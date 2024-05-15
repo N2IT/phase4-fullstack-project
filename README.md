@@ -54,3 +54,5 @@ curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh
 ```
 
 Then delete everything in your folder and run `rm -rf .git`. Then redo the installation instructions!# phase4-fullstack-project
+# Project Name Here
+Fill out your project details here in your README.md
