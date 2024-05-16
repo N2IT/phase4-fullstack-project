@@ -21,7 +21,7 @@ def create_accounts():
       discount = rc(range(25, 50)),
       markup_variable = rc(range(1, 2)),
       created_at = datetime.now(),
-      updated_at = datetime.now()
+      # updated_at = 000000
     )
   
     accounts.append(a)
@@ -37,10 +37,12 @@ def create_users():
       last_name = fake.last_name(),
       username=fake.profile(fields=['username'])['username'],
       created_at = datetime.now(),
-      updated_at = datetime.now(),
+      # updated_at = 000000,
       status = fake.boolean(chance_of_getting_true=75),
-      account_id = rc([account.id for account in accounts])
+      account_id = rc([account.id for account in accounts]),
     )
+
+    u.password_hash = fake.password(length=7, special_chars=False, upper_case=False)
   
     users.append(u)
 
@@ -51,6 +53,7 @@ if __name__ == "__main__":
   with app.app_context():
     print("Clearing db...")
     Account.query.delete()
+    User.query.delete()
 
     print("Seeding accounts...")
     accounts = create_accounts()
