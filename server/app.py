@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 
-from flask import request, session
-from flask_restful import Resource
+from flask import request, session, make_response
+from flask_restful import Api, Resource
 
 from config import app, db, api
 from models import Account, User
@@ -12,12 +12,19 @@ from models import Account, User
 
 class Accounts(Resource):
   def get(self):
-    accounts = [account.to_dict() for account in Accounts.query.all()]
+    accounts = [account.to_dict() for account in Account.query.all()]
 
-    if accounts:
-      return make_response(accounts, 200)
+    if not accounts:
+      return {'error' : '204: No content available'}, 204
+      
+    return make_response(
+      accounts,
+      200
+      )
 
-    return {'error' : '204: No content available'}
+    
+
+api.add_resource(Accounts, '/accounts')
 
 if __name__ == "__main__":
   app.run(port=5555, debug=True)
