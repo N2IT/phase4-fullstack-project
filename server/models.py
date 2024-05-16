@@ -26,10 +26,17 @@ class Account(db.Model, SerializerMixin):
     @validates('account_number')
     def validate_account_number(self, key, value):
         if value == "":
-            return {'error' : '422: Unprocessible entry'}, 422
+            return {'error' : '422: Account number must contain a value'}, 422
         elif Account.query.filter(Account.account_number == value).first():
             return {'error' : '422: Account number must be unique'}, 422
         return value
+
+    @validates('company_name'):
+    def validate_company_name(self, key, value):
+        if value == "":
+            return {'error' : '422: A company name must be entered'}, 422
+        elif Account.query.filter(Account.company_name == value).first():
+            return {'error' : '422: Company name must be unique'}, 422
     
     # relationships
     users = db.relationship('User', back_populates = 'account')
