@@ -1,7 +1,7 @@
 from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
+from sqlalchemy.orm import validates
 from flask_sqlalchemy import SQLAlchemy
-
 from config import db, bcrypt
 
 
@@ -9,8 +9,8 @@ class Account(db.Model, SerializerMixin):
     __tablename__ = 'accounts'
 
     id = db.Column(db.Integer, primary_key = True)
-    account_number = db.Column(db.Integer)
-    company_name = db.Column(db.String)
+    account_number = db.Column(db.Integer, nullable=False, unique=True)
+    company_name = db.Column(db.String, nullable=False, unique=True)
     address_1 = db.Column(db.String)
     address_2 = db.Column(db.String)
     city = db.Column(db.String)
@@ -19,14 +19,23 @@ class Account(db.Model, SerializerMixin):
     phone = db.Column(db.Integer)
     discount = db.Column(db.Integer)
     markup_variable = db.Column(db.Integer)
+    status = db.Column(db.Boolean)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
+    
+    @validates('account_number')
+    def validate_account_number(self, key, value):
+        if value == "":
+            return {'error' : '422: Unprocessible entry'}, 422
+        elif Account.query.filter(Account.account_number == value).first():
+            return {'error' : '422: Account number must be unique'}, 422
+        return value
     
     # relationships
     users = db.relationship('User', back_populates = 'account')
     # quotes = db.Column(db.Integer, db.ForeingKey('quotes.id'))
 
-    serialize_rules = ('-users.account','-users.account_id','-users.created_at', '-users.updated_at', '-users.id')
+    serialize_rules = ('-users.account','-users.account_id','-users.created_at', '-users.updated_at', '-users.id', '-users._password_hash',)
 
     def __repr__(self):
         return f'Account {self.id}, {self.account_number}, {self.company_name}, {self.address_1}, {self.address_2}, {self.city}, {self.state}, {self.zip_code}, {self.phone}, {self.discount}, {self.markup_variable}, {self.created_at}, {self.updated_at}'
@@ -43,7 +52,8 @@ class User(db.Model,SerializerMixin):
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
     status = db.Column(db.Boolean)
     account_id = db.Column(db.String, db.ForeignKey('accounts.id'))
-    _password_hash = db.Column(db.String)
+    _password_hash = db.Column(db.String(12))
+
 
     @hybrid_property
     def password_hash(self):

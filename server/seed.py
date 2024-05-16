@@ -22,6 +22,7 @@ def create_accounts():
       markup_variable = rc(range(1, 2)),
       created_at = datetime.now(),
       # updated_at = 000000
+      status = fake.boolean(chance_of_getting_true=85),
     )
   
     accounts.append(a)
@@ -38,7 +39,7 @@ def create_users():
       username=fake.profile(fields=['username'])['username'],
       created_at = datetime.now(),
       # updated_at = 000000,
-      status = fake.boolean(chance_of_getting_true=75),
+      status = fake.boolean(chance_of_getting_true=85),
       account_id = rc([account.id for account in accounts]),
     )
 

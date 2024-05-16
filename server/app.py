@@ -12,7 +12,7 @@ from models import Account, User
 
 class Accounts(Resource):
   def get(self):
-    accounts = [account.to_dict(rules = ('-id', '-updated_at')) for account in Account.query.all()]
+    accounts = [account.to_dict(rules = ('-id', '-updated_at',)) for account in Account.query.all()]
 
     if not accounts:
       return {'error' : '204: No content available'}, 204
