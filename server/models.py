@@ -31,12 +31,13 @@ class Account(db.Model, SerializerMixin):
             return {'error' : '422: Account number must be unique'}, 422
         return value
 
-    @validates('company_name'):
+    @validates('company_name')
     def validate_company_name(self, key, value):
         if value == "":
             return {'error' : '422: A company name must be entered'}, 422
         elif Account.query.filter(Account.company_name == value).first():
             return {'error' : '422: Company name must be unique'}, 422
+        return value
     
     # relationships
     users = db.relationship('User', back_populates = 'account')
@@ -52,9 +53,9 @@ class User(db.Model,SerializerMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key = True)
-    first_name = db.Column(db.String(3), nullable=False)
+    first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
-    username = db.Column(db.String(6), nullable=False, unique=True)
+    username = db.Column(db.String(3), nullable=False, unique=True)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
     status = db.Column(db.Boolean)
@@ -77,6 +78,22 @@ class User(db.Model,SerializerMixin):
         return bcrypt.check_password_hash(
             self._password_hash, password.encode('utf-8')
             )
+
+    @validates('first_name', 'last_name')
+    def validates_name(self, key, name):
+        if name == "":
+            return {'error' : '402: First and / or last name fields must be populated.'}
+        return name
+
+    @validates('username')
+    def validate_username(self, key, username):
+        if username == "":
+            return {'error' : '422: A username must contain 5 or more characters'}, 422
+        elif len(username) < 3:
+            return {'error' : '422: A username must contain 5 or more characters'}, 422
+        elif User.query.filter(User.username == username).first():
+            return {'error' : '422: The username value entered is not unique.'}, 422
+        return username
 
     # relationships
     account = db.relationship('Account', back_populates = 'users')
