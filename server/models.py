@@ -46,5 +46,3 @@ class User(db.Model,SerializerMixin):
 
     def __repr__(self):
         return f'User {self.id}, {self.first_name}, {self.last_name}, {self.username}, {self.created_at}, {self.updated_at}, {self.status}, {self.account_id}'
-
-    breakpoint()
