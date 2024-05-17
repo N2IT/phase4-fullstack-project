@@ -119,7 +119,6 @@ class CreateUser(Resource):
 
         new_user.password_hash = form_data['password']
 
-
         db.session.add(new_user)
         db.session.commit()
 
@@ -137,7 +136,6 @@ class CreateUser(Resource):
         )        
 
         new_user.password_hash = form_data['password']
-
 
         db.session.add(new_user)
         db.session.commit()
