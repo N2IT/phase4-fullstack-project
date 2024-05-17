@@ -91,6 +91,7 @@ class CreateUser(Resource):
     first_name = form_data.get('first_name')
     last_name = form_data.get('last_name')
     username = form_data.get('username')
+    account_id = form_data.get('account_id')
 
     errors = []
 
@@ -107,12 +108,33 @@ class CreateUser(Resource):
       if errors:
         return {'errors' : errors }, 422
       
-      if 'username' in form_data:
+      if session['account_id'] and 'username' in form_data:
         new_user = User(
           first_name = first_name,
           last_name = last_name,
-          username = username
-        )
+          username = username,
+          status = True,
+          account_id = session['account_id']
+        )        
+
+        new_user.password_hash = form_data['password']
+
+
+        db.session.add(new_user)
+        db.session.commit()
+
+        session['user_id'] = new_user.id
+
+        return new_user.to_dict(), 201
+      
+      elif 'username' in form_data:
+        new_user = User(
+          first_name = first_name,
+          last_name = last_name,
+          username = username,
+          status = True,
+          account_id = account_id
+        )        
 
         new_user.password_hash = form_data['password']
 
