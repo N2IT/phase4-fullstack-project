@@ -36,8 +36,45 @@ class Users(Resource):
     )
 
 
+class CreateAccount(Resource):
+  def post(get):
+    form_data = request.get_json()
+    
+    account_number = form_data.get('account_number')
+    company_name = form_data.get('company_name')
+
+    errors = []
+
+    if form_data:
+      if not account_number:
+        errors.append('An account number must be entered.')
+      elif Account.query.filter(Account.account_number == account_number).first():
+        errors.append('The account number must be unique.')
+      elif not company_name:
+        errors.append('An company name must be entered.')
+      elif Account.query.filter(Account.company_name == company_name).first():
+        errors.append('The company name must be unique.')
+      
+      if errors:
+        return {'errors' : errors }, 422
+      
+      new_account = Account(
+        account_number = account_number,
+        company_name = company_name
+      )
+
+      db.session.add(new_account)
+      db.session.commit()
+
+      return new_account.to_dict(), 201
+
+    else:
+      return {'errors' : '422: Unprocessable Entry'}, 422
+
+
 api.add_resource(Accounts, '/accounts')
 api.add_resource(Users, '/users')
+api.add_resource(CreateAccount, '/create_account')
 
 
 if __name__ == "__main__":

@@ -26,9 +26,9 @@ class Account(db.Model, SerializerMixin):
     @validates('account_number')
     def validate_account_number(self, key, value):
         if value == "":
-            return {'error' : '422: Account number must contain a value'}, 422
+            raise ValueError ({'error' : '422: Account number must contain a value'}, 422)
         elif Account.query.filter(Account.account_number == value).first():
-            return {'error' : '422: Account number must be unique'}, 422
+            raise ValueError ({'error' : '422: Account number must be unique'}, 422)
         return value
 
     @validates('company_name')
