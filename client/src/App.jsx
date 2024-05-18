@@ -6,20 +6,22 @@ import Home from './Home';
 import CreateNewAccount from "./CreateNewAccount";
 import ErrorPage from "./ErrroPage";
 
-function App() {
-    return (
-      <>
-        <header className="">
-          <NavBar />
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/create-account" element={<CreateNewAccount />} />
-            <Route path="*" element={<ErrorPage />} />
-          </Routes>
-        </header>
-        <Outlet />
-      </>
-    );
+const App = () => {
+  return (
+    <>
+      <header className="header">
+        <NavBar />
+      </header>
+      <main>
+        <Routes>
+          <Route path="/" element={<Home />} />
+          <Route path="/create-account" element={<CreateNewAccount />} />
+          <Route path="*" element={<ErrorPage />} />
+        </Routes>
+      </main>
+      <Outlet />
+    </>
+  );
 }
 
 export default App

@@ -1,8 +1,8 @@
 import { Link } from 'react-router-dom'
 
 const NavBar = () => {
-    <>
-        <nav>
+    return (
+        <>
             <ul>
                 <li>
                     <Link to="/">Home</Link>
@@ -11,10 +11,11 @@ const NavBar = () => {
                     <Link to="/create-account">Create New Account</Link>
                 </li>
             </ul>
-        </nav>
 
-        <hr />
-    </>
+
+            <hr />
+        </>
+    )
 }
 
-export default NavBar
+export default NavBar;
