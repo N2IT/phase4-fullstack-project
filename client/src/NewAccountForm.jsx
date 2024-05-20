@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from "yup";
+import { useNavigate } from 'react-router-dom'
 
 const NewAccountForm = () => {
 
     const [accounts, setAccounts] = useState([]);
+    const [errors, setErrors] = useState([])
     const [refreshPage, setRefreshPage] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
-        console.log("FETCH! ");
         fetch("/api/accounts")
-          .then((res) => res.json())
-          .then((data) => {
-            setAccounts(data);
-            console.log(data);
-          });
-      }, [refreshPage]);
+            .then((res) => res.json())
+            .then((data) => {
+                setAccounts(data);
+                console.log(data);
+            });
+    }, [setRefreshPage]);
 
     const formSchema = yup.object().shape({
         account_number: yup.number().positive("Must be a positive number").integer("Invalid entry.").required("Must enter an account number.").typeError("Please enter an integer."),
@@ -42,15 +44,22 @@ const NewAccountForm = () => {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(values),
-            }).then(
-                (res) => {
-                    if (res.status == 200) {
-                        setRefreshPage(!refreshPage);
+            })
+                .then((res) => res.json())
+                .then((data) => {
+                    console.log(data)
+                    debugger
+                    if (data.errors){
+                        setErrors(data.errors)
                     }
-                }
-            )
+                    navigate('/user-create');
+                })
+                
+                
         }
-    })
+})
+                    
+
 
     return (
         <>
@@ -64,7 +73,7 @@ const NewAccountForm = () => {
                         onChange={formik.handleChange}
                         value={formik.values.account_number}
                     />
-                    <p style={{ color: 'red' }}> {formik.errors.account_number}</p>
+                    <p style={{ color: 'red' }}> {formik.errors.account_number} </p>
                     {/* <br /> */}
                     <label htmlFor="company_name">Company Name </label>
                     <input
@@ -76,6 +85,7 @@ const NewAccountForm = () => {
                     <p style={{ color: 'red' }}> {formik.errors.company_name}</p>
                     <button type="submit">Submit</button>
                 </form>
+                <p style={{ color: 'red' }}>{errors ? errors : null}</p>
             </div>
         </>
     )
