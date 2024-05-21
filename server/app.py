@@ -28,7 +28,8 @@ class Accounts(Resource):
     account_number = int(random.random()*1000)
     company_name = form_data.get('company_name')
     city = form_data.get('city')
-    state = form.data_get('state')
+    state = form_data.get('state')
+    
     
 
     errors = []
@@ -50,13 +51,17 @@ class Accounts(Resource):
         account_number = account_number,
         company_name = company_name,
         city = city,
-        state = state
+        state = state,
+        status = True
       )
 
       db.session.add(new_account)
       db.session.commit()
 
-      # session['account_id'] = new_account.id
+      breakpoint()
+
+      session['account_id'] = new_account.id
+
 
       return new_account.to_dict(), 201
 
@@ -83,7 +88,9 @@ class Users(Resource):
     last_name = form_data.get('last_name')
     username = form_data.get('username')
     email = form_data.get('email')
-    account_id = form_data.get('account_id')
+    if session['account_id']:
+      account_id = session['account_id']
+    # account_id = form_data.get('account_id')
     password = form_data.get('password_hash')
 
     errors = []
@@ -105,26 +112,7 @@ class Users(Resource):
       if errors:
         return {'errors' : errors }, 422
       
-      if session['account_id'] and 'username' in form_data:
-        new_user = User(
-          first_name = first_name,
-          last_name = last_name,
-          username = username,
-          email = email,
-          status = True,
-          account_id = session['account_id']
-        )        
-
-        new_user.password_hash = form_data['password']
-
-        db.session.add(new_user)
-        db.session.commit()
-
-        session['user_id'] = new_user.id
-
-        return new_user.to_dict(), 201
-      
-      elif 'username' in form_data:
+      if 'username' in form_data:
         new_user = User(
           first_name = first_name,
           last_name = last_name,

@@ -3,12 +3,12 @@ import { useFormik } from 'formik';
 import * as yup from "yup";
 import { useNavigate } from 'react-router-dom'
 
-const NewUserForm = ({ setUserForm }) => {
+const NewUserForm = () => {
 
     const [users, setUsers] = useState([]);
     const [errors, setErrors] = useState([])
     const [refreshPage, setRefreshPage] = useState(false);
-    // const navigate = useNavigate();
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetch("/api/accounts")
@@ -33,13 +33,14 @@ const NewUserForm = ({ setUserForm }) => {
             email: "",
             username: "",
             password: "",
+            account_id: "",
             // address_1: "",
             // address_2: "",
             // city: "",
             // state: "",
             // zip_code: "",
             // phone: "",
-            // status: "",
+            status: true,
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
@@ -53,8 +54,9 @@ const NewUserForm = ({ setUserForm }) => {
                 .then((res) => res.json())
                 .then((data) => {
                     debugger
-                    {data.errors ? setErrors(data.errors) : setUserForm()}
+                    {data.errors ? setErrors(data.errors) : null}
                 })
+            navigate('/my-account')
                 
                 
         }
@@ -63,7 +65,7 @@ const NewUserForm = ({ setUserForm }) => {
     return (
         <>
             <div>
-                <h2>Get started with your user details</h2>
+                <h2>Now fill in your user details:</h2>
                 <form onSubmit={formik.handleSubmit}>
                 <label htmlFor="username">First Name </label>
                     <input
@@ -81,6 +83,14 @@ const NewUserForm = ({ setUserForm }) => {
                         value={formik.values.last_name}
                     />
                     <p style={{ color: 'red' }}> {formik.errors.last_name} </p>
+                    <label htmlFor="username">Email </label>
+                    <input
+                        id="email"
+                        name="email"
+                        onChange={formik.handleChange}
+                        value={formik.values.email}
+                    />
+                    <p style={{ color: 'red' }}> {formik.errors.email} </p>
                     <label htmlFor="username">Username </label>
                     <input
                         id="username"

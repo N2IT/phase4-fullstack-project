@@ -1,14 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from "yup";
-import { useNavigate } from 'react-router-dom'
 
-const NewAccountForm = () => {
+const NewAccountForm = ({ setAccountForm }) => {
 
-    const [accounts, setAccounts] = useState([]);
+    // const [accounts, setAccounts] = useState([]);
     const [errors, setErrors] = useState([])
     // const [refreshPage, setRefreshPage] = useState(false);
-    const navigate = useNavigate();
 
     // useEffect(() => {
     //     fetch("/api/accounts")
@@ -20,8 +18,9 @@ const NewAccountForm = () => {
     // }, [setRefreshPage]);
 
     const formSchema = yup.object().shape({
-        account_number: yup.number().positive("Must be a positive number").integer("Invalid entry.").required("Must enter an account number.").typeError("Please enter an integer."),
-        company_name: yup.string().required("A company name must be entered.")
+        company_name: yup.string().required("A company name must be entered."),
+        city: yup.string().required('Please enter the city where your company is located'),
+        state: yup.string().required('Please enter the state where your company is located')
     })
 
     const formik = useFormik({
@@ -30,11 +29,11 @@ const NewAccountForm = () => {
             company_name: "",
             // address_1: "",
             // address_2: "",
-            // city: "",
-            // state: "",
+            city: "",
+            state: "",
             // zip_code: "",
             // phone: "",
-            // status: "",
+            status: true,
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
@@ -45,11 +44,10 @@ const NewAccountForm = () => {
                 },
                 body: JSON.stringify(values),
             })
-                .then((res) => res.json())
+                .then((res) => res.json()) 
                 .then((data) => {
-                    {data.errors ? setErrors(data.errors) : navigate('/user-create')}
+                    {data.errors ? setErrors(data.errors) : setAccountForm()}
                 })
-                
                 
         }
 })
@@ -59,17 +57,8 @@ const NewAccountForm = () => {
     return (
         <>
             <div>
-                <h2>Now enter your company details</h2>
+                <h2>First enter you company details:</h2>
                 <form onSubmit={formik.handleSubmit}>
-                    <label htmlFor="account_number">Account Number </label>
-                    <input
-                        id="account_number"
-                        name="account_number"
-                        onChange={formik.handleChange}
-                        value={formik.values.account_number}
-                    />
-                    <p style={{ color: 'red' }}> {formik.errors.account_number} </p>
-                    {/* <br /> */}
                     <label htmlFor="company_name">Company Name </label>
                     <input
                         id="company_name"
@@ -78,6 +67,22 @@ const NewAccountForm = () => {
                         value={formik.values.company_name}
                     />
                     <p style={{ color: 'red' }}> {formik.errors.company_name}</p>
+                    <label htmlFor="account_number">City </label>
+                    <input
+                        id="city"
+                        name="city"
+                        onChange={formik.handleChange}
+                        value={formik.values.city}
+                    />
+                    <p style={{ color: 'red' }}> {formik.errors.city} </p>
+                    <label htmlFor="account_number">State </label>
+                    <input
+                        id="state"
+                        name="state"
+                        onChange={formik.handleChange}
+                        value={formik.values.state}
+                    />
+                    <p style={{ color: 'red' }}> {formik.errors.state} </p>
                     <button type="submit">Submit</button>
                 </form>
                 <p style={{ color: 'red' }}>{errors ? errors : null}</p>

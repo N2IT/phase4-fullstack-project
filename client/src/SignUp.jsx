@@ -3,17 +3,17 @@ import NewAccountForm from "./NewAccountForm";
 import { useState } from "react";
 
 const SignUp = () => {
-    const[userForm, setUserForm] = useState(true)
+    const[accountForm, setAccountForm] = useState(true)
 
-    const onSubmitUserForm = () => {
-        setUserForm(!userForm)
+    const onSubmitAccountForm = () => {
+        setAccountForm(!accountForm)
     }
 
 
     return (
       <div>
         {/* <h2>Create New Account</h2> */}
-        {userForm ? <NewUserForm setUserForm={onSubmitUserForm}/> : <NewAccountForm />}
+        {accountForm ? <NewAccountForm setAccountForm={onSubmitAccountForm}/> : <NewUserForm /> }
         {/* <NewUserForm />
         <NewAccountForm /> */}
       </div>
