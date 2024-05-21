@@ -1,9 +1,19 @@
 import LoginForm from './LoginForm'
 import { Link, useOutletContext } from 'react-router-dom';
+// import { useEffect } from 'react';
 
 const Home = () => {
 
   const [user, setUser] = useOutletContext();
+
+  // useEffect(() => {
+  //   fetch('/api/check-session')
+  //   .then((r) => {
+  //     if (r.ok) {
+  //       r.json().then((user) => setUser(user));
+  //     }
+  //   })
+  // },[])
 
   return (
     <>

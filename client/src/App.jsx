@@ -14,7 +14,7 @@ const App = () => {
         r.json().then((user) => setUser(user));
       }
     })
-  })
+  },[])
 
   return (
     <>

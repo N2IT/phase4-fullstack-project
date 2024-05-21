@@ -94,14 +94,14 @@ class Users(Resource):
     errors = []
 
     if form_data:
-      # if not first_name:
-      #   errors.append('A first name must be entered.')
-      # elif not last_name:
-      #   errors.append('An last name must be entered.')
-      if not username:
+      if not first_name:
+        errors.append('A first name must be entered.')
+      elif not last_name:
+        errors.append('An last name must be entered.')
+      elif not username:
         errors.append('A username must be entered.')
       elif User.query.filter(User.username == username).first():
-        errors.append('The username name must be unique.')
+        errors.append('The username is already in use. Please try again.')
       elif not email:
         errors.append('Please enter an email for this user')
       elif User.query.filter(User.email == email).first():
@@ -135,10 +135,7 @@ class Users(Resource):
 
 class CheckSession(Resource):
   def get(self):
-    if session['account_id']:
-      account = Account.query.filter(Account.id == session.get('account_id')).first()
-      return account.to_dict(), 200
-    elif session['user_id']:
+    if session['user_id']:
       user = User.query.filter(User.id == session.get('user_id')).first()
       return user.to_dict(), 200
     else:
@@ -152,11 +149,18 @@ class Login(Resource):
 
     if user:
       return make_response(
-      user,
+      user.to_dict(),
       200
     )
 
     return { 'errors' : "401: Unathorized" }
+
+class Logout(Resource):
+  def delete(self):
+    if session.get('user_id'):
+      session['user_id'] = None
+      return {}, 204
+
 
     
 
@@ -164,6 +168,7 @@ api.add_resource(Accounts, '/accounts')
 api.add_resource(Users, '/users')
 api.add_resource(Login, '/login')
 api.add_resource(CheckSession, '/check-session')
+api.add_resource(Logout, '/logout')
 
 
 

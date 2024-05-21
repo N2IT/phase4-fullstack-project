@@ -55,8 +55,8 @@ class User(db.Model,SerializerMixin):
     id = db.Column(db.Integer, primary_key = True)
     email = db.Column(db.String)
     username = db.Column(db.String(3), nullable=False, unique=True)
-    first_name = db.Column(db.String)
-    last_name = db.Column(db.String)
+    first_name = db.Column(db.String, nullable=False)
+    last_name = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
     status = db.Column(db.Boolean)
@@ -80,11 +80,11 @@ class User(db.Model,SerializerMixin):
             self._password_hash, password.encode('utf-8')
             )
 
-    # @validates('first_name', 'last_name')
-    # def validates_name(self, key, name):
-    #     if name == "":
-    #         return {'error' : '402: First and / or last name fields must be populated.'}
-    #     return name
+    @validates('first_name', 'last_name')
+    def validates_name(self, key, name):
+        if name == "":
+            return {'error' : '402: First and / or last name fields must be populated.'}
+        return name
 
     @validates('username')
     def validate_username(self, key, username):

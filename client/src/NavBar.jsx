@@ -2,17 +2,30 @@ import { Link } from 'react-router-dom'
 
 const NavBar = ({ user, setUser }) => {
 
+    const handleLogoutClick = () => {
+        fetch("/api/logout", {
+            method: 'DELETE'
+        })
+            .then((r) => {
+                if (r.ok) {
+                    setUser(null)
+                }
+            })
+    }
+
     return (
         <>
-            {user ? <ul>
-                <li>
-                    <Link to="/">Home</Link>
-                </li>
-                <li>
-                    <Link to="/sign-up">Sign Up</Link>
-                </li>
-            </ul> :
-            null
+            {user ?
+                <ul>
+                    <li>
+                        <button onClick={handleLogoutClick}>Logout</button>
+                    </li>
+                    <li>
+                        <Link to="/">Home</Link>
+                    </li>
+
+                </ul> :
+                null
             }
         </>
     )

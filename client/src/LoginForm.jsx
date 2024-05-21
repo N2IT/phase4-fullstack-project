@@ -8,7 +8,7 @@ const LoginForm = () => {
     const [user, setUser] = useOutletContext();
     const [errors, setErrors] = useState([])
     // const [refreshPage, setRefreshPage] = useState(false);
-    const navigate = useNavigate();
+    // const navigate = useNavigate();
 
     // useEffect(() => {
     //     fetch("/api/login")
@@ -47,7 +47,7 @@ const LoginForm = () => {
     return (
         <>
             <div>
-                <h2>Now fill in your user details:</h2>
+                <h2>Enter your credentials below:</h2>
                 <form onSubmit={formik.handleSubmit}>
                     <label htmlFor="username">Username </label>
                     <input
