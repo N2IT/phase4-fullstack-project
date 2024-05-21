@@ -15,11 +15,11 @@ const NewAccountForm = ({ setAccountForm }) => {
     const formik = useFormik({
         initialValues: {
             account_number: "",
-            company_name: "",
+            company_name: "Convoluted",
             // address_1: "",
             // address_2: "",
-            city: "",
-            state: "",
+            city: "Seattle",
+            state: "WA",
             // zip_code: "",
             // phone: "",
             status: true,

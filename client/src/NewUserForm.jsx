@@ -19,11 +19,11 @@ const NewUserForm = () => {
 
     const formik = useFormik({
         initialValues: {
-            first_name: "",
-            last_name: "",
+            first_name: "Trevor",
+            last_name: "No-A",
             email: "",
-            username: "",
-            password: "",
+            username: "tnoa",
+            password: "twelvecharacters",
             account_id: "",
             status: true,
         },
