@@ -2,14 +2,14 @@
 import { Link, useOutletContext } from 'react-router-dom';
 // import { useEffect } from 'react';
 
-const Users = () => {
+const NewQuote = () => {
 
   const [user, setUser] = useOutletContext();
 
   return (
     <>
       {user ? (
-        <h2>Welcome to the Users page, {user.username}!</h2>
+        <h2>Welcome to the NewQuote page, {user.username}!</h2>
       ):
       <div>
         <h2>Unauthorized</h2>
@@ -21,5 +21,5 @@ const Users = () => {
   );
 }
 
-export default Users;
+export default NewQuote;
 

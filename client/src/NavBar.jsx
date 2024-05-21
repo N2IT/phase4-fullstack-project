@@ -23,6 +23,21 @@ const NavBar = ({ user, setUser }) => {
                     <li>
                         <Link to="/">Home</Link>
                     </li>
+                    <li>
+                        <Link to ="/accounts">Accounts</Link>
+                    </li>
+                    <li>
+                        <Link to ="/users">Users</Link>
+                    </li>
+                    <li>
+                        <Link to ="/quotes">Quotes</Link>
+                    </li>
+                    <li>
+                        <Link to ="/new-quote">New Quote</Link>
+                    </li>
+                    <li>
+                        <Link to ="/support">Support</Link>
+                    </li>
 
                 </ul> :
                 null

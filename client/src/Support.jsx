@@ -2,14 +2,14 @@
 import { Link, useOutletContext } from 'react-router-dom';
 // import { useEffect } from 'react';
 
-const Users = () => {
+const Support = () => {
 
   const [user, setUser] = useOutletContext();
 
   return (
     <>
       {user ? (
-        <h2>Welcome to the Users page, {user.username}!</h2>
+        <h2>Welcome to the Support page, {user.username}!</h2>
       ):
       <div>
         <h2>Unauthorized</h2>
@@ -21,5 +21,5 @@ const Users = () => {
   );
 }
 
-export default Users;
+export default Support;
 
