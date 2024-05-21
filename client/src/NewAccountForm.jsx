@@ -7,17 +7,17 @@ const NewAccountForm = () => {
 
     const [accounts, setAccounts] = useState([]);
     const [errors, setErrors] = useState([])
-    const [refreshPage, setRefreshPage] = useState(false);
+    // const [refreshPage, setRefreshPage] = useState(false);
     const navigate = useNavigate();
 
-    useEffect(() => {
-        fetch("/api/accounts")
-            .then((res) => res.json())
-            .then((data) => {
-                setAccounts(data);
-                console.log(data);
-            });
-    }, [setRefreshPage]);
+    // useEffect(() => {
+    //     fetch("/api/accounts")
+    //         .then((res) => res.json())
+    //         .then((data) => {
+    //             setAccounts(data);
+    //             console.log(data);
+    //         });
+    // }, [setRefreshPage]);
 
     const formSchema = yup.object().shape({
         account_number: yup.number().positive("Must be a positive number").integer("Invalid entry.").required("Must enter an account number.").typeError("Please enter an integer."),
@@ -59,7 +59,7 @@ const NewAccountForm = () => {
     return (
         <>
             <div>
-                <h2>Enter Company Account Details</h2>
+                <h2>Now enter your company details</h2>
                 <form onSubmit={formik.handleSubmit}>
                     <label htmlFor="account_number">Account Number </label>
                     <input

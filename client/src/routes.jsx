@@ -1,6 +1,6 @@
 import App from './App'
 import Home from './Home';
-import CreateNewAccount from "./CreateNewAccount";
+import SignUp from './SignUp';
 import ErrorPage from "./ErrroPage";
 
 const routes = [
@@ -14,8 +14,8 @@ const routes = [
                 element: <Home />
             },
             {
-                path: 'create-account',
-                element: <CreateNewAccount />
+                path: 'sign-up',
+                element: <SignUp />
             }
         ]
 

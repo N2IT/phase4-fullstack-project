@@ -8,7 +8,7 @@ fake = Faker()
 
 def create_accounts():
   accounts = []
-  for _ in range(20):
+  for _ in range(10):
     a = Account(
       account_number = rc(range(0, 1000)),
       company_name = fake.company(),
@@ -21,7 +21,7 @@ def create_accounts():
       discount = rc(range(25, 50)),
       markup_variable = rc(range(1, 2)),
       created_at = datetime.now(),
-      # updated_at = 000000
+      updated_at = datetime.now(),
       status = fake.boolean(chance_of_getting_true=85),
     )
   
@@ -32,13 +32,14 @@ def create_accounts():
 
 def create_users():
   users = []
-  for _ in range(50):
+  for _ in range(20):
     u = User(
       first_name = fake.first_name(),
       last_name = fake.last_name(),
+      email = fake.profile(fields=['mail'])['mail'],
       username=fake.profile(fields=['username'])['username'],
       created_at = datetime.now(),
-      # updated_at = 000000,
+      updated_at = datetime.now(),
       status = fake.boolean(chance_of_getting_true=85),
       account_id = rc([account.id for account in accounts]),
     )

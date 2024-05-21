@@ -2,7 +2,7 @@
 
 from flask import request, session, make_response
 from flask_restful import Api, Resource
-
+import random
 from config import app, db, api
 from models import Account, User
 
@@ -25,8 +25,11 @@ class Accounts(Resource):
   def post(self):
     form_data = request.get_json()
     
-    account_number = form_data.get('account_number')
+    account_number = int(random.random()*1000)
     company_name = form_data.get('company_name')
+    city = form_data.get('city')
+    state = form.data_get('state')
+    
 
     errors = []
 
@@ -45,13 +48,15 @@ class Accounts(Resource):
       
       new_account = Account(
         account_number = account_number,
-        company_name = company_name
+        company_name = company_name,
+        city = city,
+        state = state
       )
 
       db.session.add(new_account)
       db.session.commit()
 
-      session['account_id'] = new_account.id
+      # session['account_id'] = new_account.id
 
       return new_account.to_dict(), 201
 
@@ -77,19 +82,25 @@ class Users(Resource):
     first_name = form_data.get('first_name')
     last_name = form_data.get('last_name')
     username = form_data.get('username')
+    email = form_data.get('email')
     account_id = form_data.get('account_id')
+    password = form_data.get('password_hash')
 
     errors = []
 
     if form_data:
-      if not first_name:
-        errors.append('A first name must be entered.')
-      elif not last_name:
-        errors.append('An last name must be entered.')
-      elif not username:
+      # if not first_name:
+      #   errors.append('A first name must be entered.')
+      # elif not last_name:
+      #   errors.append('An last name must be entered.')
+      if not username:
         errors.append('A username must be entered.')
       elif User.query.filter(User.username == username).first():
         errors.append('The username name must be unique.')
+      elif not email:
+        errors.append('Please enter an email for this user')
+      elif User.query.filter(User.email == email).first():
+        errors.append('This email is already being used')
       
       if errors:
         return {'errors' : errors }, 422
@@ -99,6 +110,7 @@ class Users(Resource):
           first_name = first_name,
           last_name = last_name,
           username = username,
+          email = email,
           status = True,
           account_id = session['account_id']
         )        
