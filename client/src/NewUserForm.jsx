@@ -8,17 +8,7 @@ const NewUserForm = () => {
     const [user, setUser] = useOutletContext();
     const [users, setUsers] = useState([]);
     const [errors, setErrors] = useState([])
-    const [refreshPage, setRefreshPage] = useState(false);
     const navigate = useNavigate();
-
-    useEffect(() => {
-        fetch("/api/users")
-            .then((res) => res.json())
-            .then((data) => {
-                setUsers(data);
-                console.log(data);
-            });
-    }, [setRefreshPage]);
 
     const formSchema = yup.object().shape({
         first_name: yup.string().required("Please enter you first name."),
@@ -35,12 +25,6 @@ const NewUserForm = () => {
             username: "",
             password: "",
             account_id: "",
-            // address_1: "",
-            // address_2: "",
-            // city: "",
-            // state: "",
-            // zip_code: "",
-            // phone: "",
             status: true,
         },
         validationSchema: formSchema,
@@ -54,14 +38,8 @@ const NewUserForm = () => {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    if (data.errors)
-                        setErrors(data.errors)
-                    // setUsers(data)
-                    setUser(data)
-                    navigate("/")
-                }
-                )
-
+                    {!data.errors ? (setUsers(data), setUser(data), navigate('/')) : setErrors(data.errors) }
+                })
         }
     })
 

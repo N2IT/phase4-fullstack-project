@@ -4,18 +4,7 @@ import * as yup from "yup";
 
 const NewAccountForm = ({ setAccountForm }) => {
 
-    // const [accounts, setAccounts] = useState([]);
     const [errors, setErrors] = useState([])
-    // const [refreshPage, setRefreshPage] = useState(false);
-
-    // useEffect(() => {
-    //     fetch("/api/accounts")
-    //         .then((res) => res.json())
-    //         .then((data) => {
-    //             setAccounts(data);
-    //             console.log(data);
-    //         });
-    // }, [setRefreshPage]);
 
     const formSchema = yup.object().shape({
         company_name: yup.string().required("A company name must be entered."),

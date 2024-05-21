@@ -6,15 +6,6 @@ const Home = () => {
 
   const [user, setUser] = useOutletContext();
 
-  // useEffect(() => {
-  //   fetch('/api/check-session')
-  //   .then((r) => {
-  //     if (r.ok) {
-  //       r.json().then((user) => setUser(user));
-  //     }
-  //   })
-  // },[])
-
   return (
     <>
       {user ? (

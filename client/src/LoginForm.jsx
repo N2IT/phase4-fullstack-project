@@ -7,18 +7,6 @@ const LoginForm = () => {
 
     const [user, setUser] = useOutletContext();
     const [errors, setErrors] = useState([])
-    // const [refreshPage, setRefreshPage] = useState(false);
-    // const navigate = useNavigate();
-
-    // useEffect(() => {
-    //     fetch("/api/login")
-    //         .then((res) => res.json())
-    //         .then((data) => {
-    //             setUsers(data);
-    //             console.log(data);
-    //         });
-    // }, [setRefreshPage]);
-
     const formSchema = yup.object().shape({
         username: yup.string().required(),
         password: yup.string().required()
@@ -57,7 +45,6 @@ const LoginForm = () => {
                         value={formik.values.username}
                     />
                     <p style={{ color: 'red' }}> {formik.errors.username} </p>
-                    {/* <br /> */}
                     <label htmlFor="password">Password </label>
                     <input
                         id="password"
