@@ -163,6 +163,7 @@ class Login(Resource):
 api.add_resource(Accounts, '/accounts')
 api.add_resource(Users, '/users')
 api.add_resource(Login, '/login')
+api.add_resource(CheckSession, '/check-session')
 
 
 

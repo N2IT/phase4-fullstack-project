@@ -4,17 +4,16 @@ const NavBar = ({ user, setUser }) => {
 
     return (
         <>
-            <ul>
+            {user ? <ul>
                 <li>
                     <Link to="/">Home</Link>
                 </li>
                 <li>
                     <Link to="/sign-up">Sign Up</Link>
                 </li>
-            </ul>
-
-
-            <hr />
+            </ul> :
+            null
+            }
         </>
     )
 }
