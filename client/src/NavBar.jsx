@@ -1,6 +1,7 @@
 import { Link } from 'react-router-dom'
 
-const NavBar = () => {
+const NavBar = ({ user, setUser }) => {
+
     return (
         <>
             <ul>

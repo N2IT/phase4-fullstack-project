@@ -58,8 +58,6 @@ class Accounts(Resource):
       db.session.add(new_account)
       db.session.commit()
 
-      breakpoint()
-
       session['account_id'] = new_account.id
 
 
@@ -117,6 +115,7 @@ class Users(Resource):
           first_name = first_name,
           last_name = last_name,
           username = username,
+          email = email,
           status = True,
           account_id = account_id
         )        
@@ -146,11 +145,25 @@ class CheckSession(Resource):
       return {'errors' : '401 : Unauthorized'}, 401
 
 
+class Login(Resource):
+  def post(self):
+    user = User.query.filter(User.username == request.get_json()['username']).first()
+    session['user_id'] = user.id
+
+    if user:
+      return make_response(
+      user,
+      200
+    )
+
+    return { 'errors' : "401: Unathorized" }
+
+    
 
 api.add_resource(Accounts, '/accounts')
 api.add_resource(Users, '/users')
-# api.add_resource(CreateAccount, '/create_account')
-# api.add_resource(CreateUser, '/create_user')
+api.add_resource(Login, '/login')
+
 
 
 if __name__ == "__main__":

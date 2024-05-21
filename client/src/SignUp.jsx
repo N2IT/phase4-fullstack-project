@@ -9,13 +9,10 @@ const SignUp = () => {
         setAccountForm(!accountForm)
     }
 
-
     return (
       <div>
         {/* <h2>Create New Account</h2> */}
         {accountForm ? <NewAccountForm setAccountForm={onSubmitAccountForm}/> : <NewUserForm /> }
-        {/* <NewUserForm />
-        <NewAccountForm /> */}
       </div>
     );
   }

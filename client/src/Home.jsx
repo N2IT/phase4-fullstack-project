@@ -2,6 +2,7 @@ import LoginForm from './LoginForm'
 import { Link } from 'react-router-dom';
 
 const Home = () => {
+
     return (
       <div>
         <h2>Quote Pro</h2>

@@ -53,11 +53,8 @@ const NewUserForm = () => {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    debugger
-                    {data.errors ? setErrors(data.errors) : null}
+                    {data.errors ? setErrors(data.errors) : navigate('/my-account')}
                 })
-            navigate('/my-account')
-                
                 
         }
 })
