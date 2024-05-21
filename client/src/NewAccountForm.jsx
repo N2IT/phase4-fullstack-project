@@ -47,12 +47,7 @@ const NewAccountForm = () => {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    console.log(data)
-                    debugger
-                    if (data.errors){
-                        setErrors(data.errors)
-                    }
-                    navigate('/user-create');
+                    {data.errors ? setErrors(data.errors) : navigate('/user-create')}
                 })
                 
                 

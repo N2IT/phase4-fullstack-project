@@ -21,23 +21,8 @@ class Accounts(Resource):
       accounts,
       200
       )
-
-    
-class Users(Resource):
-  def get(self):
-    users = [user.to_dict(rules = ('-account_id','-id', '-updated_at', '-_password_hash')) for user in User.query.all()]
-
-    if not users:
-      return {'error' : '204: No content available'}, 204
-
-    return make_response(
-      users,
-      200
-    )
-
-
-class CreateAccount(Resource):
-  def post(get):
+  
+  def post(self):
     form_data = request.get_json()
     
     account_number = form_data.get('account_number')
@@ -51,7 +36,7 @@ class CreateAccount(Resource):
       elif Account.query.filter(Account.account_number == account_number).first():
         errors.append('The account number must be unique.')
       elif not company_name:
-        errors.append('An company name must be entered.')
+        errors.append('A company name must be entered.')
       elif Account.query.filter(Account.company_name == company_name).first():
         errors.append('The company name must be unique.')
       
@@ -73,19 +58,20 @@ class CreateAccount(Resource):
     else:
       return {'errors' : '422: Unprocessable Entry'}, 422
 
-class CheckSession(Resource):
+    
+class Users(Resource):
   def get(self):
-    if session['account_id']:
-      account = Account.query.filter(Account.id == session.get('account_id')).first()
-      return account.to_dict(), 200
-    elif session['user_id']:
-      user = User.query.filter(User.id == session.get('user_id')).first()
-      return user.to_dict(), 200
-    else:
-      return {'errors' : '401 : Unauthorized'}, 401
+    users = [user.to_dict(rules = ('-account_id','-id', '-updated_at', '-_password_hash')) for user in User.query.all()]
 
-class CreateUser(Resource):
-  def post(get):
+    if not users:
+      return {'error' : '204: No content available'}, 204
+
+    return make_response(
+      users,
+      200
+    )
+  
+  def post(self):
     form_data = request.get_json()
     
     first_name = form_data.get('first_name')
@@ -148,11 +134,23 @@ class CreateUser(Resource):
       return {'errors' : '422: Unprocessable Entry'}, 422
 
 
+class CheckSession(Resource):
+  def get(self):
+    if session['account_id']:
+      account = Account.query.filter(Account.id == session.get('account_id')).first()
+      return account.to_dict(), 200
+    elif session['user_id']:
+      user = User.query.filter(User.id == session.get('user_id')).first()
+      return user.to_dict(), 200
+    else:
+      return {'errors' : '401 : Unauthorized'}, 401
+
+
 
 api.add_resource(Accounts, '/accounts')
 api.add_resource(Users, '/users')
-api.add_resource(CreateAccount, '/create_account')
-api.add_resource(CreateUser, '/create_user')
+# api.add_resource(CreateAccount, '/create_account')
+# api.add_resource(CreateUser, '/create_user')
 
 
 if __name__ == "__main__":
