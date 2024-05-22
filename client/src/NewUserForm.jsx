@@ -60,6 +60,7 @@ const NewUserForm = () => {
                 <form onSubmit={formik.handleSubmit}>
                     <label htmlFor="username">First Name </label>
                     <input
+                        type="text"
                         id="first_name"
                         name="first_name"
                         onChange={formik.handleChange}
@@ -68,6 +69,7 @@ const NewUserForm = () => {
                     <p style={{ color: 'red' }}> {formik.errors.first_name} </p>
                     <label htmlFor="username">Last Name </label>
                     <input
+                        type="text"
                         id="last_name"
                         name="last_name"
                         onChange={formik.handleChange}
@@ -76,6 +78,7 @@ const NewUserForm = () => {
                     <p style={{ color: 'red' }}> {formik.errors.last_name} </p>
                     <label htmlFor="username">Email </label>
                     <input
+                        type="email"
                         id="email"
                         name="email"
                         onChange={formik.handleChange}
@@ -84,6 +87,7 @@ const NewUserForm = () => {
                     <p style={{ color: 'red' }}> {formik.errors.email} </p>
                     <label htmlFor="username">Username </label>
                     <input
+                        type="text"
                         id="username"
                         name="username"
                         onChange={formik.handleChange}
@@ -93,6 +97,7 @@ const NewUserForm = () => {
                     {/* <br /> */}
                     <label htmlFor="password">Password </label>
                     <input
+                        type="password"
                         id="password"
                         name="password"
                         onChange={formik.handleChange}

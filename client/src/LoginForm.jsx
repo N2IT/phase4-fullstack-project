@@ -40,11 +40,11 @@ const LoginForm = () => {
                     setUser(user);
                     navigate('/accounts');
                 })
-                // .catch((error) => {
-                //     console.error('Error during login:', error.message);
-                //     setErrors({ api: error.message });
-                // });
-                // THIS CATCH ERROR WAS CAUSING MAJOR ISSUES. LEAVING FOR NOW AS REFERENCE
+            // .catch((error) => {
+            //     console.error('Error during login:', error.message);
+            //     setErrors({ api: error.message });
+            // });
+            // THIS CATCH ERROR WAS CAUSING MAJOR ISSUES.LEAVING FOR NOW AS REFERENCE
         },
     });
 
@@ -57,6 +57,7 @@ const LoginForm = () => {
                 <form onSubmit={formik.handleSubmit}>
                     <label htmlFor="username">Username </label>
                     <input
+                        type="text"
                         id="username"
                         name="username"
                         onBlur={formik.handleBlur}
@@ -66,6 +67,7 @@ const LoginForm = () => {
                     <p style={{ color: 'red' }}> {formik.errors.username} </p>
                     <label htmlFor="password">Password </label>
                     <input
+                        type="password"
                         id="password"
                         name="password"
                         onBlur={formik.handleBlur}
