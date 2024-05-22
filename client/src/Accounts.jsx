@@ -4,7 +4,7 @@ import { Link, useOutletContext } from 'react-router-dom';
 
 const Accounts = () => {
 
-  const [user, setUser] = useOutletContext();
+  const [user] = useOutletContext();
 
   return (
     <>

@@ -161,8 +161,6 @@ class Logout(Resource):
     if session.get('user_id'):
       session['user_id'] = None
       return {}, 204
-
-
     
 
 api.add_resource(Accounts, '/accounts')

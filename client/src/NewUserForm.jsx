@@ -5,8 +5,7 @@ import { useNavigate, useOutletContext } from 'react-router-dom'
 
 const NewUserForm = () => {
 
-    const [user, setUser] = useOutletContext();
-    const [users, setUsers] = useState([]);
+    const [setUser] = useOutletContext();
     const [errors, setErrors] = useState([])
     const navigate = useNavigate();
 
