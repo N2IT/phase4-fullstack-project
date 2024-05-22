@@ -1,8 +1,16 @@
 
 import { Link, useOutletContext } from 'react-router-dom';
-// import { useEffect } from 'react';
+import { useEffect } from 'react';
 
 const Accounts = () => {
+
+ 
+//   useEffect(() => {
+
+//   }, [] 
+// )
+
+}
 
   const [user, setUser] = useOutletContext();
 
