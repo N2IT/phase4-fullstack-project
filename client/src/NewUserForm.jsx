@@ -21,7 +21,7 @@ const NewUserForm = () => {
         initialValues: {
             first_name: "Trevor",
             last_name: "No-A",
-            email: "",
+            email: "tnoa@tnoa.com",
             username: "tnoa",
             password: "twelvecharacters",
             account_id: "",

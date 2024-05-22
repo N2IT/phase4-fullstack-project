@@ -7,6 +7,7 @@ const LoginForm = () => {
 
     const [user, setUser] = useOutletContext();
     const [errors, setErrors] = useState([])
+    const navigate = useNavigate();
     const formSchema = yup.object().shape({
         username: yup.string().required(),
         password: yup.string().required()
@@ -19,18 +20,29 @@ const LoginForm = () => {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
+            debugger
             fetch("/api/login", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
                 },
                 body: JSON.stringify(values),
-            }).then((res) => {
-                {res.ok ? res.json().then((user) => setUser(user)) : setErrors(res.errors)}
-
             })
+            .then((r) => r.json())
+            .then((user) => {
+                {!user.ok ? setErrors(user.errors) : setUser(user), navigate('/my-account')}
+            })
+            
+                // {!r.ok ? setErrors(r.errors) : r.son().then((user) => setUser(user))}
+                // if (r.ok) {
+                //   r.json()
+                //   .then((user) => setUser(user));
+                // }
+                // setErrors()
+            //   });
+            }
         }
-    })
+)
 
     return (
         <>

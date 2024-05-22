@@ -8,9 +8,8 @@ const Accounts = () => {
 
   return (
     <>
-      {user ? (
-        <h2>Welcome to the Accounts page, {user.username}!</h2>
-      ):
+      {user ? <h2>Welcome to the Accounts page, {user.username}!</h2>
+      :
       <div>
         <h2>Unauthorized</h2>
         <h3>Get Started Here:</h3>

@@ -144,9 +144,23 @@ class CheckSession(Resource):
 
 class Login(Resource):
   def post(self):
-    user = User.query.filter(User.username == request.get_json()['username']).first()
-    session['user_id'] = user.id
+    data = request.get_json()
+    username = data['username']
+    password = data['password']
 
+    user = User.query.filter(User.username == request.get_json()['username']).first()
+
+    if user is None:
+      return {'errors' : 'Invalid username or password'}, 401
+
+    if user.authenticate(password):
+      session['user_id'] = user.id
+      return user.to_dict(), 200
+    
+    return {'errors' : 'Invalid username or password'}, 401
+
+
+    
     if user:
       return make_response(
       user.to_dict(),
