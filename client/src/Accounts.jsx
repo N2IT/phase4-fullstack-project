@@ -12,8 +12,10 @@ const Accounts = () => {
       :
       <div>
         <h2>Unauthorized</h2>
+        <Link to="/">Log in</Link>
         <h3>Get Started Here:</h3>
         <Link to="/sign-up">Sign Up</Link>
+        
       </div>
       }
     </>
