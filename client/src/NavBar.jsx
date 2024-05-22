@@ -1,54 +1,3 @@
-// import { Link } from 'react-router-dom'
-
-// const NavBar = ({ user, setUser }) => {
-
-//     const handleLogoutClick = () => {
-//         fetch("/api/logout", {
-//             method: 'DELETE'
-//         })
-//             .then((r) => {
-//                 if (r.ok) {
-//                     setUser(null)
-//                 }
-//             })
-//     }
-
-//     return (
-//         <>
-//             {user ?
-//                 <ul>
-//                     <li>
-//                         <button onClick={handleLogoutClick}>Logout</button>
-//                     </li>
-//                     <li>
-//                         <Link to="/">Home</Link>
-//                     </li>
-//                     <li>
-//                         <Link to ="/accounts">Accounts</Link>
-//                     </li>
-//                     <li>
-//                         <Link to ="/users">Users</Link>
-//                     </li>
-//                     <li>
-//                         <Link to ="/quotes">Quotes</Link>
-//                     </li>
-//                     <li>
-//                         <Link to ="/new-quote">New Quote</Link>
-//                     </li>
-//                     <li>
-//                         <Link to ="/support">Support</Link>
-//                     </li>
-
-//                 </ul> :
-//                 null
-//             }
-//         </>
-//     )
-// }
-
-// export default NavBar;
-
-
 // import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 // import Form from 'react-bootstrap/Form';
@@ -56,11 +5,11 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 // import NavDropdown from 'react-bootstrap/NavDropdown';
 import Offcanvas from 'react-bootstrap/Offcanvas';
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react';
 
 function NavBar({ user, setUser }) {
-
+    const navigate = useNavigate();
     const [expanded, setExpanded] = useState(false);
 
     const handleLogoutClick = () => {
@@ -70,6 +19,7 @@ function NavBar({ user, setUser }) {
             .then((r) => {
                 if (r.ok) {
                     setUser(null)
+                    navigate('/')
                 }
             })
     }
@@ -87,7 +37,7 @@ function NavBar({ user, setUser }) {
                                 aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
                                 placement="end"
                             >
-                                <Offcanvas.Header closeButton>
+                                <Offcanvas.Header closeButton onClick={() => setExpanded(false)}>
                                     <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
                                         QuotePro
                                     </Offcanvas.Title>

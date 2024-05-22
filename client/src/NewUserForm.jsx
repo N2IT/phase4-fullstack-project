@@ -36,9 +36,19 @@ const NewUserForm = () => {
                 },
                 body: JSON.stringify(values),
             })
-                .then((res) => res.json())
-                .then((data) => {
-                    {!data.errors ? (setUsers(data), setUser(data), navigate('/')) : setErrors(data.errors) }
+                .then((response) => {
+                    // Ensure the response is fully parsed before checking its content
+                    if (!response.ok) {
+                        response.json().then((data) => {
+                            setErrors(data.errors);
+                        });
+                    }
+                    return response.json();
+                })
+                .then((user) => {
+                    console.log('User response:', user);
+                    setUser(user);
+                    navigate('/accounts');
                 })
         }
     })

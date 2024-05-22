@@ -20,7 +20,6 @@ const LoginForm = () => {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-            debugger
             fetch("/api/login", {
                 method: "POST",
                 headers: {
@@ -28,21 +27,28 @@ const LoginForm = () => {
                 },
                 body: JSON.stringify(values),
             })
-            .then((r) => r.json())
-            .then((user) => {
-                {!user.ok ? setErrors(user.errors) : setUser(user), navigate('/my-account')}
-            })
-            
-                // {!r.ok ? setErrors(r.errors) : r.son().then((user) => setUser(user))}
-                // if (r.ok) {
-                //   r.json()
-                //   .then((user) => setUser(user));
-                // }
-                // setErrors()
-            //   });
-            }
-        }
-)
+                .then((response) => {
+                    if (!response.ok) {
+                        response.json().then((data) => {
+                            setErrors(data.errors);
+                        });
+                    }
+                    return response.json();
+                })
+                .then((user) => {
+                    console.log('User response:', user);
+                    setUser(user);
+                    navigate('/accounts');
+                })
+                // .catch((error) => {
+                //     console.error('Error during login:', error.message);
+                //     setErrors({ api: error.message });
+                // });
+                // THIS CATCH ERROR WAS CAUSING MAJOR ISSUES. LEAVING FOR NOW AS REFERENCE
+        },
+    });
+
+
 
     return (
         <>
@@ -53,6 +59,7 @@ const LoginForm = () => {
                     <input
                         id="username"
                         name="username"
+                        onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
                         value={formik.values.username}
                     />
@@ -61,6 +68,7 @@ const LoginForm = () => {
                     <input
                         id="password"
                         name="password"
+                        onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
                         value={formik.values.password}
                     />
