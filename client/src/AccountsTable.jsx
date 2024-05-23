@@ -1,18 +1,14 @@
-import { useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+// import { useEffect } from 'react';
+// import { useNavigate } from 'react-router-dom';
 
+// import AccountById from "./AccountById"
+import { Link } from "react-router-dom"
 
-const AccountsTable = ({ accounts, setAccounts }) => {
+const AccountsTable = ({ accounts, setAccounts, loading }) => {
 
-    const handleClick = (id) => {
-        useEffect('/api/account/<int:id>')
-        .then((res) => res.json())
-        .then((acct) => console.log(acct))
-        .catch(error => {
-            console.log.error('Error during click activity: ', error);
-        })
-
-    }
+    // const handleClick = (acct) => {
+    //     console.log(acct.id)
+    // }
     // click the id
     // set the id to a variable using state
     // update url to accounts/variable
@@ -20,33 +16,33 @@ const AccountsTable = ({ accounts, setAccounts }) => {
 
     return (
         <>
-            <table>
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>ACCT NUMBER</th>
-                        <th>COMPANY NAME</th>
-                        <th>STATE</th>
-                        <th>PHONE</th>
-                        <th>DISCOUNT</th>
-                        <th>ACTIONS</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {accounts.map((account) => (
-                        <tr key={account.id} className="">
-                            <td>{account.id}</td>
-                            <td>{account.account_number}</td>
-                            <td>{account.company_name}</td>
-                            <td>{account.state}</td>
-                            <td>{account.phone}</td>
-                            <td>{account.discount}</td>
-                            <td>{account.actions}</td>
-                            <td><p className="view-btn" title="View Account" onClick={() => console.log(account.id)}> View </p></td>
+            {loading ? <h2>Loading...</h2> :
+                <table>
+                    <thead>
+                        <tr>
+                            <th>ACCT NUMBER</th>
+                            <th>COMPANY NAME</th>
+                            <th>STATE</th>
+                            <th>PHONE</th>
+                            <th>DISCOUNT</th>
+                            <th>ACTIONS</th>
                         </tr>
-                    ))}
-                </tbody>
-            </table>
+                    </thead>
+                    <tbody>
+                        {accounts.map((account) => (
+                            <tr key={account.account_number} className="">
+                                <td>{account.account_number}</td>
+                                <td>{account.company_name}</td>
+                                <td>{account.state}</td>
+                                <td>{account.phone}</td>
+                                <td>{account.discount}</td>
+                                <td>{account.actions}</td>
+                                <td><Link to={`/accounts/${account.id}`}>View</Link></td>
+                            </tr>
+                        ))}
+                    </tbody>
+                </table>
+            }
         </>
     )
 }

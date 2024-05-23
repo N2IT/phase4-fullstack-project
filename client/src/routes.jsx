@@ -7,6 +7,7 @@ import Users from './Users';
 import Quotes from './Quotes';
 import NewQuote from './NewQuote';
 import Support from './Support';
+import AccountById from './AccountById';
 
 const routes = [
     {
@@ -25,6 +26,10 @@ const routes = [
             {
                 path: 'accounts',
                 element: <Accounts />
+            },
+            {
+                path: 'accounts/:id',
+                element: <AccountById />
             },
             {
                 path: 'users',
