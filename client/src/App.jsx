@@ -21,6 +21,7 @@ const App = () => {
 
   const handleIdClick = (value) => {
     setValueId(value.id)
+    setUser(user)
     navigate(`/accounts/${value.id}`)
 }
 
@@ -29,7 +30,7 @@ const App = () => {
       <header className="header">
         <NavBar user={user} setUser={setUser}/>
       </header>
-      <Outlet context={[user, setUser, handleIdClick, valueId]}/>
+      <Outlet context={[user, setUser, handleIdClick, valueId, setValueId ]}/>
     </>
   );
 }

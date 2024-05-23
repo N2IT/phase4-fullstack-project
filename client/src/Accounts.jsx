@@ -12,7 +12,6 @@ const Accounts = () => {
   // debugger
 
   useEffect(() => {
-    console.log('Fetching accounts!')
     fetch('/api/accounts')
       .then((r) => r.json())
       .then((data) => setAccounts(data))
