@@ -1,24 +1,28 @@
 import { useState, useEffect } from 'react';
 import { useOutletContext, useParams } from 'react-router-dom';
+import EditAccountForm from './EditAccountForm'
 
 const AccountById = () => {
 
-    const [ user, setUser, handleIdClick, valueId ] = useOutletContext()
+    const [user] = useOutletContext()
     const {id} = useParams();
     const [account, setAccount] = useState(null)
 
-    useEffect(() => {
-        if (id) {
-            fetch(`/api/accounts/${id}`)
-                .then((r) => r.json())
-                .then((data) => setAccount(data))
-                .catch(error => console.error('Errors:', error));       
-        }
-    }, [id])
+        useEffect(() => {
+            if (id) {
+                fetch(`/api/accounts/${id}`)
+                    .then((r) => r.json())
+                    .then((data) => setAccount(data))
+                    .catch(error => console.error('Errors:', error));       
+            }
+        }, [user])
+
+    
 
     return (
         <>
-            { user ? (account ? account.account_number : 'Loading...') : <p>Lost pahtna</p>}
+            {account ? <EditAccountForm account={account} setAccount={setAccount} /> : <p>You will need to login</p>}
+            
         </>
     )
 }

@@ -8,6 +8,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 const App = () => {
   const [user, setUser] = useState(null)
   const [valueId, setValueId] = useState()
+  const [errors, setErrors] = useState([])
   const navigate = useNavigate()
 
   useEffect(() => {
@@ -30,7 +31,7 @@ const App = () => {
       <header className="header">
         <NavBar user={user} setUser={setUser}/>
       </header>
-      <Outlet context={[user, setUser, handleIdClick, valueId, setValueId ]}/>
+      <Outlet context={[user, setUser, errors, setErrors, handleIdClick, valueId, setValueId ]}/>
     </>
   );
 }

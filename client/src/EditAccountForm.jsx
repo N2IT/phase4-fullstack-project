@@ -3,7 +3,9 @@ import { useFormik } from 'formik';
 import * as yup from "yup";
 import { useOutletContext } from 'react-router-dom';
 
-const NewAccountForm = ({ setAccountForm }) => {
+const EditAccountForm = ({ account, setAccount }) => {
+
+    console.log(account)
 
     const [user, setUser, errors, setErrors, handleIdClick, valueId, setValueId ] = useOutletContext()
 
@@ -27,8 +29,8 @@ const NewAccountForm = ({ setAccountForm }) => {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-            fetch("/api/accounts", {
-                method: "POST",
+            fetch("/api/accounts/${id}", {
+                method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
                 },
@@ -41,7 +43,7 @@ const NewAccountForm = ({ setAccountForm }) => {
                 
         }
 })
-                    
+
     return (
         <>
             <div>
@@ -79,4 +81,4 @@ const NewAccountForm = ({ setAccountForm }) => {
     )
 }
 
-export default NewAccountForm
+export default EditAccountForm

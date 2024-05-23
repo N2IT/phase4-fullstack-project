@@ -2,7 +2,7 @@ import { useOutletContext } from "react-router-dom"
 
 const AccountsTable = ({ accounts, setAccounts, loading }) => {
 
-    const [user, setUser, handleIdClick] = useOutletContext()
+    const [user, setUser, errors, setErrors, handleIdClick, valueId, setValueId ] = useOutletContext()
 
     return (
         <>
