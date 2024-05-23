@@ -8,8 +8,15 @@ const AccountsTable = ({ accounts, setAccounts }) => {
         useEffect('/api/account/<int:id>')
         .then((res) => res.json())
         .then((acct) => console.log(acct))
+        .catch(error => {
+            console.log.error('Error during click activity: ', error);
+        })
 
     }
+    // click the id
+    // set the id to a variable using state
+    // update url to accounts/variable
+    // fetch account/var details for page view
 
     return (
         <>
@@ -35,7 +42,7 @@ const AccountsTable = ({ accounts, setAccounts }) => {
                             <td>{account.phone}</td>
                             <td>{account.discount}</td>
                             <td>{account.actions}</td>
-                            <td><p className="view-btn" title="View Account" onClick={() => console.log(account)}> View </p></td>
+                            <td><p className="view-btn" title="View Account" onClick={() => console.log(account.id)}> View </p></td>
                         </tr>
                     ))}
                 </tbody>

@@ -12,7 +12,7 @@ from models import Account, User
 
 class Accounts(Resource):
   def get(self):
-    accounts = [account.to_dict(rules = ('-updated_at',)) for account in Account.query.all()]
+    accounts = [account.to_dict(rules = ('-id', '-updated_at',)) for account in Account.query.all()]
 
     if not accounts:
       return {'error' : '204: No content available'}, 204
@@ -30,8 +30,6 @@ class Accounts(Resource):
     city = form_data.get('city')
     state = form_data.get('state')
     
-    
-
     errors = []
 
     if form_data:
@@ -60,11 +58,23 @@ class Accounts(Resource):
 
       session['account_id'] = new_account.id
 
-
       return new_account.to_dict(), 201
 
     else:
       return {'errors' : '422: Unprocessable Entry'}, 422
+
+
+class AccountById(Resource):
+  def get(self,id):
+    account = Account.query.filter(Account.id == id).first()
+    if account:
+      return make_response(
+        account.to_dict(),
+        200
+      )
+    else:
+      return {'errors': '404: That account does not exist'}
+    
 
     
 class Users(Resource):
@@ -164,6 +174,7 @@ class Logout(Resource):
     
 
 api.add_resource(Accounts, '/accounts')
+api.add_resource(AccountById, '/accounts/<int:id>')
 api.add_resource(Users, '/users')
 api.add_resource(Login, '/login')
 api.add_resource(CheckSession, '/check-session')
