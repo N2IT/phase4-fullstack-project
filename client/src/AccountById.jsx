@@ -1,16 +1,25 @@
-import { useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import { useOutletContext } from 'react-router-dom';
 
 const AccountById = () => {
-    
+
+    const [user, setUser, handleIdClick, valueId] = useOutletContext()
+    const [account, setAccount] = useState()
+
     useEffect(() => {
-        fetch('/api/accounts/:id')
-        .then((r) => r.json())
-        .then((data) => console.log(data))
-        .catch((error) => console.log('error', error))
-    },[])
+        if (valueId) {
+            fetch(`/api/accounts/${valueId}`)
+            .then((r) => r.json())
+            .then((account) => console.log(account))
+            .catch(error => console.error('Errors:', error));
+        }
+    },[valueId])
     
     return(
-        <h2>Here is where the account detail will be</h2>
+        <>
+        {user ? `Here is where the ${account} detail will be` : <h3>Uh Oh</h3>
+        }
+    </>
     )
 }
 

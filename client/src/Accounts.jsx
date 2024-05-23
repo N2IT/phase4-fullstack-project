@@ -9,7 +9,7 @@ const Accounts = () => {
   const [accounts, setAccounts] = useState([])
   const [isLoading, setIsLoading] = useState(true)
 
-  debugger
+  // debugger
 
   useEffect(() => {
     console.log('Fetching accounts!')

@@ -74,7 +74,7 @@ class AccountById(Resource):
           200
         )
       else:
-        raise ValueError ('404 : That account does not exist')
+        return {'errors' : 'That account does not exist'}
     except ValueError as e:
       return {'errors' : str(e)}, 404
     except Exception as e:

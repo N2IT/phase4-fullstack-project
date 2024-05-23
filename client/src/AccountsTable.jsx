@@ -1,18 +1,8 @@
-// import { useEffect } from 'react';
-// import { useNavigate } from 'react-router-dom';
-
-// import AccountById from "./AccountById"
-import { Link } from "react-router-dom"
+import { useOutletContext } from "react-router-dom"
 
 const AccountsTable = ({ accounts, setAccounts, loading }) => {
 
-    // const handleClick = (acct) => {
-    //     console.log(acct.id)
-    // }
-    // click the id
-    // set the id to a variable using state
-    // update url to accounts/variable
-    // fetch account/var details for page view
+    const [user, setUser, handleIdClick] = useOutletContext()
 
     return (
         <>
@@ -37,7 +27,7 @@ const AccountsTable = ({ accounts, setAccounts, loading }) => {
                                 <td>{account.phone}</td>
                                 <td>{account.discount}</td>
                                 <td>{account.actions}</td>
-                                <td><Link to={`/accounts/${account.id}`}>View</Link></td>
+                                <td><p className="view-btn" title="View Account" onClick={() => handleIdClick(account)}> View </p></td>
                             </tr>
                         ))}
                     </tbody>
