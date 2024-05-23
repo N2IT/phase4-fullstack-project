@@ -66,14 +66,35 @@ class Accounts(Resource):
 
 class AccountById(Resource):
   def get(self,id):
-    account = Account.query.filter(Account.id == id).first()
-    if account:
-      return make_response(
-        account.to_dict(),
-        200
-      )
-    else:
-      return {'errors': '404: That account does not exist'}
+    try:
+      account = Account.query.filter(Account.id == id).first()
+      if account:
+        return make_response(
+          account.to_dict(),
+          200
+        )
+      else:
+        raise ValueError ('404 : That account does not exist')
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
+    except Exception as e:
+      return {'errors' : str(e)}, 500
+
+class UserById(Resource):
+  def get(self,id):
+    try:
+      user = User.query.filter(User.id == id).first()
+      if user:
+        return make_response(
+          user.to_dict(rules = ('-_password_hash',)),
+          200
+        )
+      else:
+        raise ValueError( '404: That user does not exist')
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
+    except Exception as e:
+      return {'errors' : str(e)}, 500
     
 
     
@@ -176,6 +197,7 @@ class Logout(Resource):
 api.add_resource(Accounts, '/accounts')
 api.add_resource(AccountById, '/accounts/<int:id>')
 api.add_resource(Users, '/users')
+api.add_resource(UserById, '/users/<int:id>')
 api.add_resource(Login, '/login')
 api.add_resource(CheckSession, '/check-session')
 api.add_resource(Logout, '/logout')
