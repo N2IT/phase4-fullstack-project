@@ -33,10 +33,6 @@ const routes = [
                 element: <AccountById />
             },
             {
-                path: 'accounts/:id/edit',
-                element: <EditAccountById />
-            },
-            {
                 path: 'users',
                 element: <Users />
             },

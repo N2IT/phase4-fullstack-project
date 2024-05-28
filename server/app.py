@@ -102,10 +102,6 @@ class AccountById(Resource):
       return {'errors' : str(e)}, 500
 
 
-
-
-
-
 class UserById(Resource):
   def get(self,id):
     try:

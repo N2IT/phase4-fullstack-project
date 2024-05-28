@@ -1,8 +1,8 @@
 #root {
   max-width: 1280px;
   margin: 0 auto;
-  padding: 2rem;
-  text-align: center;
+  padding: 0; /* Adjust padding as needed */
+  text-align: left; /* Adjust text alignment as needed */
 }
 
 .header {
@@ -42,18 +42,31 @@
   }
 }
 
-.card {
-  padding: 2em;
-}
-
-.read-the-docs {
-  color: #888;
-}
-
 form {
   display: grid;
 }
 
 .view-btn:hover {
   cursor: pointer;
+}
+
+.account-details {
+  margin-top: 5rem;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  padding: 10px;
+}
+
+.grid-item {
+  /* border: 1px solid rgba(0, 0, 0, 0.8); */
+  padding: 20px;
+  font-size: 1rem;
+  text-align: center;
+}
+
+input {
+  width: 225px;
 }
