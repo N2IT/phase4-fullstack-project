@@ -6,10 +6,6 @@ import AccountsTable from './AccountsTable'
 const Accounts = () => {
 
   const [user, setUser, accounts, setAccounts, accountForm, setAccountForm, onSubmitAccountForm, errors, setErrors, handleIdClick, valueId, setValueId, isLoading, setIsLoading, disabled, setAsDisabled, handleEditClick] = useOutletContext();
-  
-  
-
-  // debugger
 
   useEffect(() => {
     fetch('/api/accounts')

@@ -38,12 +38,23 @@ const App = () => {
     setAsDisabled(!disabled)
   }
 
+  const handleUpdateAccount = (updatedAccount) => {
+    const updatedAccountsArray = accounts.map(account => {
+      if (account.id === updatedAccount.id)
+        return updatedAccount
+      else return account;  
+    });
+    setAccounts(updatedAccountsArray);
+    handleEditClick()
+  }
+
+
   return (
     <>
       <header className="header">
         <NavBar user={user} setUser={setUser} />
       </header>
-      <Outlet context={[user, setUser, accounts, setAccounts, accountForm, setAccountForm, onSubmitAccountForm, errors, setErrors, handleIdClick, valueId, setValueId, isLoading, setIsLoading, disabled, setAsDisabled, handleEditClick]} />
+      <Outlet context={[user, setUser, accounts, setAccounts, accountForm, setAccountForm, onSubmitAccountForm, errors, setErrors, handleIdClick, valueId, setValueId, isLoading, setIsLoading, disabled, setAsDisabled, handleEditClick, handleUpdateAccount ]} />
     </>
   );
 }

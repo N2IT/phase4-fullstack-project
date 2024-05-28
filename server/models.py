@@ -34,9 +34,9 @@ class Account(db.Model, SerializerMixin):
     @validates('company_name')
     def validate_company_name(self, key, value):
         if value == "":
-            return {'error' : '422: A company name must be entered'}, 422
+            raise ValueError ({'error' : '422: A company name must be entered'}, 422)
         elif Account.query.filter(Account.company_name == value).first():
-            return {'error' : '422: Company name must be unique'}, 422
+            raise ValueError ({'error' : '422: Company name must be unique'}, 422)
         return value
     
     # relationships
