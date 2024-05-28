@@ -5,9 +5,9 @@ import AccountsTable from './AccountsTable'
 
 const Accounts = () => {
 
-  const [user, setUser] = useOutletContext();
-  const [accounts, setAccounts] = useState([])
-  const [isLoading, setIsLoading] = useState(true)
+  const [user, setUser, accounts, setAccounts, accountForm, setAccountForm, onSubmitAccountForm, errors, setErrors, handleIdClick, valueId, setValueId, isLoading, setIsLoading, disabled, setAsDisabled, handleEditClick] = useOutletContext();
+  
+  
 
   // debugger
 
@@ -24,7 +24,7 @@ const Accounts = () => {
       {user ?
         <div>
           <h2>Welcome to the Accounts page, {user.username}!</h2>
-          <AccountsTable accounts={accounts} setAccounts={setAccounts} loading={isLoading} />
+          <AccountsTable />
         </div>
         :
         <div>

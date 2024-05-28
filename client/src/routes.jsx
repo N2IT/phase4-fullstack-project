@@ -8,6 +8,7 @@ import Quotes from './Quotes';
 import NewQuote from './NewQuote';
 import Support from './Support';
 import AccountById from './AccountById';
+import EditAccountById from './EditAccountById'
 
 const routes = [
     {
@@ -30,6 +31,10 @@ const routes = [
             {
                 path: 'accounts/:id',
                 element: <AccountById />
+            },
+            {
+                path: 'accounts/:id/edit',
+                element: <EditAccountById />
             },
             {
                 path: 'users',

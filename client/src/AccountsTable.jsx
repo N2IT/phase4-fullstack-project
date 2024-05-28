@@ -1,12 +1,12 @@
 import { useOutletContext } from "react-router-dom"
 
-const AccountsTable = ({ accounts, setAccounts, loading }) => {
+const AccountsTable = () => {
 
-    const [user, setUser, errors, setErrors, handleIdClick, valueId, setValueId ] = useOutletContext()
+    const [user, setUser, accounts, setAccounts, accountForm, setAccountForm, onSubmitAccountForm, errors, setErrors, handleIdClick, valueId, setValueId, isLoading, setIsLoading, disabled, setAsDisabled, handleEditClick] = useOutletContext()
 
     return (
         <>
-            {loading ? <h2>Loading...</h2> :
+            {isLoading ? <h2>Loading...</h2> :
                 <table>
                     <thead>
                         <tr>

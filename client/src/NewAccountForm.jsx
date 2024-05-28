@@ -3,9 +3,9 @@ import { useFormik } from 'formik';
 import * as yup from "yup";
 import { useOutletContext } from 'react-router-dom';
 
-const NewAccountForm = ({ setAccountForm }) => {
+const NewAccountForm = () => {
 
-    const [user, setUser, errors, setErrors, handleIdClick, valueId, setValueId ] = useOutletContext()
+    const [user, setUser, accounts, setAccounts, accountForm, setAccountForm, onSubmitAccountForm, errors, setErrors, handleIdClick, valueId, setValueId, isLoading, setIsLoading, disabled, setAsDisabled, handleEditClick] = useOutletContext()
 
     const formSchema = yup.object().shape({
         company_name: yup.string().required("A company name must be entered."),

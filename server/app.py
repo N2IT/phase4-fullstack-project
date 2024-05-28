@@ -79,6 +79,32 @@ class AccountById(Resource):
       return {'errors' : str(e)}, 404
     except Exception as e:
       return {'errors' : str(e)}, 500
+  def patch(self,id):
+    try:
+      account = Account.query.filter(Account.id == id).first()
+      if account:
+        data = request.get_json()
+        for attr in data:
+          setattr(account, attr, data[attr])
+        
+        db.session.add(account)
+        db.session.commit()
+
+        return make_response(
+          account.to_dict(), 
+          200
+        )
+      else:
+        return {'errors' : 'That account does not exist'}
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
+    except Exception as e:
+      return {'errors' : str(e)}, 500
+
+
+
+
+
 
 class UserById(Resource):
   def get(self,id):

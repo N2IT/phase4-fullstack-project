@@ -21,7 +21,7 @@ const AccountById = () => {
 
     return (
         <>
-            {account ? <EditAccountForm account={account} setAccount={setAccount} /> : <p>You will need to login</p>}
+            {account ? <EditAccountForm id={id} account={account} setAccount={setAccount} /> : <p>You will need to login</p>}
             
         </>
     )

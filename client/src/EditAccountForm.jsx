@@ -3,9 +3,9 @@ import { useFormik } from 'formik';
 import * as yup from "yup";
 import { useOutletContext } from 'react-router-dom';
 
-const EditAccountForm = ({ account, setAccount }) => {
+const EditAccountForm = ({ id, account, setAccount }) => {
 
-    const [user, setUser, errors, setErrors, handleIdClick, valueId, setValueId] = useOutletContext()
+    const [user, setUser, accounts, setAccounts, accountForm, setAccountForm, onSubmitAccountForm, errors, setErrors, handleIdClick, valueId, setValueId, isLoading, setIsLoading, disabled, setAsDisabled, handleEditClick] = useOutletContext()
 
     const formSchema = yup.object().shape({
         company_name: yup.string().required("A company name must be entered."),
@@ -31,7 +31,7 @@ const EditAccountForm = ({ account, setAccount }) => {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-            fetch("/api/accounts/${id}", {
+            fetch(`/api/accounts/${id}`, {
                 method: "PATCH",
                 headers: {
                     "Content-Type": "application/json",
@@ -40,7 +40,7 @@ const EditAccountForm = ({ account, setAccount }) => {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    { data.errors ? setErrors(data.errors) : setAccountForm() }
+                    { data.errors ? setErrors(data.errors) : setAccount(data) }
                 })
 
         }
@@ -49,13 +49,14 @@ const EditAccountForm = ({ account, setAccount }) => {
     return (
         <>
             <div>
-                <h2>Edit the company details below:</h2>
+                <h2>Edit the company details for account number {account.account_number} below:</h2>
                 <form onSubmit={formik.handleSubmit}>
                     <label htmlFor="account_number">Account Number </label>
                     <input
                         id="account_number"
                         name="account_number"
                         onChange={formik.handleChange}
+                        placeholder={account.account_number}
                         value={formik.values.account_number}
                         disabled
                     />
@@ -65,7 +66,9 @@ const EditAccountForm = ({ account, setAccount }) => {
                         id="company_name"
                         name="company_name"
                         onChange={formik.handleChange}
+                        placeholder={account.company_name}
                         value={formik.values.company_name}
+                        disabled = {disabled}
                     />
                     <p style={{ color: 'red' }}> {formik.errors.company_name}</p>
                     <label htmlFor="city">City </label>
@@ -74,6 +77,7 @@ const EditAccountForm = ({ account, setAccount }) => {
                         name="city"
                         onChange={formik.handleChange}
                         value={formik.values.city}
+                        disabled = {disabled}
                     />
                     <p style={{ color: 'red' }}> {formik.errors.city} </p>
                     <label htmlFor="state">State </label>
@@ -82,6 +86,7 @@ const EditAccountForm = ({ account, setAccount }) => {
                         name="state"
                         onChange={formik.handleChange}
                         value={formik.values.state}
+                        disabled = {disabled}
                     />
                     <p style={{ color: 'red' }}> {formik.errors.state} </p>
                     <label htmlFor="address_1">Address 1 </label>
@@ -90,6 +95,7 @@ const EditAccountForm = ({ account, setAccount }) => {
                         name="address_1"
                         onChange={formik.handleChange}
                         value={formik.values.address_1}
+                        disabled = {disabled}
                     />
                     <p style={{ color: 'red' }}> {formik.errors.address_1} </p>
                     <label htmlFor="address_2">Address 2 </label>
@@ -98,6 +104,7 @@ const EditAccountForm = ({ account, setAccount }) => {
                         name="address_2"
                         onChange={formik.handleChange}
                         value={formik.values.address_2}
+                        disabled = {disabled}
                     />
                     <p style={{ color: 'red' }}> {formik.errors.address_2} </p>
                     <label htmlFor="zip_code">Zip Code </label>
@@ -106,6 +113,7 @@ const EditAccountForm = ({ account, setAccount }) => {
                         name="zip_code"
                         onChange={formik.handleChange}
                         value={formik.values.zip_code}
+                        disabled = {disabled}
                     />
                     <p style={{ color: 'red' }}> {formik.errors.zip_code} </p>
                     <label htmlFor="phone">Phone </label>
@@ -114,6 +122,7 @@ const EditAccountForm = ({ account, setAccount }) => {
                         name="phone"
                         onChange={formik.handleChange}
                         value={formik.values.phone}
+                        disabled = {disabled}
                     />
                     <p style={{ color: 'red' }}> {formik.errors.phone} </p>
                     <label htmlFor="discount">Discount </label>
@@ -122,6 +131,7 @@ const EditAccountForm = ({ account, setAccount }) => {
                         name="discount"
                         onChange={formik.handleChange}
                         value={formik.values.discount}
+                        disabled = {disabled}
                     />
                     <p style={{ color: 'red' }}> {formik.errors.discount} </p>
                     <label htmlFor="markup_variable">Markup Variable </label>
@@ -130,6 +140,7 @@ const EditAccountForm = ({ account, setAccount }) => {
                         name="markup_variable"
                         onChange={formik.handleChange}
                         value={formik.values.markup_variable}
+                        disabled = {disabled}
                     />
                     <p style={{ color: 'red' }}> {formik.errors.markup_variable} </p>
                     <label htmlFor="created_at">Created At </label>
@@ -150,7 +161,13 @@ const EditAccountForm = ({ account, setAccount }) => {
                         disabled
                     />
                     <p style={{ color: 'red' }}> {formik.errors.updated_at} </p>
-                    <button type="submit">Submit</button>
+                    { disabled ? 
+                        <p className="view-btn" title="Edit Account" onClick={() => handleEditClick()}> Edit Account </p> :
+                        <>
+                        <button type="submit">Save Changes</button>, <p className="view-btn" title="Edit Account" onClick={() => handleEditClick()}> Cancel </p>
+                        </>
+                        }
+                    
                 </form>
                 <p style={{ color: 'red' }}>{errors ? errors : null}</p>
             </div>
