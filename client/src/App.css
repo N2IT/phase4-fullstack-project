@@ -53,3 +53,7 @@
 form {
   display: grid;
 }
+
+.view-btn:hover {
+  cursor: pointer;
+}
