@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useOutletContext, useParams } from 'react-router-dom';
-import EditAccountForm from './EditAccountForm'
+import EditUserForm from './EditUserForm'
 import { Link } from 'react-router-dom';
 
 const UserById = () => {
@@ -43,7 +43,7 @@ const UserById = () => {
         <>
             <div className='account-details'>
                 <h2>User Details</h2>
-                {user ? <p>{user.first_name} is here!</p> :
+                {user ? <p><EditUserForm id={id} /></p> :
                     <div>
                         <h2>Unauthorized</h2>
                         <Link to="/">Log in</Link>

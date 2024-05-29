@@ -55,6 +55,16 @@ const App = () => {
     handleEditClick()
   }
 
+  const handleUpdateUser = (updatedAccount) => {
+    const updatedUsersArray = users.map(user => {
+      if (user.id === updatedUser.id)
+        return updatedUser
+      else return user;
+    });
+    setUsers(updatedUsersArray);
+    handleEditClick()
+  }
+
 
   return (
     <>
@@ -82,7 +92,8 @@ const App = () => {
         handleUpdateAccount,
         handleUserIdClick,
         users,
-        setUsers
+        setUsers,
+        handleUpdateUser
       ]
       } />
     </>
