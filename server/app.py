@@ -122,7 +122,7 @@ class UserById(Resource):
     
 class Users(Resource):
   def get(self):
-    users = [user.to_dict(rules = ('-account_id','-id', '-updated_at', '-_password_hash')) for user in User.query.all()]
+    users = [user.to_dict(rules = ('-_password_hash',)) for user in User.query.all()]
 
     if not users:
       return {'error' : '204: No content available'}, 204

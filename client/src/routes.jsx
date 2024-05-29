@@ -8,7 +8,7 @@ import Quotes from './Quotes';
 import NewQuote from './NewQuote';
 import Support from './Support';
 import AccountById from './AccountById';
-import EditAccountById from './EditAccountById'
+import UserById from './UserById';
 
 const routes = [
     {
@@ -35,6 +35,10 @@ const routes = [
             {
                 path: 'users',
                 element: <Users />
+            },
+            {
+                path: 'users/:id',
+                element: <UserById />
             },
             {
                 path: 'quotes',
