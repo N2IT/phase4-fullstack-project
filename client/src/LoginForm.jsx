@@ -36,7 +36,7 @@ const LoginForm = () => {
                     return response.json();
                 })
                 .then((user) => {
-                    console.log('User response:', user);
+                    // console.log('User response:', user);
                     setUser(user);
                     navigate('/accounts');
                 })

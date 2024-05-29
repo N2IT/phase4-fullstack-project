@@ -10,6 +10,11 @@ from models import Account, User
 # just imported Account, User above
 # need to write up the Routes now
 
+@app.before_request
+def check_if_logged_in():
+  if not session.get('user_id'):
+      return {'errors': 'You are not authorized to access this page.'}, 401
+
 class Accounts(Resource):
   def get(self):
     accounts = [account.to_dict(rules = ('-updated_at',)) for account in Account.query.all()]
