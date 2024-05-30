@@ -7,7 +7,7 @@ const AccountsTable = () => {
 
     return (
         <>
-            {!isLoading ? <h2>Loading...</h2> :
+            {isLoading ? <h2>Loading...</h2> :
                 <table>
                     <thead>
                         <tr>

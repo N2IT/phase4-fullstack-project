@@ -1,32 +1,11 @@
-import { Link, useOutletContext } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useContext } from 'react';
+import Unathorized from './Unathorized';
+import { AgentContext } from './AgentProvider'
 import UsersTable from './UsersTable'
 
 const Users = () => {
 
-  const [
-    user,
-    setUser,
-    accounts,
-    setAccounts,
-    accountForm,
-    setAccountForm,
-    onSubmitAccountForm,
-    errors,
-    setErrors,
-    handleIdClick,
-    valueId,
-    setValueId,
-    isLoading,
-    setIsLoading,
-    disabled,
-    setAsDisabled,
-    handleEditClick,
-    handleUpdateAccount,
-    handleUserIdClick,
-    users,
-    setUsers
-  ] = useOutletContext();
+  const { agent, setUsers, setIsLoading } = useContext(AgentContext);
 
   useEffect(() => {
     fetch('/api/users')
@@ -39,17 +18,14 @@ const Users = () => {
   return (
     <>
       <div className="account-details">
-        {user ?
+        {agent ?
           <div>
-            <h2>Welcome to the Users page, {user.username}!</h2>
-            <UsersTable />
+            <h2>Welcome to the Users page, {agent.username}!</h2>
+            {/* <UsersTable /> */}
           </div>
           :
           <div>
-            <h2>Unauthorized</h2>
-            <Link to="/">Log in</Link>
-            <h3>Get Started Here:</h3>
-            <Link to="/sign-up">Sign Up</Link>
+            <Unathorized />
           </div>
         }
       </div>

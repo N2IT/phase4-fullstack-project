@@ -10,7 +10,7 @@ const App = () => {
   // const [agent, setAgent] = useState(null)
   const [user, setUser] = useState(null)
   // const [accounts, setAccounts] = useState([])
-  const [users, setUsers] = useState([])
+  // const [users, setUsers] = useState([])
   // const [valueId, setValueId] = useState()
   // const [errors, setErrors] = useState([])
   const navigate = useNavigate()
@@ -74,8 +74,6 @@ const App = () => {
         user,
         setUser,
         handleUserIdClick,
-        users,
-        setUsers,
       ]
     } />
     </AgentProvider>

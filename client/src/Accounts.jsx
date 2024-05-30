@@ -5,12 +5,15 @@ import { AgentContext } from './AgentProvider';
 
 const Accounts = () => {
 
-  const { agent, setAccounts } = useContext(AgentContext);
+  const { agent, setAccounts, setIsLoading } = useContext(AgentContext);
 
   useEffect(() => {
     fetch('/api/accounts')
       .then((r) => r.json())
       .then((account) => setAccounts(account))
+      .then(() => setIsLoading(false))
+      .catch(error => console.error("Error:", error));
+
   }, [])
 
   return (

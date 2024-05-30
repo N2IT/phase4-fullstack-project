@@ -6,7 +6,7 @@ import EditAccountForm from './EditAccountForm'
 
 const AccountById = () => {
 
-    const { agent, setAccount } = useContext(AgentContext);
+    const { agent, setAccount, setAsDisabled } = useContext(AgentContext);
     const { id } = useParams();
 
     useEffect(() => {
@@ -14,6 +14,7 @@ const AccountById = () => {
             fetch(`/api/accounts/${id}`)
                 .then((r) => r.json())
                 .then((data) => setAccount(data))
+                .then(() => setAsDisabled(true))
                 .catch(error => console.error('Errors:', error));
         }
     }, [])

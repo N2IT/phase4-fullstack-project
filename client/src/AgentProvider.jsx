@@ -13,6 +13,7 @@ const AgentProvider = ({ children }) => {
     const [account, setAccount] = useState(null)
     const [errors, setErrors] = useState([])
     const [disabled, setAsDisabled] = useState(true)
+    const [users, setUsers] = useState([])
 
     const onSubmitAccountForm = () => {
         setAccountForm(!accountForm)
@@ -56,6 +57,7 @@ const AgentProvider = ({ children }) => {
                 handleIdClick,
                 handleUpdateAccount,
                 isLoading,
+                navigate,
                 onSubmitAccountForm,
                 setAccount,
                 setAccounts,
@@ -65,6 +67,8 @@ const AgentProvider = ({ children }) => {
                 setErrors,
                 setIsLoading,
                 setValueId,
+                users,
+                setUsers,
                 valueId,
             }
         }> {children}</AgentContext.Provider>
