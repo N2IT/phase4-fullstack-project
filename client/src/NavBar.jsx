@@ -5,15 +5,15 @@ import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-function NavBar({ user, setUser }) {
+function NavBar({ agent, setAgent }) {
   const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false);
 
   useEffect(() => {
-    if (user) {
+    if (agent) {
       setExpanded(false);
     }
-  }, [user]);
+  }, [agent]);
 
   const handleLogoutClick = () => {
     fetch("/api/logout", {
@@ -21,7 +21,7 @@ function NavBar({ user, setUser }) {
     })
       .then((r) => {
         if (r.ok) {
-          setUser(null);
+          setAgent(null);
           navigate('/');
         }
       });
@@ -37,7 +37,7 @@ function NavBar({ user, setUser }) {
 
   return (
     <>
-      {user ? (
+      {agent ? (
         <Navbar expanded={expanded} expand={false} className="bg-body-tertiary mb-3">
           <Container fluid>
             <Navbar.Brand href="/">qp</Navbar.Brand>
@@ -56,7 +56,7 @@ function NavBar({ user, setUser }) {
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
-                  <p>Welcome, {user.username}!</p>
+                  <p>Welcome, {agent.username}!</p>
                   <Link to="/" onClick={handleClose}>Home</Link>
                   <Link to="/accounts" onClick={handleClose}>Accounts</Link>
                   <Link to="/users" onClick={handleClose}>Users</Link>

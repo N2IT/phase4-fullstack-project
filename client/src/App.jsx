@@ -6,6 +6,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 
 
 const App = () => {
+  const [agent, setAgent] = useState(null)
   const [user, setUser] = useState(null)
   const [accounts, setAccounts] = useState([])
   const [users, setUsers] = useState([])
@@ -24,7 +25,7 @@ const App = () => {
     fetch('/api/check-session')
       .then((r) => {
         if (r.ok) {
-          r.json().then((user) => setUser(user));
+          r.json().then((agent) => setAgent(agent));
         }
       })
   }, [])
@@ -69,9 +70,11 @@ const App = () => {
   return (
     <>
       <header className="header">
-        <NavBar user={user} setUser={setUser} />
+        <NavBar agent={agent} setAgent={setAgent} />
       </header>
       <Outlet context={[
+        agent,
+        setAgent,
         user,
         setUser,
         accounts,

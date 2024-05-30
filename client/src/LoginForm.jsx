@@ -5,7 +5,7 @@ import { useNavigate, useOutletContext } from 'react-router-dom'
 
 const LoginForm = () => {
 
-    const [user, setUser] = useOutletContext();
+    const [agent, setAgent, user, setUser] = useOutletContext();
     const [errors, setErrors] = useState([])
     const navigate = useNavigate();
     const formSchema = yup.object().shape({
@@ -35,10 +35,10 @@ const LoginForm = () => {
                     }
                     return response.json();
                 })
-                .then((user) => {
-                    console.log('User response:', user);
-                    setUser(user);
-                    navigate('/accounts');
+                .then((agent) => {
+                    console.log('User response:', agent);
+                    setAgent(agent);
+                    navigate('/');
                 })
             // .catch((error) => {
             //     console.error('Error during login:', error.message);

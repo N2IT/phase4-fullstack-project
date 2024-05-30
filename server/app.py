@@ -12,22 +12,25 @@ from models import Account, User
 
 # @app.before_request
 # def check_if_logged_in():
-#   if not session.get('user_id'):
+#   if not session['user_id']:
 #       return {'errors': 'You are not authorized to access this page.'}, 401
 
 # THIS A LITTLE TOO RESTRICTIVE AND WILL NOT ALLOW LOGIN NOR ACCOUNT CREATION
 
 class Accounts(Resource):
   def get(self):
-    accounts = [account.to_dict(rules = ('-updated_at',)) for account in Account.query.all()]
+    if session.get('user_id'):
+      accounts = [account.to_dict(rules = ('-updated_at',)) for account in Account.query.all()]
 
-    if not accounts:
-      return {'error' : '204: No content available'}, 204
-      
-    return make_response(
-      accounts,
-      200
-      )
+      if not accounts:
+        return {'error' : '204: No content available'}, 204
+        
+      return make_response(
+        accounts,
+        200
+        )
+    else:
+      return {'errors' : '401: Unauthorized'}
   
   def post(self):
     form_data = request.get_json()
