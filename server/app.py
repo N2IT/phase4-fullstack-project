@@ -22,6 +22,7 @@ def check_if_logged_in():
 class Accounts(Resource):
   def get(self):
     accounts = [account.to_dict(rules = ('-updated_at',)) for account in Account.query.all()]
+    # exmaple for visibility by role if account.role == 'admin'
 
     if not accounts:
       return {'error' : '204: No content available'}, 204

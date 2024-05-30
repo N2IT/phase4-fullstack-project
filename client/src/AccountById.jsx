@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react';
-import { useOutletContext, useParams } from 'react-router-dom';
+import { useState, useContext, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
+import { AgentContext } from './AgentProvider';
 import EditAccountForm from './EditAccountForm'
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
 
 const AccountById = () => {
 
-    const [user] = useOutletContext()
+    const { agent, setAccount } = useContext(AgentContext);
     const { id } = useParams();
-    const [account, setAccount] = useState(null)
 
     useEffect(() => {
         if (id) {
@@ -16,21 +16,23 @@ const AccountById = () => {
                 .then((data) => setAccount(data))
                 .catch(error => console.error('Errors:', error));
         }
-    }, [user])
-
-
+    }, [])
 
     return (
         <>
             <div className='account-details'>
-                <h2>Account Details</h2>
-                {account ? (user ? <EditAccountForm id={id} account={account} setAccount={setAccount} /> :
+                {agent ?
+                    <>
+                        <h2>Account Details</h2>
+                        <EditAccountForm id={id} />
+                    </> :
                     <div>
                         <h2>Unauthorized</h2>
                         <Link to="/">Log in</Link>
                         <h3>Get Started Here:</h3>
                         <Link to="/sign-up">Sign Up</Link>
-                    </div>) : null}
+                    </div>
+                }
             </div>
         </>
     )

@@ -12,10 +12,10 @@ const App = () => {
   // const [accounts, setAccounts] = useState([])
   const [users, setUsers] = useState([])
   // const [valueId, setValueId] = useState()
-  const [errors, setErrors] = useState([])
+  // const [errors, setErrors] = useState([])
   const navigate = useNavigate()
   // const [isLoading, setIsLoading] = useState(true)
-  const [disabled, setAsDisabled] = useState(true)
+  // const [disabled, setAsDisabled] = useState(true)
   // const [accountForm, setAccountForm] = useState(true)
 
   // const onSubmitAccountForm = () => {
@@ -40,29 +40,29 @@ const App = () => {
     navigate(`/users/${value.id}`)
   }
 
-  const handleEditClick = () => {
-    setAsDisabled(!disabled)
-  }
+  // const handleEditClick = () => {
+  //   setAsDisabled(!disabled)
+  // }
 
-  const handleUpdateAccount = (updatedAccount) => {
-    const updatedAccountsArray = accounts.map(account => {
-      if (account.id === updatedAccount.id)
-        return updatedAccount
-      else return account;
-    });
-    setAccounts(updatedAccountsArray);
-    handleEditClick()
-  }
+  // const handleUpdateAccount = (updatedAccount) => {
+  //   const updatedAccountsArray = accounts.map(account => {
+  //     if (account.id === updatedAccount.id)
+  //       return updatedAccount
+  //     else return account;
+  //   });
+  //   setAccounts(updatedAccountsArray);
+  //   handleEditClick()
+  // }
 
-  const handleUpdateUser = (updatedUser) => {
-    const updatedUsersArray = users.map(user => {
-      if (user.id === updatedUser.id)
-        return updatedUser
-      else return user;
-    });
-    setUsers(updatedUsersArray);
-    handleEditClick()
-  }
+  // const handleUpdateUser = (updatedUser) => {
+  //   const updatedUsersArray = users.map(user => {
+  //     if (user.id === updatedUser.id)
+  //       return updatedUser
+  //     else return user;
+  //   });
+  //   setUsers(updatedUsersArray);
+  //   handleEditClick()
+  // }
 
   return (
     <>
@@ -73,16 +73,9 @@ const App = () => {
       <Outlet context={[
         user,
         setUser,
-        errors,
-        setErrors,
-        disabled,
-        setAsDisabled,
-        handleEditClick,
-        handleUpdateAccount,
         handleUserIdClick,
         users,
         setUsers,
-        handleUpdateUser
       ]
     } />
     </AgentProvider>
