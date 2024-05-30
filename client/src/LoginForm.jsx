@@ -1,11 +1,12 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useContext } from 'react';
 import { useFormik } from 'formik';
 import * as yup from "yup";
 import { useNavigate, useOutletContext } from 'react-router-dom'
+import { AgentContext, AgentProvider} from './AgentProvider';
 
 const LoginForm = () => {
 
-    const [agent, setAgent, user, setUser] = useOutletContext();
+    const { agent, setAgent } = useContext(AgentContext);
     const [errors, setErrors] = useState([])
     const navigate = useNavigate();
     const formSchema = yup.object().shape({

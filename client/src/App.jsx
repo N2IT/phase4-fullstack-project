@@ -3,10 +3,11 @@ import { useNavigate, Outlet } from "react-router-dom";
 import './App.css'
 import NavBar from './NavBar'
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { AgentProvider } from './AgentProvider';
 
 
 const App = () => {
-  const [agent, setAgent] = useState(null)
+  // const [agent, setAgent] = useState(null)
   const [user, setUser] = useState(null)
   const [accounts, setAccounts] = useState([])
   const [users, setUsers] = useState([])
@@ -15,24 +16,17 @@ const App = () => {
   const navigate = useNavigate()
   const [isLoading, setIsLoading] = useState(true)
   const [disabled, setAsDisabled] = useState(true)
-  const [accountForm, setAccountForm] = useState(true)
+  // const [accountForm, setAccountForm] = useState(true)
 
-  const onSubmitAccountForm = () => {
-    setAccountForm(!accountForm)
-  }
+  // const onSubmitAccountForm = () => {
+  //   setAccountForm(!accountForm)
+  // }
 
-  useEffect(() => {
-    fetch('/api/check-session')
-      .then((r) => r.json())
-      .then((agent) => setAgent(agent))
-        // if (r.ok) {
-        //   r.json().then((agent) => setAgent(agent));
-        // }
-        // else {
-        //   r.json().then((data) => setErrors(data.errors))
-        // }
-      
-  }, [])
+  // useEffect(() => {
+  //   fetch('/api/check-session')
+  //     .then((r) => r.json())
+  //     .then((agent) => setAgent(agent))
+  // }, [])
 
   const handleIdClick = (value) => {
     setValueId(value.id)
@@ -73,19 +67,15 @@ const App = () => {
 
   return (
     <>
-      <header className="header">
-        <NavBar agent={agent} setAgent={setAgent} />
-      </header>
+      <AgentProvider>
+        <header className="header">
+          <NavBar />
+        </header>
       <Outlet context={[
-        agent,
-        setAgent,
         user,
         setUser,
         accounts,
         setAccounts,
-        accountForm,
-        setAccountForm,
-        onSubmitAccountForm,
         errors,
         setErrors,
         handleIdClick,
@@ -102,7 +92,9 @@ const App = () => {
         setUsers,
         handleUpdateUser
       ]
-      } />
+    } />
+    </AgentProvider>
+
     </>
   );
 }

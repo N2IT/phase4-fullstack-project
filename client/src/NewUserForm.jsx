@@ -46,7 +46,7 @@ const NewUserForm = () => {
                 .then((user) => {
                     console.log('User response:', user);
                     setUser(user);
-                    navigate('/accounts');
+                    navigate('/');
                 })
         }
     })

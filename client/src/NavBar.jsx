@@ -3,9 +3,11 @@ import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Link, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import { AgentContext, AgentProvider} from './AgentProvider';
 
-function NavBar({ agent, setAgent }) {
+function NavBar() {
+  const { agent, setAgent } = useContext(AgentContext);
   const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false);
 

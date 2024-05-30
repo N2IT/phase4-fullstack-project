@@ -1,16 +1,18 @@
 import LoginForm from './LoginForm'
-import { Link, useOutletContext } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { AgentContext } from './AgentProvider';
 // import { useEffect } from 'react';
 
 const Home = () => {
 
-  const [user, setUser] = useOutletContext();
+  const { agent } = useContext(AgentContext);
 
   return (
     <>
       <div className="account-details">
-        {user ? (
-          <h2>Welcome {user.username}!</h2>
+        {agent ? (
+          <h2>Welcome {agent.username}!</h2>
         ) :
           <div>
             <h2>Quote Pro</h2>
