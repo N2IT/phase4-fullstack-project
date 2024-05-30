@@ -1,39 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { useFormik } from 'formik';
 import * as yup from "yup";
-import { useOutletContext } from 'react-router-dom';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { AgentContext } from './AgentProvider';
 
 const EditUserForm = ({ id }) => {
 
-    const [
-        user,
-        setUser,
-        accounts,
-        setAccounts,
-        accountForm,
-        setAccountForm,
-        onSubmitAccountForm,
-        errors,
-        setErrors,
-        handleIdClick,
-        valueId,
-        setValueId,
-        isLoading,
-        setIsLoading,
-        disabled,
-        setAsDisabled,
-        handleEditClick,
-        handleUpdateAccount,
-        handleUserIdClick,
-        users,
-        setUsers,
-        handleUpdateUser
-    ] = useOutletContext();
-
-    console.log(user)
+    const { user, errors, setErrors, disabled, handleEditClick, handleUpdateUser } = useContext(AgentContext);
 
     const [originalValues, setOriginalValues] = useState({
         email: '',

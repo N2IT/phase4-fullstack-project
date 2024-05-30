@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react'
-import { useNavigate, Outlet } from "react-router-dom";
+import { Outlet } from "react-router-dom";
 import './App.css'
 import NavBar from './NavBar'
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -8,12 +8,12 @@ import { AgentProvider } from './AgentProvider';
 
 const App = () => {
   // const [agent, setAgent] = useState(null)
-  const [user, setUser] = useState(null)
+  // const [user, setUser] = useState(null)
   // const [accounts, setAccounts] = useState([])
   // const [users, setUsers] = useState([])
   // const [valueId, setValueId] = useState()
   // const [errors, setErrors] = useState([])
-  const navigate = useNavigate()
+  // const navigate = useNavigate()
   // const [isLoading, setIsLoading] = useState(true)
   // const [disabled, setAsDisabled] = useState(true)
   // const [accountForm, setAccountForm] = useState(true)
@@ -34,11 +34,11 @@ const App = () => {
   //   navigate(`/accounts/${value.id}`)
   // }
 
-  const handleUserIdClick = (value) => {
-    setValueId(value.id)
-    setUser(user)
-    navigate(`/users/${value.id}`)
-  }
+  // const handleUserIdClick = (value) => {
+  //   setValueId(value.id)
+  //   setUser(user)
+  //   navigate(`/users/${value.id}`)
+  // }
 
   // const handleEditClick = () => {
   //   setAsDisabled(!disabled)
@@ -70,12 +70,7 @@ const App = () => {
         <header className="header">
           <NavBar />
         </header>
-      <Outlet context={[
-        user,
-        setUser,
-        handleUserIdClick,
-      ]
-    } />
+      <Outlet />
     </AgentProvider>
 
     </>

@@ -1,5 +1,5 @@
 import { useEffect, useContext } from 'react';
-import Unathorized from './Unathorized';
+import Unauthorized from './Unauthorized';
 import AccountsTable from './AccountsTable'
 import { AgentContext } from './AgentProvider';
 
@@ -26,7 +26,7 @@ const Accounts = () => {
           </div>
         </div> :
         <div>
-          <Unathorized />
+          <Unauthorized />
         </div>
       }
     </>

@@ -1,5 +1,5 @@
 import { useEffect, useContext } from 'react';
-import Unathorized from './Unathorized';
+import Unauthorized from './Unauthorized';
 import { AgentContext } from './AgentProvider'
 import UsersTable from './UsersTable'
 
@@ -21,11 +21,11 @@ const Users = () => {
         {agent ?
           <div>
             <h2>Welcome to the Users page, {agent.username}!</h2>
-            {/* <UsersTable /> */}
+            <UsersTable />
           </div>
           :
           <div>
-            <Unathorized />
+            <Unauthorized />
           </div>
         }
       </div>

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
 
-const Unathorized = () => {
+const Unauthorized = () => {
     return (
         <div className="account-details">
             <h2>Unauthorized</h2>
@@ -12,4 +12,4 @@ const Unathorized = () => {
     )
 }
 
-export default Unathorized
+export default Unauthorized

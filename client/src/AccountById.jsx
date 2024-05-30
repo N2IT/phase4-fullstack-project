@@ -2,6 +2,7 @@ import { useState, useContext, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { AgentContext } from './AgentProvider';
 import EditAccountForm from './EditAccountForm'
+import Unauthorized from './Unauthorized';
 // import { Link } from 'react-router-dom';
 
 const AccountById = () => {
@@ -28,10 +29,7 @@ const AccountById = () => {
                         <EditAccountForm id={id} />
                     </> :
                     <div>
-                        <h2>Unauthorized</h2>
-                        <Link to="/">Log in</Link>
-                        <h3>Get Started Here:</h3>
-                        <Link to="/sign-up">Sign Up</Link>
+                        <Unauthorized />
                     </div>
                 }
             </div>

@@ -9,7 +9,6 @@ import NewQuote from './NewQuote';
 import Support from './Support';
 import AccountById from './AccountById';
 import UserById from './UserById';
-import Unathorized from './Unathorized';
 
 const routes = [
     {

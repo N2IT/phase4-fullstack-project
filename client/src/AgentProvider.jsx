@@ -14,6 +14,7 @@ const AgentProvider = ({ children }) => {
     const [errors, setErrors] = useState([])
     const [disabled, setAsDisabled] = useState(true)
     const [users, setUsers] = useState([])
+    const [user, setUser] = useState(null)
 
     const onSubmitAccountForm = () => {
         setAccountForm(!accountForm)
@@ -26,6 +27,11 @@ const AgentProvider = ({ children }) => {
     const handleIdClick = (value) => {
         setValueId(value.id)
         navigate(`/accounts/${value.id}`)
+    }
+
+    const handleUserIdClick = (value) => {
+        setValueId(value.id)
+        navigate(`/users/${value.id}`)
     }
 
     const handleUpdateAccount = (updatedAccount) => {
@@ -56,6 +62,7 @@ const AgentProvider = ({ children }) => {
                 handleEditClick,
                 handleIdClick,
                 handleUpdateAccount,
+                handleUserIdClick,
                 isLoading,
                 navigate,
                 onSubmitAccountForm,
@@ -67,7 +74,9 @@ const AgentProvider = ({ children }) => {
                 setErrors,
                 setIsLoading,
                 setValueId,
+                user,
                 users,
+                setUser,
                 setUsers,
                 valueId,
             }
