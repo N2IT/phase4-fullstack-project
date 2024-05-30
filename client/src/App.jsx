@@ -23,11 +23,15 @@ const App = () => {
 
   useEffect(() => {
     fetch('/api/check-session')
-      .then((r) => {
-        if (r.ok) {
-          r.json().then((agent) => setAgent(agent));
-        }
-      })
+      .then((r) => r.json())
+      .then((agent) => setAgent(agent))
+        // if (r.ok) {
+        //   r.json().then((agent) => setAgent(agent));
+        // }
+        // else {
+        //   r.json().then((data) => setErrors(data.errors))
+        // }
+      
   }, [])
 
   const handleIdClick = (value) => {
@@ -56,7 +60,7 @@ const App = () => {
     handleEditClick()
   }
 
-  const handleUpdateUser = (updatedAccount) => {
+  const handleUpdateUser = (updatedUser) => {
     const updatedUsersArray = users.map(user => {
       if (user.id === updatedUser.id)
         return updatedUser

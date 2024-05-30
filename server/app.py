@@ -10,27 +10,26 @@ from models import Account, User
 # just imported Account, User above
 # need to write up the Routes now
 
-# @app.before_request
-# def check_if_logged_in():
-#   if not session['user_id']:
-#       return {'errors': 'You are not authorized to access this page.'}, 401
-
+@app.before_request
+def check_if_logged_in():
+  if session.get('user_id') is None:
+    session['user_id'] = None
+  else:
+    print('User is logged in')
+    print(session['user_id'])
 # THIS A LITTLE TOO RESTRICTIVE AND WILL NOT ALLOW LOGIN NOR ACCOUNT CREATION
 
 class Accounts(Resource):
   def get(self):
-    if session.get('user_id'):
-      accounts = [account.to_dict(rules = ('-updated_at',)) for account in Account.query.all()]
+    accounts = [account.to_dict(rules = ('-updated_at',)) for account in Account.query.all()]
 
-      if not accounts:
-        return {'error' : '204: No content available'}, 204
-        
-      return make_response(
-        accounts,
-        200
-        )
-    else:
-      return {'errors' : '401: Unauthorized'}
+    if not accounts:
+      return {'error' : '204: No content available'}, 204
+      
+    return make_response(
+      accounts,
+      200
+      )
   
   def post(self):
     form_data = request.get_json()
@@ -76,43 +75,41 @@ class Accounts(Resource):
 
 class AccountById(Resource):
   def get(self,id):
-    if session.get('user_id'):
-      try:
-        account = Account.query.filter(Account.id == id).first()
-        if account:
-          return make_response(
-            account.to_dict(),
-            200
-          )
-        else:
-          return {'errors' : 'That account does not exist'}
-      except ValueError as e:
-        return {'errors' : str(e)}, 404
-      except Exception as e:
-        return {'errors' : str(e)}, 500
-    else:
-      return {'errors' : '401: Unauthorized'}   
-    def patch(self,id):
-      try:
-        account = Account.query.filter(Account.id == id).first()
-        if account:
-          data = request.get_json()
-          for attr in data:
-            setattr(account, attr, data[attr])
-          
-          db.session.add(account)
-          db.session.commit()
+    try:
+      account = Account.query.filter(Account.id == id).first()
+      if account:
+        return make_response(
+          account.to_dict(),
+          200
+        )
+      else:
+        return {'errors' : 'That account does not exist'}
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
+    except Exception as e:
+      return {'errors' : str(e)}, 500
 
-          return make_response(
-            account.to_dict(), 
-            200
-          )
-        else:
-          return {'errors' : 'That account does not exist'}
-      except ValueError as e:
-        return {'errors' : str(e)}, 404
-      except Exception as e:
-        return {'errors' : str(e)}, 500 
+  def patch(self,id):
+    try:
+      account = Account.query.filter(Account.id == id).first()
+      if account:
+        data = request.get_json()
+        for attr in data:
+          setattr(account, attr, data[attr])
+        
+        db.session.add(account)
+        db.session.commit()
+
+        return make_response(
+          account.to_dict(), 
+          200
+        )
+      else:
+        return {'errors' : 'That account does not exist'}
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
+    except Exception as e:
+      return {'errors' : str(e)}, 500 
 
 
 class UserById(Resource):
@@ -163,15 +160,15 @@ class Users(Resource):
       if not first_name:
         errors.append('A first name must be entered.')
       elif not last_name:
-        errors.append('An last name must be entered.')
+        errors.append('Please enter a last name.')
       elif not username:
-        errors.append('A username must be entered.')
+        errors.append('Please enter a username.')
       elif User.query.filter(User.username == username).first():
-        errors.append('The username is already in use. Please try again.')
+        errors.append('That username is already in use. Please try again.')
       elif not email:
-        errors.append('Please enter an email for this user')
+        errors.append('Please enter an email')
       elif User.query.filter(User.email == email).first():
-        errors.append('This email is already being used')
+        errors.append('This email is already used. Please enter another email address.')
       
       if errors:
         return {'errors' : errors }, 422
@@ -201,26 +198,27 @@ class Users(Resource):
 
 class CheckSession(Resource):
   def get(self):
-    if session['user_id']:
-      user = User.query.filter(User.id == session.get('user_id')).first()
-      return user.to_dict(), 200
-    else:
-      return {'errors' : '401 : Unauthorized'}, 401
+        user = User.query.filter(User.id == session.get('user_id')).first()
+        if user:
+            return user.to_dict(),200
+        
+        else:
+            return {}, 204
 
 
 class Login(Resource):
-    def post(self):
-        data = request.get_json()
-        username = data['username']
-        password = data['password']
+  def post(self):
+    data = request.get_json()
+    username = data['username']
+    password = data['password']
 
-        user = User.query.filter(User.username == username).first()
+    user = User.query.filter(User.username == username).first()
 
-        if user is None or not user.authenticate(password):
-            return {'errors': 'Invalid username or password'}, 401
+    if user is None or not user.authenticate(password):
+        return {'errors': 'Invalid username or password'}, 401
 
-        session['user_id'] = user.id
-        return user.to_dict(), 200
+    session['user_id'] = user.id
+    return user.to_dict(), 200
 
 class Logout(Resource):
   def delete(self):
