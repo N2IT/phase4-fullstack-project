@@ -56,6 +56,7 @@ function NavBar({ user, setUser }) {
               </Offcanvas.Header>
               <Offcanvas.Body>
                 <Nav className="justify-content-end flex-grow-1 pe-3">
+                  <p>Welcome, {user.username}!</p>
                   <Link to="/" onClick={handleClose}>Home</Link>
                   <Link to="/accounts" onClick={handleClose}>Accounts</Link>
                   <Link to="/users" onClick={handleClose}>Users</Link>

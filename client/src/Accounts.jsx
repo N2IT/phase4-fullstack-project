@@ -11,7 +11,8 @@ const Accounts = () => {
     fetch('/api/accounts')
       .then((r) => {
         if (!r.ok) {
-          r.json().then((data) => {
+          r.json()
+          .then((data) => {
             setErrors(data)
           })
         }
@@ -28,6 +29,7 @@ const Accounts = () => {
 
   // WORKING OUT AUTHORIZATION IN THE BACKEND. NEED TO REFLECT AUTHORIZATION ERRORS ON FRONTEND WHEN ACCESS FAILS
 
+  // NEED TO UPDATE USER TO AGENT FOR LOGIN AND PERSIST AGENT ACROSS APP - UPDATE NAV TO INCLUDE 'WELCOME, (AGENT)'
 
   return (
     <>
