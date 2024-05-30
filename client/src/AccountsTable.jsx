@@ -1,12 +1,13 @@
-import { useOutletContext } from "react-router-dom"
+import { useContext } from 'react';
+import { AgentContext } from './AgentProvider';
 
 const AccountsTable = () => {
 
-    const [user, setUser, accounts, setAccounts, accountForm, setAccountForm, onSubmitAccountForm, errors, setErrors, handleIdClick, valueId, setValueId, isLoading, setIsLoading, disabled, setAsDisabled, handleEditClick] = useOutletContext()
+    const { accounts, handleIdClick, isLoading } = useContext(AgentContext);
 
     return (
         <>
-            {isLoading ? <h2>Loading...</h2> :
+            {!isLoading ? <h2>Loading...</h2> :
                 <table>
                     <thead>
                         <tr>

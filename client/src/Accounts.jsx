@@ -1,12 +1,11 @@
-
-import { useOutletContext } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useContext } from 'react';
 import Unathorized from './Unathorized';
-// import AccountsTable from './AccountsTable'
+import AccountsTable from './AccountsTable'
+import { AgentContext } from './AgentProvider';
 
 const Accounts = () => {
 
-  const [agent, setAgent, user, setUser, accounts, setAccounts, accountForm, setAccountForm, onSubmitAccountForm, errors, setErrors, handleIdClick, valueId, setValueId, isLoading, setIsLoading, disabled, setAsDisabled, handleEditClick, status, setStatus] = useOutletContext();
+  const { agent, setAccounts } = useContext(AgentContext);
 
   useEffect(() => {
     fetch('/api/accounts')
@@ -14,17 +13,13 @@ const Accounts = () => {
       .then((account) => setAccounts(account))
   }, [])
 
-
-  // WORKING OUT AUTHORIZATION IN THE BACKEND. NEED TO REFLECT AUTHORIZATION ERRORS ON FRONTEND WHEN ACCESS FAILS
-
-  // NEED TO UPDATE USER TO AGENT FOR LOGIN AND PERSIST AGENT ACROSS APP - UPDATE NAV TO INCLUDE 'WELCOME, (AGENT)'
-
   return (
     <>
       {agent ?
         <div className="account-details">
           <div>
-            <h2>Account Table will show here</h2>
+            <h2>Account Table</h2>
+            <AccountsTable />
           </div>
         </div> :
         <div>

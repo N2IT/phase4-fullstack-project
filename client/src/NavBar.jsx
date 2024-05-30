@@ -4,7 +4,7 @@ import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
-import { AgentContext, AgentProvider} from './AgentProvider';
+import { AgentContext } from './AgentProvider';
 
 function NavBar() {
   const { agent, setAgent } = useContext(AgentContext);

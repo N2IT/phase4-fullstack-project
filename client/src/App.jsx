@@ -9,12 +9,12 @@ import { AgentProvider } from './AgentProvider';
 const App = () => {
   // const [agent, setAgent] = useState(null)
   const [user, setUser] = useState(null)
-  const [accounts, setAccounts] = useState([])
+  // const [accounts, setAccounts] = useState([])
   const [users, setUsers] = useState([])
-  const [valueId, setValueId] = useState()
+  // const [valueId, setValueId] = useState()
   const [errors, setErrors] = useState([])
   const navigate = useNavigate()
-  const [isLoading, setIsLoading] = useState(true)
+  // const [isLoading, setIsLoading] = useState(true)
   const [disabled, setAsDisabled] = useState(true)
   // const [accountForm, setAccountForm] = useState(true)
 
@@ -28,11 +28,11 @@ const App = () => {
   //     .then((agent) => setAgent(agent))
   // }, [])
 
-  const handleIdClick = (value) => {
-    setValueId(value.id)
-    setUser(user)
-    navigate(`/accounts/${value.id}`)
-  }
+  // const handleIdClick = (value) => {
+  //   setValueId(value.id)
+  //   setUser(user)
+  //   navigate(`/accounts/${value.id}`)
+  // }
 
   const handleUserIdClick = (value) => {
     setValueId(value.id)
@@ -64,7 +64,6 @@ const App = () => {
     handleEditClick()
   }
 
-
   return (
     <>
       <AgentProvider>
@@ -74,15 +73,8 @@ const App = () => {
       <Outlet context={[
         user,
         setUser,
-        accounts,
-        setAccounts,
         errors,
         setErrors,
-        handleIdClick,
-        valueId,
-        setValueId,
-        isLoading,
-        setIsLoading,
         disabled,
         setAsDisabled,
         handleEditClick,
