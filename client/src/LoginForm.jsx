@@ -36,7 +36,6 @@ const LoginForm = () => {
                     return response.json();
                 })
                 .then((agent) => {
-                    console.log('User response:', agent);
                     setAgent(agent);
                     navigate('/');
                 })
