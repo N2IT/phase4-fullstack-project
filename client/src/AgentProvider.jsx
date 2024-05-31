@@ -30,7 +30,8 @@ const AgentProvider = ({ children }) => {
     }
 
     const handleUserIdClick = (value) => {
-        setValueId(value.id)
+        console.log(value)
+        setUser(value)
         navigate(`/users/${value.id}`)
     }
 
@@ -55,6 +56,8 @@ const AgentProvider = ({ children }) => {
     }
 
     useEffect(() => {
+        // console.log('User:', user)
+        // console.log('Users:', users)
         fetch('/api/check-session')
             .then((r) => r.json())
             .then((agent) => {
@@ -64,8 +67,10 @@ const AgentProvider = ({ children }) => {
             .catch(error => {
                 console.error('Error fetching agent data:', error);
                 setIsLoading(false);
-              });
+            });
     }, [])
+
+
 
     return (
         <AgentContext.Provider value={

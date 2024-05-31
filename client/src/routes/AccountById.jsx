@@ -2,13 +2,14 @@ import { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { AgentContext } from '../AgentProvider';
 import EditAccountForm from '../components/EditAccountForm'
-import UsersTable from '../components/UsersTable'
+import UsersTableByAccount from '../components/UsersTableByAccount';
+// import UsersTable from '../components/UsersTable'
 import Unauthorized from '../components/Unauthorized';
 // import { Link } from 'react-router-dom';
 
 const AccountById = () => {
 
-    const { agent, account, setAccount, setAsDisabled, errors, setErrors } = useContext(AgentContext);
+    const { agent, account, setAccount, setIsLoading, setUsers, users, setAsDisabled, errors, setErrors } = useContext(AgentContext);
     const { id } = useParams();
 
     useEffect(() => {
@@ -26,6 +27,7 @@ const AccountById = () => {
             })
             .then(data => {
                 setAccount(data);
+                // setUsers(data.users) THIS IS BREAKING THINGS
                 setAsDisabled(true);
                 setErrors(null);
             })
@@ -34,9 +36,30 @@ const AccountById = () => {
                 setErrors([error.errors] || 'Unknown Error');
                 setAccount(null);
             });
+
+        fetch('/api/users')
+            .then((r) => r.json())
+            .then((data) => {
+                if (data.errors) {
+                    setErrors(data.errors);
+                }
+                else
+                    setUsers(data)
+            })
+            .then(() => setIsLoading(false))
+            .catch(error => console.error('Error:', error));
+
     }, [id, agent, setAccount, setAsDisabled, setErrors])
 
     if (!account) {
+        return <>
+            <div className='account-details'>
+                <h1> Loading... </h1>
+            </div>
+        </>
+    }
+
+    if (!users) {
         return <>
             <div className='account-details'>
                 <h1> Loading... </h1>
@@ -54,8 +77,9 @@ const AccountById = () => {
                             <EditAccountForm id={id} />
                         </div>
                         <div>
-                            <UsersTable />
+                            <UsersTableByAccount />
                         </div>
+
                     </>
                 ) : (
                     <div className='account-details'>

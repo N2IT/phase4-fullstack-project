@@ -5,6 +5,7 @@ const UsersTable = () => {
 
     const { users, handleUserIdClick } = useContext(AgentContext);
 
+
     return (
         <>
             <table>
@@ -15,6 +16,7 @@ const UsersTable = () => {
                         <th>LAST NAME</th>
                         <th>USERNAME</th>
                         <th>ACCOUNT NUMBER</th>
+                        <th>STATUS</th>
                         <th>ACTIONS</th>
                     </tr>
                 </thead>
@@ -26,7 +28,8 @@ const UsersTable = () => {
                             <td>{user.last_name}</td>
                             <td>{user.username}</td>
                             {/* <td>{user.role_id}</td> */}
-                            <td>{user.account_id}</td>
+                            <td>{user.account.account_number}</td>
+                            <td>{user.status === true ? <p>Active</p> : <p>Inactive</p> }</td>
                             <td><p className="view-btn" title="View User" onClick={() => handleUserIdClick(user)}> View </p></td>
                         </tr>
                     ))}

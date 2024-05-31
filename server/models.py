@@ -43,7 +43,7 @@ class Account(db.Model, SerializerMixin):
     users = db.relationship('User', back_populates = 'account')
     # quotes = db.Column(db.Integer, db.ForeingKey('quotes.id'))
 
-    serialize_rules = ('-users.account','-users.account_id','-users.created_at', '-users.updated_at', '-users.id', '-users._password_hash',)
+    serialize_rules = ('-users.account', '-users.created_at', '-users.updated_at', '-users._password_hash',)
 
     def __repr__(self):
         return f'Account {self.id}, {self.account_number}, {self.company_name}, {self.address_1}, {self.address_2}, {self.city}, {self.state}, {self.zip_code}, {self.phone}, {self.discount}, {self.markup_variable}, {self.created_at}, {self.updated_at}'
