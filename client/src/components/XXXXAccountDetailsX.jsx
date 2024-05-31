@@ -1,8 +1,9 @@
-import { useOutletContext } from "react-router-dom"
+import { AgentContext } from "../AgentProvider";
+import { useContext } from "react";
 
-const AccountDetails = ({ account, setAccount }) => { 
+const AccountDetails = () => { 
 
-    const [user, setUser, errors, setErrors, handleIdClick, valueId, setValueId, isLoading, setIsLoading ] = useOutletContext();
+    const {account, isLoading} = useContext(AgentContext);
     return (
         <>
             {isLoading ? <h2>Loading...</h2> :

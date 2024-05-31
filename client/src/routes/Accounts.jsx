@@ -1,6 +1,6 @@
 import { useEffect, useContext } from 'react';
-import Unauthorized from '../Unauthorized';
-import AccountsTable from '../AccountsTable'
+import Unauthorized from '../components/Unauthorized';
+import AccountsTable from '../components/AccountsTable'
 import { AgentContext } from '../AgentProvider';
 
 const Accounts = () => {

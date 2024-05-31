@@ -1,5 +1,5 @@
 import { useContext } from 'react'
-import { AgentContext } from './AgentProvider';
+import { AgentContext } from '../AgentProvider';
 
 const UsersTable = () => {
 

@@ -1,7 +1,7 @@
 import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as yup from "yup";
-import { AgentContext } from './AgentProvider';
+import { AgentContext } from '../AgentProvider';
 
 const NewAccountForm = () => {
 

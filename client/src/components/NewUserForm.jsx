@@ -1,7 +1,7 @@
 import { useContext }from 'react';
 import { useFormik } from 'formik';
 import * as yup from "yup";
-import { AgentContext } from './AgentProvider';
+import { AgentContext } from '../AgentProvider';
 
 const NewUserForm = () => {
 
@@ -51,7 +51,7 @@ const NewUserForm = () => {
 
     return (
         <>
-            <div>
+            <div className='account-details'>
                 <h2>Now fill in your user details:</h2>
                 <form onSubmit={formik.handleSubmit}>
                     <label htmlFor="username">First Name </label>

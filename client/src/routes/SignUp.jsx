@@ -1,7 +1,7 @@
-import NewUserForm from "./NewUserForm";
-import NewAccountForm from "./NewAccountForm";
+import NewUserForm from "../components/NewUserForm";
+import NewAccountForm from "../components/NewAccountForm";
 import { useContext } from "react";
-import { AgentContext } from './AgentProvider';
+import { AgentContext } from '../AgentProvider';
 
 const SignUp = () => {
 

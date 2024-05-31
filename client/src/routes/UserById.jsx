@@ -1,8 +1,8 @@
 import { useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import EditUserForm from './EditUserForm'
-import Unauthorized from './Unauthorized';
-import { AgentContext } from './AgentProvider';
+import EditUserForm from '../components/EditUserForm';
+import Unauthorized from '../components/Unauthorized';
+import { AgentContext } from '../AgentProvider';
 
 const UserById = () => {
     const { agent, user, setUser, setAsDisabled, errors, setErrors } = useContext(AgentContext)

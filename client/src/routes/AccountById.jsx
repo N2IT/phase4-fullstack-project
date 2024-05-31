@@ -1,9 +1,9 @@
 import { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import { AgentContext } from './AgentProvider';
-import EditAccountForm from './EditAccountForm'
-import UsersTable from './UsersTable'
-import Unauthorized from './Unauthorized';
+import { AgentContext } from '../AgentProvider';
+import EditAccountForm from '../components/EditAccountForm'
+import UsersTable from '../components/UsersTable'
+import Unauthorized from '../components/Unauthorized';
 // import { Link } from 'react-router-dom';
 
 const AccountById = () => {
