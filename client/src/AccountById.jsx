@@ -2,6 +2,7 @@ import { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { AgentContext } from './AgentProvider';
 import EditAccountForm from './EditAccountForm'
+import UsersTable from './UsersTable'
 import Unauthorized from './Unauthorized';
 // import { Link } from 'react-router-dom';
 
@@ -47,10 +48,15 @@ const AccountById = () => {
         <>
             {agent ? (
                 account ? (
-                    <div className='account-details'>
-                        <h2>Account Details</h2>
-                        <EditAccountForm id={id} />
-                    </div>
+                    <>
+                        <div className='account-details'>
+                            <h2>Account Details</h2>
+                            <EditAccountForm id={id} />
+                        </div>
+                        <div>
+                            <UsersTable />
+                        </div>
+                    </>
                 ) : (
                     <div className='account-details'>
                         {errors.length > 0 ? <h2>{errors[0]}</h2> : <h2>That account does not exist.</h2>}

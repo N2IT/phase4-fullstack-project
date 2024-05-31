@@ -1,7 +1,7 @@
-import LoginForm from './LoginForm'
+import LoginForm from '../LoginForm'
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
-import { AgentContext } from './AgentProvider';
+import { AgentContext } from '../AgentProvider';
 // import { useEffect } from 'react';
 
 const Home = () => {
