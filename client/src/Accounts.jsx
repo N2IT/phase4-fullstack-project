@@ -5,7 +5,7 @@ import { AgentContext } from './AgentProvider';
 
 const Accounts = () => {
 
-  const { agent, setAccounts, setIsLoading } = useContext(AgentContext);
+  const { agent, accounts, setAccounts, setIsLoading } = useContext(AgentContext);
 
   useEffect(() => {
     fetch('/api/accounts')
@@ -15,6 +15,14 @@ const Accounts = () => {
       .catch(error => console.error("Error:", error));
 
   }, [])
+
+  if (!agent) {
+    return <>
+        <div className='account-details'>
+            <h1> Loading... </h1>
+        </div>
+    </>
+}
 
   return (
     <>

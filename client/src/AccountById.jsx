@@ -35,8 +35,6 @@ const AccountById = () => {
             });
     }, [id, agent, setAccount, setAsDisabled, setErrors])
 
-    debugger
-
     if (!account) {
         return <>
             <div className='account-details'>

@@ -1,14 +1,11 @@
-import React, { useState, useContext } from 'react';
+import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as yup from "yup";
-import { useOutletContext } from 'react-router-dom';
-import { AgentContext, AgentProvider} from './AgentProvider';
+import { AgentContext } from './AgentProvider';
 
 const NewAccountForm = () => {
 
-    const [user, setUser, accounts, setAccounts, errors, setErrors, handleIdClick, valueId, setValueId, isLoading, setIsLoading, disabled, setAsDisabled, handleEditClick] = useOutletContext()
-
-    const { setAccountForm  } = useContext(AgentContext);
+    const { setAccountForm, errors, setErrors  } = useContext(AgentContext);
 
 
     const formSchema = yup.object().shape({
@@ -48,7 +45,7 @@ const NewAccountForm = () => {
                     
     return (
         <>
-            <div>
+            <div className="account-details">
                 <h2>First enter you company details:</h2>
                 <form onSubmit={formik.handleSubmit}>
                     <label htmlFor="company_name">Company Name </label>

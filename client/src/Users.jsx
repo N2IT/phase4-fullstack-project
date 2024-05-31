@@ -21,6 +21,14 @@ const Users = () => {
       .catch(error => console.error('Error:', error));
   }, [])
 
+  if (!agent) {
+    return <>
+        <div className='account-details'>
+            <h1> Loading... </h1>
+        </div>
+    </>
+}
+
   return (
     <>
       <div className="account-details">

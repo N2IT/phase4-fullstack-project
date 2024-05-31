@@ -8,8 +8,6 @@ const Home = () => {
 
   const { agent, isLoading } = useContext(AgentContext);
 
-  debugger
-
   if (isLoading) {
     return <div> Loading ... </div>
   }

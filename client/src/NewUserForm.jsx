@@ -1,12 +1,11 @@
-import React, { useEffect, useState } from 'react';
+import { useContext }from 'react';
 import { useFormik } from 'formik';
 import * as yup from "yup";
-import { useNavigate, useOutletContext } from 'react-router-dom'
+import { AgentContext } from './AgentProvider';
 
 const NewUserForm = () => {
 
-    const [user, setUser, errors, setErrors, handleIdClick, valueId, setValueId ] = useOutletContext();
-    const navigate = useNavigate();
+    const { setAgent, errors, setErrors, navigate }  = useContext(AgentContext);
 
     const formSchema = yup.object().shape({
         first_name: yup.string().required("Please enter you first name."),
@@ -44,7 +43,7 @@ const NewUserForm = () => {
                 })
                 .then((user) => {
                     console.log('User response:', user);
-                    setUser(user);
+                    setAgent(user);
                     navigate('/');
                 })
         }
