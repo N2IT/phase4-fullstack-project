@@ -32,6 +32,14 @@ const UserById = () => {
             });
     }, [id, agent, setUser, setAsDisabled, setErrors]);
 
+    if (!user) {
+        return <>
+            <div className='account-details'>
+                <h1> Loading... </h1>
+            </div>
+        </>
+    }
+
     return (
         <>
             {agent ? (

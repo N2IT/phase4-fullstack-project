@@ -1,5 +1,5 @@
-import { useState, useContext, useEffect } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useContext, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { AgentContext } from './AgentProvider';
 import EditAccountForm from './EditAccountForm'
 import Unauthorized from './Unauthorized';
@@ -34,6 +34,16 @@ const AccountById = () => {
                 setAccount(null);
             });
     }, [id, agent, setAccount, setAsDisabled, setErrors])
+
+    debugger
+
+    if (!account) {
+        return <>
+            <div className='account-details'>
+                <h1> Loading... </h1>
+            </div>
+        </>
+    }
 
     return (
         <>
