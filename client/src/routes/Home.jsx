@@ -1,4 +1,4 @@
-import LoginForm from '../LoginForm'
+import LoginForm from '../components/LoginForm'
 import { Link } from 'react-router-dom';
 import { useContext } from 'react';
 import { AgentContext } from '../AgentProvider';
