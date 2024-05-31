@@ -6,7 +6,6 @@ import { AgentContext } from './AgentProvider';
 
 const UserById = () => {
     const { agent, user, setUser, setAsDisabled, errors, setErrors } = useContext(AgentContext)
-
     const { id } = useParams();
 
     useEffect(() => {
@@ -24,6 +23,7 @@ const UserById = () => {
             .then(data => {
                 setUser(data);
                 setAsDisabled(true);
+                setErrors(null);
             })
             .catch(error => {
                 console.error('Errors:', error);
@@ -31,8 +31,6 @@ const UserById = () => {
                 setUser(null);
             });
     }, [id, agent, setUser, setAsDisabled, setErrors]);
-
-    debugger
 
     return (
         <>

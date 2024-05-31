@@ -7,32 +7,49 @@ import Unauthorized from './Unauthorized';
 
 const AccountById = () => {
 
-    const { agent, setAccount, setAsDisabled } = useContext(AgentContext);
+    const { agent, account, setAccount, setAsDisabled, errors, setErrors } = useContext(AgentContext);
     const { id } = useParams();
 
     useEffect(() => {
-        if (id) {
-            fetch(`/api/accounts/${id}`)
-                .then((r) => r.json())
-                .then((data) => setAccount(data))
-                .then(() => setAsDisabled(true))
-                .catch(error => console.error('Errors:', error));
+        if (!agent) {
+            return;
         }
-    }, [])
+
+        fetch(`/api/accounts/${id}`)
+
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(data => { throw data; });
+                }
+                return response.json();
+            })
+            .then(data => {
+                setAccount(data);
+                setAsDisabled(true);
+            })
+            .catch(error => {
+                console.error('Errors:', error);
+                setErrors([error.errors] || 'Unknown Error');
+                setAccount(null);
+            });
+    }, [id, agent, setAccount, setAsDisabled, setErrors])
 
     return (
         <>
-            <div className='account-details'>
-                {agent ?
-                    <>
+            {agent ? (
+                account ? (
+                    <div className='account-details'>
                         <h2>Account Details</h2>
                         <EditAccountForm id={id} />
-                    </> :
-                    <div>
-                        <Unauthorized />
                     </div>
-                }
-            </div>
+                ) : (
+                    <div className='account-details'>
+                        {errors.length > 0 ? <h2>{errors[0]}</h2> : <h2>That account does not exist.</h2>}
+                    </div>
+                )
+            ) : (
+                <Unauthorized />
+            )}
         </>
     )
 }

@@ -76,19 +76,17 @@ class Accounts(Resource):
 
 class AccountById(Resource):
   def get(self,id):
-    # try:
-    account = Account.query.filter(Account.id == id).first()
-    if account:
-      return make_response(
-        account.to_dict(),
-        200
-      )
-    else:
-      return {'errors' : 'That account does not exist'}
-    # except ValueError as e:
-    #   return {'errors' : str(e)}, 404
-    # except Exception as e:
-    #   return {'errors' : str(e)}, 500
+    try:
+      account = Account.query.filter(Account.id == id).first()
+      if account:
+        return make_response(
+          account.to_dict(),
+          200
+        )
+      else:
+        return {"errors": "404: That account does not exist"}, 404
+    except Exception as e:
+        return {"errors": str(e)}, 500
 
   def patch(self,id):
     try:
@@ -125,8 +123,6 @@ class UserById(Resource):
       else:
         return {"errors": "404: That user does not exist"}, 404
     except Exception as e:
-        # It's a good idea to log these errors for debugging purposes
-        # logging.error(f"Unexpected error: {str(e)}")
         return {"errors": str(e)}, 500
 
   # NEED TO WRITE THE PATCH METHOD OUT
