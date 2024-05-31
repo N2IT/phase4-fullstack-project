@@ -125,7 +125,27 @@ class UserById(Resource):
     except Exception as e:
         return {"errors": str(e)}, 500
 
-  # NEED TO WRITE THE PATCH METHOD OUT
+  def patch(self, id):
+    try:
+      user = User.query.filter(User.id == id).first()
+      if user:
+        data = request.get_json()
+        for attr in data:
+          setattr(user, attr, data[attr])
+
+        db.session.add(user)
+        db.session.commit()
+
+        return make_response(
+          user.to_dict(),
+          200
+        )
+      else:
+        return {'errors' : 'That user does not exist'}
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
+    except Exception as e:
+      return {'errors' : str(e)}, 500
     
 
     

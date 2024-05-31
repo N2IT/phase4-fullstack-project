@@ -26,6 +26,7 @@ const AccountById = () => {
             .then(data => {
                 setAccount(data);
                 setAsDisabled(true);
+                setErrors(null);
             })
             .catch(error => {
                 console.error('Errors:', error);

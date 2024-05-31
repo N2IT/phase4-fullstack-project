@@ -44,6 +44,16 @@ const AgentProvider = ({ children }) => {
         handleEditClick()
     }
 
+    const handleUpdateUser = (updatedUser) => {
+        const updatedUsersArray = users.map(user => {
+            if (user.id === updatedUser.id)
+                return updatedUser
+            else return user;
+        });
+        setUsers(updatedUsersArray);
+        handleEditClick()
+    }
+
     useEffect(() => {
         fetch('/api/check-session')
             .then((r) => r.json())
@@ -63,6 +73,7 @@ const AgentProvider = ({ children }) => {
                 handleIdClick,
                 handleUpdateAccount,
                 handleUserIdClick,
+                handleUpdateUser,
                 isLoading,
                 navigate,
                 onSubmitAccountForm,
