@@ -5,34 +5,55 @@ import Unauthorized from './Unauthorized';
 import { AgentContext } from './AgentProvider';
 
 const UserById = () => {
-    const { agent, setUser, setAsDisabled } = useContext(AgentContext)
+    const { agent, user, setUser, setAsDisabled, errors, setErrors } = useContext(AgentContext)
 
     const { id } = useParams();
 
     useEffect(() => {
-        if (id) {
-            fetch(`/api/users/${id}`)
-                .then((r) => r.json())
-                .then((data) => setUser(data))
-                .then(() => setAsDisabled(true))
-                .catch(error => console.error('Errors:', error));
+        if (!agent) {
+            return;
         }
-    }, [])
+
+        fetch(`/api/users/${id}`)
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(data => { throw data; });
+                }
+                return response.json();
+            })
+            .then(data => {
+                setUser(data);
+                setAsDisabled(true);
+            })
+            .catch(error => {
+                console.error('Errors:', error);
+                setErrors([error.errors] || 'Unknown Error');
+                setUser(null);
+            });
+    }, [id, agent, setUser, setAsDisabled, setErrors]);
+
+    debugger
 
     return (
         <>
-            {agent ?
-                <div className='account-details'>
-                    <h2>User Details</h2>
-                    <p><EditUserForm id={id} /></p>
-                </div> :
-                <div>
-                    <Unauthorized />
-                </div>
-
-            }
+            {agent ? (
+                user ? (
+                    <div className='account-details'>
+                        <h2>User Details</h2>
+                        <EditUserForm id={id} />
+                    </div>
+                ) : (
+                    <div className='account-details'>
+                        {errors.length > 0 ? <h2>{errors[0]}</h2> : <h2>That user does not exist.</h2>}
+                    </div>
+                )
+            ) : (
+                <Unauthorized />
+            )}
         </>
-    )
+    );
+
+
 }
 
 export default UserById

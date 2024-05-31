@@ -63,7 +63,6 @@ class User(db.Model,SerializerMixin):
     account_id = db.Column(db.String, db.ForeignKey('accounts.id'))
     _password_hash = db.Column(db.String(12))
 
-
     @hybrid_property
     def password_hash(self):
         raise Exception('Password hashes may not be viewed')

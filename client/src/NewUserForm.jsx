@@ -35,7 +35,6 @@ const NewUserForm = () => {
                 body: JSON.stringify(values),
             })
                 .then((response) => {
-                    // Ensure the response is fully parsed before checking its content
                     if (!response.ok) {
                         response.json().then((data) => {
                             setErrors(data.errors);

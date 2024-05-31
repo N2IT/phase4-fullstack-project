@@ -10,7 +10,13 @@ const Users = () => {
   useEffect(() => {
     fetch('/api/users')
       .then((r) => r.json())
-      .then((data) => setUsers(data))
+      .then((data) => {
+        if (data.errors) {
+          setErrors(data.errors);
+        }
+        else
+          setUsers(data)
+      })
       .then(() => setIsLoading(false))
       .catch(error => console.error('Error:', error));
   }, [])
