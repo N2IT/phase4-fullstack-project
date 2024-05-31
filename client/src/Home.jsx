@@ -6,7 +6,13 @@ import { AgentContext } from './AgentProvider';
 
 const Home = () => {
 
-  const { agent } = useContext(AgentContext);
+  const { agent, isLoading } = useContext(AgentContext);
+
+  debugger
+
+  if (isLoading) {
+    return <div> Loading ... </div>
+  }
 
   return (
     <>
