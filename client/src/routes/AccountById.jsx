@@ -18,7 +18,6 @@ const AccountById = () => {
         }
 
         fetch(`/api/accounts/${id}`)
-
             .then(response => {
                 if (!response.ok) {
                     return response.json().then(data => { throw data; });
@@ -37,6 +36,8 @@ const AccountById = () => {
                 setAccount(null);
             });
 
+        // without this i lose userstablebyaccount data on page refresh
+        // possible alternate route?
         fetch('/api/users')
             .then((r) => r.json())
             .then((data) => {

@@ -22,7 +22,7 @@ const EditAccountForm = ({ id }) => {
         markup_variable: '',
         created_at: '',
         updated_at: '',
-        status: true,
+        status: "",
     });
 
     useEffect(() => {
@@ -40,7 +40,7 @@ const EditAccountForm = ({ id }) => {
                 markup_variable: `${account.markup_variable}`,
                 created_at: `${account.created_at}`,
                 updated_at: `${account.updated_at}`,
-                status: true,
+                status: `${account.status}` === 'true' ? 'Active' : 'Inactive',
             });
         }
     }, [account]);
@@ -235,6 +235,20 @@ const EditAccountForm = ({ id }) => {
                                 disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.updated_at} </p>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col lg={3} md={6} xs={12}>
+                            <label htmlFor="status">Status &nbsp; </label>
+                            <br />
+                            <input
+                                id="status"
+                                name="status"
+                                onChange={formik.handleChange}
+                                value={formik.values.status}
+                                disabled={disabled}
+                            />
+                            <p style={{ color: 'red' }}> {formik.errors.status} </p>
                         </Col>
                     </Row>
                     {disabled ?
