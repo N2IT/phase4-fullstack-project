@@ -9,7 +9,7 @@ import Unauthorized from '../components/Unauthorized';
 
 const AccountById = () => {
 
-    const { agent, isLoading, setAccount, setIsLoading, setUsers, setAsDisabled, setErrors } = useContext(AgentContext);
+    const { agent, account, isLoading, setAccount, setIsLoading, setUsers, setAsDisabled, setErrors, errors } = useContext(AgentContext);
     const { id } = useParams();
 
     useEffect(() => {

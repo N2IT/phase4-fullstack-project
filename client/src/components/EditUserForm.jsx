@@ -33,7 +33,7 @@ const EditUserForm = ({ id }) => {
                 company_name: `${user.account.company_name}`,
                 created_at: `${user.created_at}`,
                 updated_at: `${user.updated_at}`,
-                status: `${user.status}`,
+                status: `${user.status}` === 'true' ? 'Active' : 'Inactive' ,
             });
         }
     }, []);

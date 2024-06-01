@@ -70,8 +70,6 @@ const AgentProvider = ({ children }) => {
             });
     }, [])
 
-
-
     return (
         <AgentContext.Provider value={
             {
