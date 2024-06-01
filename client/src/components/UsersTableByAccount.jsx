@@ -1,17 +1,14 @@
 import { useContext, useEffect } from 'react'
 import { AgentContext } from '../AgentProvider';
 
-const UsersTableByAccount = ({ accountUsers }) => {
+const UsersTableByAccount = () => {
 
-    const { handleUserIdClick } = useContext(AgentContext);
+    const { users, account, handleUserIdClick } = useContext(AgentContext);
 
-    if (!accountUsers) {
-        return <>
-            <div className='account-details'>
-                <h1> Loading... </h1>
-            </div>
-        </>
-    }
+    const accountUsers = users.filter(user => {
+        // console.log(typeof user.account_id, typeof account.id);
+        return parseInt(user.account_id, 10) === account.id;
+    });
 
     return (
         <>

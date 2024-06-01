@@ -9,7 +9,7 @@ import Unauthorized from '../components/Unauthorized';
 
 const AccountById = () => {
 
-    const { agent, account, setAccount, setIsLoading, setUsers, users, setAsDisabled, errors, setErrors } = useContext(AgentContext);
+    const { agent, isLoading, setAccount, setIsLoading, setUsers, setAsDisabled, setErrors } = useContext(AgentContext);
     const { id } = useParams();
 
     useEffect(() => {
@@ -51,31 +51,10 @@ const AccountById = () => {
 
     }, [id, agent, setAccount, setAsDisabled, setErrors])
 
-    if (!account) {
-        return <>
-            <div className='account-details'>
-                <h1> Loading... </h1>
-            </div>
-        </>
-    }
-
-    if (!users) {
-        return <>
-            <div className='account-details'>
-                <h1> Loading... </h1>
-            </div>
-        </>
-    }
-
-    const accountUsers = users.filter(user => {
-        // console.log(typeof user.account_id, typeof account.id);
-        // console.log('Comparing:', user.account_id, account.id);
-        return parseInt(user.account_id, 10) === account.id;
-    });
-    
-    console.log('Filtered Users:', accountUsers);
-
-
+    if (isLoading) {
+        return <div> Loading ... </div>
+      }
+   
     return (
         <>
             {agent ? (
@@ -86,7 +65,7 @@ const AccountById = () => {
                             <EditAccountForm id={id} />
                         </div>
                         <div>
-                            <UsersTableByAccount accountUsers={accountUsers}/>
+                            <UsersTableByAccount />
                         </div>
 
                     </>

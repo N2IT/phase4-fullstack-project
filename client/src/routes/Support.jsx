@@ -1,15 +1,21 @@
 
-import { Link, useOutletContext } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { useContext } from 'react';
+import { AgentContext } from '../AgentProvider';
 // import { useEffect } from 'react';
 
 const Support = () => {
 
-  const [user, setUser] = useOutletContext();
+  const { agent, isLoading } = useContext(AgentContext)
+
+  if (isLoading) {
+    return <div> Loading ... </div>
+  }
 
   return (
     <>
       <div className="account-details">
-        {user ? (
+        {agent ? (
           <h2>Welcome to the Support page, {user.username}!</h2>
         ) :
           <div>

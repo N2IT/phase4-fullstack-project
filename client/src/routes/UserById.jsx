@@ -5,7 +5,7 @@ import Unauthorized from '../components/Unauthorized';
 import { AgentContext } from '../AgentProvider';
 
 const UserById = () => {
-    const { agent, user, setUser, setAsDisabled, errors, setErrors } = useContext(AgentContext)
+    const { agent, user, setUser, setAsDisabled, errors, setErrors, isLoading } = useContext(AgentContext)
     const { id } = useParams();
 
     useEffect(() => {
@@ -36,13 +36,9 @@ const UserById = () => {
             });
     }, [id, agent, setUser, setAsDisabled, setErrors]);
 
-    if (!user) {
-        return <>
-            <div className='account-details'>
-                <h1> Loading... </h1>
-            </div>
-        </>
-    }
+    if (isLoading) {
+        return <div> Loading ... </div>
+      }
 
     return (
         <>

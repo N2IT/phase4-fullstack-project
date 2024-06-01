@@ -19,7 +19,7 @@ const EditUserForm = ({ id }) => {
         company_name: '',
         created_at: '',
         updated_at: '',
-        status: true,
+        status: '',
     });
 
     useEffect(() => {
@@ -33,7 +33,7 @@ const EditUserForm = ({ id }) => {
                 company_name: `${user.account.company_name}`,
                 created_at: `${user.created_at}`,
                 updated_at: `${user.updated_at}`,
-                status: true,
+                status: `${user.status}`,
             });
         }
     }, []);

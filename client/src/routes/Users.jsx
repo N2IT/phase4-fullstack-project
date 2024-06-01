@@ -5,7 +5,7 @@ import UsersTable from '../components/UsersTable'
 
 const Users = () => {
 
-  const { agent, users, setUsers, setIsLoading } = useContext(AgentContext);
+  const { agent, setUsers, setIsLoading, isLoading } = useContext(AgentContext);
 
   useEffect(() => {
     fetch('/api/users')
@@ -21,23 +21,10 @@ const Users = () => {
       .catch(error => console.error('Error:', error));
   }, [])
 
-  if (!users) {
-    return <>
-      <div className='account-details'>
-        <h1> Loading... </h1>
-      </div>
-    </>
-  }
 
-  if (!agent) {
-    return <>
-      <div className='account-details'>
-        <h1> Loading... </h1>
-      </div>
-    </>
+  if (isLoading) {
+    return <div> Loading ... </div>
   }
-
-  
 
 
   return (
