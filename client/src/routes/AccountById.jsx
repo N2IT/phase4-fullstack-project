@@ -67,6 +67,15 @@ const AccountById = () => {
         </>
     }
 
+    const accountUsers = users.filter(user => {
+        // console.log(typeof user.account_id, typeof account.id);
+        // console.log('Comparing:', user.account_id, account.id);
+        return parseInt(user.account_id, 10) === account.id;
+    });
+    
+    console.log('Filtered Users:', accountUsers);
+
+
     return (
         <>
             {agent ? (
@@ -77,7 +86,7 @@ const AccountById = () => {
                             <EditAccountForm id={id} />
                         </div>
                         <div>
-                            <UsersTableByAccount />
+                            <UsersTableByAccount accountUsers={accountUsers}/>
                         </div>
 
                     </>

@@ -25,7 +25,7 @@ class Account(db.Model, SerializerMixin):
     
     @validates('account_number')
     def validate_account_number(self, key, value):
-        if value == "":
+        if value == None:
             raise ValueError ({'error' : '422: Account number must contain a value'}, 422)
         elif Account.query.filter(Account.account_number == value).first():
             raise ValueError ({'error' : '422: Account number must be unique'}, 422)
@@ -60,7 +60,7 @@ class User(db.Model,SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
     status = db.Column(db.Boolean)
-    account_id = db.Column(db.String, db.ForeignKey('accounts.id'))
+    account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'))
     _password_hash = db.Column(db.String(12))
 
     @hybrid_property

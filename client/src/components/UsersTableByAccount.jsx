@@ -1,27 +1,11 @@
 import { useContext, useEffect } from 'react'
 import { AgentContext } from '../AgentProvider';
 
-const UsersTableByAccount = () => {
+const UsersTableByAccount = ({ accountUsers }) => {
 
-    const { users, account, handleUserIdClick } = useContext(AgentContext);
+    const { handleUserIdClick } = useContext(AgentContext);
 
-    // RUNNING USEEFFECT ON ACCOUNTBYID PAGE PASSING DOWN VIA CONTEXT?
-    // THEN FILTER THE USERS TO MATCH USER.ACCOUNT.ACCOUNT_NUMBER W/ ACCOUNT ID?
-
-
-    // debugger
-
-    const accountUsers = users.filter((user) => {
-        if (user.account_id === account.id) {
-            console.log(user)
-        }
-    })
-
-    console.log(accountUsers)
-
-    // LEAVING OFF HERE TO PICKUP LATER
-
-    if (!users) {
+    if (!accountUsers) {
         return <>
             <div className='account-details'>
                 <h1> Loading... </h1>
@@ -31,6 +15,7 @@ const UsersTableByAccount = () => {
 
     return (
         <>
+            <h3>Account Users</h3>
             <table>
                 <thead>
                     <tr>
@@ -50,7 +35,7 @@ const UsersTableByAccount = () => {
                             <td>{user.last_name}</td>
                             <td>{user.email}</td>
                             {/* <td>{user.role_id}</td> */}
-                            <td>{user.status === true ? <p>Active</p> : <p>Inactive</p> }</td>
+                            <td>{user.status === true ? <p>Active</p> : <p>Inactive</p>}</td>
                             <td><p className="view-btn" title="View User" onClick={() => handleUserIdClick(user)}> View </p></td>
                         </tr>
                     ))}
