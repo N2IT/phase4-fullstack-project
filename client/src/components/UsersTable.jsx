@@ -29,7 +29,7 @@ const UsersTable = () => {
                             <td>{user.username}</td>
                             {/* <td>{user.role_id}</td> */}
                             <td>{user.account.account_number}</td>
-                            <td>{user.status === true ? <p>Active</p> : <p>Inactive</p> }</td>
+                            <td>{user.status}</td>
                             <td><p className="view-btn" title="View User" onClick={() => handleUserIdClick(user)}> View </p></td>
                         </tr>
                     ))}

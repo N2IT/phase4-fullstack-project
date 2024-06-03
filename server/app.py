@@ -96,6 +96,9 @@ class AccountById(Resource):
         for attr in data:
           setattr(account, attr, data[attr])
         
+        if data.get('status') == 'inactive':
+          return {'NOTICE' : 'YOUR ACCOUNT IS BEING SET TO INACTIVE!'}
+        
         db.session.add(account)
         db.session.commit()
 

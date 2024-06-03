@@ -32,7 +32,7 @@ const UsersTableByAccount = () => {
                             <td>{user.last_name}</td>
                             <td>{user.email}</td>
                             {/* <td>{user.role_id}</td> */}
-                            <td>{user.status === true ? <p>Active</p> : <p>Inactive</p>}</td>
+                            <td>{user.status}</td>
                             <td><p className="view-btn" title="View User" onClick={() => handleUserIdClick(user)}> View </p></td>
                         </tr>
                     ))}
