@@ -2,7 +2,7 @@ from sqlalchemy_serializer import SerializerMixin
 from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import validates
 from flask_sqlalchemy import SQLAlchemy
-from config import db, bcrypt
+from config import db, bcrypt, metadata
 
 
 class Account(db.Model, SerializerMixin):
@@ -61,6 +61,7 @@ class User(db.Model,SerializerMixin):
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
     status = db.Column(db.String, nullable=False)
     account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'))
+    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     _password_hash = db.Column(db.String(12))
 
     @hybrid_property
@@ -104,6 +105,7 @@ class User(db.Model,SerializerMixin):
 
     # relationships
     account = db.relationship('Account', back_populates = 'users')
+    role = db.relationship('Role', back_populates = 'users')
 
     serialize_rules = ('-account.users', '-account.created_at', '-account.updated_at', '-account.address_1', '-account.address_2', '-account.city', '-account.id', '-account.phone', '-account.zip_code')
 
@@ -111,15 +113,43 @@ class User(db.Model,SerializerMixin):
         return f'User {self.id}, {self.first_name}, {self.last_name}, {self.username}, {self.created_at}, {self.updated_at}, {self.status}, {self.account_id}'
 
 
-# class Role(db.Model, SerializerMixin):
-#     pass
+role_permissions = db.Table (
+    'role_permissions',
+    metadata,
+    db.Column('role_id', db.Integer, db.ForeignKey(
+        'roles.id'), primary_key=True),
+    db.Column('permission_id', db.Integer, db.ForeignKey(
+        'permissions.id'), primary_key=True)
+)
+
+class Role(db.Model, SerializerMixin):
+    __tablename__ = 'roles'
+    id = db.Column(db.Integer, primary_key = True)
+    title = db.Column(db.String)
+
+    # relationships
+    permissions = db.relationship('Permission', secondary=role_permissions, back_populates='roles')
+    # permissions = db.relationship('Permission', back_populates='roles')
+    users = db.relationship('User', back_populates='role')
+
+    def __repr__(self):
+        return f'Role {self.id}, {self.title}'
 
 
-# class Permisssion(db.Model, SerializerMixin):
-#     pass
+class Permission(db.Model, SerializerMixin):
+    __tablename__ = 'permissions'
+    id = db.Column(db.Integer, primary_key = True)
+    name = db.Column(db.String)
+    description = db.Column(db.String)
 
-# class RolePermission(db.Model, SerializerMixin):
-#     pass
+    #relationship
+    roles = db.relationship('Role', secondary=role_permissions, back_populates='permissions')
+    # roles = db.relationship('Role', back_populates='permissions')
+
+
+    def __repr__(self):
+        return f'Role {self.id}, {self.name}, {self.description}'
+
 
 # class Quote(db.Model, SerializerMixin):
 #     pass
