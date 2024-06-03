@@ -6,7 +6,7 @@ from models import Account, User, Role, Permission, role_permissions
 
 fake = Faker()
 status_list = ['active', 'inactive']
-roles = [0, 1, 2]
+roles = [1, 2, 3]
 
 def create_accounts():
   accounts = []

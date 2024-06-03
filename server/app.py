@@ -17,14 +17,14 @@ def check_if_logged_in():
   else:
     print('User is logged in')
     print(session['user_id'])
-# THIS A LITTLE TOO RESTRICTIVE AND WILL NOT ALLOW LOGIN NOR ACCOUNT CREATION
+
 
 class Accounts(Resource):
   def get(self):
     id = session.get('user_id')
     user = User.query.filter(User.id == id).first()
     
-    if user.role_id == 0:
+    if user.role_id == 1:
       accounts = [account.to_dict(rules = ('-updated_at',)) for account in Account.query.all()]
       # exmaple for visibility by role if account.role == 'admin'
 
