@@ -4,7 +4,7 @@ from flask import request, session, make_response
 from flask_restful import Api, Resource
 import random
 from config import app, db, api
-from models import Account, User
+from models import Account, User, Role, Permission, role_permissions
 
 
 # just imported Account, User above
@@ -21,16 +21,22 @@ def check_if_logged_in():
 
 class Accounts(Resource):
   def get(self):
-    accounts = [account.to_dict(rules = ('-updated_at',)) for account in Account.query.all()]
-    # exmaple for visibility by role if account.role == 'admin'
+    id = session.get('user_id')
+    user = User.query.filter(User.id == id).first()
+    
+    if user.role_id == 0:
+      accounts = [account.to_dict(rules = ('-updated_at',)) for account in Account.query.all()]
+      # exmaple for visibility by role if account.role == 'admin'
 
-    if not accounts:
-      return {'error' : '204: No content available'}, 204
-      
-    return make_response(
-      accounts,
-      200
-      )
+      if not accounts:
+        return {'error' : '204: No content available'}, 204
+        
+      return make_response(
+        accounts,
+        200
+        )
+    else:
+      return {'error' : 'You are not authorized. Please contact your administrator.'}
   
   def post(self):
     form_data = request.get_json()

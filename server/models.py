@@ -107,7 +107,7 @@ class User(db.Model,SerializerMixin):
     account = db.relationship('Account', back_populates = 'users')
     role = db.relationship('Role', back_populates = 'users')
 
-    serialize_rules = ('-account.users', '-account.created_at', '-account.updated_at', '-account.address_1', '-account.address_2', '-account.city', '-account.id', '-account.phone', '-account.zip_code')
+    serialize_rules = ('-account.users', '-account.created_at', '-account.updated_at', '-account.address_1', '-account.address_2', '-account.city', '-account.id', '-account.phone', '-account.zip_code', '-role')
 
     def __repr__(self):
         return f'User {self.id}, {self.first_name}, {self.last_name}, {self.username}, {self.created_at}, {self.updated_at}, {self.status}, {self.account_id}'
