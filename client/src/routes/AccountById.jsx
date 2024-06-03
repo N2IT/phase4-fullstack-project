@@ -46,6 +46,7 @@ const AccountById = () => {
                 }
                 else
                     setUsers(data)
+                    setErrors(null)
             })
             .then(() => setIsLoading(false))
             .catch(error => console.error('Error:', error));

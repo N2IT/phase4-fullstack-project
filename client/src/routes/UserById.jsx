@@ -13,10 +13,6 @@ const UserById = () => {
             return;
         }
 
-        console.log(user)
-
-        // debugger
-
         fetch(`/api/users/${id}`)
             .then(response => {
                 if (!response.ok) {
