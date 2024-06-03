@@ -1,10 +1,11 @@
 from config import app, db
-from random import randint, choice as rc
+from random import randint, choice as rc, choices
 from datetime import datetime
 from faker import Faker
 from models import Account, User
 
 fake = Faker()
+status_list = ['active', 'inactive']
 
 def create_accounts():
   accounts = []
@@ -22,7 +23,7 @@ def create_accounts():
       markup_variable = rc(range(1, 2)),
       created_at = datetime.now(),
       updated_at = datetime.now(),
-      status = fake.boolean(chance_of_getting_true=85),
+      status = choices(status_list, weights = [10, 1], k=1)[0]
     )
   
     accounts.append(a)
@@ -40,7 +41,7 @@ def create_users():
       username=fake.profile(fields=['username'])['username'],
       created_at = datetime.now(),
       updated_at = datetime.now(),
-      status = fake.boolean(chance_of_getting_true=85),
+      status = choices(status_list, weights = [10, 1], k=1)[0],
       account_id = rc([account.id for account in accounts]),
     )
 

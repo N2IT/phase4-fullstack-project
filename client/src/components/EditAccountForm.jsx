@@ -40,7 +40,7 @@ const EditAccountForm = ({ id }) => {
                 markup_variable: `${account.markup_variable}`,
                 created_at: `${account.created_at}`,
                 updated_at: `${account.updated_at}`,
-                status: `${account.status}` === 'true' ? 'Active' : 'Inactive',
+                status: `${account.status}`,
             });
         }
     }, [account]);
@@ -241,13 +241,17 @@ const EditAccountForm = ({ id }) => {
                         <Col lg={3} md={6} xs={12}>
                             <label htmlFor="status">Status &nbsp; </label>
                             <br />
-                            <input
+                            {/* <input
                                 id="status"
                                 name="status"
                                 onChange={formik.handleChange}
                                 value={formik.values.status}
                                 disabled={disabled}
-                            />
+                            /> */}
+                            <select id='status' name='status' onChange={formik.handleChange} value={formik.values.status} disabled={disabled}>
+                                <option value='active'>Active</option>
+                                <option value='inactive'>Inactive</option>
+                            </select>
                             <p style={{ color: 'red' }}> {formik.errors.status} </p>
                         </Col>
                     </Row>

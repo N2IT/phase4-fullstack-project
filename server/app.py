@@ -60,7 +60,7 @@ class Accounts(Resource):
         company_name = company_name,
         city = city,
         state = state,
-        status = True
+        status = 'active'
       )
 
       db.session.add(new_account)
@@ -198,7 +198,7 @@ class Users(Resource):
           last_name = last_name,
           username = username,
           email = email,
-          status = True,
+          status = 'active',
           account_id = account_id
         )        
 

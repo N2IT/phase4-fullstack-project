@@ -19,7 +19,7 @@ class Account(db.Model, SerializerMixin):
     phone = db.Column(db.Integer)
     discount = db.Column(db.Integer)
     markup_variable = db.Column(db.Integer)
-    status = db.Column(db.Boolean)
+    status = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
     
@@ -59,7 +59,7 @@ class User(db.Model,SerializerMixin):
     last_name = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, server_default=db.func.now(), server_onupdate=db.func.now())
-    status = db.Column(db.Boolean)
+    status = db.Column(db.String, nullable=False)
     account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'))
     _password_hash = db.Column(db.String(12))
 
