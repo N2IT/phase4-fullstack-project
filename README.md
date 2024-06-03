@@ -1,3 +1,22 @@
+# IDEA
+seeding the app will create you as the primary admin where you will have full access.
+Logout to test usecase as potential new user / account
+new users can create accounts but will need admin approval before gaining additional features and access
+- account id will be assigned, but no discount - pending admin approval
+- initially have 'sales' access which includes:
+Read Account,
+Read User,
+Create Quote,
+Read Quote,
+Update Quote (associated to their user account)
+
+Admin - full access
+
+Manager - same as admin access EXCEPT:
+Cannot Create new account on behalf of new user
+Cannot update account details without admin permissions
+Cannot delete account
+
 # Simple Flask Project Generator for Flatiron School
 
 This script is for generating a barebone phase 4 project that's already configured for Flask with a React frontend.
