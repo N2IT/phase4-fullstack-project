@@ -98,7 +98,6 @@ class AccountById(Resource):
         return {"errors": str(e)}, 500
 
 
-
   def patch(self,id):
     try:
       account = Account.query.filter(Account.id == id).first()
@@ -162,7 +161,6 @@ class UserById(Resource):
       return {'errors' : str(e)}, 500
     
 
-    
 class Users(Resource):
   def get(self):
     try:
@@ -235,6 +233,7 @@ class Users(Resource):
     except Exception as e:
       return {'errors' : str(e)}, 500
     
+
 class CheckSession(Resource):
   def get(self):
         user = User.query.filter(User.id == session.get('user_id')).first()
@@ -253,8 +252,11 @@ class Login(Resource):
 
     user = User.query.filter(User.username == username).first()
 
+    if user.status == 'inactive':
+      return {'errors' : 'This users account is no longer active.'}, 401
+
     if user is None or not user.authenticate(password):
-        return {'errors': 'Invalid username or password'}, 401
+      return {'errors': 'Invalid username or password'}, 401
 
     session['user_id'] = user.id
     return user.to_dict(), 200
