@@ -41,9 +41,6 @@ class Accounts(Resource):
         return {'errors' : str(e)}, 404
       except Exception as e:
         return {'errors' : str(e)}, 500 
-
-    else:
-      return {'error' : 'You are not authorized. Please contact your administrator.'}
   
   def post(self):
     form_data = request.get_json()
@@ -89,17 +86,34 @@ class Accounts(Resource):
 
 class AccountById(Resource):
   def get(self,id):
-    try:
-      account = Account.query.filter(Account.id == id).first()
-      if account:
-        return make_response(
-          account.to_dict(),
-          200
-        )
-      else:
-        return {"errors": "404: That account does not exist"}, 404
-    except Exception as e:
-        return {"errors": str(e)}, 500
+    userId = session.get('user_id')
+    user = User.query.filter(User.id == userId).first()
+    if user.role_id == 1:
+      try:
+        account = Account.query.filter(Account.id == id).first()
+        if account:
+          return make_response(
+            account.to_dict(),
+            200
+          )
+        else:
+          return {"errors": "404: That account does not exist"}, 404
+      except Exception as e:
+          return {"errors": str(e)}, 500
+    else:
+      try:
+        account = Account.query.filter(Account.id == user.account_id).first()
+        if account:
+          return make_response(
+            account.to_dict(),
+            200
+          )
+        else:
+          return {"errors": "404: That account does not exist"}, 404
+      except Exception as e:
+          return {"errors": str(e)}, 500
+
+      
 
   def patch(self,id):
     try:
