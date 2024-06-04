@@ -14,7 +14,7 @@ function NavBar() {
   useEffect(() => {
     if (agent) {
       setExpanded(false);
-      setValueId(agent.id)
+      setValueId(agent.account_id)
     }
   }, [agent]);
 

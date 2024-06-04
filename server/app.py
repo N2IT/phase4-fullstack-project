@@ -20,148 +20,109 @@ def check_if_logged_in():
 
 class Accounts(Resource):
   def get(self):
-    userId = session.get('user_id')
-    user = User.query.filter(User.id == userId).first()
+    try:
+      accounts = [account.to_dict(rules = ('-updated_at',)) for account in Account.query.all()]
+      # exmaple for visibility by role if account.role == 'admin'
 
-    if userId:
-      if user.role_id == 1:
-        try:
-          accounts = [account.to_dict(rules = ('-updated_at',)) for account in Account.query.all()]
-          # exmaple for visibility by role if account.role == 'admin'
+      if not accounts:
+        return {'error' : '204: No content available'}, 204
+        
+      return make_response(
+        accounts,
+        200
+        )
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
+    except Exception as e:
+      return {'errors' : str(e)}, 500
 
-          if not accounts:
-            return {'error' : '204: No content available'}, 204
-            
-          return make_response(
-            accounts,
-            200
-            )
-        except ValueError as e:
-          return {'errors' : str(e)}, 404
-        except Exception as e:
-          return {'errors' : str(e)}, 500
-      else:
-        return {'errors' : '401: Unathorized'}, 401 
-    else:
-      return {'errors' : '401: Unathorized'}, 401 
   
   def post(self):
-    userId = session.get('user_id')
-    user = User.query.filter(User.id == userId).first()
-    if userId:
-      if user.role_id == 1:
-        try:
-          form_data = request.get_json()
+      try:
+        form_data = request.get_json()
+        
+        account_number = int(random.random()*1000)
+        company_name = form_data.get('company_name')
+        city = form_data.get('city')
+        state = form_data.get('state')
+        
+        errors = []
+
+        if form_data:
+          if not account_number:
+            errors.append('An account number must be entered.')
+          elif Account.query.filter(Account.account_number == account_number).first():
+            errors.append('The account number must be unique.')
+          elif not company_name:
+            errors.append('A company name must be entered.')
+          elif Account.query.filter(Account.company_name == company_name).first():
+            errors.append('The company name must be unique.')
           
-          account_number = int(random.random()*1000)
-          company_name = form_data.get('company_name')
-          city = form_data.get('city')
-          state = form_data.get('state')
+          if errors:
+            return {'errors' : errors }, 422
           
-          errors = []
+          new_account = Account(
+            account_number = account_number,
+            company_name = company_name,
+            city = city,
+            state = state,
+            status = 'active'
+          )
 
-          if form_data:
-            if not account_number:
-              errors.append('An account number must be entered.')
-            elif Account.query.filter(Account.account_number == account_number).first():
-              errors.append('The account number must be unique.')
-            elif not company_name:
-              errors.append('A company name must be entered.')
-            elif Account.query.filter(Account.company_name == company_name).first():
-              errors.append('The company name must be unique.')
-            
-            if errors:
-              return {'errors' : errors }, 422
-            
-            new_account = Account(
-              account_number = account_number,
-              company_name = company_name,
-              city = city,
-              state = state,
-              status = 'active'
-            )
+          db.session.add(new_account)
+          db.session.commit()
 
-            db.session.add(new_account)
-            db.session.commit()
+          session['account_id'] = new_account.id
 
-            session['account_id'] = new_account.id
-
-            return new_account.to_dict(), 201
-          else:
-            return {'errors' : '422: Unprocessable Entry'}, 422
-        except ValueError as e:
-          return {'errors' : str(e)}, 404
-        except Exception as e:
-          return {'errors' : str(e)}, 500
-      else:
-        return {'errors' : '401: Unathorized'}, 401
-    else:
-      return {'errors' : '401: Unathorized'}, 401 
+          return new_account.to_dict(), 201
+        else:
+          return {'errors' : '422: Unprocessable Entry'}, 422
+      except ValueError as e:
+        return {'errors' : str(e)}, 404
+      except Exception as e:
+        return {'errors' : str(e)}, 500
 
 
 class AccountById(Resource):
   def get(self,id):
-    userId = session.get('user_id')
-    user = User.query.filter(User.id == userId).first()
-    if userId:
-      if user.role_id == 1:
-        try:
-          account = Account.query.filter(Account.id == id).first()
-          if account:
-            return make_response(
-              account.to_dict(),
-              200
-            )
-          else:
-            return {"errors": "404: That account does not exist"}, 404
-        except Exception as e:
-            return {"errors": str(e)}, 500
+    try:
+      account = Account.query.filter(Account.id == id).first()
+      if account:
+        return make_response(
+          account.to_dict(),
+          200
+        )
       else:
-        try:
-          account = Account.query.filter(Account.id == user.account_id).first()
-          if account:
-            return make_response(
-              account.to_dict(),
-              200
-            )
-        except Exception as e:
-            return {"errors": str(e)}, 500
-    else:
-      return {'errors' : '401: Unathorized'}, 401
+        return {"errors": "404: That account does not exist"}, 404
+    except Exception as e:
+        return {"errors": str(e)}, 500
+
 
 
   def patch(self,id):
-    userId = session.get('user_id')
-    user = User.query.filter(User.id == userId).first()
-    if userId:
-      if user.role_id == 1:
-        try:
-          account = Account.query.filter(Account.id == id).first()
-          if account:
-            data = request.get_json()
-            for attr in data:
-              setattr(account, attr, data[attr])
-            
-            # if data.get('status') == 'inactive':
-            #   return {'NOTICE' : 'YOUR ACCOUNT IS BEING SET TO INACTIVE!'}
-            
-            db.session.add(account)
-            db.session.commit()
+    try:
+      account = Account.query.filter(Account.id == id).first()
+      if account:
+        data = request.get_json()
+        for attr in data:
+          setattr(account, attr, data[attr])
+        
+        # if data.get('status') == 'inactive':
+        #   return {'NOTICE' : 'YOUR ACCOUNT IS BEING SET TO INACTIVE!'}
+        
+        db.session.add(account)
+        db.session.commit()
 
-            return make_response(
-              account.to_dict(), 
-              200
-            )
-          else:
-            return {'errors' : 'That account does not exist'}
-        except ValueError as e:
-          return {'errors' : str(e)}, 404
-        except Exception as e:
-          return {'errors' : str(e)}, 500
+        return make_response(
+          account.to_dict(), 
+          200
+        )
       else:
-        return {'errors' : '401: Unathorized'}, 401
-    else:
-      return {'errors' : '401: Unathorized'}, 401
+        return {'errors' : 'That account does not exist'}
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
+    except Exception as e:
+      return {'errors' : str(e)}, 500
 
 
 class UserById(Resource):
@@ -204,70 +165,76 @@ class UserById(Resource):
     
 class Users(Resource):
   def get(self):
-    users = [user.to_dict(rules = ('-_password_hash',)) for user in User.query.all()]
+    try:
+      users = [user.to_dict(rules = ('-_password_hash',)) for user in User.query.all()]
 
-    if not users:
-      return {'error' : '204: No content available'}, 204
+      if not users:
+        return {'error' : '204: No content available'}, 204
 
-    return make_response(
-      users,
-      200
-    )
+      return make_response(
+        users,
+        200
+      )
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
+    except Exception as e:
+      return {'errors' : str(e)}, 500
   
   def post(self):
-    form_data = request.get_json()
+    try:
+      form_data = request.get_json()
+      
+      first_name = form_data.get('first_name')
+      last_name = form_data.get('last_name')
+      username = form_data.get('username')
+      email = form_data.get('email')
+      if session['account_id']:
+        account_id = session['account_id']
+      # account_id = form_data.get('account_id')
+      password = form_data.get('password_hash')
+
+      errors = []
+
+      if form_data:
+        if not first_name:
+          errors.append('A first name must be entered.')
+        elif not last_name:
+          errors.append('Please enter a last name.')
+        elif not username:
+          errors.append('Please enter a username.')
+        elif User.query.filter(User.username == username).first():
+          errors.append('That username is already in use. Please try again.')
+        elif not email:
+          errors.append('Please enter an email')
+        elif User.query.filter(User.email == email).first():
+          errors.append('This email is already used. Please enter another email address.')
+        
+        if errors:
+          return {'errors' : errors }, 422
+        
+        if 'username' in form_data:
+          new_user = User(
+            first_name = first_name,
+            last_name = last_name,
+            username = username,
+            email = email,
+            status = 'active',
+            account_id = account_id
+          )        
+
+          new_user.password_hash = form_data['password']
+
+          db.session.add(new_user)
+          db.session.commit()
+
+          session['user_id'] = new_user.id
+
+          return new_user.to_dict(), 201
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
+    except Exception as e:
+      return {'errors' : str(e)}, 500
     
-    first_name = form_data.get('first_name')
-    last_name = form_data.get('last_name')
-    username = form_data.get('username')
-    email = form_data.get('email')
-    if session['account_id']:
-      account_id = session['account_id']
-    # account_id = form_data.get('account_id')
-    password = form_data.get('password_hash')
-
-    errors = []
-
-    if form_data:
-      if not first_name:
-        errors.append('A first name must be entered.')
-      elif not last_name:
-        errors.append('Please enter a last name.')
-      elif not username:
-        errors.append('Please enter a username.')
-      elif User.query.filter(User.username == username).first():
-        errors.append('That username is already in use. Please try again.')
-      elif not email:
-        errors.append('Please enter an email')
-      elif User.query.filter(User.email == email).first():
-        errors.append('This email is already used. Please enter another email address.')
-      
-      if errors:
-        return {'errors' : errors }, 422
-      
-      if 'username' in form_data:
-        new_user = User(
-          first_name = first_name,
-          last_name = last_name,
-          username = username,
-          email = email,
-          status = 'active',
-          account_id = account_id
-        )        
-
-        new_user.password_hash = form_data['password']
-
-        db.session.add(new_user)
-        db.session.commit()
-
-        session['user_id'] = new_user.id
-
-        return new_user.to_dict(), 201
-
-    else:
-      return {'errors' : '422: Unprocessable Entry'}, 422
-
-
 class CheckSession(Resource):
   def get(self):
         user = User.query.filter(User.id == session.get('user_id')).first()
