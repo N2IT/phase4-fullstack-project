@@ -6,10 +6,8 @@ import random
 from config import app, db, api
 from models import Account, User, Role, Permission, role_permissions
 
-
 # just imported Account, User above
 # need to write up the Routes now
-
 
 @app.before_request
 def check_if_logged_in():
@@ -22,11 +20,10 @@ def check_if_logged_in():
 
 class Accounts(Resource):
   def get(self):
-    breakpoint()
-    id = session.get('user_id')
-    user = User.query.filter(User.id == id).first()
+    userId = session.get('user_id')
+    user = User.query.filter(User.id == userId).first()
 
-    if id:
+    if userId:
       if user.role_id == 1:
         try:
           accounts = [account.to_dict(rules = ('-updated_at',)) for account in Account.query.all()]
@@ -49,101 +46,122 @@ class Accounts(Resource):
       return {'errors' : '401: Unathorized'}, 401 
   
   def post(self):
-    form_data = request.get_json()
-    
-    account_number = int(random.random()*1000)
-    company_name = form_data.get('company_name')
-    city = form_data.get('city')
-    state = form_data.get('state')
-    
-    errors = []
+    userId = session.get('user_id')
+    user = User.query.filter(User.id == userId).first()
+    if userId:
+      if user.role_id == 1:
+        try:
+          form_data = request.get_json()
+          
+          account_number = int(random.random()*1000)
+          company_name = form_data.get('company_name')
+          city = form_data.get('city')
+          state = form_data.get('state')
+          
+          errors = []
 
-    if form_data:
-      if not account_number:
-        errors.append('An account number must be entered.')
-      elif Account.query.filter(Account.account_number == account_number).first():
-        errors.append('The account number must be unique.')
-      elif not company_name:
-        errors.append('A company name must be entered.')
-      elif Account.query.filter(Account.company_name == company_name).first():
-        errors.append('The company name must be unique.')
-      
-      if errors:
-        return {'errors' : errors }, 422
-      
-      new_account = Account(
-        account_number = account_number,
-        company_name = company_name,
-        city = city,
-        state = state,
-        status = 'active'
-      )
+          if form_data:
+            if not account_number:
+              errors.append('An account number must be entered.')
+            elif Account.query.filter(Account.account_number == account_number).first():
+              errors.append('The account number must be unique.')
+            elif not company_name:
+              errors.append('A company name must be entered.')
+            elif Account.query.filter(Account.company_name == company_name).first():
+              errors.append('The company name must be unique.')
+            
+            if errors:
+              return {'errors' : errors }, 422
+            
+            new_account = Account(
+              account_number = account_number,
+              company_name = company_name,
+              city = city,
+              state = state,
+              status = 'active'
+            )
 
-      db.session.add(new_account)
-      db.session.commit()
+            db.session.add(new_account)
+            db.session.commit()
 
-      session['account_id'] = new_account.id
+            session['account_id'] = new_account.id
 
-      return new_account.to_dict(), 201
-
+            return new_account.to_dict(), 201
+          else:
+            return {'errors' : '422: Unprocessable Entry'}, 422
+        except ValueError as e:
+          return {'errors' : str(e)}, 404
+        except Exception as e:
+          return {'errors' : str(e)}, 500
+      else:
+        return {'errors' : '401: Unathorized'}, 401
     else:
-      return {'errors' : '422: Unprocessable Entry'}, 422
+      return {'errors' : '401: Unathorized'}, 401 
 
 
 class AccountById(Resource):
   def get(self,id):
     userId = session.get('user_id')
     user = User.query.filter(User.id == userId).first()
-    if user.role_id == 1:
-      try:
-        account = Account.query.filter(Account.id == id).first()
-        if account:
-          return make_response(
-            account.to_dict(),
-            200
-          )
-        else:
-          return {"errors": "404: That account does not exist"}, 404
-      except Exception as e:
-          return {"errors": str(e)}, 500
+    if userId:
+      if user.role_id == 1:
+        try:
+          account = Account.query.filter(Account.id == id).first()
+          if account:
+            return make_response(
+              account.to_dict(),
+              200
+            )
+          else:
+            return {"errors": "404: That account does not exist"}, 404
+        except Exception as e:
+            return {"errors": str(e)}, 500
+      else:
+        try:
+          account = Account.query.filter(Account.id == user.account_id).first()
+          if account:
+            return make_response(
+              account.to_dict(),
+              200
+            )
+        except Exception as e:
+            return {"errors": str(e)}, 500
     else:
-      try:
-        account = Account.query.filter(Account.id == user.account_id).first()
-        if account:
-          return make_response(
-            account.to_dict(),
-            200
-          )
-        else:
-          return {"errors": "404: That account does not exist"}, 404
-      except Exception as e:
-          return {"errors": str(e)}, 500
+      return {'errors' : '401: Unathorized'}, 401
 
 
   def patch(self,id):
-    try:
-      account = Account.query.filter(Account.id == id).first()
-      if account:
-        data = request.get_json()
-        for attr in data:
-          setattr(account, attr, data[attr])
-        
-        # if data.get('status') == 'inactive':
-        #   return {'NOTICE' : 'YOUR ACCOUNT IS BEING SET TO INACTIVE!'}
-        
-        db.session.add(account)
-        db.session.commit()
+    userId = session.get('user_id')
+    user = User.query.filter(User.id == userId).first()
+    if userId:
+      if user.role_id == 1:
+        try:
+          account = Account.query.filter(Account.id == id).first()
+          if account:
+            data = request.get_json()
+            for attr in data:
+              setattr(account, attr, data[attr])
+            
+            # if data.get('status') == 'inactive':
+            #   return {'NOTICE' : 'YOUR ACCOUNT IS BEING SET TO INACTIVE!'}
+            
+            db.session.add(account)
+            db.session.commit()
 
-        return make_response(
-          account.to_dict(), 
-          200
-        )
+            return make_response(
+              account.to_dict(), 
+              200
+            )
+          else:
+            return {'errors' : 'That account does not exist'}
+        except ValueError as e:
+          return {'errors' : str(e)}, 404
+        except Exception as e:
+          return {'errors' : str(e)}, 500
       else:
-        return {'errors' : 'That account does not exist'}
-    except ValueError as e:
-      return {'errors' : str(e)}, 404
-    except Exception as e:
-      return {'errors' : str(e)}, 500 
+        return {'errors' : '401: Unathorized'}, 401
+    else:
+      return {'errors' : '401: Unathorized'}, 401
 
 
 class UserById(Resource):
