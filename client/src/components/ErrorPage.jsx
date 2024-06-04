@@ -1,7 +1,8 @@
 const ErrorPage = () => {
     return (
-        <div className="">
-            <h1>We are off the path!</h1>
+        <div className="account-details">
+            <h2>Either this page does not exist OR you do not have proper authorization.</h2>
+            <p>Contact the administrator for assistance.</p>
             <a className="" href="/"><p>Click here to return to home page.</p></a>
         </div>
     );

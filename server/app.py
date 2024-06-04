@@ -10,6 +10,7 @@ from models import Account, User, Role, Permission, role_permissions
 # just imported Account, User above
 # need to write up the Routes now
 
+
 @app.before_request
 def check_if_logged_in():
   if session.get('user_id') is None:
@@ -25,16 +26,22 @@ class Accounts(Resource):
     user = User.query.filter(User.id == id).first()
     
     if user.role_id == 1:
-      accounts = [account.to_dict(rules = ('-updated_at',)) for account in Account.query.all()]
-      # exmaple for visibility by role if account.role == 'admin'
+      try:
+        accounts = [account.to_dict(rules = ('-updated_at',)) for account in Account.query.all()]
+        # exmaple for visibility by role if account.role == 'admin'
 
-      if not accounts:
-        return {'error' : '204: No content available'}, 204
-        
-      return make_response(
-        accounts,
-        200
-        )
+        if not accounts:
+          return {'error' : '204: No content available'}, 204
+          
+        return make_response(
+          accounts,
+          200
+          )
+      except ValueError as e:
+        return {'errors' : str(e)}, 404
+      except Exception as e:
+        return {'errors' : str(e)}, 500 
+
     else:
       return {'error' : 'You are not authorized. Please contact your administrator.'}
   
@@ -102,8 +109,8 @@ class AccountById(Resource):
         for attr in data:
           setattr(account, attr, data[attr])
         
-        if data.get('status') == 'inactive':
-          return {'NOTICE' : 'YOUR ACCOUNT IS BEING SET TO INACTIVE!'}
+        # if data.get('status') == 'inactive':
+        #   return {'NOTICE' : 'YOUR ACCOUNT IS BEING SET TO INACTIVE!'}
         
         db.session.add(account)
         db.session.commit()
