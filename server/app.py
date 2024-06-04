@@ -22,25 +22,31 @@ def check_if_logged_in():
 
 class Accounts(Resource):
   def get(self):
+    breakpoint()
     id = session.get('user_id')
     user = User.query.filter(User.id == id).first()
-    
-    if user.role_id == 1:
-      try:
-        accounts = [account.to_dict(rules = ('-updated_at',)) for account in Account.query.all()]
-        # exmaple for visibility by role if account.role == 'admin'
 
-        if not accounts:
-          return {'error' : '204: No content available'}, 204
-          
-        return make_response(
-          accounts,
-          200
-          )
-      except ValueError as e:
-        return {'errors' : str(e)}, 404
-      except Exception as e:
-        return {'errors' : str(e)}, 500 
+    if id:
+      if user.role_id == 1:
+        try:
+          accounts = [account.to_dict(rules = ('-updated_at',)) for account in Account.query.all()]
+          # exmaple for visibility by role if account.role == 'admin'
+
+          if not accounts:
+            return {'error' : '204: No content available'}, 204
+            
+          return make_response(
+            accounts,
+            200
+            )
+        except ValueError as e:
+          return {'errors' : str(e)}, 404
+        except Exception as e:
+          return {'errors' : str(e)}, 500
+      else:
+        return {'errors' : '401: Unathorized'}, 401 
+    else:
+      return {'errors' : '401: Unathorized'}, 401 
   
   def post(self):
     form_data = request.get_json()
@@ -113,7 +119,6 @@ class AccountById(Resource):
       except Exception as e:
           return {"errors": str(e)}, 500
 
-      
 
   def patch(self,id):
     try:
