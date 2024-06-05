@@ -1,11 +1,12 @@
 import { useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import EditUserForm from '../components/EditUserForm';
+import SalesEditUserForm from '../components/SalesEditUserForm';
 import Unauthorized from '../components/Unauthorized';
 import { AgentContext } from '../AgentProvider';
 
 const UserById = () => {
-    const { agent, user, setUser, setAsDisabled, errors, setErrors, isLoading } = useContext(AgentContext)
+    const { agent, user, setUser, setAsDisabled, errors = [], setErrors, isLoading } = useContext(AgentContext)
     const { id } = useParams();
 
     useEffect(() => {
@@ -34,7 +35,16 @@ const UserById = () => {
 
     if (isLoading) {
         return <div> Loading ... </div>
-      }
+    }
+
+    if (agent.role_id === 1 && user || agent.role_id ===2 && user) {
+        return (
+            <div className='account-details'>
+                <h2>User Details</h2>
+                <EditUserForm id={id} />
+            </div>
+        );
+    }    
 
     return (
         <>
@@ -42,7 +52,7 @@ const UserById = () => {
                 user ? (
                     <div className='account-details'>
                         <h2>User Details</h2>
-                        <EditUserForm id={id} />
+                        <SalesEditUserForm id={id} />
                     </div>
                 ) : (
                     <div className='account-details'>
