@@ -252,11 +252,12 @@ class Login(Resource):
 
     user = User.query.filter(User.username == username).first()
 
-    if user.status == 'inactive':
-      return {'errors' : 'This users account is no longer active.'}, 401
-
     if user is None or not user.authenticate(password):
       return {'errors': 'Invalid username or password'}, 401
+
+    if user:
+      if user.status == 'inactive':
+        return {'errors' : 'This users account is no longer active.'}, 401
 
     session['user_id'] = user.id
     return user.to_dict(), 200

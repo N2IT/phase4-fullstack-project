@@ -42,7 +42,6 @@ const NewUserForm = () => {
                     return response.json();
                 })
                 .then((user) => {
-                    console.log('User response:', user);
                     setAgent(user);
                     navigate('/');
                 })

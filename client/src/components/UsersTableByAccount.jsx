@@ -3,7 +3,7 @@ import { AgentContext } from '../AgentProvider';
 
 const UsersTableByAccount = () => {
 
-    const { users, account, handleUserIdClick } = useContext(AgentContext);
+    const { users, account, handleUserIdClick, agent } = useContext(AgentContext);
 
     const accountUsers = users.filter(user => {
         // console.log(typeof user.account_id, typeof account.id);
@@ -33,7 +33,13 @@ const UsersTableByAccount = () => {
                             <td>{user.email}</td>
                             {/* <td>{user.role_id}</td> */}
                             <td>{user.status}</td>
-                            <td><p className="view-btn" title="View User" onClick={() => handleUserIdClick(user)}> View </p></td>
+                            {agent.role_id === 3 ? (agent.username === user.username ?
+                                <td><p className="view-btn" title="View User" onClick={() => handleUserIdClick(user)}> View </p></td>
+                                :
+                                <td><p>n/a</p></td>) : (
+                                <td><p className="view-btn" title="View User" onClick={() => handleUserIdClick(user)}> View </p></td>
+                            )
+                            }
                         </tr>
                     ))}
                 </tbody>

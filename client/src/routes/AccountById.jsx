@@ -1,11 +1,11 @@
 import { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { AgentContext } from '../AgentProvider';
-import EditAccountForm from '../components/EditAccountForm'
 import UsersTableByAccount from '../components/UsersTableByAccount';
-// import UsersTable from '../components/UsersTable'
 import Unauthorized from '../components/Unauthorized';
-// import { Link } from 'react-router-dom';
+import AdminEditAccountForm from '../components/AdminEditAccountForm';
+import ManagerEditAccountForm from '../components/ManagerEditAccountForm';
+import SalesEditAccountForm from '../components/SalesEditAccountForm';
 
 const AccountById = () => {
 
@@ -19,8 +19,11 @@ const AccountById = () => {
 
         fetch(`/api/accounts/${id}`)
             .then(response => {
+                // if (!response.ok) {
+                //     return response.json().then(data => { throw data; });
+                // }
                 if (!response.ok) {
-                    return response.json().then(data => { throw data; });
+                    return response.json().then(data => console.log(data.errors))
                 }
                 return response.json();
             })
@@ -30,11 +33,12 @@ const AccountById = () => {
                 setAsDisabled(true);
                 setErrors(null);
             })
-            .catch(error => {
-                console.error('Errors:', error);
-                setErrors([error.errors] || 'Unknown Error');
-                setAccount(null);
-            });
+            // .catch(error => {
+            //     // console.log(errors)
+            //     console.error('Errors:', error);
+            //     setErrors(error);
+            //     setAccount(null);
+            // });
 
         // without this i lose userstablebyaccount data on page refresh
         // possible alternate route?
@@ -46,7 +50,7 @@ const AccountById = () => {
                 }
                 else
                     setUsers(data)
-                    setErrors(null)
+                setErrors(null)
             })
             .then(() => setIsLoading(false))
             .catch(error => console.error('Error:', error));
@@ -55,30 +59,67 @@ const AccountById = () => {
 
     if (isLoading) {
         return <div> Loading ... </div>
-      }
-   
+    }
+
+    if (agent.role_id === 1 && account) {
+        return (
+            <>
+                <div className='account-details'>
+                    <h2>Hello, admin:</h2>
+                    <h3>Account Details</h3>
+                    <AdminEditAccountForm id={id} />
+                </div>
+                <div>
+                    <UsersTableByAccount />
+                </div>
+            </>
+        )
+    }
+
+    if (agent.role_id === 2 && account) {
+        return (
+            <>
+                <div className='account-details'>
+                    <h2>Hello, manager:</h2>
+                    <h3>Account Details</h3>
+                    <ManagerEditAccountForm id={id} />
+                </div>
+                <div>
+                    <UsersTableByAccount />
+                </div>
+            </>
+        )
+    }
+
+    if (agent.role_id === 3 && account) {
+        return (
+            <>
+                <div className='account-details'>
+                    <h2>Hello, sales:</h2>
+                    <h3>Account Details</h3>
+                    <SalesEditAccountForm id={id} />
+                </div>
+                <div>
+                    <UsersTableByAccount />
+                </div>
+
+            </>
+        )
+    }
+
+    if (agent.role_id === null) {
+        return (
+            <div className = 'account-details'>
+                <h2>Please contact your administrator to assign your role within the account.</h2>
+            </div>
+        )
+    }
+
     return (
         <>
-            {agent ? (
-                account ? (
-                    <>
-                        <div className='account-details'>
-                            <h2>Account Details</h2>
-                            <EditAccountForm id={id} />
-                        </div>
-                        <div>
-                            <UsersTableByAccount />
-                        </div>
-
-                    </>
-                ) : (
-                    <div className='account-details'>
-                        {errors.length > 0 ? <h2>{errors[0]}</h2> : <h2>That account does not exist.</h2>}
-                    </div>
-                )
-            ) : (
-                <Unauthorized />
-            )}
+            <div className='account-details'>
+                <h2>404: That account does not exist.</h2>
+            </div>
         </>
     )
 }
