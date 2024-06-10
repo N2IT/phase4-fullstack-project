@@ -23,7 +23,7 @@ def create_accounts():
       discount = rc(range(25, 50)),
       markup_variable = rc(range(1, 2)),
       created_at = datetime.now(),
-      updated_at = datetime.now(),
+      # updated_at = datetime.now(),
       status = choices(status_list, weights = [10, 1], k=1)[0]
     )
   
@@ -42,7 +42,7 @@ def create_users():
       email = fake.profile(fields=['mail'])['mail'],
       username=fake.profile(fields=['username'])['username'],
       created_at = datetime.now(),
-      updated_at = datetime.now(),
+      # updated_at = datetime.now(),
       status = choices(status_list, weights = [10, 1], k=1)[0],
       role_id = choices(roles, weights = [1, 5, 10], k=1)[0],
       account_id = rc([account.id for account in accounts]),
