@@ -41,9 +41,10 @@ class Account(db.Model, SerializerMixin):
     
     # relationships
     users = db.relationship('User', back_populates = 'account')
-    # quotes = db.Column(db.Integer, db.ForeingKey('quotes.id'))
+    customers = db.relationship('Customer', back_populates = 'account')
+    quotes = db.relationship('Quote', back_populates = 'account')
 
-    serialize_rules = ('-users.account', '-users.created_at', '-users.updated_at', '-users._password_hash',)
+    serialize_rules = ('-users.account', '-users.created_at', '-users.updated_at', '-users._password_hash', '-customers', '-quotes')
 
     def __repr__(self):
         return f'Account {self.id}, {self.account_number}, {self.company_name}, {self.address_1}, {self.address_2}, {self.city}, {self.state}, {self.zip_code}, {self.phone}, {self.discount}, {self.markup_variable}, {self.created_at}, {self.updated_at}'
@@ -151,5 +152,65 @@ class Permission(db.Model, SerializerMixin):
         return f'Role {self.id}, {self.name}, {self.description}'
 
 
-# class Quote(db.Model, SerializerMixin):
-#     pass
+class Customer(db.Model, SerializerMixin):
+    __tablename__ = 'customers'
+    id = db.Column(db.Integer, primary_key = True)
+    first_name = db.Column(db.String)
+    last_name = db.Column(db.String)
+    email = db.Column(db.String)
+    phone = db.Column(db.Integer)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    created_by = db.Column(db.Integer)
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+    updated_by = = db.Column(db.Integer)
+    notes = db.Column(db.String(500))
+    account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'))
+
+    ## relationships
+    quotes = db.relationship('Quote', back_populates = 'customers')
+    account = db.relationship('Account', back_populates = 'customers')
+
+    ##serialize
+    serialize_rules = ('-account','-quotes',)
+
+    def __repr__(self):
+        return f'Customer {self.id}, {self.first_name}, {self.last_name}, {self.email}, {self.phone}, {self.created_at}, {self.created_by}, {self.updated_at}, {self.updated_by}, {self.notes}, {self.account_id}'
+
+
+class Configuration(db.Model, SerializerMixin):
+    __tablename__ = 'configurations'
+    id = db.Column(db.Integer, primary_key = True)
+    sku - db.Column(db.Integer)
+    product_title = db.Column(db.String)
+    product_description = db.Column(db.String)
+    cost = db.Column(db.Integer)
+    
+
+class Quote(db.Model, SerializerMixin):
+    __tablename__ = 'quotes'
+    id = db.Column(db.Integer, primary_key = True)
+    quote_number = db.Column(db.Integer)
+    title = db.Column(db.string)
+    discount = db.Column(db.Integer) ## Needs to reference discount from account
+    savings = db.Column(db.Integer)
+    markup_variable = db.Column(db.Integer)
+    sale_price = db.Column(db.Integer)
+    margin_percentage = db.Column(db.Integer)
+    margin_dollars = db.Column(db.Integer)
+    notes = db.Column(db.String(500))
+    status = db.Column(db.Boolean)
+    converted = db.Column(db.Boolean)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    created_by = db.Column(db.Integer)
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+    updated_by = = db.Column(db.Integer)
+    customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
+    configuration_id = db.Column(db.Integer, db.ForeingKey('configurations.id'))
+    account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'))
+
+    # relationships
+    customer = db.relationship('Customer', back_populates = 'quotes')
+    configurations = db.relationship('Congiguration', back_populates = 'quote')
+
+    def __repr__(self):
+        return f'Quote {self.id}, {self.quote_number}, {self.title}, {self.discount}, {self.savings}, {self.markup_variable}, {self.sale_price}, {self.margin_percentage}, {self.margin_dollars}, {self.notes}, {self.status}, {self.converted}, {self.created_at}, {self.created_by}, {self.updated_at}, {self.updated_by}, {self.customer_id}, {self.configuration_id}, {self.account_id}'
