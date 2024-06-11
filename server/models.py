@@ -162,7 +162,7 @@ class Customer(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     created_by = db.Column(db.Integer)
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
-    updated_by = = db.Column(db.Integer)
+    updated_by = db.Column(db.Integer)
     notes = db.Column(db.String(500))
     account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'))
 
@@ -180,7 +180,7 @@ class Customer(db.Model, SerializerMixin):
 class Configuration(db.Model, SerializerMixin):
     __tablename__ = 'configurations'
     id = db.Column(db.Integer, primary_key = True)
-    sku - db.Column(db.Integer)
+    sku = db.Column(db.Integer)
     product_title = db.Column(db.String)
     product_description = db.Column(db.String)
     cost = db.Column(db.Integer)
@@ -199,7 +199,7 @@ class Quote(db.Model, SerializerMixin):
     __tablename__ = 'quotes'
     id = db.Column(db.Integer, primary_key = True)
     quote_number = db.Column(db.Integer)
-    title = db.Column(db.string)
+    title = db.Column(db.String)
     discount = db.Column(db.Integer) ## Needs to reference discount from account
     savings = db.Column(db.Integer)
     markup_variable = db.Column(db.Integer)
@@ -212,9 +212,9 @@ class Quote(db.Model, SerializerMixin):
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     created_by = db.Column(db.Integer)
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
-    updated_by = = db.Column(db.Integer)
+    updated_by = db.Column(db.Integer)
     customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
-    configuration_id = db.Column(db.Integer, db.ForeingKey('configurations.id'))
+    configuration_id = db.Column(db.Integer, db.ForeignKey('configurations.id'))
     account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'))
 
     # relationships
