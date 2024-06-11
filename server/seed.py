@@ -2,7 +2,7 @@ from config import app, db
 from random import randint, choice as rc, choices
 from datetime import datetime
 from faker import Faker
-from models import Account, User, Role, Permission, role_permissions
+from models import *
 
 fake = Faker()
 status_list = ['active', 'inactive']
@@ -54,10 +54,72 @@ def create_users():
 
   return users
 
-def create_roles():
-  role0=Role(title="admin")
-  role1=Role(title="manager")
-  role2=Role(title="sales")
+def create_customers():
+  customers = []
+  for _ in range(20):
+    c = Customer(
+      first_name = fake.first_name(),
+      last_name = fake.last_name(),
+      email = fake.profile(fields=['mail'])['mail'],
+      phone = fake.phone_number(),
+      created_at = datetime.now(),
+      created_by = 1,
+      notes = fake.text(),
+      account_id = rc([account.id for account in accounts]),
+    )
+
+    customers.append(c)
+
+  return customers
+
+def create_configurations():
+  configurations = []
+
+  for _ in range(35):
+    configs = Configuration(
+      sku = fake.ean(length=8),
+      product_title = fake.company_suffix(),
+      product_description = fake.sentence(),
+      cost = fake.pricetag()
+    )
+
+    configurations.append(configs)
+  
+  return configurations
+  
+def create_quotes():
+  quotes = []
+  customer_account_data = {
+        customer.id: {
+            'account_id': customer.account.id,
+            'discount': customer.account.discount,
+            'markup_variable': customer.account.markup_variable
+        }
+        for customer in customers if customer.account
+    }
+
+  for _ in range(30):
+    selected_customer_id = rc(list(customer_account_data.keys()))
+    account_data = customer_account_data[selected_customer_id]
+
+    q = Quote(
+        quote_number=rc(range(0, 1000)),
+        title=fake.name(),
+        customer_id=selected_customer_id,
+        account_id=account_data['account_id'],
+        discount=account_data['discount'],
+        markup_variable=account_data['markup_variable'],
+        notes=fake.sentence(),
+        status=True,
+        converted=False,
+        created_at=datetime.now(),
+        configuration_id=rc([configuration.id for configuration in configurations])
+    )
+
+    quotes.append(q)
+  
+  return quotes
+
 
 
 if __name__ == "__main__":
@@ -69,6 +131,9 @@ if __name__ == "__main__":
     User.query.delete()
     Role.query.delete()
     Permission.query.delete()
+    Customer.query.delete()
+    Configuration.query.delete()
+    Quote.query.delete()
 
     print("Seeding accounts...")
     accounts = create_accounts()
@@ -166,6 +231,21 @@ if __name__ == "__main__":
     p9.roles.append(role2)
     p10.roles.append(role2)
 
+    db.session.commit()
+
+    print('seeding customers...')
+    customers = create_customers()
+    db.session.add_all(customers)
+    db.session.commit()
+
+    print('seeding configurations...')
+    configurations = create_configurations()
+    db.session.add_all(configurations)
+    db.session.commit()
+
+    print('seeding quotes...')
+    quotes = create_quotes()
+    db.session.add_all(quotes)
     db.session.commit()
 
     print('done seeding')

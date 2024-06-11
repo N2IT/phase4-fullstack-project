@@ -41,10 +41,10 @@ class Account(db.Model, SerializerMixin):
     
     # relationships
     users = db.relationship('User', back_populates = 'account')
-    # customers = db.relationship('Customer', back_populates = 'account')
-    # quotes = db.relationship('Quote', back_populates = 'account')
+    customers = db.relationship('Customer', back_populates = 'account')
+    quotes = db.relationship('Quote', back_populates = 'account')
 
-    serialize_rules = ('-users.account', '-users.created_at', '-users.updated_at', '-users._password_hash', '-customers', '-quotes')
+    serialize_rules = ('-users.account', '-users.created_at', '-users.updated_at', '-users._password_hash')
 
     def __repr__(self):
         return f'Account {self.id}, {self.account_number}, {self.company_name}, {self.address_1}, {self.address_2}, {self.city}, {self.state}, {self.zip_code}, {self.phone}, {self.discount}, {self.markup_variable}, {self.created_at}, {self.updated_at}'
@@ -164,17 +164,17 @@ class Customer(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     updated_by = db.Column(db.Integer)
     notes = db.Column(db.String(500))
-    # account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'))
+    account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'))
 
     ## relationships
-    # quotes = db.relationship('Quote', back_populates = 'customer')
-    # account = db.relationship('Account', back_populates = 'customers')
+    quotes = db.relationship('Quote', back_populates = 'customer')
+    account = db.relationship('Account', back_populates = 'customers')
 
     ##serialize
-    # serialize_rules = ('-quotes',)
+    serialize_rules = ('-quotes',)
 
     def __repr__(self):
-        return f'Customer {self.id}, {self.first_name}, {self.last_name}, {self.email}, {self.phone}, {self.created_at}, {self.created_by}, {self.updated_at}, {self.updated_by}, {self.notes} '
+        return f'Customer {self.id}, {self.first_name}, {self.last_name}, {self.email}, {self.phone}, {self.created_at}, {self.created_by}, {self.updated_at}, {self.updated_by}, {self.notes}, {self.account_id} '
 
 
 
@@ -187,10 +187,10 @@ class Configuration(db.Model, SerializerMixin):
     cost = db.Column(db.Integer)
 
     ##relationships
-    # quote = db.relationship('Quote', back_populates = 'configurations')
+    quote = db.relationship('Quote', back_populates = 'configurations')
 
     ##serialize
-    # serialize_rules = ('-quote',)
+    serialize_rules = ('-quote',)
 
     def __repr__(self):
         return f'Configuration {self.id}, {self.sku}, {self.product_title}, {self.product_description}, {self.cost}'
@@ -214,16 +214,17 @@ class Quote(db.Model, SerializerMixin):
     created_by = db.Column(db.Integer)
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     updated_by = db.Column(db.Integer)
-    # customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
-    # configuration_id = db.Column(db.Integer, db.ForeignKey('configurations.id'))
-    # account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'))
+    customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
+    configuration_id = db.Column(db.Integer, db.ForeignKey('configurations.id'))
+    account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'))
 
     # relationships
-    # customer = db.relationship('Customer', back_populates = 'quotes')
-    # configurations = db.relationship('Configuration', back_populates = 'quote')
+    customer = db.relationship('Customer', back_populates = 'quotes')
+    configurations = db.relationship('Configuration', back_populates = 'quote')
+    account = db.relationship('Account', back_populates = 'quotes')
 
     ##serialize
-    # serialize_rules = ('-customer', '-configurations',)
+    serialize_rules = ('-customer', '-configurations','-account')
 
     def __repr__(self):
         return f'Quote {self.id}, {self.quote_number}, {self.title}, {self.discount}, {self.savings}, {self.markup_variable}, {self.sale_price}, {self.margin_percentage}, {self.margin_dollars}, {self.notes}, {self.status}, {self.converted}, {self.created_at}, {self.created_by}, {self.updated_at}, {self.updated_by}'
