@@ -167,7 +167,7 @@ class Customer(db.Model, SerializerMixin):
     account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'))
 
     ## relationships
-    quotes = db.relationship('Quote', back_populates = 'customers')
+    quotes = db.relationship('Quote', back_populates = 'customer')
     account = db.relationship('Account', back_populates = 'customers')
 
     ##serialize
@@ -184,6 +184,15 @@ class Configuration(db.Model, SerializerMixin):
     product_title = db.Column(db.String)
     product_description = db.Column(db.String)
     cost = db.Column(db.Integer)
+
+    ##relationships
+    quote = db.relationship('Quote', back_populates = 'configurations')
+
+    ##serialize
+    serialize_rules = ('-quote',)
+
+    def __repr__(self):
+        return f'Configuration {self.id}, {self.sku}, {self.product_title}, {self.product_description}, {self.cost}'
     
 
 class Quote(db.Model, SerializerMixin):
@@ -210,7 +219,10 @@ class Quote(db.Model, SerializerMixin):
 
     # relationships
     customer = db.relationship('Customer', back_populates = 'quotes')
-    configurations = db.relationship('Congiguration', back_populates = 'quote')
+    configurations = db.relationship('Configuration', back_populates = 'quote')
+
+    ##serialize
+    serialize_rules = ('-customer', '-configurations',)
 
     def __repr__(self):
         return f'Quote {self.id}, {self.quote_number}, {self.title}, {self.discount}, {self.savings}, {self.markup_variable}, {self.sale_price}, {self.margin_percentage}, {self.margin_dollars}, {self.notes}, {self.status}, {self.converted}, {self.created_at}, {self.created_by}, {self.updated_at}, {self.updated_by}, {self.customer_id}, {self.configuration_id}, {self.account_id}'
