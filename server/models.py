@@ -185,6 +185,7 @@ class Configuration(db.Model, SerializerMixin):
     product_title = db.Column(db.String)
     product_description = db.Column(db.String)
     cost = db.Column(db.Integer)
+    quote_id = db.Column(db.Integer, db.ForeignKey('quotes.id'))
 
     ##relationships
     quote = db.relationship('Quote', back_populates = 'configurations')
@@ -201,7 +202,7 @@ class Quote(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key = True)
     quote_number = db.Column(db.Integer)
     title = db.Column(db.String)
-    discount = db.Column(db.Integer) ## Needs to reference discount from account
+    discount = db.Column(db.Integer)
     savings = db.Column(db.Integer)
     markup_variable = db.Column(db.Integer)
     sale_price = db.Column(db.Integer)
@@ -215,7 +216,7 @@ class Quote(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     updated_by = db.Column(db.Integer)
     customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
-    configuration_id = db.Column(db.Integer, db.ForeignKey('configurations.id'))
+    # configuration_id = db.Column(db.Integer, db.ForeignKey('configurations.id'))
     account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'))
 
     # relationships

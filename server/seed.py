@@ -21,7 +21,7 @@ def create_accounts():
       zip_code = fake.postcode(),
       phone = fake.phone_number(),
       discount = rc(range(25, 50)),
-      markup_variable = rc(range(1, 2)),
+      markup_variable = rc(range(2, 4)),
       created_at = datetime.now(),
       # updated_at = datetime.now(),
       status = choices(status_list, weights = [10, 1], k=1)[0]
@@ -71,21 +71,6 @@ def create_customers():
     customers.append(c)
 
   return customers
-
-def create_configurations():
-  configurations = []
-
-  for _ in range(35):
-    configs = Configuration(
-      sku = fake.ean(length=8),
-      product_title = fake.company_suffix(),
-      product_description = fake.sentence(),
-      cost = fake.pricetag()
-    )
-
-    configurations.append(configs)
-  
-  return configurations
   
 def create_quotes():
   quotes = []
@@ -113,12 +98,41 @@ def create_quotes():
         status=True,
         converted=False,
         created_at=datetime.now(),
-        configuration_id=rc([configuration.id for configuration in configurations])
+        created_by = 1,
+        # configuration_id=rc([configuration.id for configuration in configurations])
     )
 
     quotes.append(q)
   
   return quotes
+
+def create_configurations():
+  configurations = []
+
+  for _ in range(35):
+    cost = randint(3500, 10000000) / 100.0
+    configs = Configuration(
+      sku = fake.ean(length=8),
+      product_title = fake.company_suffix(),
+      product_description = fake.sentence(),
+      cost = cost,      
+      quote_id = rc([quote.id for quote in quotes]),
+    )
+
+    configurations.append(configs)
+  
+  return configurations
+
+def calculate_quote_info():
+  
+  pass
+  ## if quote.configurations then retrieve total cost of all configurations for that quote and set to variable
+  ## savings, sale_price, margin %, margin $
+  ## savings = total_cost * discount
+  ## sale_price = total_cost * markup_variable
+  ## margin % = (total_cost * markup_variable)/total_cost
+  ## margin $ = (total_cost * markup_variable) - total_cost
+
 
 
 
@@ -238,14 +252,14 @@ if __name__ == "__main__":
     db.session.add_all(customers)
     db.session.commit()
 
-    print('seeding configurations...')
-    configurations = create_configurations()
-    db.session.add_all(configurations)
-    db.session.commit()
-
     print('seeding quotes...')
     quotes = create_quotes()
     db.session.add_all(quotes)
+    db.session.commit()
+
+    print('seeding configurations...')
+    configurations = create_configurations()
+    db.session.add_all(configurations)
     db.session.commit()
 
     print('done seeding')
