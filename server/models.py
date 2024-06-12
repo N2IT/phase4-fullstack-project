@@ -155,16 +155,40 @@ class Permission(db.Model, SerializerMixin):
 class Customer(db.Model, SerializerMixin):
     __tablename__ = 'customers'
     id = db.Column(db.Integer, primary_key = True)
-    first_name = db.Column(db.String)
-    last_name = db.Column(db.String)
-    email = db.Column(db.String)
-    phone = db.Column(db.Integer)
+    first_name = db.Column(db.String, nullable = False)
+    last_name = db.Column(db.String, nullable = False)
+    email = db.Column(db.String, nullable = False, unique = True)
+    phone = db.Column(db.Integer, nullable = False, unique = True)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     created_by = db.Column(db.Integer)
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     updated_by = db.Column(db.Integer)
     notes = db.Column(db.String(500))
-    account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'))
+    account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'), nullable = False)
+
+    @validates('phone')
+    def validate_phone(self, key, value):
+        if value == None:
+            raise ValueError ({'error' : '422: Phone number must contain a value'}, 422)
+        elif Customer.query.filter(Customer.phone == value).first():
+            raise ValueError ({'error' : '422: Phone number must be unique'}, 422)
+        return value
+
+    @validates('email')
+    def validate_email(self, key, address):
+        if '@' not in address:
+            raise ValueError("Invalid email address entered")
+        elif Customer.query.filter(Customer.email == address).first():
+            raise ValueError ({'error' : '422: Email must be unique'}, 422)
+        elif address == None:
+            raise ValueError({'error' : '422 : The email field must contain a value'}, 422)
+        return address
+
+    @validates('notes')
+    def validate_notes(self, key, notes):
+        if len(notes) > 500:
+            raise ValueError("You have exceeded the 500 character limit")
+        return notes
 
     ## relationships
     quotes = db.relationship('Quote', back_populates = 'customer')

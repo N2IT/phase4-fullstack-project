@@ -322,6 +322,57 @@ class Customers(Resource):
       return {'errors' : str(e)}, 404
     except Exception as e:
       return {'errors' : str(e)}, 500
+  
+  def post(self):
+    try:
+      form_data = request.get_json()
+
+      first_name = form_data.get('first_name')
+      last_name = form_data.get('last_name')
+      email = form_data.get('email')
+      phone = form_data.get('phone')
+      notes = form_data.get('notes')
+      account_id = form_data.get('account_id')
+
+      errors = []
+
+      if form_data:
+        if not first_name:
+          errors.append('A first name must be entered')
+        elif not last_name:
+          errors.append('A last name must be entered')
+        elif not email:
+          errors.append('An email must be entered')
+        elif not phone:
+          errors.append('A phone number must be entered')
+        elif not account_id:
+          errors.append('Customer not assiged to an account')
+        
+        if errors:
+          return {
+            'errors' : errors 
+          }, 422
+
+        new_customer = Customer(
+          first_name = first_name,
+          last_name = last_name,
+          email = email,
+          phone = phone,
+          notes = notes,
+          account_id = account_id
+        )
+
+        db.session.add(new_customer)
+        db.session.commit()
+
+        return new_customer.to_dict(), 201
+      
+      else:
+        return {'errors' : '422: Unprocessable Entry'}, 422
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
+    except Exception as e:
+      return {'errors' : str(e)}, 500
 
 
 class CustomerById(Resource):
