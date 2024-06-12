@@ -22,7 +22,7 @@ def create_accounts():
       zip_code = fake.postcode(),
       phone = fake.phone_number(),
       discount = randint(0, 45) / 100.0,
-      markup_variable = rc(range(2, 4)),
+      markup_variable = randint(110, 399) / 100,
       created_at = datetime.now(),
       # updated_at = datetime.now(),
       status = choices(status_list, weights = [10, 1], k=1)[0]
@@ -138,11 +138,14 @@ def calculate_quote_info():
       # Fetch the corresponding quote
       quote = db.session.get(Quote, quote_id)
 
+      # Assign misc variables associated to calculations
+      cost_w_savings = total_cost - (total_cost * quote.discount)
+
       # Calculate the financial metrics
       quote.savings = total_cost * quote.discount
-      quote.sale_price = total_cost * quote.markup_variable
-      quote.margin_percentage = 100 * quote.markup_variable  # as markup_variable is a multiplier of cost
-      quote.margin_dollars = (total_cost * quote.markup_variable) - total_cost
+      quote.sale_price = cost_w_savings * quote.markup_variable
+      quote.margin_percentage = ((quote.sale_price - cost_w_savings) / cost_w_savings) # as markup_variable is a multiplier of cost
+      quote.margin_dollars = quote.sale_price - cost_w_savings
 
       # Update the quote in the database
       db.session.add(quote)
