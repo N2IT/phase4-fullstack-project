@@ -1,8 +1,9 @@
-from config import app, db
+from config import app, db, func
 from random import randint, choice as rc, choices
 from datetime import datetime
 from faker import Faker
 from models import *
+
 
 fake = Faker()
 status_list = ['active', 'inactive']
@@ -20,7 +21,7 @@ def create_accounts():
       state = fake.state(),
       zip_code = fake.postcode(),
       phone = fake.phone_number(),
-      discount = rc(range(25, 50)),
+      discount = randint(0, 45) / 100.0,
       markup_variable = rc(range(2, 4)),
       created_at = datetime.now(),
       # updated_at = datetime.now(),
@@ -110,7 +111,7 @@ def create_configurations():
   configurations = []
 
   for _ in range(35):
-    cost = randint(3500, 10000000) / 100.0
+    cost = randint(3500, 1000000) / 100.0
     configs = Configuration(
       sku = fake.ean(length=8),
       product_title = fake.company_suffix(),
@@ -124,9 +125,35 @@ def create_configurations():
   return configurations
 
 def calculate_quote_info():
+  # Fetch total cost per quote from configurations
+  total_costs = db.session.query(
+      Configuration.quote_id,
+      func.sum(Configuration.cost).label('total_cost')
+  ).group_by(Configuration.quote_id).all()
+
+  for total_cost_data in total_costs:
+      quote_id = total_cost_data.quote_id
+      total_cost = total_cost_data.total_cost
+
+      # Fetch the corresponding quote
+      quote = db.session.get(Quote, quote_id)
+
+      # Calculate the financial metrics
+      quote.savings = total_cost * quote.discount
+      quote.sale_price = total_cost * quote.markup_variable
+      quote.margin_percentage = 100 * quote.markup_variable  # as markup_variable is a multiplier of cost
+      quote.margin_dollars = (total_cost * quote.markup_variable) - total_cost
+
+      # Update the quote in the database
+      db.session.add(quote)
+
+      
+  db.session.commit()  # Commit all changes at once
   
-  pass
-  ## if quote.configurations then retrieve total cost of all configurations for that quote and set to variable
+  ## if quote.configurations 
+  ## sumtotal configurations by quote_id number
+  ## insert 
+  ## then retrieve total cost of all configurations for that quote and set to variable
   ## savings, sale_price, margin %, margin $
   ## savings = total_cost * discount
   ## sale_price = total_cost * markup_variable
@@ -262,4 +289,8 @@ if __name__ == "__main__":
     db.session.add_all(configurations)
     db.session.commit()
 
+    print('updating quote calculated fields...')
+    calculate_quote_info()
+
     print('done seeding')
+    
