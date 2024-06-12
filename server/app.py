@@ -186,9 +186,10 @@ class Users(Resource):
       last_name = form_data.get('last_name')
       username = form_data.get('username')
       email = form_data.get('email')
-      if session['account_id']:
+      if session.get('account_id'):
         account_id = session['account_id']
-      # account_id = form_data.get('account_id')
+      else:
+        account_id = form_data.get('account_id')
       password = form_data.get('password_hash')
 
       errors = []
@@ -205,7 +206,7 @@ class Users(Resource):
         elif not email:
           errors.append('Please enter an email')
         elif User.query.filter(User.email == email).first():
-          errors.append('This email is already used. Please enter another email address.')
+          errors.append('This email is already in use. Please enter another email address.')
         
         if errors:
           return {'errors' : errors }, 422
@@ -266,7 +267,11 @@ class Logout(Resource):
   def delete(self):
     if session.get('user_id'):
       session['user_id'] = None
-      return {}, 204
+    if session.get('account_id'):
+      session['account_id'] = None
+    if session.get('customer_id'):
+      session['customer_id'] = None
+    return {}, 204
 
 
 class Quotes(Resource):
@@ -287,7 +292,7 @@ class Quotes(Resource):
       return {'errors' : str(e)}, 500
 
   # def post(self):
-  #   WORKING ON CUSTOMER THEN CONFIGURATIONS FIRST
+  #   pass
 
 
 class QuoteById(Resource):
@@ -343,8 +348,12 @@ class Customers(Resource):
           errors.append('A last name must be entered')
         elif not email:
           errors.append('An email must be entered')
+        elif Customer.query.filter(Customer.email == email).first():
+          errors.append('This email is alread in use. Please try a different email address.')
         elif not phone:
           errors.append('A phone number must be entered')
+        elif Customer.query.filter(Customer.phone == phone).first():
+          errors.append('This phone number is already on record.')
         elif not account_id:
           errors.append('Customer not assiged to an account')
         
@@ -364,6 +373,8 @@ class Customers(Resource):
 
         db.session.add(new_customer)
         db.session.commit()
+
+        session['customer_id'] = new_customer.id
 
         return new_customer.to_dict(), 201
       
@@ -390,6 +401,12 @@ class CustomerById(Resource):
     except Exception as e:
       return {"errors": str(e)}, 500
 
+  # def patch(self, id):
+  #   pass
+  
+  # def delete(self, id):
+  #   pass
+
 
 class Configurations(Resource):
   def get(self):
@@ -407,7 +424,52 @@ class Configurations(Resource):
       return {'errors' : str(e)}, 404
     except Exception as e:
       return {'errors' : str(e)}, 500
+  
+  def post(self):
+    try:
+      ## retrieve form data
+      form_data = request.get_json()
 
+      sku = form_data.get('sku')
+      product_title = form_data.get('product_title')
+      product_description = form_data.get('product_description')
+      cost = form_data.get('cost')
+      if session.get('quote_id'):
+        quote_id = session['quote_id']
+      else:
+        quote_id = form_data.get('quote_id')
+
+      errors = []
+
+      if form_data:
+        if not sku:
+          errors.append('A sku must be entered')
+        if not product_title:
+          errors.append('A product title must be entered')
+        if not product_description:
+          errors.append('A product description must be entered')
+        if not cost:
+          errors.append('An account id must be associated with the configuration')
+        
+        if errors:
+          return { 'errors' : errors }, 422
+        
+        new_configuration = Configuration(
+          sku = sku,
+          product_title = product_title,
+          product_description = product_description,
+          cost = cost,
+          quote_id = quote_id
+        )
+
+        db.session.add(new_configuration)
+        db.session.commit()
+
+        return new_configuration.to_dict(), 201
+    except ValueError as e:
+      return {'errors' : str(e)}
+    except Exception as e:
+      return {'errors' : str(e)}
 
 class ConfigurationById(Resource):
   def get(self, id):

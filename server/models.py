@@ -54,14 +54,14 @@ class User(db.Model,SerializerMixin):
     __tablename__ = 'users'
 
     id = db.Column(db.Integer, primary_key = True)
-    email = db.Column(db.String)
+    email = db.Column(db.String, nullable=False, unique = True)
     username = db.Column(db.String(3), nullable=False, unique=True)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     status = db.Column(db.String, nullable=False)
-    account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'))
+    account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'), nullable = False)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     _password_hash = db.Column(db.String(12))
 
@@ -101,8 +101,16 @@ class User(db.Model,SerializerMixin):
             raise ValidationError(f'Email validation error: {str(e)}')
         except Exception as e:
             raise ValidationError(f'An unexpected error occurred: {str(e)}')
-
-
+    
+    @validates('email')
+    def validate_email(self, key, address):
+        if '@' not in address:
+            raise ValueError("Invalid email address entered")
+        elif User.query.filter(User.email == address).first():
+            raise ValueError ({'error' : '422: Email must be unique'}, 422)
+        elif address == None:
+            raise ValueError({'error' : '422 : The email field must contain a value'}, 422)
+        return address
 
     # relationships
     account = db.relationship('Account', back_populates = 'users')
