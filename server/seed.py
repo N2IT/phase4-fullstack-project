@@ -146,23 +146,9 @@ def calculate_quote_info():
 
       # Update the quote in the database
       db.session.add(quote)
-
-      
+    
   db.session.commit()  # Commit all changes at once
   
-  ## if quote.configurations 
-  ## sumtotal configurations by quote_id number
-  ## insert 
-  ## then retrieve total cost of all configurations for that quote and set to variable
-  ## savings, sale_price, margin %, margin $
-  ## savings = total_cost * discount
-  ## sale_price = total_cost * markup_variable
-  ## margin % = (total_cost * markup_variable)/total_cost
-  ## margin $ = (total_cost * markup_variable) - total_cost
-
-
-
-
 if __name__ == "__main__":
   with app.app_context():
     print("Clearing db...")

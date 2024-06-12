@@ -4,7 +4,7 @@ from flask import request, session, make_response
 from flask_restful import Api, Resource
 import random
 from config import app, db, api
-from models import Account, User, Role, Permission, role_permissions
+from models import Account, User, Role, Permission, role_permissions, Quote, Customer, Configuration
 
 # just imported Account, User above
 # need to write up the Routes now
@@ -236,12 +236,12 @@ class Users(Resource):
 
 class CheckSession(Resource):
   def get(self):
-        user = User.query.filter(User.id == session.get('user_id')).first()
-        if user:
-            return user.to_dict(),200
-        
-        else:
-            return {}, 204
+    user = User.query.filter(User.id == session.get('user_id')).first()
+    if user:
+        return user.to_dict(),200
+    
+    else:
+        return {}, 204
 
 
 class Login(Resource):
@@ -267,7 +267,113 @@ class Logout(Resource):
     if session.get('user_id'):
       session['user_id'] = None
       return {}, 204
-    
+
+
+class Quotes(Resource):
+  def get(self):
+    try:
+      quotes = [quote.to_dict() for quote in Quote.query.all()]
+
+      if not quotes:
+        return {'error' : '204: No content available'}, 204
+
+      return make_response(
+        quotes,
+        200
+      )
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
+    except Exception as e:
+      return {'errors' : str(e)}, 500
+
+  # def post(self):
+  #   WORKING ON CUSTOMER THEN CONFIGURATIONS FIRST
+
+
+class QuoteById(Resource):
+  def get(self, id):
+    try:
+      quote = Quote.query.filter(Quote.id == id).first()
+
+      if quote:
+        return make_response(
+          quote.to_dict(),
+          200
+        )
+      else:
+        return {"errors": "404: That quote does not exist"}, 404
+    except Exception as e:
+      return {"errors": str(e)}, 500
+
+
+class Customers(Resource):
+  def get(self):
+    try:
+      customers = [quote.to_dict() for quote in Customer.query.all()]
+
+      if not customers:
+        return {'error' : '204: No content available'}, 204
+
+      return make_response(
+        customers,
+        200
+      )
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
+    except Exception as e:
+      return {'errors' : str(e)}, 500
+
+
+class CustomerById(Resource):
+  def get(self, id):
+    try:
+      customer = Customer.query.filter(Customer.id == id).first()
+
+      if customer:
+        return make_response(
+          customer.to_dict(),
+          200
+        )
+      else:
+        return {"errors": "404: That customer does not exist"}, 404
+    except Exception as e:
+      return {"errors": str(e)}, 500
+
+
+class Configurations(Resource):
+  def get(self):
+    try:
+      configurations = [configuration.to_dict() for configuration in Configuration.query.all()]
+
+      if not configurations:
+        return {'error' : '204: No content available'}, 204
+
+      return make_response(
+        configurations,
+        200
+      )
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
+    except Exception as e:
+      return {'errors' : str(e)}, 500
+
+
+class ConfigurationById(Resource):
+  def get(self, id):
+    try:
+      configuration = Configuration.query.filter(Configuration.id == id).first()
+
+      if configuration:
+        return make_response(
+          configuration.to_dict(),
+          200
+        )
+      else:
+        return {"errors" : "404: That configuration does not exist."}, 404
+    except Exception as e:
+      return {"errors": str(e)}, 500
+
+
 
 api.add_resource(Accounts, '/accounts')
 api.add_resource(AccountById, '/accounts/<int:id>')
@@ -276,8 +382,12 @@ api.add_resource(UserById, '/users/<int:id>')
 api.add_resource(Login, '/login')
 api.add_resource(CheckSession, '/check-session')
 api.add_resource(Logout, '/logout')
-
-
+api.add_resource(Quotes, '/quotes')
+api.add_resource(QuoteById, '/quotes/<int:id>')
+api.add_resource(Customers, '/customers')
+api.add_resource(CustomerById, '/customers/<int:id>')
+api.add_resource(Configurations, '/configurations')
+api.add_resource(ConfigurationById, '/configurations/<int:id>')
 
 if __name__ == "__main__":
   app.run(port=5555, debug=True)

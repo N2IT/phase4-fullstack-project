@@ -171,7 +171,7 @@ class Customer(db.Model, SerializerMixin):
     account = db.relationship('Account', back_populates = 'customers')
 
     ##serialize
-    serialize_rules = ('-quotes',)
+    serialize_rules = ('-quotes', '-account')
 
     def __repr__(self):
         return f'Customer {self.id}, {self.first_name}, {self.last_name}, {self.email}, {self.phone}, {self.created_at}, {self.created_by}, {self.updated_at}, {self.updated_by}, {self.notes}, {self.account_id} '
@@ -191,7 +191,7 @@ class Configuration(db.Model, SerializerMixin):
     quote = db.relationship('Quote', back_populates = 'configurations')
 
     ##serialize
-    serialize_rules = ('-quote',)
+    # serialize_rules = ('-quote.account_id', '-quote.customer_id')
 
     def __repr__(self):
         return f'Configuration {self.id}, {self.sku}, {self.product_title}, {self.product_description}, {self.cost}'
