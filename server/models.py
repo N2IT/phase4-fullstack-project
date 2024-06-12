@@ -44,7 +44,7 @@ class Account(db.Model, SerializerMixin):
     customers = db.relationship('Customer', back_populates = 'account')
     quotes = db.relationship('Quote', back_populates = 'account')
 
-    serialize_rules = ('-users.account', '-users.created_at', '-users.updated_at', '-users._password_hash')
+    serialize_rules = ('-users.account', '-users.created_at', '-users.updated_at', '-users._password_hash', '-customers.account_id', '-quotes.account_id', '-quotes.customer_id', '-customers.updated_at', '-customers.updated_by')
 
     def __repr__(self):
         return f'Account {self.id}, {self.account_number}, {self.company_name}, {self.address_1}, {self.address_2}, {self.city}, {self.state}, {self.zip_code}, {self.phone}, {self.discount}, {self.markup_variable}, {self.created_at}, {self.updated_at}'
@@ -171,7 +171,7 @@ class Customer(db.Model, SerializerMixin):
     account = db.relationship('Account', back_populates = 'customers')
 
     ##serialize
-    serialize_rules = ('-quotes', '-account')
+    serialize_rules = ('-account','-quotes.account_id', '-quotes.customer_id')
 
     def __repr__(self):
         return f'Customer {self.id}, {self.first_name}, {self.last_name}, {self.email}, {self.phone}, {self.created_at}, {self.created_by}, {self.updated_at}, {self.updated_by}, {self.notes}, {self.account_id} '
@@ -191,7 +191,7 @@ class Configuration(db.Model, SerializerMixin):
     quote = db.relationship('Quote', back_populates = 'configurations')
 
     ##serialize
-    # serialize_rules = ('-quote.account_id', '-quote.customer_id')
+    serialize_rules = ('-quote.configurations',)
 
     def __repr__(self):
         return f'Configuration {self.id}, {self.sku}, {self.product_title}, {self.product_description}, {self.cost}'
@@ -225,7 +225,7 @@ class Quote(db.Model, SerializerMixin):
     account = db.relationship('Account', back_populates = 'quotes')
 
     ##serialize
-    serialize_rules = ('-customer', '-configurations','-account')
+    serialize_rules = ('-customer.quotes','-customer.account_id', '-customer.created_at', '-customer.created_by', '-customer.id', '-customer.updated_at', '-customer.updated_by', '-configurations.quote', '-configurations.id', '-configurations.quote_id', '-account')
 
     def __repr__(self):
         return f'Quote {self.id}, {self.quote_number}, {self.title}, {self.discount}, {self.savings}, {self.markup_variable}, {self.sale_price}, {self.margin_percentage}, {self.margin_dollars}, {self.notes}, {self.status}, {self.converted}, {self.created_at}, {self.created_by}, {self.updated_at}, {self.updated_by}'
