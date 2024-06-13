@@ -131,6 +131,10 @@ class RolePermmission(db.model, SerializerMixin):
     granted_at = db.Column(db.DateTime, server_default=db.func.now())
     expires_at = db.Column(db.DateTime, server_default=db.func.now() + 24)
 
+    #relationships
+    role = db.relationship('Role', back_populates='role_permissions')
+    permission = db.relationship('Permission', back_populates='role_permissions')
+
     def __repr__(self):
         return f'RolePermission {self.id}, {self.role.title}, {self.permission.name}, {self.permission.description}, {self.granted_at}, {self.expires_at}'
 
@@ -149,7 +153,8 @@ class Role(db.Model, SerializerMixin):
     title = db.Column(db.String)
 
     # relationships
-    permissions = db.relationship('Permission', secondary=role_permissions, back_populates='roles')
+    role_permissions = db.relationship('RolePermission', back_populates='role')
+    # permissions = db.relationship('Permission', secondary=role_permissions, back_populates='roles')
     # permissions = db.relationship('Permission', back_populates='roles')
     users = db.relationship('User', back_populates='role')
 
@@ -164,7 +169,8 @@ class Permission(db.Model, SerializerMixin):
     description = db.Column(db.String)
 
     #relationship
-    roles = db.relationship('Role', secondary=role_permissions, back_populates='permissions')
+    role_permissions = db.relationship('RolePermission', back_populates='permission')
+    # roles = db.relationship('Role', secondary=role_permissions, back_populates='permissions')
     # roles = db.relationship('Role', back_populates='permissions')
 
 
