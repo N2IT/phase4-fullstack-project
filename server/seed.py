@@ -7,7 +7,7 @@ from models import *
 
 fake = Faker()
 status_list = ['active', 'inactive']
-roles = [1, 2, 3]
+roles = [1, 2, 3, 4]
 
 def create_accounts():
   accounts = []
@@ -45,7 +45,7 @@ def create_users():
       created_at = datetime.now(),
       # updated_at = datetime.now(),
       status = choices(status_list, weights = [10, 1], k=1)[0],
-      role_id = choices(roles, weights = [1, 5, 10], k=1)[0],
+      role_id = choices(roles, weights = [1, 5, 10, 2], k=1)[0],
       account_id = rc([account.id for account in accounts]),
     )
 
@@ -180,6 +180,7 @@ if __name__ == "__main__":
     role0=Role(title="admin")
     role1=Role(title="manager")
     role2=Role(title="sales")
+    role3=Role(title="guest")
 
     db.session.add_all([role0, role1, role2])
     db.session.commit()
@@ -201,67 +202,50 @@ if __name__ == "__main__":
     db.session.add_all([p0,p1,p2,p3,p4,p5,p6,p7,p8,p9,p10,p11])
     db.session.commit()
 
-    print('Appending role_permissions...')
-    print('Adding role_permissions to role0...')
-    role0.permissions.append(p0)
-    role0.permissions.append(p1)
-    role0.permissions.append(p2)
-    role0.permissions.append(p3)
-    role0.permissions.append(p4)
-    role0.permissions.append(p5)
-    role0.permissions.append(p6)
-    role0.permissions.append(p7)
-    role0.permissions.append(p8)
-    role0.permissions.append(p9)
-    role0.permissions.append(p10)
-    role0.permissions.append(p11)
+    print('Appending roles_permissions...')
+    print('Adding roles_permissions to admin...')
 
-    print('Adding role_permissions to role1...')
-    role1.permissions.append(p1)
-    role1.permissions.append(p4)
-    role1.permissions.append(p5)
-    role1.permissions.append(p6)
-    role1.permissions.append(p8)
-    role1.permissions.append(p9)
-    role1.permissions.append(p10)
+    rp0 = RolePermission(role = role0, permission = p0)
+    rp1 = RolePermission(role = role0, permission = p1)
+    rp2 = RolePermission(role = role0, permission = p2)
+    rp3 = RolePermission(role = role0, permission = p3)
+    rp4 = RolePermission(role = role0, permission = p4)
+    rp5 = RolePermission(role = role0, permission = p5)
+    rp6 = RolePermission(role = role0, permission = p6)
+    rp7 = RolePermission(role = role0, permission = p7)
+    rp8 = RolePermission(role = role0, permission = p8)
+    rp9 = RolePermission(role = role0, permission = p9)
+    rp10= RolePermission(role = role0, permission = p10)
+    rp11 = RolePermission(role = role0, permission = p11)
 
-    print('Adding role_permissions to role2...')
-    role2.permissions.append(p1)
-    role2.permissions.append(p5)
-    role2.permissions.append(p6)
-    role2.permissions.append(p8)
-    role2.permissions.append(p9)
-    role2.permissions.append(p10)
+    print('Adding roles_permissions to manager...')
+    rp12 = RolePermission(role = role1, permission = p1)
+    rp13 = RolePermission(role = role1, permission = p4)
+    rp14 = RolePermission(role = role1, permission = p5)
+    rp15 = RolePermission(role = role1, permission = p6)
+    rp16 = RolePermission(role = role1, permission = p8)
+    rp17 = RolePermission(role = role1, permission = p9)
+    rp18 = RolePermission(role = role1, permission = p10)
 
-    print('Appending role_permissions...')
-    p0.roles.append(role0)
-    p1.roles.append(role0)
-    p2.roles.append(role0)
-    p3.roles.append(role0)
-    p4.roles.append(role0)
-    p5.roles.append(role0)
-    p6.roles.append(role0)
-    p7.roles.append(role0)
-    p8.roles.append(role0)
-    p9.roles.append(role0)
-    p10.roles.append(role0)
-    p11.roles.append(role0)
+    print('Adding roles_permissions to sales...')
+    rp19 = RolePermission(role = role2, permission = p1)
+    rp20 = RolePermission(role = role2, permission = p5)
+    rp21 = RolePermission(role = role2, permission = p6)
+    rp22 = RolePermission(role = role2, permission = p8)
+    rp23 = RolePermission(role = role2, permission = p9)
+    rp24 = RolePermission(role = role2, permission = p10)
 
-    p1.roles.append(role1)
-    p4.roles.append(role1)
-    p5.roles.append(role1)
-    p6.roles.append(role1)
-    p8.roles.append(role1)
-    p9.roles.append(role1)
-    p10.roles.append(role1)
+    print('Adding roles_permissions to guest...')
+    rp25 = RolePermission(role = role3, permission = p1)
+    rp26 = RolePermission(role = role3, permission = p4)
+    rp27 = RolePermission(role = role3, permission = p5)
+    rp28 = RolePermission(role = role3, permission = p6)
+    rp29 = RolePermission(role = role3, permission = p8)
+    rp30 = RolePermission(role = role3, permission = p9)
+    rp31= RolePermission(role = role3, permission = p10)
+    rp32 = RolePermission(role = role3, permission = p11)
 
-    p1.roles.append(role2)
-    p5.roles.append(role2)
-    p6.roles.append(role2)
-    p8.roles.append(role2)
-    p9.roles.append(role2)
-    p10.roles.append(role2)
-
+    db.session.add_all([rp0,rp1,rp2,rp3,rp4,rp5,rp6,rp7,rp8,rp9,rp10,rp11,rp12,rp13,rp14,rp15,rp16,rp17,rp18,rp19,rp20,rp21,rp22,rp23,rp24,rp25,rp26,rp27,rp28,rp29,rp30,rp31,rp32])
     db.session.commit()
 
     print('seeding customers...')
@@ -283,4 +267,3 @@ if __name__ == "__main__":
     calculate_quote_info()
 
     print('done seeding')
-    

@@ -3,6 +3,7 @@ from sqlalchemy.ext.hybrid import hybrid_property
 from sqlalchemy.orm import validates
 from flask_sqlalchemy import SQLAlchemy
 from config import db, bcrypt, metadata
+from sqlalchemy.ext.associationproxy import association_proxy
 
 
 class Account(db.Model, SerializerMixin):
@@ -129,7 +130,7 @@ class RolePermission(db.Model, SerializerMixin):
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     permission_id = db.Column(db.Integer, db.ForeignKey('permissions.id'))
     granted_at = db.Column(db.DateTime, server_default=db.func.now())
-    expires_at = db.Column(db.DateTime, server_default=db.func.now() + 24)
+    expires_at = db.Column(db.DateTime)
 
     #relationships
     role = db.relationship('Role', back_populates='roles_permissions')
@@ -158,6 +159,9 @@ class Role(db.Model, SerializerMixin):
     # permissions = db.relationship('Permission', back_populates='roles')
     users = db.relationship('User', back_populates='role')
 
+    # association proxy
+    permissions = association_proxy('roles_permissions', 'permission', creator=lambda permission_obj: RolePermission(permission=permission_obj))
+
     def __repr__(self):
         return f'Role {self.id}, {self.title}'
 
@@ -172,6 +176,9 @@ class Permission(db.Model, SerializerMixin):
     roles_permissions = db.relationship('RolePermission', back_populates='permission')
     # roles = db.relationship('Role', secondary=role_permissions, back_populates='permissions')
     # roles = db.relationship('Role', back_populates='permissions')
+
+    # association proxy
+    roles = association_proxy('roles_permissions', 'role', creator=lambda role_obj: RolePermission(role=role_obj))
 
 
     def __repr__(self):
