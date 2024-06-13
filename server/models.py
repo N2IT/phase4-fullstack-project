@@ -122,14 +122,16 @@ class User(db.Model,SerializerMixin):
         return f'User {self.id}, {self.first_name}, {self.last_name}, {self.username}, {self.created_at}, {self.updated_at}, {self.status}, {self.account_id}'
 
 
-role_permissions = db.Table (
-    'role_permissions',
-    metadata,
-    db.Column('role_id', db.Integer, db.ForeignKey(
-        'roles.id'), primary_key=True),
-    db.Column('permission_id', db.Integer, db.ForeignKey(
-        'permissions.id'), primary_key=True)
-)
+class RolePermmission(db.model, SerializerMixin):
+    pass
+# role_permissions = db.Table (
+#     'role_permissions',
+#     metadata,
+#     db.Column('role_id', db.Integer, db.ForeignKey(
+#         'roles.id'), primary_key=True),
+#     db.Column('permission_id', db.Integer, db.ForeignKey(
+#         'permissions.id'), primary_key=True)
+# )
 
 class Role(db.Model, SerializerMixin):
     __tablename__ = 'roles'
