@@ -123,7 +123,17 @@ class User(db.Model,SerializerMixin):
 
 
 class RolePermmission(db.model, SerializerMixin):
-    pass
+    __tablename__ = 'role_permissions'
+
+    id = db.Column(db.Integer, primary_key=True)
+    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
+    permission_id = db.Column(db.Integer, db.ForeignKey('permissions.id'))
+    granted_at = db.Column(db.DateTime, server_default=db.func.now())
+    expires_at = db.Column(db.DateTime, server_default=db.func.now() + 24)
+
+    def __repr__(self):
+        return f'RolePermission {self.id}, {self.role.title}, {self.permission.name}, {self.permission.description}, {self.granted_at}, {self.expires_at}'
+
 # role_permissions = db.Table (
 #     'role_permissions',
 #     metadata,
