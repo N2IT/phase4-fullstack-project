@@ -4,7 +4,7 @@ from flask import request, session, make_response
 from flask_restful import Api, Resource
 import random
 from config import app, db, api
-from models import Account, User, Role, Permission, role_permissions, Quote, Customer, Configuration
+from models import Account, User, Role, Permission, RolePermission, Quote, Customer, Configuration
 
 # just imported Account, User above
 # need to write up the Routes now

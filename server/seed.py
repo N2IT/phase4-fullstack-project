@@ -156,10 +156,10 @@ def calculate_quote_info():
 if __name__ == "__main__":
   with app.app_context():
     print("Clearing db...")
-    db.session.query(role_permissions).delete()
     db.session.commit()
     Account.query.delete()
     User.query.delete()
+    RolePermission.query.delete()
     Role.query.delete()
     Permission.query.delete()
     Customer.query.delete()
