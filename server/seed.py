@@ -142,6 +142,7 @@ def calculate_quote_info():
       cost_w_savings = total_cost - (total_cost * quote.discount)
 
       # Calculate the financial metrics
+      quote.total_cost = total_cost
       quote.savings = total_cost * quote.discount
       quote.sale_price = cost_w_savings * quote.markup_variable
       quote.margin_percentage = ((quote.sale_price - cost_w_savings) / cost_w_savings) # as markup_variable is a multiplier of cost

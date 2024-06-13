@@ -233,6 +233,7 @@ class Quote(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key = True)
     quote_number = db.Column(db.Integer)
     title = db.Column(db.String)
+    total_cost =db.Column(db.Integer)
     discount = db.Column(db.Integer)
     savings = db.Column(db.Integer)
     markup_variable = db.Column(db.Integer)
