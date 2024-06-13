@@ -209,7 +209,6 @@ class Customer(db.Model, SerializerMixin):
         return f'Customer {self.id}, {self.first_name}, {self.last_name}, {self.email}, {self.phone}, {self.created_at}, {self.created_by}, {self.updated_at}, {self.updated_by}, {self.notes}, {self.account_id} '
 
 
-
 class Configuration(db.Model, SerializerMixin):
     __tablename__ = 'configurations'
     id = db.Column(db.Integer, primary_key = True)

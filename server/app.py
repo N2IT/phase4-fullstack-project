@@ -291,8 +291,82 @@ class Quotes(Resource):
     except Exception as e:
       return {'errors' : str(e)}, 500
 
-  # def post(self):
-  #   pass
+  def post(self):
+    try:
+      form_data = request.get_json()
+
+      quote_number = form_data.get('quote_number')
+      title = form_data.get('title')
+      discount = form_data.get('discount')
+      savings = form_data.get('savings')
+      markup_variable = form_data.get('markup_variable')
+      sale_price = form_data.get('sale_price')
+      margin_percentage = form_data.get('margin_percentage')
+      margin_dollars = form_data.get('margin_dollars')
+      notes = form_data.get('notes')
+      status = form_data.get('status')
+      converted = form_data.get('converted')
+      if session.get('customer_id'):
+        customer_id = session['customer_id']
+      else:
+        customer_id = form_data.get('customer_id')
+      if session.get('account_id'):
+        account_id = session['account_id']
+      else:  
+        account_id = form_data.get('account_id')
+
+      errors = []
+
+      if form_data:
+        if not quote_number:
+          errors.append('A quote number must be assigned')
+        elif not title:
+          errors.append('A title must be assigned')
+        elif not discount:
+          errros.append('A discount must be assigned')
+        elif not savings:
+          errors.append('Savings must be applied')
+        elif not sale_price:
+          errors.append('A sale price must be entered')
+        elif not status:
+          errors.append('A status must be applied')
+        # elif not converted:
+        #   errors.append('A converted status value must be applied')
+        elif not customer_id:
+          errors.append('A customer id must be applied')
+        elif not account_id:
+          errors.append('An account id must be applied')
+        
+        if errors:
+          return {'errors' : errors }, 422
+
+        new_quote = Quote(
+          quote_number = quote_number,
+          title = title,
+          discount = discount,
+          savings = savings,
+          markup_variable = markup_variable,
+          sale_price = sale_price,
+          margin_percentage = margin_percentage,
+          margin_dollars = margin_dollars,
+          notes = notes,
+          status = status,
+          converted = converted,
+          customer_id = customer_id,
+          account_id = account_id
+        )
+
+        db.session.add(new_quote)
+        db.session.commit()
+
+        return new_quote.to_dict(), 201
+        
+      else:
+        return {'errors' : '422: Unprocessable Entry'}, 422
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
+    except Exception as e:
+      return {'errors' : str(e)}, 500      
 
 
 class QuoteById(Resource):
@@ -309,6 +383,7 @@ class QuoteById(Resource):
         return {"errors": "404: That quote does not exist"}, 404
     except Exception as e:
       return {"errors": str(e)}, 500
+  
 
 
 class Customers(Resource):
