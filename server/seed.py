@@ -24,7 +24,6 @@ def create_accounts():
       discount = randint(0, 45) / 100.0,
       markup_variable = randint(110, 399) / 100,
       created_at = datetime.now(),
-      # updated_at = datetime.now(),
       status = choices(status_list, weights = [10, 1], k=1)[0]
     )
   
@@ -43,7 +42,6 @@ def create_users():
       email = fake.profile(fields=['mail'])['mail'],
       username=fake.profile(fields=['username'])['username'],
       created_at = datetime.now(),
-      # updated_at = datetime.now(),
       status = choices(status_list, weights = [10, 1], k=1)[0],
       role_id = choices(roles, weights = [1, 5, 10, 2], k=1)[0],
       account_id = rc([account.id for account in accounts]),
@@ -100,7 +98,6 @@ def create_quotes():
         converted=False,
         created_at=datetime.now(),
         created_by = 1,
-        # configuration_id=rc([configuration.id for configuration in configurations])
     )
 
     quotes.append(q)
@@ -125,14 +122,12 @@ def create_configurations():
   return configurations
 
 def calculate_quote_info(quote_id=None):
-  # Fetch total cost per quote from configurations
-  # breakpoint()
   quote = Quote.query.filter(Quote.id == quote_id).first()
   if quote_id and not quote.configurations:
     quote.total_cost = None
     quote.savings = None
     quote.sale_price = None
-    quote.margin_percentage = None # as markup_variable is a multiplier of cost
+    quote.margin_percentage = None
     quote.margin_dollars = None
 
     db.session.add(quote)
@@ -158,14 +153,13 @@ def calculate_quote_info(quote_id=None):
         quote.total_cost = total_cost
         quote.savings = total_cost * quote.discount
         quote.sale_price = cost_w_savings * quote.markup_variable
-        quote.margin_percentage = ((quote.sale_price - cost_w_savings) / cost_w_savings) # as markup_variable is a multiplier of cost
+        quote.margin_percentage = ((quote.sale_price - cost_w_savings) / cost_w_savings)
         quote.margin_dollars = quote.sale_price - cost_w_savings
 
-      # Update the quote in the database
         db.session.add(quote)
     
-  db.session.commit()  # Commit all changes at once
-  
+  db.session.commit()
+
 if __name__ == "__main__":
   with app.app_context():
     print("Clearing db...")
