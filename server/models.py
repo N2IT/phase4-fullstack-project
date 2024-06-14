@@ -41,9 +41,9 @@ class Account(db.Model, SerializerMixin):
         return value
     
     # relationships
-    users = db.relationship('User', back_populates = 'account')
-    customers = db.relationship('Customer', back_populates = 'account')
-    quotes = db.relationship('Quote', back_populates = 'account')
+    users = db.relationship('User', back_populates = 'account', cascade='all, delete')
+    customers = db.relationship('Customer', back_populates = 'account', cascade='all, delete')
+    quotes = db.relationship('Quote', back_populates = 'account', cascade='all, delete')
 
     serialize_rules = ('-users.account', '-users.created_at', '-users.updated_at', '-users._password_hash', '-customers.account_id', '-quotes.account_id', '-quotes.customer_id', '-customers.updated_at', '-customers.updated_by')
 
@@ -139,14 +139,6 @@ class RolePermission(db.Model, SerializerMixin):
     def __repr__(self):
         return f'RolePermission {self.id}, {self.role.title}, {self.permission.name}, {self.permission.description}, {self.granted_at}, {self.expires_at}'
 
-# role_permissions = db.Table (
-#     'role_permissions',
-#     metadata,
-#     db.Column('role_id', db.Integer, db.ForeignKey(
-#         'roles.id'), primary_key=True),
-#     db.Column('permission_id', db.Integer, db.ForeignKey(
-#         'permissions.id'), primary_key=True)
-# )
 
 class Role(db.Model, SerializerMixin):
     __tablename__ = 'roles'
@@ -154,7 +146,7 @@ class Role(db.Model, SerializerMixin):
     title = db.Column(db.String)
 
     # relationships
-    roles_permissions = db.relationship('RolePermission', back_populates='role')
+    roles_permissions = db.relationship('RolePermission', back_populates='role', cascade='all, delete-orphan')
     # permissions = db.relationship('Permission', secondary=role_permissions, back_populates='roles')
     # permissions = db.relationship('Permission', back_populates='roles')
     users = db.relationship('User', back_populates='role')
@@ -173,7 +165,7 @@ class Permission(db.Model, SerializerMixin):
     description = db.Column(db.String)
 
     #relationship
-    roles_permissions = db.relationship('RolePermission', back_populates='permission')
+    roles_permissions = db.relationship('RolePermission', back_populates='permission', cascade='all, delete-orphan')
     # roles = db.relationship('Role', secondary=role_permissions, back_populates='permissions')
     # roles = db.relationship('Role', back_populates='permissions')
 
@@ -278,7 +270,7 @@ class Quote(db.Model, SerializerMixin):
 
     # relationships
     customer = db.relationship('Customer', back_populates = 'quotes')
-    configurations = db.relationship('Configuration', back_populates = 'quote')
+    configurations = db.relationship('Configuration', back_populates = 'quote', cascade='all, delete')
     account = db.relationship('Account', back_populates = 'quotes')
 
     ##serialize

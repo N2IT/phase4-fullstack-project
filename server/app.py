@@ -98,7 +98,6 @@ class AccountById(Resource):
     except Exception as e:
         return {"errors": str(e)}, 500
 
-
   def patch(self,id):
     try:
       account = Account.query.filter(Account.id == id).first()
@@ -123,6 +122,27 @@ class AccountById(Resource):
       return {'errors' : str(e)}, 404
     except Exception as e:
       return {'errors' : str(e)}, 500
+  
+  def delete(self, id):
+    try:
+      account = Account.query.filter(Account.id == id).first()
+      if account:
+        db.session.delete(account)
+        db.session.commit()
+        response_body = {
+          'delete successful' : True,
+          "message" : 'Account and all associated users, customers, quotes removed'
+        }
+        return make_response(
+          response_body,
+          200
+        )
+      else:
+        return {'errors' : '404: That account does not exist'}
+    except Exception as e:
+      return {'errors' : str(e)}, 500
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
 
 
 class UserById(Resource):
