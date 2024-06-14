@@ -495,8 +495,34 @@ class CustomerById(Resource):
     except Exception as e:
       return {"errors": str(e)}, 500
 
-  # def patch(self, id):
-  #   pass
+  def patch(self, id):
+    try:
+      # locate the customer by id and set to variable
+      customer = Customer.query.filter(Customer.id == id).first()
+
+      # check if customer exists
+      if customer:
+        # retrieve the data from form set to variable
+        data = request.get_json()
+
+        # iterate through customer variable (for loop)
+        # setupdated attributes to customer object
+        for attr in data:
+          setattr(customer, attr, data[attr])
+
+        # return to dictionay with success code 200
+        return customer.to_dict(), 200
+
+        db.session.add(customer)
+        db.session.commit()
+        # add and commit updated cusotmer object to database
+      else:
+        return {'errors' : '404 : That quote does not exist'}, 404
+        # else and except statements
+    except Exception as e:
+      return {'errors' : str(e)}, 500
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
   
   # def delete(self, id):
   #   pass
