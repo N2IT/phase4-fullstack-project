@@ -5,6 +5,7 @@ from flask_restful import Api, Resource
 import random
 from config import app, db, api
 from models import Account, User, Role, Permission, RolePermission, Quote, Customer, Configuration
+from seed import calculate_quote_info
 
 # just imported Account, User above
 # need to write up the Routes now
@@ -25,7 +26,7 @@ class Accounts(Resource):
       # exmaple for visibility by role if account.role == 'admin'
 
       if not accounts:
-        return {'error' : '204: No content available'}, 204
+        return {'errors' : '204: No content available'}, 204
         
       return make_response(
         accounts,
@@ -393,6 +394,10 @@ class QuoteById(Resource):
       if quote:
         for attr in data:
           setattr(quote, attr, data[attr])
+
+        db.session.add(quote)
+        db.session.commit()
+
         return make_response(
             quote.to_dict(), 
             200
@@ -497,28 +502,21 @@ class CustomerById(Resource):
 
   def patch(self, id):
     try:
-      # locate the customer by id and set to variable
       customer = Customer.query.filter(Customer.id == id).first()
-
-      # check if customer exists
       if customer:
-        # retrieve the data from form set to variable
         data = request.get_json()
-
-        # iterate through customer variable (for loop)
-        # setupdated attributes to customer object
         for attr in data:
           setattr(customer, attr, data[attr])
-
-        # return to dictionay with success code 200
-        return customer.to_dict(), 200
-
+        
         db.session.add(customer)
         db.session.commit()
-        # add and commit updated cusotmer object to database
+
+        return make_response(
+          customer.to_dict(), 200
+        )
+    
       else:
         return {'errors' : '404 : That quote does not exist'}, 404
-        # else and except statements
     except Exception as e:
       return {'errors' : str(e)}, 500
     except ValueError as e:
@@ -605,7 +603,36 @@ class ConfigurationById(Resource):
         return {"errors" : "404: That configuration does not exist."}, 404
     except Exception as e:
       return {"errors": str(e)}, 500
+  
+  def patch(self, id):
+    try:
+      configuration = Configuration.query.filter(Configuration.id == id).first()
 
+      if configuration:
+        data = request.get_json()
+        breakpoint()
+
+        for attr in data:
+          setattr(configuration, attr, data[attr])
+        
+        db.session.add(configuration)
+        db.session.commit()
+
+        cost = data['cost']
+        if cost:
+          calculate_quote_info()
+          ## this is temporary - don't know if a server side calc is good or not 
+          ## may want to do so from frontend
+
+        return make_response(
+          configuration.to_dict(), 200
+        )
+      else:
+        return {'errors' : '404: That configuation does not exist'}
+    except Exception as e:
+      return {'errors' : str(e)}, 500
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
 
 
 api.add_resource(Accounts, '/accounts')

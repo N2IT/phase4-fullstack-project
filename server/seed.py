@@ -2,7 +2,7 @@ from config import app, db, func
 from random import randint, choice as rc, choices
 from datetime import datetime
 from faker import Faker
-from models import *
+from models import * 
 
 
 fake = Faker()
