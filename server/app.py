@@ -386,18 +386,13 @@ class QuoteById(Resource):
   
   def patch(self, id):
     try:
-      # query database to see if quote by id exists?
-      # id quote and store as 'quote' variable
       quote = Quote.query.filter(Quote.id == id).first()
     
-      # retrieve form data
       data = request.get_json()
 
       if quote:
-      # iterate through quote attributes 
         for attr in data:
           setattr(quote, attr, data[attr])
-        # update attributes with new data
         return make_response(
             quote.to_dict(), 
             200
@@ -409,7 +404,6 @@ class QuoteById(Resource):
     except Exception as e:
       return {'errors' : str(e)}, 500
   
-
 
 class Customers(Resource):
   def get(self):
