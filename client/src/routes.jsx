@@ -48,6 +48,10 @@ const routes = [
                 path: 'new-quote',
                 element: <NewQuote />
             },
+            // {
+            //     path: 'quotes/:id',
+            //     element: <QuoteById />
+            // },
             {
                 path: 'support',
                 element: <Support />

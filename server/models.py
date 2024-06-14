@@ -10,7 +10,7 @@ class Account(db.Model, SerializerMixin):
     __tablename__ = 'accounts'
 
     id = db.Column(db.Integer, primary_key = True)
-    account_number = db.Column(db.Integer, nullable=False, unique=True)
+    account_number = db.Column(db.Integer, nullable=False)
     company_name = db.Column(db.String, nullable=False, unique=True)
     address_1 = db.Column(db.String)
     address_2 = db.Column(db.String)
@@ -28,8 +28,8 @@ class Account(db.Model, SerializerMixin):
     def validate_account_number(self, key, value):
         if value == None:
             raise ValueError ({'error' : '422: Account number must contain a value'}, 422)
-        elif Account.query.filter(Account.account_number == value).first():
-            raise ValueError ({'error' : '422: Account number must be unique'}, 422)
+        # elif Account.query.filter(Account.account_number == value).first():
+        #     raise ValueError ({'error' : '422: Account number must be unique'}, 422)
         return value
 
     @validates('company_name')
@@ -45,7 +45,7 @@ class Account(db.Model, SerializerMixin):
     customers = db.relationship('Customer', back_populates = 'account', cascade='all, delete')
     quotes = db.relationship('Quote', back_populates = 'account', cascade='all, delete')
 
-    serialize_rules = ('-users.account', '-users.created_at', '-users.updated_at', '-users._password_hash', '-customers.account_id', '-quotes.account_id', '-quotes.customer_id', '-customers.updated_at', '-customers.updated_by')
+    serialize_rules = ('-users.account', '-users.created_at', '-users.updated_at', '-users._password_hash', '-customers.account_id', '-quotes', '-quotes.customer_id', '-customers.updated_at', '-customers.updated_by')
 
     def __repr__(self):
         return f'Account {self.id}, {self.account_number}, {self.company_name}, {self.address_1}, {self.address_2}, {self.city}, {self.state}, {self.zip_code}, {self.phone}, {self.discount}, {self.markup_variable}, {self.created_at}, {self.updated_at}'
@@ -274,7 +274,7 @@ class Quote(db.Model, SerializerMixin):
     account = db.relationship('Account', back_populates = 'quotes')
 
     ##serialize
-    serialize_rules = ('-customer.quotes','-customer.account_id', '-customer.created_at', '-customer.created_by', '-customer.id', '-customer.updated_at', '-customer.updated_by', '-configurations.quote', '-configurations.quote_id', '-account')
+    serialize_rules = ('-customer.quotes','-customer.account_id', '-customer.created_at', '-customer.created_by', '-customer.id', '-customer.updated_at', '-customer.updated_by', '-configurations.quote', '-configurations.quote_id','-account')
 
     def __repr__(self):
         return f'Quote {self.id}, {self.quote_number}, {self.title}, {self.discount}, {self.savings}, {self.markup_variable}, {self.sale_price}, {self.margin_percentage}, {self.margin_dollars}, {self.notes}, {self.status}, {self.converted}, {self.created_at}, {self.created_by}, {self.updated_at}, {self.updated_by}'
