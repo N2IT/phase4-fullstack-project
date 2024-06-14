@@ -180,6 +180,30 @@ class UserById(Resource):
       return {'errors' : str(e)}, 404
     except Exception as e:
       return {'errors' : str(e)}, 500
+  
+  def delete(self, id):
+    try:
+      user = User.query.filter(User.id == id).first()
+      if user:
+        db.session.delete(user)
+        db.session.commit()
+
+        response_body = {
+          'delete successful' : True,
+          'message' : 'The user has been deleted'
+        }
+
+        return make_response(
+          response_body,
+          200
+        )
+
+      else:
+        return {'errors' : '404: That user does not exist'}
+    except Exception as e:
+      return {'errors' : str(e)}, 500
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
     
 
 class Users(Resource):
