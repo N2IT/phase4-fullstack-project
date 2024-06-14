@@ -37,14 +37,14 @@ const UserById = () => {
         return <div> Loading ... </div>
     }
 
-    if (agent.role_id === 1 && user || agent.role_id ===2 && user) {
+    if (agent.role_id === 1 && user || agent.role_id === 2 && user) {
         return (
             <div className='account-details'>
                 <h2>User Details</h2>
                 <EditUserForm id={id} />
             </div>
         );
-    }    
+    }
 
     return (
         <>
@@ -56,7 +56,11 @@ const UserById = () => {
                     </div>
                 ) : (
                     <div className='account-details'>
-                        {errors.length > 0 ? <h2>{errors[0]}</h2> : <h2>That user does not exist.</h2>}
+                        {Array.isArray(errors) && errors.length > 0 ? (
+                            <h2>{errors[0]}</h2>
+                        ) : (
+                            <h2>That user does not exist.</h2>
+                        )}
                     </div>
                 )
             ) : (

@@ -3,7 +3,7 @@ import { AgentContext } from '../AgentProvider';
 
 const UsersTable = () => {
 
-    const { users, handleUserIdClick } = useContext(AgentContext);
+    const { users, handleIdClick } = useContext(AgentContext);
 
 
     return (
@@ -30,7 +30,7 @@ const UsersTable = () => {
                             {/* <td>{user.role_id}</td> */}
                             <td>{user.account.account_number}</td>
                             <td>{user.status}</td>
-                            <td><p className="view-btn" title="View User" onClick={() => handleUserIdClick(user)}> View </p></td>
+                            <td><p className="view-btn" title="View User" onClick={() => handleIdClick(user)}> View </p></td>
                         </tr>
                     ))}
                 </tbody>

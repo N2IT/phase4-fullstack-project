@@ -14,6 +14,7 @@ const AgentProvider = ({ children }) => {
     const [errors, setErrors] = useState([])
     const [disabled, setAsDisabled] = useState(true)
     const [users, setUsers] = useState([])
+    const [quotes, setQuotes] = useState([])
     const [user, setUser] = useState(null)
 
     const onSubmitAccountForm = () => {
@@ -25,14 +26,29 @@ const AgentProvider = ({ children }) => {
     }
 
     const handleIdClick = (value) => {
-        setValueId(value.id)
-        navigate(`/accounts/${value.id}`)
+        if (value.account_number) {
+            navigate(`/accounts/${value.id}`)
+        }
+        else if (value.username) {
+            navigate(`/users/${value.id}`)
+        }
+        else if (value.quote_number) {
+            navigate(`/quotes/${value.id}`)
+        }
     }
 
-    const handleUserIdClick = (value) => {
-        setUser(value)
-        navigate(`/users/${value.id}`)
-    }
+    // const handleUserIdClick = (value) => {
+    //     setUser(value)
+    //     navigate(`/users/${value.id}`)
+    // }
+
+    // const handleQuoteIdClick = (value) => {
+    //     if (value.quote_number) {
+    //         navigate(`/quotes/${value.id}`)
+    //     }
+
+        
+    // }
 
     const handleUpdateAccount = (updatedAccount) => {
         const updatedAccountsArray = accounts.map(account => {
@@ -79,11 +95,11 @@ const AgentProvider = ({ children }) => {
                 handleEditClick,
                 handleIdClick,
                 handleUpdateAccount,
-                handleUserIdClick,
                 handleUpdateUser,
                 isLoading,
                 navigate,
                 onSubmitAccountForm,
+                quotes,
                 setAccount,
                 setAccounts,
                 setAccountForm,
@@ -91,6 +107,7 @@ const AgentProvider = ({ children }) => {
                 setAsDisabled,
                 setErrors,
                 setIsLoading,
+                setQuotes,
                 setValueId,
                 user,
                 users,

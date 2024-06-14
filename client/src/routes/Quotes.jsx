@@ -1,35 +1,50 @@
-
-import { useContext } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useContext } from 'react';
+import Unauthorized from '../components/Unauthorized';
+import QuotesTable from '../components/QuotesTable'
 import { AgentContext } from '../AgentProvider';
-// import { useEffect } from 'react';
+import InvalidCredentials from '../components/InvalidCredentials';
 
 const Quotes = () => {
 
-  const { agent, isLoading } = useContext(AgentContext)
+  const { agent, isLoading, setQuotes, setIsLoading } = useContext(AgentContext);
+
+  useEffect(() => {
+    fetch('/api/quotes')
+      .then((r) => r.json())
+      .then((quote) => setQuotes(quote))
+      .then(() => setIsLoading(false))
+      .catch(error => console.error("Error:", error));
+
+  }, [])
 
   if (isLoading) {
     return <div> Loading ... </div>
   }
-  
+
   return (
     <>
       <div className="account-details">
-        {agent ? (
-          <h2>Welcome to the Quotes page, {user.username}!</h2>
-        ) :
+        {agent ? (agent.role_id === 1 ?
           <div>
-            <h2>Unauthorized</h2>
-            <Link to="/">Log in</Link>
-            <h3>Get Started Here:</h3>
-            <Link to="/sign-up">Sign Up</Link>
-
+            <h2>Account Table</h2>
+            <QuotesTable />
           </div>
+          : (
+            <div>
+              <InvalidCredentials />
+            </div>
+          )
+        ) : (
+          <div>
+            <Unauthorized />
+          </div>
+        )
+
         }
       </div>
     </>
   );
-}
 
+}
 export default Quotes;
 
