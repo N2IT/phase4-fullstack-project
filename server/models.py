@@ -216,7 +216,7 @@ class Customer(db.Model, SerializerMixin):
         return notes
 
     ## relationships
-    quotes = db.relationship('Quote', back_populates = 'customer')
+    quotes = db.relationship('Quote', back_populates = 'customer', cascade='all, delete')
     account = db.relationship('Account', back_populates = 'customers')
 
     ##serialize

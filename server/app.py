@@ -131,14 +131,14 @@ class AccountById(Resource):
         db.session.commit()
         response_body = {
           'delete successful' : True,
-          "message" : 'Account and all associated users, customers, quotes removed'
+          "message" : f'Account {id} and all associated users, customers, quotes have been deleted.'
         }
         return make_response(
           response_body,
           200
         )
       else:
-        return {'errors' : '404: That account does not exist'}
+        return {'errors' : '404: That account does not exist'}, 404
     except Exception as e:
       return {'errors' : str(e)}, 500
     except ValueError as e:
@@ -190,7 +190,7 @@ class UserById(Resource):
 
         response_body = {
           'delete successful' : True,
-          'message' : 'The user has been deleted'
+          'message' : f'User {id} has been deleted'
         }
 
         return make_response(
@@ -199,7 +199,7 @@ class UserById(Resource):
         )
 
       else:
-        return {'errors' : '404: That user does not exist'}
+        return {'errors' : '404: That user does not exist'}, 404
     except Exception as e:
       return {'errors' : str(e)}, 500
     except ValueError as e:
@@ -452,7 +452,31 @@ class QuoteById(Resource):
       return {'errors' : str(e)}, 404
     except Exception as e:
       return {'errors' : str(e)}, 500
-  
+
+  def delete(self, id):
+    try:
+      quote = Quote.query.filter(Quote.id == id).first()
+
+      if quote:
+        db.session.delete(quote)
+        db.session.commit()
+
+        response_body = {
+          'delete_successful' : True,
+          'message' : f'Quote {id} and its assigned configurations have been deleted.'
+        }
+
+        return make_response(
+          response_body,
+          200
+        ) 
+      else:
+        return {'errors' : '404:That quote does not exist'}, 404
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
+    except Exception as e:
+      return {'errors' : str(e)}, 500
+
 
 class Customers(Resource):
   def get(self):
@@ -558,7 +582,6 @@ class CustomerById(Resource):
         return make_response(
           customer.to_dict(), 200
         )
-    
       else:
         return {'errors' : '404 : That quote does not exist'}, 404
     except Exception as e:
@@ -566,9 +589,29 @@ class CustomerById(Resource):
     except ValueError as e:
       return {'errors' : str(e)}, 404
   
-  # def delete(self, id):
-  #   pass
+  def delete(self, id):
+    try:
+      customer = Customer.query.filter(Customer.id == id).first()
 
+      if customer:
+        db.session.delete(customer)
+        db.session.commit()
+
+        response_body = {
+          'delete_successful' : True,
+          'message' : f'Customer {id} and all associated quotes have been deleted'
+        }
+
+        return make_response(
+          response_body,
+          200
+        )
+      else:
+        return {'errors' : '404:That cusotmer does not exist'}, 404
+    except Exception as e:
+      return {'errors' : str(e)}, 500
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
 
 class Configurations(Resource):
   def get(self):
@@ -672,7 +715,35 @@ class ConfigurationById(Resource):
           configuration.to_dict(), 200
         )
       else:
-        return {'errors' : '404: That configuation does not exist'}
+        return {'errors' : '404: That configuation does not exist'}, 404
+    except Exception as e:
+      return {'errors' : str(e)}, 500
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
+
+  def delete(self, id):
+    try:
+      configuration = Configuration.query.filter(Configuration.id == id).first()
+      quote_id = configuration.quote_id
+
+      if configuration:
+        
+        db.session.delete(configuration)
+        db.session.commit()
+
+        response_body = {
+          'delete_successful' : True,
+          'message' : f'Configuration {id} has been deleted.'
+        }
+
+        calculate_quote_info(quote_id)
+ 
+        return make_response(
+          response_body,
+          200
+        )
+      else:
+        {'errors' : '404:That configuration does not exist'}, 404
     except Exception as e:
       return {'errors' : str(e)}, 500
     except ValueError as e:

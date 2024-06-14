@@ -124,32 +124,45 @@ def create_configurations():
   
   return configurations
 
-def calculate_quote_info():
+def calculate_quote_info(quote_id=None):
   # Fetch total cost per quote from configurations
-  total_costs = db.session.query(
-      Configuration.quote_id,
-      func.sum(Configuration.cost).label('total_cost')
-  ).group_by(Configuration.quote_id).all()
+  # breakpoint()
+  quote = Quote.query.filter(Quote.id == quote_id).first()
+  if quote_id and not quote.configurations:
+    quote.total_cost = None
+    quote.savings = None
+    quote.sale_price = None
+    quote.margin_percentage = None # as markup_variable is a multiplier of cost
+    quote.margin_dollars = None
 
-  for total_cost_data in total_costs:
-      quote_id = total_cost_data.quote_id
-      total_cost = total_cost_data.total_cost
+    db.session.add(quote)
+    
+  else:
+    total_costs = db.session.query(
+        Configuration.quote_id,
+        func.sum(Configuration.cost).label('total_cost')
+    ).group_by(Configuration.quote_id).all()
 
-      # Fetch the corresponding quote
-      quote = db.session.get(Quote, quote_id)
+    
 
-      # Assign misc variables associated to calculations
-      cost_w_savings = total_cost - (total_cost * quote.discount)
+    for total_cost_data in total_costs:
+        quote_id = total_cost_data.quote_id
+        total_cost = total_cost_data.total_cost
 
-      # Calculate the financial metrics
-      quote.total_cost = total_cost
-      quote.savings = total_cost * quote.discount
-      quote.sale_price = cost_w_savings * quote.markup_variable
-      quote.margin_percentage = ((quote.sale_price - cost_w_savings) / cost_w_savings) # as markup_variable is a multiplier of cost
-      quote.margin_dollars = quote.sale_price - cost_w_savings
+        # Fetch the corresponding quote
+        quote = db.session.get(Quote, quote_id)
+        # Assign misc variables associated to calculations
+        cost_w_savings = total_cost - (total_cost * quote.discount)
+
+        # Calculate the financial metrics
+        quote.total_cost = total_cost
+        quote.savings = total_cost * quote.discount
+        quote.sale_price = cost_w_savings * quote.markup_variable
+        quote.margin_percentage = ((quote.sale_price - cost_w_savings) / cost_w_savings) # as markup_variable is a multiplier of cost
+        quote.margin_dollars = quote.sale_price - cost_w_savings
 
       # Update the quote in the database
-      db.session.add(quote)
+        db.session.add(quote)
     
   db.session.commit()  # Commit all changes at once
   
