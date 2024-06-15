@@ -180,7 +180,7 @@ const EditQuoteForm = ({ id }) => {
                                 id="sale_price"
                                 name="sale_price"
                                 onChange={formik.handleChange}
-                                value={(formik.values.total_cost * formik.values.discount) * formik.values.markup_variable}
+                                value={(formik.values.total_cost - formik.values.savings) * formik.values.markup_variable}
                                 disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.sale_price}</p>
