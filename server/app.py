@@ -441,6 +441,10 @@ class QuoteById(Resource):
 
         db.session.add(quote)
         db.session.commit()
+      
+        mu_variable = data['markup_variable']
+        if mu_variable:
+          calculate_quote_info()
 
         return make_response(
             quote.to_dict(), 

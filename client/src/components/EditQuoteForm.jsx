@@ -9,6 +9,7 @@ import { AgentContext } from '../AgentProvider';
 const EditQuoteForm = ({ id }) => {
 
     const { quote, errors, setErrors, disabled, handleEditClick, handleUpdateQuote } = useContext(AgentContext);
+    // NEED TO WORK OUT HOW TO UPDATE CALCULATION FIELDS ON FRONT END BASED ON UPDATE TO MARKUP VARIABLE AND / OR CONFIGURATIONS
 
     const [originalValues, setOriginalValues] = useState({
         quote_number: '',
@@ -52,7 +53,7 @@ const EditQuoteForm = ({ id }) => {
                 account_id: `${quote.account_id}`
             });
         }
-    }, [quote]);
+    }, [quote, quote.markup_variable]);
 
     const formSchema = yup.object().shape({
         quote_number: yup.string().required("Please enter a quote number."),
