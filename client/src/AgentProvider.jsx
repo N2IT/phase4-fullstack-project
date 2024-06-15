@@ -14,6 +14,7 @@ const AgentProvider = ({ children }) => {
     const [errors, setErrors] = useState([])
     const [disabled, setAsDisabled] = useState(true)
     const [users, setUsers] = useState([])
+    const [quote, setQuote] = useState([])
     const [quotes, setQuotes] = useState([])
     const [user, setUser] = useState(null)
 
@@ -29,7 +30,7 @@ const AgentProvider = ({ children }) => {
         if (value.account_number) {
             navigate(`/accounts/${value.id}`)
         }
-        else if (value.username) {
+        else if (value.role_id) {
             navigate(`/users/${value.id}`)
         }
         else if (value.quote_number) {
@@ -70,6 +71,16 @@ const AgentProvider = ({ children }) => {
         handleEditClick()
     }
 
+    const handleUpdateQuote = (updatedQuote) => {
+        const updatedQuotesArray = quotes.map(quote => {
+            if (quote.id === updatedQuote.id)
+                return updatedQuote
+            else return quote;
+        });
+        setQuotes(updatedQuotesArray);
+        handleEditClick()
+    }
+
     useEffect(() => {
         fetch('/api/check-session')
             .then((r) => r.json())
@@ -96,9 +107,11 @@ const AgentProvider = ({ children }) => {
                 handleIdClick,
                 handleUpdateAccount,
                 handleUpdateUser,
+                handleUpdateQuote,
                 isLoading,
                 navigate,
                 onSubmitAccountForm,
+                quote,
                 quotes,
                 setAccount,
                 setAccounts,
@@ -107,6 +120,7 @@ const AgentProvider = ({ children }) => {
                 setAsDisabled,
                 setErrors,
                 setIsLoading,
+                setQuote,
                 setQuotes,
                 setValueId,
                 user,
