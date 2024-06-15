@@ -26,7 +26,7 @@ const Quotes = () => {
       <div className="account-details">
         {agent ? (agent.role_id === 1 ?
           <div>
-            <h2>Account Table</h2>
+            <h2>Quotes Table</h2>
             <QuotesTable />
           </div>
           : (
