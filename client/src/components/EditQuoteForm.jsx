@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { useFormik } from 'formik';
+import { Formik, FormikProvider, useFormik } from 'formik';
 import * as yup from "yup";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -156,7 +156,7 @@ const EditQuoteForm = ({ id }) => {
                                 id="savings"
                                 name="savings"
                                 onChange={formik.handleChange}
-                                value={formik.values.savings}
+                                value={(formik.values.total_cost * formik.values.discount)}
                                 disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.savings}</p>
@@ -180,7 +180,7 @@ const EditQuoteForm = ({ id }) => {
                                 id="sale_price"
                                 name="sale_price"
                                 onChange={formik.handleChange}
-                                value={formik.values.sale_price}
+                                value={(formik.values.total_cost * formik.values.discount) * formik.values.markup_variable}
                                 disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.sale_price}</p>
