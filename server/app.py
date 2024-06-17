@@ -437,6 +437,7 @@ class QuoteById(Resource):
     
       if quote:
         data = request.get_json()
+        # breakpoint()
         if data:
           for attr in data:
             setattr(quote, attr, data[attr])

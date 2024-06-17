@@ -265,7 +265,6 @@ class Quote(db.Model, SerializerMixin):
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     updated_by = db.Column(db.Integer)
     customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
-    # configuration_id = db.Column(db.Integer, db.ForeignKey('configurations.id'))
     account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'))
 
     # relationships

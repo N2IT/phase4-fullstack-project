@@ -8,7 +8,8 @@ import { AgentContext } from '../AgentProvider';
 
 const EditQuoteForm = ({ id }) => {
 
-    const { quote, errors, setErrors, disabled, handleEditClick, handleUpdateQuote } = useContext(AgentContext);
+    const { agent, quote, errors, setErrors, disabled, handleEditClick, handleUpdateQuote, setUpdatedBy } = useContext(AgentContext);
+    // const { title, setTitle, markupVariable, setMarkupVariable, notes, setNotes, status, setStatus, converted, setConverted } = useState()
     // NEED TO WORK OUT HOW TO UPDATE CALCULATION FIELDS ON FRONT END BASED ON UPDATE TO MARKUP VARIABLE AND / OR CONFIGURATIONS
 
     const [originalValues, setOriginalValues] = useState({
@@ -50,7 +51,7 @@ const EditQuoteForm = ({ id }) => {
                 created_at: `${quote.created_at}`,
                 created_by: `${quote.created_by}`,
                 updated_at: quote.updated_at ? `${quote.updated_at}` : "",
-                updated_by:  quote.updated_by,
+                updated_by:  `${quote.updated_by}`,
                 customer_id: `${quote.customer_id}`,
                 account_id: `${quote.account_id}`
             })
@@ -72,6 +73,7 @@ const EditQuoteForm = ({ id }) => {
         validationSchema: formSchema,
         onSubmit: (values) => {
             const changes = {};
+            debugger
             Object.keys(values).forEach(key => {
                 if (values[key] !== originalValues[key]) {
                     changes[key] = values[key];
@@ -206,7 +208,7 @@ const EditQuoteForm = ({ id }) => {
                                 id="margin_dollars"
                                 name="margin_dollars"
                                 onChange={formik.handleChange}
-                                value={(((formik.values.total_cost * formik.values.discount) * formik.values.markup_variable) - (formik.values.total_cost * formik.values.discount)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                value={"$" + (((formik.values.total_cost * formik.values.discount) * formik.values.markup_variable) - (formik.values.total_cost * formik.values.discount)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                 disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.margin_dollars}</p>
@@ -288,7 +290,12 @@ const EditQuoteForm = ({ id }) => {
                                 id="updated_by"
                                 name="updated_by"
                                 onChange={formik.handleChange}
-                                value={formik.values.updated_by}
+                                value={originalValues.title !== formik.values.title 
+                                    || originalValues.markup_variable !== formik.values.markup_variable
+                                    || originalValues.notes !== formik.values.notes
+                                    || originalValues.status !== formik.values.status
+                                    || originalValues.converted !== formik.values.converted 
+                                    ? formik.values.updated_by = agent.id : formik.values.updated_by}
                                 disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.updated_by} </p>
