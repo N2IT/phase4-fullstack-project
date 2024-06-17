@@ -7,7 +7,7 @@ import Col from 'react-bootstrap/Col';
 import { AgentContext } from '../AgentProvider';
 
 const AdminEditAccountForm = ({ id }) => {
-    const { account, disabled, errors, setErrors, handleEditClick, handleUpdateAccount } = useContext(AgentContext)
+    const { agent, account, disabled, errors, setErrors, handleEditClick, handleUpdateAccount } = useContext(AgentContext)
 
     const [originalValues, setOriginalValues] = useState({
         account_number: '',
@@ -22,7 +22,8 @@ const AdminEditAccountForm = ({ id }) => {
         markup_variable: '',
         created_at: '',
         updated_at: '',
-        status: "",
+        updated_by: '',
+        status: '',
     });
 
     useEffect(() => {
@@ -39,7 +40,8 @@ const AdminEditAccountForm = ({ id }) => {
                 discount: `${account.discount}`,
                 markup_variable: `${account.markup_variable}`,
                 created_at: `${account.created_at}`,
-                updated_at: `${account.updated_at}`,
+                updated_at: account.updated_at ? `${account.updated_at}` : '',
+                updated_by: account.updated_by ? `${account.updated_by}` : '',
                 status: `${account.status}`,
             });
         }
@@ -236,6 +238,28 @@ const AdminEditAccountForm = ({ id }) => {
                             />
                             <p style={{ color: 'red' }}> {formik.errors.updated_at} </p>
                         </Col>
+                        <Col lg={3} md={6} xs={12}>
+                            <label htmlFor="updated_by">Updated By &nbsp; </label>
+                            <br />
+                            <input
+                                id="updated_by"
+                                name="updated_by"
+                                onChange={formik.handleChange}
+                                value={originalValues.company_name !== formik.values.company_name
+                                    || originalValues.discount !== formik.values.discount
+                                    || originalValues.markup_variable !== formik.values.markup_variable
+                                    || originalValues.phone !== formik.values.phone
+                                    || originalValues.city !== formik.values.city
+                                    || originalValues.state !== formik.values.state
+                                    || originalValues.address_1 !== formik.values.address_1
+                                    || originalValues.address_2 !== formik.values.address_2
+                                    || originalValues.zip_code !== formik.values.zip_code
+                                    || originalValues.status !== formik.values.status
+                                    ? formik.values.updated_by = agent.id : formik.values.updated_by}
+                                disabled
+                            />
+                            <p style={{ color: 'red' }}> {formik.errors.updated_by} </p>
+                        </Col>
                     </Row>
                     <Row>
                         <Col lg={3} md={6} xs={12}>
@@ -258,7 +282,8 @@ const AdminEditAccountForm = ({ id }) => {
                     {disabled ?
                         <p className="view-btn" title="Edit Account" onClick={() => handleEditClick()}> Edit Account </p> :
                         <>
-                            <button type="submit">Save Changes</button> <p className="view-btn" title="Edit Account" onClick={() => handleEditClick()}> Cancel </p>
+                            <p><button type="submit">Save Changes</button></p>
+                            <p className="view-btn" title="Edit Account" onClick={() => handleEditClick()}> Cancel </p>
                         </>
                     }
                 </form>

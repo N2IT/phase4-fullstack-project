@@ -23,6 +23,7 @@ class Account(db.Model, SerializerMixin):
     status = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+    updated_by = db.Column(db.Integer)
     
     @validates('account_number')
     def validate_account_number(self, key, value):
@@ -61,6 +62,7 @@ class User(db.Model,SerializerMixin):
     last_name = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+    updated_by = db.Column(db.Integer)
     status = db.Column(db.String, nullable=False)
     account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'), nullable = False)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
@@ -131,6 +133,7 @@ class RolePermission(db.Model, SerializerMixin):
     permission_id = db.Column(db.Integer, db.ForeignKey('permissions.id'))
     granted_at = db.Column(db.DateTime, server_default=db.func.now())
     expires_at = db.Column(db.DateTime)
+    status = db.Column(db.String)
 
     #relationships
     role = db.relationship('Role', back_populates='roles_permissions')
@@ -234,6 +237,10 @@ class Configuration(db.Model, SerializerMixin):
     product_description = db.Column(db.String)
     cost = db.Column(db.Integer)
     quote_id = db.Column(db.Integer, db.ForeignKey('quotes.id'))
+    ccreated_at = db.Column(db.DateTime, server_default=db.func.now())
+    created_by = db.Column(db.Integer)
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+    updated_by = db.Column(db.Integer)
 
     ##relationships
     quote = db.relationship('Quote', back_populates = 'configurations')

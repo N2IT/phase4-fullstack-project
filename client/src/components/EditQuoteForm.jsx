@@ -134,7 +134,7 @@ const EditQuoteForm = ({ id }) => {
                                 id="total_cost"
                                 name="total_cost"
                                 onChange={formik.handleChange}
-                                value={"$" + (formik.values.total_cost).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                value={("$" + (formik.values.total_cost)).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                 disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.total_cost} </p>
