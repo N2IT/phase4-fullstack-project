@@ -17,6 +17,7 @@ const AgentProvider = ({ children }) => {
     const [quote, setQuote] = useState([])
     const [quotes, setQuotes] = useState([])
     const [user, setUser] = useState(null)
+    const [updatedBy, setUpdatedBy] = useState()
 
     const onSubmitAccountForm = () => {
         setAccountForm(!accountForm)
@@ -122,7 +123,9 @@ const AgentProvider = ({ children }) => {
                 setIsLoading,
                 setQuote,
                 setQuotes,
+                setUpdatedBy,
                 setValueId,
+                updatedBy,
                 user,
                 users,
                 setUser,

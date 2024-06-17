@@ -27,6 +27,7 @@ const EditQuoteForm = ({ id }) => {
         created_at:'',
         created_by:'',
         updated_at:'',
+        updated_by:'',
         customer_id:'',
         account_id:'',
     });
@@ -41,19 +42,20 @@ const EditQuoteForm = ({ id }) => {
                 savings: quote.savings ? `${quote.savings}` : "",
                 markup_variable: `${quote.markup_variable}`,
                 sale_price: quote.sale_price ? `${quote.sale_price}` : "",
-                margin_percentage: quote.margin_percentage ? `${quote.margin_percentage}` : "",
+                margin_percentage: `${quote.margin_percentage}`,
                 margin_dollars: quote.margin_dollars ? `${quote.margin_dollars}` : "",
                 notes: `${quote.notes}`,
                 status: `${quote.status}`,
                 converted: `${quote.converted}`,
                 created_at: `${quote.created_at}`,
                 created_by: `${quote.created_by}`,
-                updated_at: `${quote.updated_at}`,
+                updated_at: quote.updated_at ? `${quote.updated_at}` : "",
+                updated_by:  quote.updated_by,
                 customer_id: `${quote.customer_id}`,
                 account_id: `${quote.account_id}`
             })
         }
-    }, [quote, quote.markup_variable]);
+    }, [quote]);
 
     const formSchema = yup.object().shape({
         quote_number: yup.string().required("Please enter a quote number."),
@@ -124,7 +126,7 @@ const EditQuoteForm = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.title}</p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="total_cost">Total Cost &nbsp; </label>
+                            <label htmlFor="total_cost">Total Cost $&nbsp; </label>
                             <br />
                             <input
                                 id="total_cost"
@@ -136,7 +138,7 @@ const EditQuoteForm = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.total_cost} </p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="discount">Discount &nbsp; </label>
+                            <label htmlFor="discount">Discount %&nbsp; </label>
                             <br />
                             <input
                                 id="discount"
@@ -150,7 +152,7 @@ const EditQuoteForm = ({ id }) => {
                     </Row>
                     <Row>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="savings">Savings &nbsp; </label>
+                            <label htmlFor="savings">Savings $&nbsp; </label>
                             <br />
                             <input
                                 id="savings"
@@ -174,26 +176,25 @@ const EditQuoteForm = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.markup_variable}</p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="sale_price">Sale Price &nbsp; </label>
+                            <label htmlFor="sale_price">Sale Price $&nbsp; </label>
                             <br />
                             <input
                                 id="sale_price"
                                 name="sale_price"
                                 onChange={formik.handleChange}
-                                value={formik.values.total_cost === 0 ? "" : "$" + ((formik.values.total_cost - formik.values.savings) * formik.values.markup_variable).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                value={"$" + ((formik.values.total_cost - formik.values.savings) * formik.values.markup_variable).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                 disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.sale_price}</p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                        {/* CONTINUE HERE UPON RETURN */}
                             <label htmlFor="margin_percentage">Margin % &nbsp; </label>
                             <br />
                             <input
                                 id="margin_percentage"
                                 name="margin_percentage"
                                 onChange={formik.handleChange}
-                                value={formik.values.margin_percentage === 0 ? "" : (((formik.values.total_cost * formik.values.discount) * formik.values.markup_variable) - (formik.values.total_cost * formik.values.discount)) / (formik.values.total_cost * formik.values.discount).toFixed(2)}
+                                value={formik.values.total_cost && formik.values.savings && formik.values.sale_price ? ((((formik.values.total_cost * formik.values.discount) * formik.values.markup_variable) - (formik.values.total_cost * formik.values.discount)) / (formik.values.total_cost * formik.values.discount) * 100).toFixed(2) : "0%" }
                                 disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.margin_percentage}</p>
@@ -205,7 +206,7 @@ const EditQuoteForm = ({ id }) => {
                                 id="margin_dollars"
                                 name="margin_dollars"
                                 onChange={formik.handleChange}
-                                value={formik.values.total_cost === 0 ? "" : "$" + (((formik.values.total_cost * formik.values.discount) * formik.values.markup_variable) - (formik.values.total_cost * formik.values.discount)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                value={(((formik.values.total_cost * formik.values.discount) * formik.values.markup_variable) - (formik.values.total_cost * formik.values.discount)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                 disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.margin_dollars}</p>
@@ -322,7 +323,8 @@ const EditQuoteForm = ({ id }) => {
                     {disabled ?
                         <p className="view-btn" title="Edit Account" onClick={() => handleEditClick()}> Edit Quote Details </p> :
                         <>
-                            <button type="submit">Save Changes</button> <p className="view-btn" title="Edit Quote" onClick={() => handleEditClick()}> Cancel </p>
+                            <p><button type="submit">Save Changes</button></p> 
+                            <p className="view-btn" title="Cancel update" onClick={() => {handleEditClick(); setErrors(null)}}> Cancel </p>
                         </>
                     }
                 </form>

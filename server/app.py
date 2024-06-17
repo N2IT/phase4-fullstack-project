@@ -429,27 +429,31 @@ class QuoteById(Resource):
     except Exception as e:
       return {"errors": str(e)}, 500
   
+
   def patch(self, id):
+    # breakpoint()
     try:
       quote = Quote.query.filter(Quote.id == id).first()
     
-      data = request.get_json()
-
       if quote:
-        for attr in data:
-          setattr(quote, attr, data[attr])
+        data = request.get_json()
+        if data:
+          for attr in data:
+            setattr(quote, attr, data[attr])
 
-        db.session.add(quote)
-        db.session.commit()
-      
-        mu_variable = data['markup_variable']
-        if mu_variable:
-          calculate_quote_info()
+          db.session.add(quote)
+          db.session.commit()
+        
+          mu_variable = data.get('markup_variable')
+          if mu_variable:
+            calculate_quote_info()
 
-        return make_response(
-            quote.to_dict(), 
-            200
-          )
+          return make_response(
+              quote.to_dict(), 
+              200
+            )
+        else:
+          return {'errors' : 'There are no changes to commit'}
       else:
         return {'errors' : 'That quote does not exist'}, 404
     except ValueError as e:
