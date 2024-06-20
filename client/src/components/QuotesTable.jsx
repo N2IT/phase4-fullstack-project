@@ -3,13 +3,9 @@ import { AgentContext } from '../AgentProvider';
 import Table from 'react-bootstrap/Table';
 
 const QuotesTable = () => {
-// PASSSING QUOTES AS PROP TO PERSIST QUOTES DATA
-// ISSUE SURFACING AFTER UPDATING A CONFIGURATION WITHIN QUOTE, SAVING, THEN USING NAV TO RETURN TO QUOTES PAGE AS ADMIN
+
     const { handleIdClick, isLoading, quotes } = useContext(AgentContext);
-
-    console.log(quotes)
-    debugger
-
+    
     return (
         <>
             {isLoading ? <h2>Loading...</h2> :

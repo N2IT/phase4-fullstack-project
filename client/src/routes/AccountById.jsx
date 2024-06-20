@@ -6,6 +6,7 @@ import Unauthorized from '../components/Unauthorized';
 import AdminEditAccountForm from '../components/AdminEditAccountForm';
 import ManagerEditAccountForm from '../components/ManagerEditAccountForm';
 import SalesEditAccountForm from '../components/SalesEditAccountForm';
+import QuotesTableByAccount from '../components/QuotesTableByAccount';
 
 const AccountById = () => {
     const { agent, account, isLoading, setAccount, setUsers, setAsDisabled, setErrors, errors } = useContext(AgentContext);
@@ -67,6 +68,10 @@ const AccountById = () => {
                 </div>
                 <div>
                     <UsersTableByAccount />
+                </div>
+                <br></br>
+                <div>
+                    <QuotesTableByAccount />
                 </div>
             </>
         );
