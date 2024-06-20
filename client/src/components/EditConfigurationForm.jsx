@@ -41,7 +41,7 @@ const EditConfigurationForm = ({ id }) => {
     }, []);
 
     const formSchema = yup.object().shape({
-        sku: yup.number().integer().required('Please enter a sku.'),
+        sku: yup.string().required('Please enter a sku.'),
         product_title: yup.string().required('Please enter a product title.'),
         product_description: yup.string().required('Please enter a product description'),
         cost: yup.string().required('Please enter a cost for the product.'),
