@@ -713,7 +713,7 @@ class ConfigurationById(Resource):
         db.session.add(configuration)
         db.session.commit()
 
-        cost = data['cost']
+        cost = data.get('cost')
         if cost:
           calculate_quote_info()
           ## this is temporary - don't know if a server side calc is good or not 

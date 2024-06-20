@@ -80,7 +80,7 @@ const AgentProvider = ({ children }) => {
                 return updatedConfiguration
             else return configuration;
         });
-        setQuotes(updatedConfigurationsArray);
+        setConfigurations(updatedConfigurationsArray);
         handleEditClick()
     }
 

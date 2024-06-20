@@ -3,8 +3,12 @@ import { AgentContext } from '../AgentProvider';
 import Table from 'react-bootstrap/Table';
 
 const QuotesTable = () => {
+// PASSSING QUOTES AS PROP TO PERSIST QUOTES DATA
+// ISSUE SURFACING AFTER UPDATING A CONFIGURATION WITHIN QUOTE, SAVING, THEN USING NAV TO RETURN TO QUOTES PAGE AS ADMIN
+    const { handleIdClick, isLoading, quotes } = useContext(AgentContext);
 
-    const { quotes, handleIdClick, isLoading } = useContext(AgentContext);
+    console.log(quotes)
+    debugger
 
     return (
         <>
@@ -33,7 +37,7 @@ const QuotesTable = () => {
                     </thead>
                     <tbody>
                         {quotes.map((quote) => (
-                            <tr key={quote.quote_number} className="">
+                            <tr key={quote.id} className="">
                                 <td>{quote.quote_number}</td>
                                 <td>{quote.account.company_name}</td>
                                 {/* <td>{quote.quote_number}</td> */}

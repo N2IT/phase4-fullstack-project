@@ -119,7 +119,7 @@ const EditConfigurationForm = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.product_description} </p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="cost">Cost &nbsp; </label>
+                            <label htmlFor="cost">Cost $&nbsp; </label>
                             <br />
                             <input
                                 id="cost"

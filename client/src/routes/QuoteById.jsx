@@ -4,9 +4,10 @@ import EditQuoteForm from '../components/EditQuoteForm';
 // import SalesEditUserForm from '../components/SalesEditUserForm';
 import Unauthorized from '../components/Unauthorized';
 import { AgentContext } from '../AgentProvider';
+import ConfigurationsTableByQuote from '../components/ConfigurationsTableByQuote';
 
 const QuoteById = () => {
-    const { agent, quote, setQuote, setAsDisabled, errors = [], setErrors, isLoading } = useContext(AgentContext)
+    const { agent, quote, setConfigurations, setQuote, setAsDisabled, errors = [], setErrors, isLoading } = useContext(AgentContext)
     const { id } = useParams();
 
     useEffect(() => {
@@ -31,6 +32,24 @@ const QuoteById = () => {
                 setErrors([error.errors] || 'Unknown Error');
                 setQuote(null);
             });
+            
+        fetch('/api/configurations')
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(data => { throw data; });
+                }
+                return response.json();
+            })
+            .then(data => {
+                setConfigurations(data);
+                setAsDisabled(true);
+                // setErrors(null);
+            })
+            .catch(error => {
+                console.error('Errors:', error);
+                setErrors([error.errors] || ['Unknown Error']);
+                setConfigurations(null);
+            });
     }, [id, agent, setQuote, setAsDisabled, setErrors]);
 
     if (isLoading) {
@@ -50,10 +69,15 @@ const QuoteById = () => {
         <>
             {agent ? (
                 quote ? (
-                    <div className='account-details'>
-                        <h2>Quote Details</h2>
-                        <EditQuoteForm id={id} />
-                    </div>
+                    <>
+                        <div className='account-details'>
+                            <h2>Quote Details</h2>
+                            <EditQuoteForm id={id} />
+                        </div>
+                        <div className="account-details">
+                            <ConfigurationsTableByQuote />
+                        </div>
+                    </>
                 ) : (
                     <div className='account-details'>
                         {Array.isArray(errors) && errors.length > 0 ? (
