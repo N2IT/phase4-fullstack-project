@@ -73,7 +73,6 @@ const EditQuoteForm = ({ id }) => {
         validationSchema: formSchema,
         onSubmit: (values) => {
             const changes = {};
-            debugger
             Object.keys(values).forEach(key => {
                 if (values[key] !== originalValues[key]) {
                     changes[key] = values[key];

@@ -10,6 +10,8 @@ import Support from './routes/Support';
 import AccountById from './routes/AccountById';
 import UserById from './routes/UserById';
 import QuoteById from './routes/QuoteById';
+import Configurations from './routes/Configurations';
+import ConfigurationById from './routes/ConfigurationById';
 
 const routes = [
     {
@@ -52,6 +54,14 @@ const routes = [
             {
                 path: 'quotes/:id',
                 element: <QuoteById />
+            },
+            {
+                path: 'configurations',
+                element: <Configurations />
+            },
+            {
+                path:'configurations/:id',
+                element: <ConfigurationById />
             },
             {
                 path: 'support',

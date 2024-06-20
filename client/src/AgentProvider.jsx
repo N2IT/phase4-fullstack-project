@@ -18,6 +18,8 @@ const AgentProvider = ({ children }) => {
     const [quotes, setQuotes] = useState([])
     const [user, setUser] = useState(null)
     const [updatedBy, setUpdatedBy] = useState()
+    const [configurations, setConfigurations] = useState([])
+    const [configuration, setConfiguration] = useState(null)
 
     const onSubmitAccountForm = () => {
         setAccountForm(!accountForm)
@@ -37,20 +39,10 @@ const AgentProvider = ({ children }) => {
         else if (value.quote_number) {
             navigate(`/quotes/${value.id}`)
         }
+        else if (value.sku) {
+            navigate(`/configurations/${value.id}`)
+        }
     }
-
-    // const handleUserIdClick = (value) => {
-    //     setUser(value)
-    //     navigate(`/users/${value.id}`)
-    // }
-
-    // const handleQuoteIdClick = (value) => {
-    //     if (value.quote_number) {
-    //         navigate(`/quotes/${value.id}`)
-    //     }
-
-        
-    // }
 
     const handleUpdateAccount = (updatedAccount) => {
         const updatedAccountsArray = accounts.map(account => {
@@ -82,6 +74,16 @@ const AgentProvider = ({ children }) => {
         handleEditClick()
     }
 
+    const handleUpdateConfiguration = (updatedConfiguration) => {
+        const updatedConfigurationsArray = configurations.map(configuration => {
+            if (configuration.id === updatedConfiguration.id)
+                return updatedConfiguration
+            else return configuration;
+        });
+        setQuotes(updatedConfigurationsArray);
+        handleEditClick()
+    }
+
     useEffect(() => {
         fetch('/api/check-session')
             .then((r) => r.json())
@@ -102,11 +104,14 @@ const AgentProvider = ({ children }) => {
                 accounts,
                 accountForm,
                 agent,
+                configuration,
+                configurations,
                 disabled,
                 errors,
                 handleEditClick,
                 handleIdClick,
                 handleUpdateAccount,
+                handleUpdateConfiguration,
                 handleUpdateUser,
                 handleUpdateQuote,
                 isLoading,
@@ -119,6 +124,8 @@ const AgentProvider = ({ children }) => {
                 setAccountForm,
                 setAgent,
                 setAsDisabled,
+                setConfiguration,
+                setConfigurations,
                 setErrors,
                 setIsLoading,
                 setQuote,

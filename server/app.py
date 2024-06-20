@@ -706,7 +706,6 @@ class ConfigurationById(Resource):
 
       if configuration:
         data = request.get_json()
-        breakpoint()
 
         for attr in data:
           setattr(configuration, attr, data[attr])
