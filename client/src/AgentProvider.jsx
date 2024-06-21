@@ -20,6 +20,8 @@ const AgentProvider = ({ children }) => {
     const [updatedBy, setUpdatedBy] = useState()
     const [configurations, setConfigurations] = useState([])
     const [configuration, setConfiguration] = useState(null)
+    const [customers, setCustomers] = useState([])
+    const [customer, setCustomer] = useState(null)
 
     const onSubmitAccountForm = () => {
         setAccountForm(!accountForm)
@@ -41,6 +43,9 @@ const AgentProvider = ({ children }) => {
         }
         else if (value.sku) {
             navigate(`/configurations/${value.id}`)
+        }
+        else if (value.notes) {
+            navigate(`/customers/${value.id}`)
         }
     }
 
@@ -84,6 +89,16 @@ const AgentProvider = ({ children }) => {
         handleEditClick()
     }
 
+    const handleUpdateCustomer = (updatedCustomer) => {
+        const updatedCustomersArray = customers.map(customer => {
+            if (customer.id === updatedCustomer.id)
+                return updatedCustomer
+            else return customer;
+        });
+        setCustomers(updatedCustomersArray);
+        handleEditClick()
+    }
+
     useEffect(() => {
         fetch('/api/check-session')
             .then((r) => r.json())
@@ -106,12 +121,15 @@ const AgentProvider = ({ children }) => {
                 agent,
                 configuration,
                 configurations,
+                customer,
+                customers,
                 disabled,
                 errors,
                 handleEditClick,
                 handleIdClick,
                 handleUpdateAccount,
                 handleUpdateConfiguration,
+                handleUpdateCustomer,
                 handleUpdateUser,
                 handleUpdateQuote,
                 isLoading,
@@ -126,6 +144,8 @@ const AgentProvider = ({ children }) => {
                 setAsDisabled,
                 setConfiguration,
                 setConfigurations,
+                setCustomer,
+                setCustomers,
                 setErrors,
                 setIsLoading,
                 setQuote,

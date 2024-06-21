@@ -12,6 +12,8 @@ import UserById from './routes/UserById';
 import QuoteById from './routes/QuoteById';
 import Configurations from './routes/Configurations';
 import ConfigurationById from './routes/ConfigurationById';
+import Customers from './routes/Customers';
+import CustomerById from './routes/CustomerById';
 
 const routes = [
     {
@@ -54,6 +56,14 @@ const routes = [
             {
                 path: 'quotes/:id',
                 element: <QuoteById />
+            },
+            {
+                path: 'customers',
+                element: <Customers />
+            },
+            {
+                path: 'customers/:id',
+                element: <CustomerById />
             },
             {
                 path: 'configurations',

@@ -258,7 +258,8 @@ const EditAccountForm = ({ id }) => {
                     {disabled ?
                         <p className="view-btn" title="Edit Account" onClick={() => handleEditClick()}> Edit Account </p> :
                         <>
-                            <button type="submit">Save Changes</button> <p className="view-btn" title="Edit Account" onClick={() => handleEditClick()}> Cancel </p>
+                           <p><button type="submit">Save Changes</button></p> 
+                           <p className="view-btn" title="Edit Account" onClick={() => handleEditClick()}> Cancel </p>
                         </>
                     }
                 </form>
