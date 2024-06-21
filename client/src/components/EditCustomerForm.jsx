@@ -14,6 +14,8 @@ const EditCustomerForm = ({ id }) => {
         // status: ''
     });
 
+
+
     useEffect(() => {
         if (customer) {
             setOriginalValues({
@@ -81,7 +83,7 @@ const EditCustomerForm = ({ id }) => {
                                 id="account_id"
                                 name="account_id"
                                 onChange={formik.handleChange}
-                                value={formik.values.sku}
+                                value={formik.values.account_id}
                                 disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.account_id} </p>

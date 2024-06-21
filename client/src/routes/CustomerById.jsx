@@ -1,7 +1,9 @@
 import { useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import EditCustomerForm from '../components/EditCustomerForm';
-// import SalesEditUserForm from '../components/SalesEditUserForm';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Unauthorized from '../components/Unauthorized';
 import { AgentContext } from '../AgentProvider';
 
@@ -42,10 +44,23 @@ const CustomerById = () => {
             {agent ? (
                 customer ? (
                     <>
-                        <div className='account-details'>
-                            <h2>Customer Details</h2>
-                            <EditCustomerForm id={id} />
-                        </div>
+                        <Container>
+                            <div className='account-details'>
+                                <Row>
+                                    <Col md={6} xs={12}>
+                                        <h2>Customer Details</h2>
+                                    </Col>
+                                    <Col md={6} xs={12}>
+                                        <button type="button" onClick={() => history.go(-1)}>Return to Prev. page</button>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <EditCustomerForm id={id} />
+                                    </Col>
+                                </Row>
+                            </div>
+                        </Container>
                     </>
                 ) : (
                     <div className='account-details'>
