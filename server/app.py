@@ -226,13 +226,14 @@ class Users(Resource):
   def post(self):
     try:
       form_data = request.get_json()
-      
+
       first_name = form_data.get('first_name')
       last_name = form_data.get('last_name')
       username = form_data.get('username')
       email = form_data.get('email')
       account_id = form_data.get('account_id')
       password = form_data.get('password_hash')
+      role_id = form_data.get('role_id')
 
       errors = []
 
@@ -249,6 +250,8 @@ class Users(Resource):
           errors.append('Please enter an email')
         elif User.query.filter(User.email == email).first():
           errors.append('This email is already in use. Please enter another email address.')
+        elif not role_id:
+          errors.append('Please select a role for the user')
         
         if errors:
           return {'errors' : errors }, 422
@@ -260,7 +263,8 @@ class Users(Resource):
             username = username,
             email = email,
             status = 'active',
-            account_id = account_id
+            account_id = account_id,
+            role_id = role_id,
           )        
 
           new_user.password_hash = form_data['password']
