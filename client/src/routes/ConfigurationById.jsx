@@ -49,7 +49,6 @@ const AccountById = () => {
             {agent.role_id ? (
                 configuration ? (
                     <div className='account-details'>
-                        <h2>Hello, admin:</h2>
                         <h2>Configuration Details</h2>
                         <EditConfigurationForm id={id} />
                     </div>

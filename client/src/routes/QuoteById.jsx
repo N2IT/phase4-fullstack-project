@@ -5,6 +5,9 @@ import EditQuoteForm from '../components/EditQuoteForm';
 import Unauthorized from '../components/Unauthorized';
 import { AgentContext } from '../AgentProvider';
 import ConfigurationsTableByQuote from '../components/ConfigurationsTableByQuote';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const QuoteById = () => {
     const { agent, quote, setConfigurations, setQuote, setAsDisabled, errors = [], setErrors, isLoading } = useContext(AgentContext)
@@ -32,7 +35,7 @@ const QuoteById = () => {
                 setErrors([error.errors] || 'Unknown Error');
                 setQuote(null);
             });
-            
+
         fetch('/api/configurations')
             .then(response => {
                 if (!response.ok) {
@@ -70,13 +73,29 @@ const QuoteById = () => {
             {agent ? (
                 quote ? (
                     <>
-                        <div className='account-details'>
-                            <h2>Quote Details</h2>
-                            <EditQuoteForm id={id} />
-                        </div>
-                        <div className="account-details">
-                            <ConfigurationsTableByQuote />
-                        </div>
+                        <Container>
+                            <div className='account-details'>
+
+                                <Row>
+                                    <Col md={6} xs={12}>
+                                        <h2>Quote Details</h2>
+                                    </Col>
+                                    <Col md={6} xs={12}>
+                                        <button type="button" onClick={() => history.go(-1)}>Return to Prev. page</button>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <EditQuoteForm id={id} />
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <ConfigurationsTableByQuote />
+                                    </Col>
+                                </Row>
+                            </div>
+                        </Container>
                     </>
                 ) : (
                     <div className='account-details'>

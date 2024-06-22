@@ -6,9 +6,10 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Unauthorized from '../components/Unauthorized';
 import { AgentContext } from '../AgentProvider';
+import QuoteTableByCustomer from '../components/QuoteTableByCustomer';
 
 const CustomerById = () => {
-    const { agent, customer, setCustomer, setAsDisabled, errors = [], setErrors, isLoading } = useContext(AgentContext)
+    const { agent, customer, setCustomer, setAsDisabled, setQuotes, errors = [], setErrors, isLoading } = useContext(AgentContext)
     const { id } = useParams();
 
     useEffect(() => {
@@ -33,7 +34,24 @@ const CustomerById = () => {
                 setErrors([error.errors] || 'Unknown Error');
                 setCustomer(null);
             });
-    }, [id, agent, setCustomer, setAsDisabled, setErrors]);
+        fetch('/api/quotes')
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(data => { throw data; });
+                }
+                return response.json();
+            })
+            .then(data => {
+                setQuotes(data);
+                setAsDisabled(true);
+                // setErrors(null);
+            })
+            .catch(error => {
+                console.error('Errors:', error);
+                setErrors([error.errors] || ['Unknown Error']);
+                setQuotes(null);
+            });
+    }, [id, agent, setQuotes, setCustomer, setAsDisabled, setErrors]);
 
     if (isLoading) {
         return <div> Loading ... </div>
@@ -57,6 +75,11 @@ const CustomerById = () => {
                                 <Row>
                                     <Col>
                                         <EditCustomerForm id={id} />
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <QuoteTableByCustomer />
                                     </Col>
                                 </Row>
                             </div>

@@ -4,6 +4,9 @@ import EditUserForm from '../components/EditUserForm';
 import SalesEditUserForm from '../components/SalesEditUserForm';
 import Unauthorized from '../components/Unauthorized';
 import { AgentContext } from '../AgentProvider';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const UserById = () => {
     const { agent, user, setUser, setAsDisabled, errors = [], setErrors, isLoading } = useContext(AgentContext)
@@ -39,10 +42,26 @@ const UserById = () => {
 
     if (agent.role_id === 1 && user || agent.role_id === 2 && user) {
         return (
-            <div className='account-details'>
-                <h2>User Details</h2>
-                <EditUserForm id={id} />
-            </div>
+            <>
+                <Container>
+                    <div className="account-details">
+                        <Row>
+                            <Col md={6} xs={12}>
+                                <h2>Hello, admin:</h2>
+                                <h3>User Details</h3>
+                            </Col>
+                            <Col md={6} xs={12}>
+                                <button type="button" onClick={() => history.go(-1)}>Return to Prev. page</button>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <EditUserForm id={id} />
+                            </Col>
+                        </Row>
+                    </div>
+                </Container>
+            </>
         );
     }
 
