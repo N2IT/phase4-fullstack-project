@@ -102,10 +102,11 @@ const AgentProvider = ({ children }) => {
         handleEditClick()
     }
 
-    function deleteAccountObject(id) {
-        console.log(id)
-        // const updatedAccounts = accounts.filter((account) => account.id !== id);
-        // setAccounts(updatedAccounts)
+    const deleteAccountObject = (id, account) => {
+        const updatedAccounts = accounts.filter((account) => account.id !== id);
+        setAccounts(updatedAccounts)
+        alert(`Account ${account.account_number} successfully deleted`)
+        navigate('/accounts')
     }
 
     useEffect(() => {

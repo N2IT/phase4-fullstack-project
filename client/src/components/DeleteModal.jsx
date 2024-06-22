@@ -1,16 +1,12 @@
+import { useContext } from 'react';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
-// import { AgentContext } from '../AgentProvider';
+import { AgentContext } from '../AgentProvider';
 
-function DeleteModal() {
-  const { show, setShow, handleShow, handleClose } = useContext(AgentContext);
-
+function DeleteModal({id}) {
+  const { account, show, handleClose, handleDeleteClick } = useContext(AgentContext);
   return (
     <>
-      <Button variant="primary" onClick={handleShow}>
-        Launch demo modal
-      </Button>
-
       <Modal show={show} onHide={handleClose}>
         <Modal.Header closeButton>
           <Modal.Title>Deleting Account</Modal.Title>
@@ -20,7 +16,7 @@ function DeleteModal() {
           <Button variant="secondary" onClick={handleClose}>
             Close
           </Button>
-          <Button variant="primary" onClick={(handleClose, console.log('account deleted'))}>
+          <Button variant="primary" onClick={(handleClose, handleDeleteClick(account))}>
             Yes, I am sure I want to delete this account.
           </Button>
         </Modal.Footer>
