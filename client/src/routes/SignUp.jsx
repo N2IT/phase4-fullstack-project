@@ -1,5 +1,5 @@
-import NewUserForm from "../components/NewUserForm";
-import NewAccountForm from "../components/NewAccountForm";
+import UserSignupForm from "../components/UserSignupForm";
+import AccountSignupForm from "../components/AccountSignupForm";
 import { useContext } from "react";
 import { AgentContext } from '../AgentProvider';
 
@@ -10,7 +10,7 @@ const SignUp = () => {
   return (
     <div>
       {/* <h2>Create New Account</h2> */}
-      {accountForm ? <NewAccountForm setAccountForm={onSubmitAccountForm}/> : <NewUserForm /> }
+      {accountForm ? <AccountSignupForm setAccountForm={onSubmitAccountForm}/> : <UserSignupForm /> }
     </div>
   );
   }

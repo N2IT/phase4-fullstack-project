@@ -3,9 +3,9 @@ import { useFormik } from 'formik';
 import * as yup from "yup";
 import { AgentContext } from '../AgentProvider';
 
-const NewUserForm = () => {
+const CreateNewUserForm = () => {
 
-    const { setAgent, errors, setErrors, navigate }  = useContext(AgentContext);
+    const { agent, errors, setAgent, setErrors, setUser }  = useContext(AgentContext);
 
     const formSchema = yup.object().shape({
         first_name: yup.string().required("Please enter you first name."),
@@ -42,8 +42,10 @@ const NewUserForm = () => {
                     return response.json();
                 })
                 .then((user) => {
-                    setAgent(user);
-                    navigate('/');
+                    debugger
+                    setUser(user);
+                    history.go(-1)
+                    alert(`User ${user.username} has been successfully created.`)
                 })
         }
     })
@@ -99,6 +101,16 @@ const NewUserForm = () => {
                         value={formik.values.password}
                     />
                     <p style={{ color: 'red' }}> {formik.errors.password}</p>
+                    <label htmlFor="account_id">Account Id </label>
+                    <input
+                        type="account_id"
+                        id="account_id"
+                        name="account_id"
+                        onChange={formik.handleChange}
+                        value={formik.values.account_id = agent.account_id}
+                        disabled
+                    />
+                    <p style={{ color: 'red' }}> {formik.errors.password}</p>
                     <button type="submit">Submit</button>
                 </form>
                 <p style={{ color: 'red' }}>{errors ? errors : null}</p>
@@ -107,4 +119,4 @@ const NewUserForm = () => {
     )
 }
 
-export default NewUserForm
+export default  CreateNewUserForm

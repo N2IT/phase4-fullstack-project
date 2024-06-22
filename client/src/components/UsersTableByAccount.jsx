@@ -1,10 +1,13 @@
 import { useContext } from 'react'
 import { AgentContext } from '../AgentProvider';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
 
 const UsersTableByAccount = () => {
 
-    const { users, account, handleIdClick, agent } = useContext(AgentContext);
+    const { users, account, handleIdClick, agent, navigate } = useContext(AgentContext);
 
     const accountUsers = users.filter(user => {
         // console.log(typeof user.account_id, typeof account.id);
@@ -13,7 +16,17 @@ const UsersTableByAccount = () => {
 
     return (
         <>
-            <h3>Account Users</h3>
+            <Container>
+                <Row>
+                    <Col md={4} sm={12}>
+                        <h3>Account Users</h3>
+                    </Col>
+                    <Col md={4} sm={12}>
+                        <button type="button" onClick={() => navigate('/add-user')}>Add New User</button>
+                    </Col>
+                </Row>
+            </Container>
+
             <Table responsive="sm" striped="columns">
                 <thead>
                     <tr>

@@ -14,6 +14,7 @@ import Configurations from './routes/Configurations';
 import ConfigurationById from './routes/ConfigurationById';
 import Customers from './routes/Customers';
 import CustomerById from './routes/CustomerById';
+import CreateNewUserForm from './components/CreateNewUserForm';
 
 const routes = [
     {
@@ -72,6 +73,10 @@ const routes = [
             {
                 path:'configurations/:id',
                 element: <ConfigurationById />
+            },
+            {
+                path: 'add-user',
+                element: <CreateNewUserForm />
             },
             {
                 path: 'support',

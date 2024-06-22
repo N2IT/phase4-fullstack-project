@@ -271,7 +271,10 @@ class Users(Resource):
           db.session.add(new_user)
           db.session.commit()
 
-          session['user_id'] = new_user.id
+          if session.get('user_id'):
+            session['user_id'] = session.get('user_id')
+          else:
+            session['user_id'] = new_user.id
 
           return new_user.to_dict(), 201
     except ValueError as e:
