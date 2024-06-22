@@ -5,7 +5,7 @@ import { AgentContext } from '../AgentProvider';
 
 const CreateNewUserForm = () => {
 
-    const { agent, errors, setAgent, setErrors, setUser }  = useContext(AgentContext);
+    const { account, errors, setErrors, setUser }  = useContext(AgentContext);
 
     const formSchema = yup.object().shape({
         first_name: yup.string().required("Please enter you first name."),
@@ -107,7 +107,7 @@ const CreateNewUserForm = () => {
                         id="account_id"
                         name="account_id"
                         onChange={formik.handleChange}
-                        value={formik.values.account_id = agent.account_id}
+                        value={formik.values.account_id = account.id}
                         disabled
                     />
                     <p style={{ color: 'red' }}> {formik.errors.password}</p>

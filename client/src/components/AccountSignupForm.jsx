@@ -5,7 +5,7 @@ import { AgentContext } from '../AgentProvider';
 
 const AccountSignupForm = () => {
 
-    const { setAccountForm, errors, setErrors  } = useContext(AgentContext);
+    const { setAccount, setAccountForm, errors, setErrors  } = useContext(AgentContext);
 
 
     const formSchema = yup.object().shape({
@@ -37,7 +37,7 @@ const AccountSignupForm = () => {
             })
                 .then((res) => res.json()) 
                 .then((data) => {
-                    {data.errors ? setErrors(data.errors) : setAccountForm()}
+                    {data.errors ? setErrors(data.errors) : setAccountForm(), setAccount(data)}
                 })
                 
         }

@@ -231,10 +231,7 @@ class Users(Resource):
       last_name = form_data.get('last_name')
       username = form_data.get('username')
       email = form_data.get('email')
-      if session.get('account_id'):
-        account_id = session['account_id']
-      else:
-        account_id = form_data.get('account_id')
+      account_id = form_data.get('account_id')
       password = form_data.get('password_hash')
 
       errors = []

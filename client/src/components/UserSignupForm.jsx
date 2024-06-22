@@ -1,11 +1,11 @@
-import { useContext }from 'react';
+import { useContext, useEffect } from 'react';
 import { useFormik } from 'formik';
 import * as yup from "yup";
 import { AgentContext } from '../AgentProvider';
 
 const UserSignupForm = () => {
 
-    const { setAgent, errors, setErrors, navigate }  = useContext(AgentContext);
+    const { setAgent, account, errors, setErrors, navigate } = useContext(AgentContext);
 
     const formSchema = yup.object().shape({
         first_name: yup.string().required("Please enter you first name."),
@@ -99,6 +99,16 @@ const UserSignupForm = () => {
                         value={formik.values.password}
                     />
                     <p style={{ color: 'red' }}> {formik.errors.password}</p>
+                    <label htmlFor="account_id">Account Id </label>
+                    <input
+                        type="account_id"
+                        id="account_id"
+                        name="account_id"
+                        onChange={formik.handleChange}
+                        value={formik.values.account_id = account.id}
+                        disabled
+                    />
+                    <p style={{ color: 'red' }}> {formik.errors.password}</p>
                     <button type="submit">Submit</button>
                 </form>
                 <p style={{ color: 'red' }}>{errors ? errors : null}</p>
@@ -107,4 +117,4 @@ const UserSignupForm = () => {
     )
 }
 
-export default  UserSignupForm
+export default UserSignupForm
