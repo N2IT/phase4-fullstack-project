@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import { AgentContext } from '../AgentProvider';
+import Table from 'react-bootstrap/Table';
 
 const UsersTable = () => {
 
@@ -8,7 +9,7 @@ const UsersTable = () => {
 
     return (
         <>
-            <table>
+            <Table responsive="sm" striped="columns">
                 <thead>
                     <tr>
                         <th>ID</th>
@@ -34,7 +35,7 @@ const UsersTable = () => {
                         </tr>
                     ))}
                 </tbody>
-            </table>
+            </Table>
         </>
     )
 }

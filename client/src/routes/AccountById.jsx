@@ -7,9 +7,12 @@ import AdminEditAccountForm from '../components/AdminEditAccountForm';
 import ManagerEditAccountForm from '../components/ManagerEditAccountForm';
 import SalesEditAccountForm from '../components/SalesEditAccountForm';
 import QuotesTableByAccount from '../components/QuotesTableByAccount';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const AccountById = () => {
-    const { agent, account, isLoading, setAccount, setUsers, setAsDisabled, setErrors, errors } = useContext(AgentContext);
+    const { agent, account, isLoading, setQuotes, setAccount, setUsers, setAsDisabled, setErrors, errors } = useContext(AgentContext);
     const { id } = useParams();
 
     useEffect(() => {
@@ -52,7 +55,24 @@ const AccountById = () => {
                 setErrors([error.errors] || ['Unknown Error']);
                 setUsers(null);
             });
-    }, [id, agent, setAccount, setUsers, setAsDisabled, setErrors]);
+        fetch('/api/quotes')
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(data => { throw data; });
+                }
+                return response.json();
+            })
+            .then(data => {
+                setQuotes(data);
+                setAsDisabled(true);
+                // setErrors(null);
+            })
+            .catch(error => {
+                console.error('Errors:', error);
+                setErrors([error.errors] || ['Unknown Error']);
+                setQuotes(null);
+            });
+    }, [id, agent, setQuotes, setAccount, setUsers, setAsDisabled, setErrors]);
 
     if (isLoading) {
         return <div>Loading ...</div>;
@@ -61,18 +81,34 @@ const AccountById = () => {
     if (agent.role_id === 1 && account) {
         return (
             <>
-                <div className='account-details'>
-                    <h2>Hello, admin:</h2>
-                    <h3>Account Details</h3>
-                    <AdminEditAccountForm id={id} />
-                </div>
-                <div>
-                    <UsersTableByAccount />
-                </div>
-                <br></br>
-                <div>
-                    <QuotesTableByAccount />
-                </div>
+                <Container>
+                    <div className='account-details'>
+                        <Row>
+                            <Col md={6} xs={12}>
+                                <h2>Hello, admin:</h2>
+                                <h3>Account Details</h3>
+                            </Col>
+                            <Col md={6} xs={12}>
+                                <button type="button" onClick={() => history.go(-1)}>Return to Prev. page</button>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <AdminEditAccountForm id={id} />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <UsersTableByAccount />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <QuotesTableByAccount />
+                            </Col>
+                        </Row>
+                    </div >
+                </Container>
             </>
         );
     }

@@ -1,5 +1,6 @@
 import { useContext } from 'react';
 import { AgentContext } from '../AgentProvider';
+import Table from 'react-bootstrap/Table';
 
 const AccountsTable = () => {
 
@@ -8,7 +9,7 @@ const AccountsTable = () => {
     return (
         <>
             {isLoading ? <h2>Loading...</h2> :
-                <table>
+                <Table responsive="sm" striped="columns">
                     <thead>
                         <tr>
                             <th>ACCT NUMBER</th>
@@ -27,12 +28,11 @@ const AccountsTable = () => {
                                 <td>{account.state}</td>
                                 <td>{account.phone}</td>
                                 <td>{account.discount}</td>
-                                <td>{account.actions}</td>
                                 <td><p className="view-btn" title="View Account" onClick={() => handleIdClick(account)}> View </p></td>
                             </tr>
                         ))}
                     </tbody>
-                </table>
+                </Table>
             }
         </>
     )
