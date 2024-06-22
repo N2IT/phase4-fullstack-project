@@ -8,7 +8,7 @@ import { AgentContext } from '../AgentProvider';
 
 const EditQuoteForm = ({ id }) => {
 
-    const { agent, quote, errors, setErrors, disabled, handleEditClick, handleUpdateQuote, setUpdatedBy } = useContext(AgentContext);
+    const { agent, quote, errors, setErrors, disabled, handleEditClick, handleUpdateQuote } = useContext(AgentContext);
     // const { title, setTitle, markupVariable, setMarkupVariable, notes, setNotes, status, setStatus, converted, setConverted } = useState()
     // NEED TO WORK OUT HOW TO UPDATE CALCULATION FIELDS ON FRONT END BASED ON UPDATE TO MARKUP VARIABLE AND / OR CONFIGURATIONS
 
@@ -128,12 +128,13 @@ const EditQuoteForm = ({ id }) => {
                         </Col>
                         <Col lg={3} md={6} xs={12}>
                             <label htmlFor="total_cost">Total Cost $&nbsp; </label>
+                            
                             <br />
                             <input
                                 id="total_cost"
                                 name="total_cost"
                                 onChange={formik.handleChange}
-                                value={("$" + (formik.values.total_cost)).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                value={("$" + (formik.values.total_cost))}
                                 disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.total_cost} </p>

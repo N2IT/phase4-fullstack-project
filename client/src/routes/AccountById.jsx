@@ -9,13 +9,14 @@ import AdminEditAccountForm from '../components/AdminEditAccountForm';
 import ManagerEditAccountForm from '../components/ManagerEditAccountForm';
 import SalesEditAccountForm from '../components/SalesEditAccountForm';
 import QuotesTableByAccount from '../components/QuotesTableByAccount';
+import CustomersTableByAccount from '../components/CustomersTableByAccount';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 
 const AccountById = () => {
-    const { agent, account, isLoading, setQuotes, setAccount, setUsers, setAsDisabled, setErrors, handleShow, errors, show, setShow, handleClose, deleteAccountObject } = useContext(AgentContext);
+    const { agent, account, isLoading, setQuotes, setAccount, setCustomers, setUsers, setAsDisabled, setErrors, handleShow, errors, show, setShow, handleClose, deleteAccountObject } = useContext(AgentContext);
     const { id } = useParams();
 
     const handleDeleteClick = () => {
@@ -84,6 +85,23 @@ const AccountById = () => {
                 setErrors([error.errors] || ['Unknown Error']);
                 setQuotes(null);
             });
+        fetch('/api/customers')
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(data => { throw data; });
+                }
+                return response.json();
+            })
+            .then(data => {
+                setCustomers(data);
+                setAsDisabled(true);
+                // setErrors(null);
+            })
+            .catch(error => {
+                console.error('Errors:', error);
+                setErrors([error.errors] || ['Unknown Error']);
+                setCustomers(null);
+            });
     }, [id, agent, setQuotes, setAccount, setUsers, setAsDisabled, setErrors]);
 
     if (isLoading) {
@@ -120,6 +138,11 @@ const AccountById = () => {
                         <Row>
                             <Col>
                                 <QuotesTableByAccount />
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col>
+                                <CustomersTableByAccount />
                             </Col>
                         </Row>
                     </div >
