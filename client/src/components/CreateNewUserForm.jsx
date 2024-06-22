@@ -42,7 +42,6 @@ const CreateNewUserForm = () => {
                     return response.json();
                 })
                 .then((user) => {
-                    debugger
                     setUser(user);
                     history.go(-1)
                     alert(`User ${user.username} has been successfully created.`)
