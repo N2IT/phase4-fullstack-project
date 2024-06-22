@@ -7,13 +7,23 @@ import AdminEditAccountForm from '../components/AdminEditAccountForm';
 import ManagerEditAccountForm from '../components/ManagerEditAccountForm';
 import SalesEditAccountForm from '../components/SalesEditAccountForm';
 import QuotesTableByAccount from '../components/QuotesTableByAccount';
+// import DeleteModal from '../components/DeleteModal';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
+
 const AccountById = () => {
-    const { agent, account, isLoading, setQuotes, setAccount, setUsers, setAsDisabled, setErrors, errors } = useContext(AgentContext);
+    const { agent, account, deleteAccountObject, isLoading, setQuotes, setAccount, setUsers, setAsDisabled, setErrors, errors } = useContext(AgentContext);
     const { id } = useParams();
+
+    const handleDeleteClick = () => {
+        fetch(`/api/accounts/${id}`, {
+            method: 'DELETE',
+        });
+
+        deleteAccountObject(id)
+    }
 
     useEffect(() => {
         if (!agent) {
@@ -84,13 +94,17 @@ const AccountById = () => {
                 <Container>
                     <div className='account-details'>
                         <Row>
-                            <Col md={6} xs={12}>
+                            <Col md={4} xs={12}>
                                 <h2>Hello, admin:</h2>
                                 <h3>Account Details</h3>
                             </Col>
-                            <Col md={6} xs={12}>
+                            <Col md={4} xs={12}>
                                 <button type="button" onClick={() => history.go(-1)}>Return to Prev. page</button>
                             </Col>
+                            <Col md={4} xs={12}>
+                                <button type="button" onClick={() => handleDeleteClick()}>Delete Account</button>
+                            </Col>
+
                         </Row>
                         <Row>
                             <Col>

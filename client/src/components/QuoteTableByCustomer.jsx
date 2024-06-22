@@ -14,7 +14,7 @@ const QuoteTableByCustomer = () => {
 
     return (
         <>
-            <h3>Customer Quotes</h3>
+            <h3>Quote Activity</h3>
             <Table responsive="sm" striped="columns">
                 <thead>
                     <tr>

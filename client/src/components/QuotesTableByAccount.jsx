@@ -14,7 +14,7 @@ const QuotesTableByAccount = () => {
 
     return (
         <>
-            <h3>Account Quotes</h3>
+            <h3>Quote Activity</h3>
             <Table responsive="sm" striped="columns">
                 <thead>
                     <tr>

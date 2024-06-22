@@ -22,6 +22,9 @@ const AgentProvider = ({ children }) => {
     const [configuration, setConfiguration] = useState(null)
     const [customers, setCustomers] = useState([])
     const [customer, setCustomer] = useState(null)
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const onSubmitAccountForm = () => {
         setAccountForm(!accountForm)
@@ -99,6 +102,12 @@ const AgentProvider = ({ children }) => {
         handleEditClick()
     }
 
+    function deleteAccountObject(id) {
+        console.log(id)
+        // const updatedAccounts = accounts.filter((account) => account.id !== id);
+        // setAccounts(updatedAccounts)
+    }
+
     useEffect(() => {
         fetch('/api/check-session')
             .then((r) => r.json())
@@ -124,9 +133,12 @@ const AgentProvider = ({ children }) => {
                 customer,
                 customers,
                 disabled,
+                deleteAccountObject,
                 errors,
+                handleClose,
                 handleEditClick,
                 handleIdClick,
+                handleShow,
                 handleUpdateAccount,
                 handleUpdateConfiguration,
                 handleUpdateCustomer,
@@ -155,8 +167,10 @@ const AgentProvider = ({ children }) => {
                 updatedBy,
                 user,
                 users,
+                setShow,
                 setUser,
                 setUsers,
+                show,
                 valueId,
             }
         }> {children}</AgentContext.Provider>
