@@ -45,6 +45,7 @@ const AgentProvider = ({ children }) => {
             navigate(`/quotes/${value.id}`)
         }
         else if (value.sku) {
+            setConfiguration(value)
             navigate(`/configurations/${value.id}`)
         }
         else if (value.notes) {

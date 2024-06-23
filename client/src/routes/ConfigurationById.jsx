@@ -28,7 +28,7 @@ const AccountById = () => {
             .catch(error => {
                 console.error('Errors:', error);
                 setErrors([error.errors] || ['Unknown Error']);
-                setAccount(null);
+                setConfiguration(null);
             });
     }, [id, agent, setConfiguration, setAsDisabled, setErrors]);
 
