@@ -187,12 +187,18 @@ class Customer(db.Model, SerializerMixin):
     last_name = db.Column(db.String, nullable = False)
     email = db.Column(db.String, nullable = False, unique = True)
     phone = db.Column(db.Integer, nullable = False, unique = True)
+    # address_1 = db.Column(db.String)
+    # address_2 = db.Column(db.String)
+    # city = db.Column(db.String)
+    # state = db.Column(db.String)
+    # zip_code = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     created_by = db.Column(db.Integer)
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     updated_by = db.Column(db.Integer)
     notes = db.Column(db.String(500))
     account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'), nullable = False)
+    # status = db.Column(db.Integer)
 
     @validates('phone')
     def validate_phone(self, key, value):

@@ -115,6 +115,7 @@ const AgentProvider = ({ children }) => {
             .then((r) => r.json())
             .then((agent) => {
                 setAgent(agent)
+                console.log(agent)
                 setIsLoading(false)
             })
             .catch(error => {

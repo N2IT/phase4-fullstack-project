@@ -14,8 +14,6 @@ const EditCustomerForm = ({ id }) => {
         // status: ''
     });
 
-
-
     useEffect(() => {
         if (customer) {
             setOriginalValues({
@@ -27,8 +25,8 @@ const EditCustomerForm = ({ id }) => {
                 notes: `${customer.notes}`,
                 created_at: `${customer.created_at}`,
                 created_by: `${customer.created_by}`,
-                updated_at: `${customer.updated_at}`,
-                updated_by: `${customer.updated_by}`,
+                updated_at: updated_at ? `${customer.updated_at}` : "",
+                updated_by: updated_by ? `${customer.updated_by}` : "",
                 // status: `${user.status}`,
             });
         }

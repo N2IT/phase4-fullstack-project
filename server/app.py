@@ -518,6 +518,7 @@ class Customers(Resource):
       phone = form_data.get('phone')
       notes = form_data.get('notes')
       account_id = form_data.get('account_id')
+      created_by = form_data.get('created_by')
 
       errors = []
 
@@ -548,13 +549,12 @@ class Customers(Resource):
           email = email,
           phone = phone,
           notes = notes,
-          account_id = account_id
+          account_id = account_id,
+          created_by = created_by
         )
 
         db.session.add(new_customer)
         db.session.commit()
-
-        session['customer_id'] = new_customer.id
 
         return new_customer.to_dict(), 201
       
