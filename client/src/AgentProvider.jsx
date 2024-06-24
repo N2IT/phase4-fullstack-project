@@ -36,12 +36,15 @@ const AgentProvider = ({ children }) => {
 
     const handleIdClick = (value) => {
         if (value.account_number) {
+            setAccount(value)
             navigate(`/accounts/${value.id}`)
         }
         else if (value.role_id) {
+            setUser(value)
             navigate(`/users/${value.id}`)
         }
         else if (value.quote_number) {
+            setQuote(value)
             navigate(`/quotes/${value.id}`)
         }
         else if (value.sku) {
@@ -110,6 +113,14 @@ const AgentProvider = ({ children }) => {
         navigate('/accounts')
     }
 
+    const deleteUserObject = (id, user) => {
+        debugger
+        const updatedUsers = users.filter((user) => user.id !== id);
+        setUsers(updatedUsers)
+        alert(`User ${user.username} has been successfully deleted`)
+        history.go(-1)       
+    }
+
     useEffect(() => {
         fetch('/api/check-session')
             .then((r) => r.json())
@@ -137,6 +148,7 @@ const AgentProvider = ({ children }) => {
                 customers,
                 disabled,
                 deleteAccountObject,
+                deleteUserObject,
                 errors,
                 handleClose,
                 handleEditClick,

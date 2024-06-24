@@ -22,6 +22,7 @@ class Account(db.Model, SerializerMixin):
     markup_variable = db.Column(db.Integer)
     status = db.Column(db.String, nullable=False)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
+    # created_by = db.Column(db.Integer)
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     updated_by = db.Column(db.Integer)
     
@@ -60,6 +61,7 @@ class User(db.Model,SerializerMixin):
     username = db.Column(db.String(3), nullable=False, unique=True)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
+    # created_by = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     updated_by = db.Column(db.Integer)
