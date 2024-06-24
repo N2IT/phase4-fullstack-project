@@ -61,6 +61,15 @@ const CreateNewCustomerForm = () => {
         }
     })
 
+    if (account === null) {
+        return (
+        <div className="account-details">
+            <h2>Refreshing this form requires you to revisit the account page.</h2>
+            <p><button className='button' onClick={() => history.go(-1)}>Return to Account Page</button></p>
+        </div>
+        )
+    }
+
     if (agent.role_id === 1 && account || agent.role_id === 2 && account) {
         return (
             <>
