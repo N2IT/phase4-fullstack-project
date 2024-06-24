@@ -58,14 +58,14 @@ const UserById = () => {
                     <div className="account-details">
                         <Row>
                             <Col md={4} xs={12}>
-                                <h2>Hello, admin:</h2>
+                                <h2>Hello, {user.username}</h2>
                                 <h3>User Details</h3>
                             </Col>
                             <Col md={4} xs={12}>
                                 <button type="button" onClick={() => history.go(-1)}>Return to Prev. page</button>
                             </Col>
                             <Col md={4} xs={12}>
-                                <button type="button" onClick={() => handleShow()}>Delete User</button>
+                                {user.id === agent.id ? null : <button type="button" onClick={() => handleShow()}>Delete User</button>}
                             </Col>
                         </Row>
                         <Row>

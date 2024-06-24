@@ -22,7 +22,7 @@ const UsersTableByAccount = () => {
                         <h3>Account Users</h3>
                     </Col>
                     <Col md={4} sm={12}>
-                        <button type="button" onClick={() => navigate('/add-user')}>Add New User</button>
+                        {agent.role_id === 3 ? null : <button type="button" onClick={() => navigate('/add-user')}>Add New User</button>}
                     </Col>
                 </Row>
             </Container>

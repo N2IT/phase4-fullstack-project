@@ -115,14 +115,14 @@ const AccountById = () => {
                     <div className='account-details'>
                         <Row>
                             <Col md={4} xs={12}>
-                                <h2>Hello, admin:</h2>
+                                <h2>Hello, {agent.username}:</h2>
                                 <h3>Account Details</h3>
                             </Col>
                             <Col md={4} xs={12}>
                                 <button type="button" onClick={() => history.go(-1)}>Return to Prev. page</button>
                             </Col>
                             <Col md={4} xs={12}>
-                                <button type="button" onClick={() => handleShow()}>Delete Account</button>
+                                {agent.account_id === account.id ? null : <button type="button" onClick={() => handleShow()}>Delete Account</button>}
                             </Col>
                         </Row>
                         <Row>
@@ -176,6 +176,12 @@ const AccountById = () => {
                 <div>
                     <UsersTableByAccount />
                 </div>
+                <div>
+                    <QuotesTableByAccount />
+                </div>
+                <div>
+                    <CustomersTableByAccount />
+                </div>
             </>
         );
     }
@@ -190,6 +196,12 @@ const AccountById = () => {
                 </div>
                 <div>
                     <UsersTableByAccount />
+                </div>
+                <div>
+                    <QuotesTableByAccount />
+                </div>
+                <div>
+                    <CustomersTableByAccount />
                 </div>
             </>
         );

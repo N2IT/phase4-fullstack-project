@@ -93,14 +93,7 @@ const AdminEditAccountForm = ({ id }) => {
                         <Col lg={3} md={6} xs={12}>
                             <label htmlFor="status">Status &nbsp; </label>
                             <br />
-                            {/* <input
-                                id="status"
-                                name="status"
-                                onChange={formik.handleChange}
-                                value={formik.values.status}
-                                disabled={disabled}
-                            /> */}
-                            <select id='status' name='status' onChange={formik.handleChange} value={formik.values.status} disabled={disabled}>
+                            <select id='status' name='status' onChange={formik.handleChange} value={formik.values.status} disabled>
                                 <option value='active'>Active</option>
                                 <option value='inactive'>Inactive</option>
                             </select>
