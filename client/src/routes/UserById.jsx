@@ -15,7 +15,6 @@ const UserById = () => {
     const { id } = useParams();
 
     const handleDeleteClick = () => {
-        debugger
         fetch(`/api/users/${id}`, {
             method: 'DELETE',
         });

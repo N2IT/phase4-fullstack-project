@@ -75,6 +75,7 @@ const CreateNewCustomerForm = () => {
             <>
                 <Container fluid>
                     <div className="account-details">
+                    <h2>Fill in new customer details below:</h2>
                         <form onSubmit={formik.handleSubmit}>
                             <Row>
                                 <Col>

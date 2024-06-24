@@ -52,6 +52,7 @@ const AgentProvider = ({ children }) => {
             navigate(`/configurations/${value.id}`)
         }
         else if (value.notes) {
+            setCustomer(value)
             navigate(`/customers/${value.id}`)
         }
     }
@@ -114,10 +115,16 @@ const AgentProvider = ({ children }) => {
     }
 
     const deleteUserObject = (id, user) => {
-        debugger
         const updatedUsers = users.filter((user) => user.id !== id);
         setUsers(updatedUsers)
         alert(`User ${user.username} has been successfully deleted`)
+        history.go(-1)       
+    }
+
+    const deleteCustomerObject = (id, customer) => {
+        const updatedCustomers = customers.filter((customer) => customer.id !== id);
+        setCustomers(updatedCustomers)
+        alert(`Customer ${customer.id} has been successfully deleted`)
         history.go(-1)       
     }
 
@@ -126,7 +133,6 @@ const AgentProvider = ({ children }) => {
             .then((r) => r.json())
             .then((agent) => {
                 setAgent(agent)
-                console.log(agent)
                 setIsLoading(false)
             })
             .catch(error => {
@@ -148,6 +154,7 @@ const AgentProvider = ({ children }) => {
                 customers,
                 disabled,
                 deleteAccountObject,
+                deleteCustomerObject,
                 deleteUserObject,
                 errors,
                 handleClose,

@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { AgentContext } from '../AgentProvider';
 
-const EditCustomerForm = ({ id }) => {
+const EditCustomerForm = () => {
 
     const { agent, customer, errors, setErrors, disabled, handleEditClick, handleUpdateCustomer } = useContext(AgentContext);
 

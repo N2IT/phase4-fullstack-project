@@ -7,10 +7,22 @@ import Col from 'react-bootstrap/Col';
 import Unauthorized from '../components/Unauthorized';
 import { AgentContext } from '../AgentProvider';
 import QuoteTableByCustomer from '../components/QuoteTableByCustomer';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+
 
 const CustomerById = () => {
-    const { agent, customer, setCustomer, setAsDisabled, setQuotes, errors = [], setErrors, isLoading } = useContext(AgentContext)
+    const { agent, customer, deleteCustomerObject, setCustomer, setAsDisabled, setQuotes, errors = [], setErrors, isLoading, show, handleShow, setShow, handleClose } = useContext(AgentContext)
     const { id } = useParams();
+
+    const handleDeleteClick = () => {
+        fetch(`/api/customers/${id}`, {
+            method: 'DELETE',
+        });
+        deleteCustomerObject(id, customer)
+        setShow(false)
+
+    }
 
     useEffect(() => {
         if (!agent) {
@@ -65,11 +77,14 @@ const CustomerById = () => {
                         <Container>
                             <div className='account-details'>
                                 <Row>
-                                    <Col md={6} xs={12}>
+                                    <Col md={4} xs={12}>
                                         <h2>Customer Details</h2>
                                     </Col>
-                                    <Col md={6} xs={12}>
+                                    <Col md={4} xs={12}>
                                         <button type="button" onClick={() => history.go(-1)}>Return to Prev. page</button>
+                                    </Col>
+                                    <Col md={4} xs={12}>
+                                        {agent.role_id === 3 ? null : <button type="button" onClick={() => handleShow()}>Delete Customer</button>}
                                     </Col>
                                 </Row>
                                 <Row>
@@ -84,6 +99,20 @@ const CustomerById = () => {
                                 </Row>
                             </div>
                         </Container>
+                        <Modal show={show} onHide={handleClose}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Deleting Customer</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>!!PLEASE CONFIRM!! You are about to delete this customer and all related quotes from this account. Do you wish to proceed?</Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleClose}>
+                                    Close
+                                </Button>
+                                <Button variant="primary" onClick={(handleClose, handleDeleteClick)}>
+                                    Yes, I am sure I want to proceed.
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
                     </>
                 ) : (
                     <div className='account-details'>
