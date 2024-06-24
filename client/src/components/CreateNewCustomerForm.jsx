@@ -70,7 +70,7 @@ const CreateNewCustomerForm = () => {
         )
     }
 
-    if (agent.role_id === 1 && account || agent.role_id === 2 && account) {
+    if (agent.role_id && account) {
         return (
             <>
                 <Container fluid>
@@ -169,9 +169,6 @@ const CreateNewCustomerForm = () => {
                 </Container >
             </>
         );
-    }
-    else if (agent.role_id === 3) {
-        <InvalidCredentials />
     }
     else
         <Unauthorized />
