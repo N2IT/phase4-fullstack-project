@@ -22,7 +22,7 @@ def create_accounts():
       zip_code = fake.postcode(),
       phone = fake.phone_number(),
       discount = randint(0, 45) / 100.0,
-      markup_variable = randint(110, 399) / 100,
+      created_by = 1,
       created_at = datetime.now(),
       status = choices(status_list, weights = [10, 1], k=1)[0]
     )
@@ -41,6 +41,7 @@ def create_users():
       last_name = fake.last_name(),
       email = fake.profile(fields=['mail'])['mail'],
       username=fake.profile(fields=['username'])['username'],
+      created_by = 1,
       created_at = datetime.now(),
       status = choices(status_list, weights = [10, 1], k=1)[0],
       role_id = choices(roles, weights = [1, 5, 10, 2], k=1)[0],
@@ -61,10 +62,16 @@ def create_customers():
       last_name = fake.last_name(),
       email = fake.profile(fields=['mail'])['mail'],
       phone = fake.phone_number(),
+      address_1 = fake.street_address(),
+      address_2 = fake.building_number(),
+      city = fake.city(),
+      state = fake.state(),
+      zip_code = fake.postcode(),
       created_at = datetime.now(),
       created_by = 1,
       notes = fake.text(),
       account_id = rc([account.id for account in accounts]),
+      status = choices(status_list, weights = [10, 1], k=1)[0],
     )
 
     customers.append(c)
@@ -77,7 +84,6 @@ def create_quotes():
         customer.id: {
             'account_id': customer.account.id,
             'discount': customer.account.discount,
-            'markup_variable': customer.account.markup_variable
         }
         for customer in customers if customer.account
     }
@@ -92,9 +98,9 @@ def create_quotes():
         customer_id=selected_customer_id,
         account_id=account_data['account_id'],
         discount=account_data['discount'],
-        markup_variable=account_data['markup_variable'],
+        markup_variable= 2,
         notes=fake.sentence(),
-        status=True,
+        status = choices(status_list, weights = [10, 1], k=1)[0],
         converted=False,
         created_at=datetime.now(),
         created_by = 1,
@@ -115,6 +121,7 @@ def create_configurations():
       product_description = fake.sentence(),
       cost = cost,      
       quote_id = rc([quote.id for quote in quotes]),
+      created_by = 1,
     )
 
     configurations.append(configs)

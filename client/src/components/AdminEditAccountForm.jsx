@@ -21,6 +21,7 @@ const AdminEditAccountForm = ({ id }) => {
         discount: '',
         markup_variable: '',
         created_at: '',
+        created_by: '',
         updated_at: '',
         updated_by: '',
         status: '',
@@ -40,6 +41,7 @@ const AdminEditAccountForm = ({ id }) => {
                 discount: `${account.discount}`,
                 markup_variable: `${account.markup_variable}`,
                 created_at: `${account.created_at}`,
+                created_by: `${account.created_by}`,
                 updated_at: account.updated_at ? `${account.updated_at}` : '',
                 updated_by: account.updated_by ? `${account.updated_by}` : '',
                 status: `${account.status}`,
@@ -85,9 +87,25 @@ const AdminEditAccountForm = ({ id }) => {
 
     return (
         <>
-            <Container fluid>
+            <Container>
                 <form onSubmit={formik.handleSubmit}>
                     <Row>
+                        <Col lg={3} md={6} xs={12}>
+                            <label htmlFor="status">Status &nbsp; </label>
+                            <br />
+                            {/* <input
+                                id="status"
+                                name="status"
+                                onChange={formik.handleChange}
+                                value={formik.values.status}
+                                disabled={disabled}
+                            /> */}
+                            <select id='status' name='status' onChange={formik.handleChange} value={formik.values.status} disabled={disabled}>
+                                <option value='active'>Active</option>
+                                <option value='inactive'>Inactive</option>
+                            </select>
+                            <p style={{ color: 'red' }}> {formik.errors.status} </p>
+                        </Col>
                         <Col lg={3} md={6} xs={12}>
                             <label htmlFor="account_number">Account Number &nbsp; </label>
                             <br />
@@ -125,18 +143,6 @@ const AdminEditAccountForm = ({ id }) => {
                                 disabled={disabled}
                             />
                             <p style={{ color: 'red' }}> {formik.errors.discount} </p>
-                        </Col>
-                        <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="markup_variable">Markup Variable &nbsp; </label>
-                            <br />
-                            <input
-                                id="markup_variable"
-                                name="markup_variable"
-                                onChange={formik.handleChange}
-                                value={formik.values.markup_variable}
-                                disabled={disabled}
-                            />
-                            <p style={{ color: 'red' }}> {formik.errors.markup_variable} </p>
                         </Col>
                     </Row>
                     <Row>
@@ -214,6 +220,8 @@ const AdminEditAccountForm = ({ id }) => {
                             />
                             <p style={{ color: 'red' }}> {formik.errors.zip_code} </p>
                         </Col>
+                    </Row>
+                    <Row>
                         <Col lg={3} md={6} xs={12}>
                             <label htmlFor="created_at">Created At &nbsp; </label>
                             <br />
@@ -225,6 +233,18 @@ const AdminEditAccountForm = ({ id }) => {
                                 disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.created_at} </p>
+                        </Col>
+                        <Col lg={3} md={6} xs={12}>
+                            <label htmlFor="created_by">Created By &nbsp; </label>
+                            <br />
+                            <input
+                                id="created_by"
+                                name="created_by"
+                                onChange={formik.handleChange}
+                                value={formik.values.created_by}
+                                disabled
+                            />
+                            <p style={{ color: 'red' }}> {formik.errors.created_by} </p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
                             <label htmlFor="updated_at">Updated At &nbsp; </label>
@@ -247,7 +267,6 @@ const AdminEditAccountForm = ({ id }) => {
                                 onChange={formik.handleChange}
                                 value={originalValues.company_name !== formik.values.company_name
                                     || originalValues.discount !== formik.values.discount
-                                    || originalValues.markup_variable !== formik.values.markup_variable
                                     || originalValues.phone !== formik.values.phone
                                     || originalValues.city !== formik.values.city
                                     || originalValues.state !== formik.values.state
@@ -259,24 +278,6 @@ const AdminEditAccountForm = ({ id }) => {
                                 disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.updated_by} </p>
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="status">Status &nbsp; </label>
-                            <br />
-                            {/* <input
-                                id="status"
-                                name="status"
-                                onChange={formik.handleChange}
-                                value={formik.values.status}
-                                disabled={disabled}
-                            /> */}
-                            <select id='status' name='status' onChange={formik.handleChange} value={formik.values.status} disabled={disabled}>
-                                <option value='active'>Active</option>
-                                <option value='inactive'>Inactive</option>
-                            </select>
-                            <p style={{ color: 'red' }}> {formik.errors.status} </p>
                         </Col>
                     </Row>
                     {disabled ?

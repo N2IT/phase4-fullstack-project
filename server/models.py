@@ -19,10 +19,9 @@ class Account(db.Model, SerializerMixin):
     zip_code = db.Column(db.Integer)
     phone = db.Column(db.Integer)
     discount = db.Column(db.Integer)
-    markup_variable = db.Column(db.Integer)
-    status = db.Column(db.String, nullable=False)
+    status = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
-    # created_by = db.Column(db.Integer)
+    created_by = db.Column(db.Integer)
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     updated_by = db.Column(db.Integer)
     
@@ -61,11 +60,11 @@ class User(db.Model,SerializerMixin):
     username = db.Column(db.String(3), nullable=False, unique=True)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
-    # created_by = db.Column(db.Integer)
+    created_by = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     updated_by = db.Column(db.Integer)
-    status = db.Column(db.String, nullable=False)
+    status = db.Column(db.String)
     account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'), nullable = False)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
     _password_hash = db.Column(db.String(12))
@@ -116,6 +115,17 @@ class User(db.Model,SerializerMixin):
         elif address == None:
             raise ValueError({'error' : '422 : The email field must contain a value'}, 422)
         return address
+    
+    @validates('account_id')
+    def validate_account_id(self, key, account_id):
+        try: 
+            if account_id == "":
+                return {'errors' : '422: An account id must be entered'}, 422
+            return account_id
+        except ValidationError as e:
+            raise ValidationError(f'Account Id validation error: {str(e)}')
+        except Exception as e:
+            raise ValidationError(f'An unexpected error occurred: {str(e)}')
 
     # relationships
     account = db.relationship('Account', back_populates = 'users')
@@ -189,18 +199,18 @@ class Customer(db.Model, SerializerMixin):
     last_name = db.Column(db.String, nullable = False)
     email = db.Column(db.String, nullable = False, unique = True)
     phone = db.Column(db.Integer, nullable = False, unique = True)
-    # address_1 = db.Column(db.String)
-    # address_2 = db.Column(db.String)
-    # city = db.Column(db.String)
-    # state = db.Column(db.String)
-    # zip_code = db.Column(db.Integer)
+    address_1 = db.Column(db.String)
+    address_2 = db.Column(db.String)
+    city = db.Column(db.String)
+    state = db.Column(db.String)
+    zip_code = db.Column(db.Integer)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     created_by = db.Column(db.Integer)
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     updated_by = db.Column(db.Integer)
     notes = db.Column(db.String(500))
     account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'), nullable = False)
-    # status = db.Column(db.Integer)
+    status = db.Column(db.String)
 
     @validates('phone')
     def validate_phone(self, key, value):
@@ -220,11 +230,28 @@ class Customer(db.Model, SerializerMixin):
             raise ValueError({'error' : '422 : The email field must contain a value'}, 422)
         return address
 
+    @validates('first_name', 'last_name')
+    def validates_name(self, key, name):
+        if name == "":
+            return {'errors' : '402: First and / or last name fields must be populated.'}
+        return name
+
     @validates('notes')
     def validate_notes(self, key, notes):
         if len(notes) > 500:
             raise ValueError("You have exceeded the 500 character limit")
         return notes
+    
+    @validates('account_id')
+    def validate_account_id(self, key, account_id):
+        try: 
+            if account_id == "":
+                return {'errors' : '422: An account id must be entered'}, 422
+            return account_id
+        except ValidationError as e:
+            raise ValidationError(f'Account Id validation error: {str(e)}')
+        except Exception as e:
+            raise ValidationError(f'An unexpected error occurred: {str(e)}')
 
     ## relationships
     quotes = db.relationship('Quote', back_populates = 'customer', cascade='all, delete')
@@ -245,7 +272,7 @@ class Configuration(db.Model, SerializerMixin):
     product_description = db.Column(db.String)
     cost = db.Column(db.Integer)
     quote_id = db.Column(db.Integer, db.ForeignKey('quotes.id'))
-    ccreated_at = db.Column(db.DateTime, server_default=db.func.now())
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
     created_by = db.Column(db.Integer)
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     updated_by = db.Column(db.Integer)
