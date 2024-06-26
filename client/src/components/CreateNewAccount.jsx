@@ -5,10 +5,13 @@ import { AgentContext } from '../AgentProvider';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import InvalidCredentials from './InvalidCredentials';
+import Unauthorized from './Unauthorized';
+
 
 const CreateNewAccount = () => {
 
-    const { agent, isLoading, setIsLoading, setAccount, errors, navigate, setErrors } = useContext(AgentContext);
+    const { agent, isLoading, setAccount, errors, navigate, setErrors } = useContext(AgentContext);
 
 
     const formSchema = yup.object().shape({
@@ -54,7 +57,11 @@ const CreateNewAccount = () => {
     if (isLoading) {
         return <div> Loading ... </div>
       }
-
+    
+    if (!agent || agent.role_id !== 1) {
+        return <InvalidCredentials />
+    }
+   
     return (
         <>
             <Container fluid>

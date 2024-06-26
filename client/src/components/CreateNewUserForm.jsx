@@ -7,24 +7,26 @@ import Unauthorized from './Unauthorized';
 
 const CreateNewUserForm = () => {
 
-    const { account, agent, errors, setErrors, setUser } = useContext(AgentContext);
+    const { account, agent, errors, setErrors, isLoading, setUser } = useContext(AgentContext);
 
     const formSchema = yup.object().shape({
         first_name: yup.string().required("Please enter you first name."),
         last_name: yup.string().required("Please enter your last name."),
+        email: yup.string().required("Please enter an email address."),
         username: yup.string().required("Must enter a username.").min(3),
         password: yup.string().required("Please enter a password.").min(12)
     })
 
     const formik = useFormik({
         initialValues: {
-            first_name: "Trevor",
-            last_name: "No-A",
-            email: "tnoa@tnoa.com",
-            username: "tnoa",
-            password: "twelvecharacters",
+            first_name: "",
+            last_name: "",
+            email: "",
+            username: "",
+            password: "",
             account_id: "",
             status: true,
+            created_by: "",
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
@@ -51,12 +53,16 @@ const CreateNewUserForm = () => {
         }
     })
 
+    if (isLoading) {
+        return <div> Loading ... </div>
+    }
+
     if (account === null) {
         return (
-        <div className="account-details">
-            <h2>Refreshing this form requires you to revisit the account page.</h2>
-            <p><button className='button' onClick={() => history.go(-1)}>Return to Account Page</button></p>
-        </div>
+            <div className="account-details">
+                <h2>Refreshing this form requires you to revisit the account page.</h2>
+                <p><button className='button' onClick={() => history.go(-1)}>Return to Account Page</button></p>
+            </div>
         )
     }
 
@@ -131,6 +137,16 @@ const CreateNewUserForm = () => {
                             disabled
                         />
                         <p style={{ color: 'red' }}> {formik.errors.password}</p>
+                        {/* <label htmlFor="created_by">Created By </label> */}
+                        <input
+                            id="created_by"
+                            name="created_by"
+                            onChange={formik.handleChange}
+                            value={formik.values.created_by = agent.id}
+                            disabled
+                            hidden
+                        />
+                        <p style={{ color: 'red' }}> {formik.errors.created_by} </p>
                         <button type="submit">Submit</button>
                     </form>
                     <p style={{ color: 'red' }}>{errors ? errors : null}</p>
