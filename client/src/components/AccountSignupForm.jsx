@@ -26,7 +26,7 @@ const AccountSignupForm = () => {
             address_2: "",
             city: "",
             state: "",
-            discount: 10,
+            discount: .10,
             zip_code: "",
             phone: "",
             status: true,

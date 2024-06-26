@@ -51,6 +51,7 @@ class Accounts(Resource):
         zip_code = form_data.get('zip_code')
         phone = form_data.get('phone')
         discount = form_data.get('discount')
+        created_by = form_data.get('created_by')
 
         errors = []
 
@@ -73,6 +74,8 @@ class Accounts(Resource):
             errors.append('Please enter the zip code where the business is located.')
           elif not phone:
             errors.append('Please enter a phone number for your business')
+          elif not discount:
+            errors.append('Please enter a discount number for this account')
           
           if errors:
             return {'errors' : errors }, 422
@@ -86,7 +89,8 @@ class Accounts(Resource):
             state = state,
             zip_code = zip_code,
             phone = phone,
-            discount = discount,
+            discount = int(discount) / 100,
+            created_by = created_by,
             status = 'active'
           )
 

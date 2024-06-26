@@ -126,7 +126,7 @@ const AdminEditAccountForm = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.company_name}</p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="discount">Discount &nbsp; </label>
+                            <label htmlFor="discount">Discount % &nbsp; </label>
                             <br />
                             <input
                                 id="discount"

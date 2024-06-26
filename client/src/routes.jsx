@@ -16,6 +16,7 @@ import Customers from './routes/Customers';
 import CustomerById from './routes/CustomerById';
 import CreateNewUserForm from './components/CreateNewUserForm';
 import CreateNewCustomerForm from './components/CreateNewCustomerForm';
+import CreateNewAccount from './components/CreateNewAccount';
 
 const routes = [
     {
@@ -78,6 +79,10 @@ const routes = [
             {
                 path: 'add-user',
                 element: <CreateNewUserForm />
+            },
+            {
+                path: 'create-new-account',
+                element: <CreateNewAccount />
             },
             {
                 path: 'add-customer',
