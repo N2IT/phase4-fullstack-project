@@ -1,11 +1,15 @@
 import UserSignupForm from "../components/UserSignupForm";
 import AccountSignupForm from "../components/AccountSignupForm";
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { AgentContext } from '../AgentProvider';
 
 const SignUp = () => {
 
-  const { accountForm, onSubmitAccountForm } = useContext(AgentContext);
+  const { accountForm, setAccountForm, onSubmitAccountForm } = useContext(AgentContext);
+
+  useEffect(() => {
+    setAccountForm(!accountForm)
+  },[])
   
   return (
     <div>
