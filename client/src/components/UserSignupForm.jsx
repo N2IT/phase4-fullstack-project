@@ -1,4 +1,5 @@
-import { useContext, useEffect } from 'react';
+import { useContext } from 'react';
+import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from "yup";
 import { AgentContext } from '../AgentProvider';
@@ -16,11 +17,11 @@ const UserSignupForm = () => {
 
     const formik = useFormik({
         initialValues: {
-            first_name: "Trevor",
-            last_name: "No-A",
-            email: "tnoa@tnoa.com",
-            username: "tnoa",
-            password: "twelvecharacters",
+            first_name: "",
+            last_name: "",
+            email: "",
+            username: "",
+            password: "",
             account_id: "",
             role_id: "",
             status: true,
@@ -123,6 +124,7 @@ const UserSignupForm = () => {
                     <button type="submit">Submit</button>
                 </form>
                 <p style={{ color: 'red' }}>{errors ? errors : null}</p>
+                <Link to="#" >Forgot Password</Link>
             </div>
         </>
     )

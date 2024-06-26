@@ -44,9 +44,14 @@ class Accounts(Resource):
         
         account_number = int(random.random()*1000)
         company_name = form_data.get('company_name')
+        address_1 = form_data.get('address_1')
+        address_2 = form_data.get('address_2')
         city = form_data.get('city')
         state = form_data.get('state')
-        
+        zip_code = form_data.get('zip_code')
+        phone = form_data.get('phone')
+        discount = form_data.get('discount')
+
         errors = []
 
         if form_data:
@@ -57,7 +62,17 @@ class Accounts(Resource):
           elif not company_name:
             errors.append('A company name must be entered.')
           elif Account.query.filter(Account.company_name == company_name).first():
-            errors.append('The company name must be unique.')
+            errors.append('A company by that name already exists. Please enter another, or login in to your account.')
+          elif not address_1:
+            errors.append('An address must be entered.')
+          elif not city:
+            errors.append('Please enter the city where the business is located.')
+          elif not state:
+            errors.append('Please enter the state where the business is located.')
+          elif not zip_code:
+            errors.append('Please enter the zip code where the business is located.')
+          elif not phone:
+            errors.append('Please enter a phone number for your business')
           
           if errors:
             return {'errors' : errors }, 422
@@ -65,15 +80,18 @@ class Accounts(Resource):
           new_account = Account(
             account_number = account_number,
             company_name = company_name,
+            address_1 = address_1,
+            address_2 = address_2,
             city = city,
             state = state,
+            zip_code = zip_code,
+            phone = phone,
+            discount = discount,
             status = 'active'
           )
 
           db.session.add(new_account)
           db.session.commit()
-
-          session['account_id'] = new_account.id
 
           return new_account.to_dict(), 201
         else:
@@ -249,7 +267,7 @@ class Users(Resource):
         elif not email:
           errors.append('Please enter an email')
         elif User.query.filter(User.email == email).first():
-          errors.append('This email is already in use. Please enter another email address.')
+          errors.append('This email is already in use. Please enter another email address or return to the homepage to login to your profile.')
         elif not role_id:
           errors.append('Please select a role for the user')
         
