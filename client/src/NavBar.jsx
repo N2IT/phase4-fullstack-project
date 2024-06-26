@@ -7,7 +7,7 @@ import { useState, useEffect, useContext } from 'react';
 import { AgentContext } from './AgentProvider';
 
 function NavBar() {
-  const { agent, setAgent, setValueId, valueId } = useContext(AgentContext);
+  const { agent, setAccountForm, setAgent, setValueId, valueId } = useContext(AgentContext);
   const navigate = useNavigate();
   const [expanded, setExpanded] = useState(false);
 
@@ -25,6 +25,7 @@ function NavBar() {
       .then((r) => {
         if (r.ok) {
           setAgent(null);
+          setAccountForm(true)
           navigate('/');
         }
       });

@@ -332,15 +332,15 @@ class Login(Resource):
 
 class Logout(Resource):
   def delete(self):
-    for cookie in request.cookies:
-      resp = make_response('')
-      resp.set_cookie(cookie,expires=0)
-    # if session.get('user_id'):
-    #   session['user_id'] = None
-    # if session.get('account_id'):
-    #   session['account_id'] = None
-    # if session.get('customer_id'):
-    #   session['customer_id'] = None
+    # for cookie in request.cookies:
+    #   resp = make_response('')
+    #   resp.set_cookie(cookie,expires=0)
+    if session.get('user_id'):
+      session['user_id'] = None
+    if session.get('account_id'):
+      session['account_id'] = None
+    if session.get('customer_id'):
+      session['customer_id'] = None
     return {}, 204
 
 
