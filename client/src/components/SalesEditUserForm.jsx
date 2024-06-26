@@ -80,6 +80,32 @@ const SalesEditUserForm = ({ id }) => {
                 <form onSubmit={formik.handleSubmit}>
                     <Row>
                         <Col lg={3} md={6} xs={12}>
+                            <label htmlFor="account_id">Account ID &nbsp; </label>
+                            <br />
+                            <input
+                                id="account_id"
+                                name="account_id"
+                                onChange={formik.handleChange}
+                                value={formik.values.account_id}
+                                disabled
+                            />
+                            <p style={{ color: 'red' }}> {formik.errors.account_id}</p>
+                        </Col>
+                        <Col lg={3} md={6} xs={12}>
+                            <label htmlFor="company_name">Company Name &nbsp; </label>
+                            <br />
+                            <input
+                                id="company_name"
+                                name="company_name"
+                                onChange={formik.handleChange}
+                                value={formik.values.company_name}
+                                disabled
+                            />
+                            <p style={{ color: 'red' }}> {formik.errors.company_name} </p>
+                        </Col>
+                    </Row>
+                    <Row>
+                        <Col lg={3} md={6} xs={12}>
                             <label htmlFor="first_name">First Name &nbsp; </label>
                             <br />
                             <input
@@ -113,7 +139,7 @@ const SalesEditUserForm = ({ id }) => {
                                 name="username"
                                 onChange={formik.handleChange}
                                 value={formik.values.username}
-                                disabled={disabled}
+                                disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.username} </p>
                         </Col>
@@ -132,45 +158,24 @@ const SalesEditUserForm = ({ id }) => {
                     </Row>
                     <Row>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="account_id">Account ID &nbsp; </label>
-                            <br />
-                            <input
-                                id="account_id"
-                                name="account_id"
-                                onChange={formik.handleChange}
-                                value={formik.values.account_id}
-                                disabled
-                            />
-                            <p style={{ color: 'red' }}> {formik.errors.account_id}</p>
-                        </Col>
-                        <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="company_name">Company Name &nbsp; </label>
-                            <br />
-                            <input
-                                id="company_name"
-                                name="company_name"
-                                onChange={formik.handleChange}
-                                value={formik.values.company_name}
-                                disabled
-                            />
-                            <p style={{ color: 'red' }}> {formik.errors.company_name} </p>
-                        </Col>
-                        <Col lg={3} md={6} xs={12}>
                             <label htmlFor="status">Status &nbsp; </label>
                             <br />
-                            {/* <input
-                                id="status"
-                                name="status"
-                                onChange={formik.handleChange}
-                                value={formik.values.status}
-                                disabled
-                            /> */}
                             <select id='status' name='status' onChange={formik.handleChange} value={formik.values.status} disabled>
                                 <option value='active'>Active</option>
                                 <option value='inactive'>Inactive</option>
                             </select>
-                                
+
                             <p style={{ color: 'red' }}> {formik.errors.status} </p>
+                        </Col>
+                        <Col>
+                            <label htmlFor="role_id">Role &nbsp; </label>
+                            <br />
+                            <select id='role_id' name='role_id' onChange={formik.handleChange} value={formik.values.role_id} disabled>
+                                <option value='1'>Admin</option>
+                                <option value='2'>Manager</option>
+                                <option value='3'>Sales</option>
+                            </select>
+                            <p style={{ color: 'red' }}> {formik.errors.role_id} </p>
                         </Col>
                     </Row>
                     <Row>
@@ -199,13 +204,13 @@ const SalesEditUserForm = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.updated_at} </p>
                         </Col>
                     </Row>
-                    {disabled ?
+                    {/* {disabled ?
                         <p className="view-btn" title="Edit Account" onClick={() => handleEditClick()}> Edit User </p> :
                         <>
-                            <p><button type="submit">Save Changes</button></p> 
+                            <p><button type="submit">Save Changes</button></p>
                             <p className="view-btn" title="Edit Account" onClick={() => handleEditClick()}> Cancel </p>
                         </>
-                    }
+                    } */}
                 </form>
                 <p style={{ color: 'red' }}>{errors ? errors : null}</p>
             </Container >
