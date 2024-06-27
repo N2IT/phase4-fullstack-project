@@ -5,6 +5,9 @@ import Table from 'react-bootstrap/Table';
 const QuoteTableByCustomer = () => {
 
     const { quotes, handleIdClick, customer } = useContext(AgentContext);
+    // debugger
+    // console.log(quotes)
+    
 
     const quotesByCustomer = quotes.filter(quote => {
     //    console.log(configuration)

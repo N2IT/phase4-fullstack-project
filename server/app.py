@@ -380,6 +380,7 @@ class Quotes(Resource):
       notes = form_data.get('notes')
       status = form_data.get('status')
       converted = form_data.get('converted')
+      customer_id = form_data.get('customer_id')
       account_id = form_data.get('account_id')
 
       errors = []
@@ -391,10 +392,10 @@ class Quotes(Resource):
           errors.append('A title must be assigned')
         elif not discount:
           errros.append('A discount must be assigned')
-        elif not savings:
-          errors.append('Savings must be applied')
-        elif not sale_price:
-          errors.append('A sale price must be entered')
+        # elif not savings:
+        #   errors.append('Savings must be applied')
+        # elif not sale_price:
+        #   errors.append('A sale price must be entered')
         elif not status:
           errors.append('A status must be applied')
         # elif not converted:

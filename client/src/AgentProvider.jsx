@@ -129,7 +129,9 @@ const AgentProvider = ({ children }) => {
     }
 
     const newConfigurationHandleIdClick = (value) => {
-        console.log(value)
+        setCustomer(value)
+        setQuotes(quotes)
+        navigate(`/customers/${value.id}/new-quote`)
     }
 
     useEffect(() => {

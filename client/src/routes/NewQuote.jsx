@@ -8,7 +8,7 @@ import NewQuoteCustomersTableByAccount from '../components/NewQuoteCustomersTabl
 
 const NewQuote = () => {
 
-  const { agent, isLoading } = useContext(AgentContext)
+  const { agent, isLoading, customers, account } = useContext(AgentContext)
   
   if (isLoading) {
     return <div> Loading ... </div>

@@ -17,7 +17,7 @@ import CustomerById from './routes/CustomerById';
 import CreateNewUserForm from './components/CreateNewUserForm';
 import CreateNewCustomerForm from './components/CreateNewCustomerForm';
 import CreateNewAccount from './components/CreateNewAccount';
-import CreateNewConfiguration from './components/CreateNewConfiguration';
+import CreateNewQuoteForm from './components/CreateNewQuoteForm';
 
 const routes = [
     {
@@ -91,7 +91,7 @@ const routes = [
             },
             {
                 path: 'customers/:id/new-quote',
-                element: <CreateNewConfiguration />
+                element: <CreateNewQuoteForm />
             },
             {
                 path: 'support',

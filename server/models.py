@@ -290,7 +290,7 @@ class Configuration(db.Model, SerializerMixin):
 class Quote(db.Model, SerializerMixin):
     __tablename__ = 'quotes'
     id = db.Column(db.Integer, primary_key = True)
-    quote_number = db.Column(db.Integer)
+    quote_number = db.Column(db.Integer, unique = True)
     title = db.Column(db.String)
     total_cost =db.Column(db.Integer)
     discount = db.Column(db.Integer)
@@ -308,6 +308,12 @@ class Quote(db.Model, SerializerMixin):
     updated_by = db.Column(db.Integer)
     customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
     account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'))
+
+    @validates('quote_number')
+    def validate_quote_number(self, key, value):
+        if Quote.query.filter(Quote.quote_number == value).first():
+            raise ValueError ({'error' : '422: Quote Number must be unique'}, 422)
+        return value
 
     # relationships
     customer = db.relationship('Customer', back_populates = 'quotes')

@@ -10,25 +10,20 @@ const CreateNewConfiguration = () => {
 
 
     const formSchema = yup.object().shape({
-        company_name: yup.string().required("A company name must be entered"),
-        address_1: yup.string().required("Please enter the address for your business"),
-        city: yup.string().required('Please enter the city where your company is located'),
-        state: yup.string().required('Please enter the state where your company is located'),
-        zip_code: yup.string().required("Please enter a zip code for your business location"),
-        phone: yup.string().required("Please enter a phone number for your business"),
+        sku: yup.string().required("Please enter the sku for the product to quote"),
+        product_title: yup.string().required("Please provide product title"),
+        product_description: yup.string().required('Please enter a product description'),
+        cost: yup.string().required('Please enter the product cost'),
     })
 
     const formik = useFormik({
         initialValues: {
-            account_number: "",
-            company_name: "",
-            address_1: "",
-            address_2: "",
-            city: "",
-            state: "",
-            discount: .10,
-            zip_code: "",
-            phone: "",
+            sku: "",
+            product_title: "",
+            product_description: "",
+            cost: "",
+            quote_id: "",
+            created_by: "",
             status: true,
         },
         validationSchema: formSchema,

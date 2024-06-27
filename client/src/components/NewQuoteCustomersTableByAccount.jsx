@@ -17,7 +17,8 @@ const NewQuoteCustomersTableByAccount = () => {
         <>
             <Container>
                 <Row>
-                    
+                    <Col>
+                    </Col>
                 </Row>
             </Container>
             {isLoading ? <h2>Loading...</h2> :
@@ -45,7 +46,7 @@ const NewQuoteCustomersTableByAccount = () => {
                                 <td>{customer.last_name}</td>
                                 <td>{customer.email}</td>
                                 <td>{customer.phone}</td>
-                                <td><p className="view-btn" title="View Quote" onClick={() => newConfigurationHandleIdClick(customer)}> Select </p></td>
+                                <td><p className="view-btn" title="View Quote" onClick={() => newConfigurationHandleIdClick(customer)}> New Quote </p></td>
                             </tr>
                         ))}
                     </tbody>
