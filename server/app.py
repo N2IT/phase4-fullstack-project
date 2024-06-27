@@ -380,14 +380,7 @@ class Quotes(Resource):
       notes = form_data.get('notes')
       status = form_data.get('status')
       converted = form_data.get('converted')
-      if session.get('customer_id'):
-        customer_id = session['customer_id']
-      else:
-        customer_id = form_data.get('customer_id')
-      if session.get('account_id'):
-        account_id = session['account_id']
-      else:  
-        account_id = form_data.get('account_id')
+      account_id = form_data.get('account_id')
 
       errors = []
 

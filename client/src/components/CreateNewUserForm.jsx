@@ -60,7 +60,7 @@ const CreateNewUserForm = () => {
     if (account === null) {
         return (
             <div className="account-details">
-                <h2>Refreshing this form requires you to revisit the account page.</h2>
+                <h2>You have refreshed the page. Please return to previous page to start again.</h2>
                 <p><button className='button' onClick={() => history.go(-1)}>Return to Account Page</button></p>
             </div>
         )

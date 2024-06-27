@@ -1,10 +1,13 @@
 import { useContext } from 'react'
 import { AgentContext } from '../AgentProvider';
 import Table from 'react-bootstrap/Table';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const QuotesTableByAccount = () => {
 
-    const { quotes, handleIdClick, account } = useContext(AgentContext);
+    const { quotes, handleIdClick, account, navigate } = useContext(AgentContext);
 
     const quotesByAccount = quotes.filter(quote => {
     //    console.log(configuration)
@@ -14,7 +17,19 @@ const QuotesTableByAccount = () => {
 
     return (
         <>
-            <h3>Quote Activity</h3>
+        <Container>
+            <Row>
+                <Col md={6} sm={12}>
+                <h3>Quote Activity</h3>
+                </Col>
+                <Col md={6} sm={12}>
+                <div>
+                  <button type="button" onClick={() => navigate('/new-quote')}>Create New Quote</button>
+                </div>
+                </Col>
+            </Row>
+        </Container>
+            
             <Table responsive="sm" striped="columns">
                 <thead>
                     <tr>

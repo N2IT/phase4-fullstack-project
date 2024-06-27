@@ -1,13 +1,15 @@
 
-import useContext from 'react'
-import { Link } from 'react-router-dom';
+// import { Link } from 'react-router-dom';
+import { useContext, useEffect } from 'react'
 import { AgentContext } from '../AgentProvider';
+import Unauthorized from '../components/Unauthorized';
+import NewQuoteCustomersTableByAccount from '../components/NewQuoteCustomersTableByAccount';
 // import { useEffect } from 'react';
 
 const NewQuote = () => {
 
   const { agent, isLoading } = useContext(AgentContext)
-
+  
   if (isLoading) {
     return <div> Loading ... </div>
   }
@@ -16,14 +18,13 @@ const NewQuote = () => {
     <>
       <div className="account-details">
         {agent ? (
-          <h2>Welcome to the NewQuote page, {user.username}!</h2>
+          <>
+            <h2>Get started with a new quote below.</h2>
+            <p>Choose from existing customer:</p>
+            <NewQuoteCustomersTableByAccount />
+          </>
         ) :
-          <div>
-            <h2>Unauthorized</h2>
-            <Link to="/">Log in</Link>
-            <h3>Get Started Here:</h3>
-            <Link to="/sign-up">Sign Up</Link>
-          </div>
+          <Unauthorized />
         }
       </div>
     </>

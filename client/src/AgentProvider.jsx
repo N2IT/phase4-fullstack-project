@@ -128,6 +128,10 @@ const AgentProvider = ({ children }) => {
         history.go(-1)       
     }
 
+    const newConfigurationHandleIdClick = (value) => {
+        console.log(value)
+    }
+
     useEffect(() => {
         fetch('/api/check-session')
             .then((r) => r.json())
@@ -168,6 +172,7 @@ const AgentProvider = ({ children }) => {
                 handleUpdateQuote,
                 isLoading,
                 navigate,
+                newConfigurationHandleIdClick,
                 onSubmitAccountForm,
                 quote,
                 quotes,
