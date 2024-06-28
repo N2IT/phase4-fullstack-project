@@ -26,7 +26,8 @@ const CreateNewQuoteForm = () => {
             });
     },[])
 
-    const prevQuote = Math.random()*1000
+    const prevQuote = Math.floor(Math.random()*1000)  
+    // JUST ADDED THIS MAKE SURE IT WORKS
 
 
     const formSchema = yup.object().shape({
