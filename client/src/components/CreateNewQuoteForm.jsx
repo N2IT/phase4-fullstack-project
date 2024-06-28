@@ -6,7 +6,7 @@ import { AgentContext } from '../AgentProvider';
 
 const CreateNewQuoteForm = () => {
 
-    const { agent, navigate, customer, account, errors, setErrors, setQuotes, setQuote, quotes, setAccountForm } = useContext(AgentContext);
+    const { agent, customer, account, errors, setErrors, setQuotes, setQuote, onSubmitAccountForm } = useContext(AgentContext);
 
     useEffect(() => {
         fetch('/api/quotes')
@@ -65,7 +65,7 @@ const CreateNewQuoteForm = () => {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    { data.errors ? setErrors(data.errors) : setQuote(data), setAccountForm(false) }
+                    { data.errors ? setErrors(data.errors) : setQuote(data), onSubmitAccountForm() }
                 })
         }
     })

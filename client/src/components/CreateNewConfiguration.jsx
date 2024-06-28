@@ -6,7 +6,7 @@ import { AgentContext } from '../AgentProvider';
 
 const CreateNewConfiguration = () => {
 
-    const { setAccount, setAccountForm, errors, setErrors  } = useContext(AgentContext);
+    const { agent, setConfiguration, errors, setErrors, quote, navigate  } = useContext(AgentContext);
 
 
     const formSchema = yup.object().shape({
@@ -22,13 +22,13 @@ const CreateNewConfiguration = () => {
             product_title: "",
             product_description: "",
             cost: "",
-            quote_id: "",
-            created_by: "",
+            quote_id: `${quote.id}`,
+            created_by: `${agent.id}`,
             status: true,
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-            fetch("/api/accounts", {
+            fetch("/api/configurations", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
@@ -37,7 +37,7 @@ const CreateNewConfiguration = () => {
             })
                 .then((res) => res.json()) 
                 .then((data) => {
-                    {data.errors ? setErrors(data.errors) : setAccountForm(), setAccount(data)}
+                    {data.errors ? setErrors(data.errors) : setConfiguration(data), navigate(`/quotes/${quote.id}`)}
                 })
                 
         }
@@ -46,68 +46,70 @@ const CreateNewConfiguration = () => {
     return (
         <>
             <div className="account-details">
-                <h2>First enter you company details:</h2>
+                <h2>Configure your product:</h2>
                 <form onSubmit={formik.handleSubmit}>
-                    <label htmlFor="company_name">Company Name </label>
+                    <label htmlFor="sku">SKU </label>
                     <input
-                        id="company_name"
-                        name="company_name"
+                        id="sku"
+                        name="sku"
                         onChange={formik.handleChange}
-                        value={formik.values.company_name}
+                        value={formik.values.sku}
                     />
-                    <p style={{ color: 'red' }}> {formik.errors.company_name}</p>
-                    <label htmlFor="address_1">Address Line 1 </label>
+                    <p style={{ color: 'red' }}> {formik.errors.sku}</p>
+                    <label htmlFor="product_title">Product Title </label>
                     <input
-                        id="address_1"
-                        name="address_1"
+                        id="product_title"
+                        name="product_title"
                         onChange={formik.handleChange}
-                        value={formik.values.address_1}
+                        value={formik.values.product_title}
                     />
-                    <p style={{ color: 'red' }}> {formik.errors.address_1}</p>
-                    <label htmlFor="address_2">Address Line 2 </label>
+                    <p style={{ color: 'red' }}> {formik.errors.product_title}</p>
+                    <label htmlFor="product_description">Product Description </label>
                     <input
-                        id="address_2"
-                        name="address_2"
+                        id="product_description"
+                        name="product_description"
                         onChange={formik.handleChange}
-                        value={formik.values.address_2}
+                        value={formik.values.product_description}
                     />
-                    <p style={{ color: 'red' }}> {formik.errors.address_2} </p>
-                    <label htmlFor="city">City </label>
+                    <p style={{ color: 'red' }}> {formik.errors.product_description} </p>
+                    <label htmlFor="cost">Cost </label>
                     <input
-                        id="city"
-                        name="city"
+                        id="cost"
+                        name="cost"
                         onChange={formik.handleChange}
-                        value={formik.values.city}
+                        value={formik.values.cost}
                     />
-                    <p style={{ color: 'red' }}> {formik.errors.city} </p>
-                    <label htmlFor="state">State </label>
+                    <p style={{ color: 'red' }}> {formik.errors.cost} </p>
+                    <label htmlFor="quote_id">Quote Id </label>
                     <input
-                        id="state"
-                        name="state"
+                        id="quote_id"
+                        name="quote_id"
                         onChange={formik.handleChange}
-                        value={formik.values.state}
+                        value={formik.values.quote_id}
+                        disabled
                     />
-                    <p style={{ color: 'red' }}> {formik.errors.state} </p>
-                    <label htmlFor="zip_code">Zip Code </label>
+                    <p style={{ color: 'red' }}> {formik.errors.quote_id} </p>
+                    <label htmlFor="created_by">Created By </label>
                     <input
-                        id="zip_code"
-                        name="zip_code"
+                        id="created_by"
+                        name="created_by"
                         onChange={formik.handleChange}
-                        value={formik.values.zip_code}
+                        value={formik.values.created_by}
+                        disabled
                     />
-                    <p style={{ color: 'red' }}> {formik.errors.zip_code} </p>
-                    <label htmlFor="phone">Phone </label>
+                    <p style={{ color: 'red' }}> {formik.errors.created_by} </p>
+                    <label htmlFor="status">Status </label>
                     <input
-                        id="phone"
-                        name="phone"
+                        id="status"
+                        name="status"
                         onChange={formik.handleChange}
-                        value={formik.values.phone}
+                        value={formik.values.status}
+                        disabled
                     />
-                    <p style={{ color: 'red' }}> {formik.errors.phone} </p>
+                    <p style={{ color: 'red' }}> {formik.errors.status} </p>
                     <button type="submit">Submit</button>
                 </form>
                 <p style={{ color: 'red' }}>{errors ? errors : null}</p>
-                <Link to="#" >Forgot Password</Link>
             </div>
         </>
     )

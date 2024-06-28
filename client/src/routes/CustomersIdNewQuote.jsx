@@ -5,14 +5,17 @@ import { AgentContext } from '../AgentProvider';
 
 const CustomersIdNewQuote = () => {
 
-  const { accountForm, onSubmitAccountForm } = useContext(AgentContext);
-  
-  return (
-    <div>
-      {/* <h2>Create New Account</h2> */}
-      {accountForm ? <CreateNewQuoteForm setAccountForm={onSubmitAccountForm}/> : <CreateNewConfiguration /> }
-    </div>
-  );
-  }
+    const { accountForm } = useContext(AgentContext);
+
+    debugger
+    console.log(accountForm)
+
+    return (
+        <div>
+            {/* <h2>Create New Account</h2> */}
+            {!accountForm ? <CreateNewQuoteForm /> : <CreateNewConfiguration />}
+        </div>
+    );
+}
 
 export default CustomersIdNewQuote
