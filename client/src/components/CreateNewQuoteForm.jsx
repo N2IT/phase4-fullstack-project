@@ -6,7 +6,7 @@ import { AgentContext } from '../AgentProvider';
 
 const CreateNewQuoteForm = () => {
 
-    const { agent, navigate, customer, account, errors, setErrors, setQuotes, setQuote, quotes } = useContext(AgentContext);
+    const { agent, navigate, customer, account, errors, setErrors, setQuotes, setQuote, quotes, setAccountForm } = useContext(AgentContext);
 
     useEffect(() => {
         fetch('/api/quotes')
@@ -26,9 +26,7 @@ const CreateNewQuoteForm = () => {
             });
     },[])
 
-    const prevQuote = Math.floor(Math.random()*1000)  
-    // JUST ADDED THIS MAKE SURE IT WORKS
-
+    const prevQuote = Math.floor(Math.random()*1000)
 
     const formSchema = yup.object().shape({
         title: yup.string().required("Please enter a title"),
@@ -67,7 +65,7 @@ const CreateNewQuoteForm = () => {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    { data.errors ? setErrors(data.errors) : setQuote(data), navigate(`/customers/${customer.id}`) }
+                    { data.errors ? setErrors(data.errors) : setQuote(data), setAccountForm(false) }
                 })
         }
     })

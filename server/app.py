@@ -381,6 +381,7 @@ class Quotes(Resource):
       status = form_data.get('status')
       converted = form_data.get('converted')
       customer_id = form_data.get('customer_id')
+      created_by = form_data.get('created_by')
       account_id = form_data.get('account_id')
 
       errors = []
@@ -420,6 +421,7 @@ class Quotes(Resource):
           notes = notes,
           status = status,
           converted = converted,
+          created_by = created_by,
           customer_id = customer_id,
           account_id = account_id
         )
