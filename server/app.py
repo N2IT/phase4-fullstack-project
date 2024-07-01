@@ -130,8 +130,6 @@ class AccountById(Resource):
         
         # if data.get('status') == 'inactive':
         #   return {'NOTICE' : 'YOUR ACCOUNT IS BEING SET TO INACTIVE!'}
-
-        breakpoint()
         
         db.session.add(account)
         db.session.commit()

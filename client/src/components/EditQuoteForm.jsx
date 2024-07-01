@@ -90,6 +90,7 @@ const EditQuoteForm = ({ id }) => {
                         setErrors(data.errors);
                     } else {
                         handleUpdateQuote(data);
+                        
                     }
                 });
         }
