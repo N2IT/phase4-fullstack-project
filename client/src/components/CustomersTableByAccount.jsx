@@ -17,10 +17,10 @@ const CustomersTable = () => {
         <>
             <Container>
                 <Row>
-                    <Col md={4} sm={12}>
+                    <Col md={6} sm={12}>
                         <h3>Account Customers</h3>
                     </Col>
-                    <Col md={4} sm={12}>
+                    <Col md={6} sm={12}>
                         <button type="button" onClick={() => (navigate('add-customer'), setNewCustomerForQuote(false))}>Add New Customer</button>
                     </Col>
                 </Row>

@@ -12,7 +12,12 @@ const CreateNewCustomerForm = () => {
 
     const { account, agent, errors, setErrors, setCustomer, newCustomerForQuote, setNewCustomerForQuote, navigate } = useContext(AgentContext);
 
-    // NEED TO SORT OUT WHY AGENT IS NOT PERSISTING ACROSS THIS COMPONENT AS WELL AS THE CREATE NEW USER
+    if (account === null) {
+        history.go(-1)
+        return (
+            alert('You have refreshed the form. You will now return to the previous page to start again.')
+        )
+    }
 
     const formSchema = yup.object().shape({
         first_name: yup.string().required('Please enter a first name.'),
@@ -63,15 +68,6 @@ const CreateNewCustomerForm = () => {
                 })
         }
     })
-
-    if (account === null) {
-        return (
-        <div className="account-details">
-            <h2>Refreshing this form requires you to revisit the account page.</h2>
-            <p><button className='button' onClick={() => history.go(-1)}>Return to Account Page</button></p>
-        </div>
-        )
-    }
 
     if (agent.role_id && account) {
         return (

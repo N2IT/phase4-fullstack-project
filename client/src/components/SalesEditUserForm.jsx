@@ -112,7 +112,6 @@ const SalesEditUserForm = ({ id }) => {
                                 id="first_name"
                                 name="first_name"
                                 onChange={formik.handleChange}
-                                placeholder={user.first_name}
                                 value={formik.values.first_name}
                                 disabled
                             />
@@ -125,7 +124,6 @@ const SalesEditUserForm = ({ id }) => {
                                 id="last_name"
                                 name="last_name"
                                 onChange={formik.handleChange}
-                                placeholder={user.last_name}
                                 value={formik.values.last_name}
                                 disabled
                             />
