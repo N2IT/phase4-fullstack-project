@@ -228,7 +228,7 @@ const EditQuoteForm = ({ id }) => {
                         <Col lg={3} md={6} xs={12}>
                             <label htmlFor="status">Status &nbsp; </label>
                             <br />
-                            <select id='status' name='status' onChange={formik.handleChange} value={formik.values.status} disabled={disabled}>
+                            <select id='status' name='status' onChange={formik.handleChange} value={formik.values.status} disabled>
                                 <option value='active'>Active</option>
                                 <option value='inactive'>Inactive</option>
                             </select>
@@ -238,9 +238,9 @@ const EditQuoteForm = ({ id }) => {
                         <Col lg={3} md={6} xs={12}>
                             <label htmlFor="converted">Converted &nbsp; </label>
                             <br />
-                            <select id='converted' name='converted' onChange={formik.handleChange} value={formik.values.converted} disabled={disabled}>
-                                <option value='active'>Yes</option>
-                                <option value='inactive'>No</option>
+                            <select id='converted' name='converted' onChange={formik.handleChange} value={formik.values.converted} disabled>
+                                <option value='Yes'>Yes</option>
+                                <option value='No'>No</option>
                             </select>
                                 
                             <p style={{ color: 'red' }}> {formik.errors.converted} </p>

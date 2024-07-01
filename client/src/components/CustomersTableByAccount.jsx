@@ -7,7 +7,7 @@ import Table from 'react-bootstrap/Table';
 
 const CustomersTable = () => {
 
-    const { handleIdClick, isLoading, customers, account, navigate } = useContext(AgentContext);
+    const { handleIdClick, isLoading, customers, account, navigate, setNewCustomerForQuote } = useContext(AgentContext);
 
     const customersByAccount = customers.filter(customer => {
         return parseInt(customer.account_id, 10) === account.id;
@@ -21,7 +21,7 @@ const CustomersTable = () => {
                         <h3>Account Customers</h3>
                     </Col>
                     <Col md={4} sm={12}>
-                        <button type="button" onClick={() => navigate('add-customer')}>Add New Customer</button>
+                        <button type="button" onClick={() => (navigate('add-customer'), setNewCustomerForQuote(false))}>Add New Customer</button>
                     </Col>
                 </Row>
             </Container>

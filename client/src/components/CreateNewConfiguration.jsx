@@ -6,8 +6,9 @@ import { AgentContext } from '../AgentProvider';
 
 const CreateNewConfiguration = () => {
 
-    const { agent, setConfiguration, errors, setErrors, quote, navigate  } = useContext(AgentContext);
+    const { agent, setConfiguration, errors, setErrors, quote, navigate, onSubmitNewQuoteForm  } = useContext(AgentContext);
 
+    // debugger
 
     const formSchema = yup.object().shape({
         sku: yup.string().required("Please enter the sku for the product to quote"),
@@ -37,7 +38,7 @@ const CreateNewConfiguration = () => {
             })
                 .then((res) => res.json()) 
                 .then((data) => {
-                    {data.errors ? setErrors(data.errors) : setConfiguration(data), navigate(`/quotes/${quote.id}`)}
+                    {data.errors ? setErrors(data.errors) : setConfiguration(data), onSubmitNewQuoteForm(), navigate(`/quotes/${quote.id}`)}
                 })
                 
         }

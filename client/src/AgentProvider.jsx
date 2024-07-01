@@ -6,6 +6,7 @@ const AgentProvider = ({ children }) => {
 
     const [agent, setAgent] = useState(null)
     const [accountForm, setAccountForm] = useState(true)
+    const [newQuotePageStatus, setNewQuotePageStatus] = useState(true)
     const [accounts, setAccounts] = useState([])
     const [isLoading, setIsLoading] = useState(true)
     const [valueId, setValueId] = useState()
@@ -25,9 +26,14 @@ const AgentProvider = ({ children }) => {
     const [show, setShow] = useState(false);
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
+    const [newCustomerForQuote, setNewCustomerForQuote] = useState(null)
 
     const onSubmitAccountForm = () => {
         setAccountForm(!accountForm)
+    }
+
+    const onSubmitNewQuoteForm = () => {
+        setNewQuotePageStatus(!newQuotePageStatus)
     }
 
     const handleEditClick = () => {
@@ -175,7 +181,10 @@ const AgentProvider = ({ children }) => {
                 isLoading,
                 navigate,
                 newConfigurationHandleIdClick,
+                newCustomerForQuote,
+                newQuotePageStatus,
                 onSubmitAccountForm,
+                onSubmitNewQuoteForm,
                 quote,
                 quotes,
                 setAccount,
@@ -189,6 +198,8 @@ const AgentProvider = ({ children }) => {
                 setCustomers,
                 setErrors,
                 setIsLoading,
+                setNewCustomerForQuote,
+                setNewQuotePageStatus,
                 setQuote,
                 setQuotes,
                 setUpdatedBy,

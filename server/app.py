@@ -673,10 +673,8 @@ class Configurations(Resource):
       product_title = form_data.get('product_title')
       product_description = form_data.get('product_description')
       cost = form_data.get('cost')
-      if session.get('quote_id'):
-        quote_id = session['quote_id']
-      else:
-        quote_id = form_data.get('quote_id')
+      quote_id = form_data.get('quote_id')
+      created_by = form_data.get('created_by')
 
       errors = []
 
@@ -689,6 +687,8 @@ class Configurations(Resource):
           errors.append('A product description must be entered')
         if not cost:
           errors.append('An account id must be associated with the configuration')
+        if not created_by:
+          errors.append('Created by must be populated')
         
         if errors:
           return { 'errors' : errors }, 422
@@ -698,11 +698,15 @@ class Configurations(Resource):
           product_title = product_title,
           product_description = product_description,
           cost = cost,
-          quote_id = quote_id
+          quote_id = quote_id,
+          created_by = created_by
         )
 
         db.session.add(new_configuration)
         db.session.commit()
+
+        if quote_id:
+          calculate_quote_info()
 
         return new_configuration.to_dict(), 201
     except ValueError as e:

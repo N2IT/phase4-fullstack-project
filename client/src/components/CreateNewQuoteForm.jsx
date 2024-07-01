@@ -6,7 +6,7 @@ import { AgentContext } from '../AgentProvider';
 
 const CreateNewQuoteForm = () => {
 
-    const { agent, customer, account, errors, setErrors, setQuotes, setQuote, onSubmitAccountForm } = useContext(AgentContext);
+    const { agent, customer, account, errors, setErrors, setQuotes, setQuote, onSubmitNewQuoteForm } = useContext(AgentContext);
 
     useEffect(() => {
         fetch('/api/quotes')
@@ -46,7 +46,7 @@ const CreateNewQuoteForm = () => {
             margin_dollars: '',
             notes: '',
             status: 'active',
-            converted: 'no',
+            converted: '',
             created_at: '',
             created_by: `${agent.id}`,
             updated_at: '',
@@ -65,7 +65,7 @@ const CreateNewQuoteForm = () => {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    { data.errors ? setErrors(data.errors) : setQuote(data), onSubmitAccountForm() }
+                    { data.errors ? setErrors(data.errors) : setQuote(data), onSubmitNewQuoteForm() }
                 })
         }
     })
@@ -127,6 +127,16 @@ const CreateNewQuoteForm = () => {
                         disabled
                     />
                     <p style={{ color: 'red' }}> {formik.errors.status} </p>
+
+                    <label htmlFor="converted">Converted </label>
+                    <input
+                        id="converted"
+                        name="converted"
+                        onChange={formik.handleChange} 
+                        value={formik.values.converted = 'No'}
+                        disabled
+                    />
+                    <p style={{ color: 'red' }}> {formik.errors.converted} </p>
                     
                     <label htmlFor="created_by">Created By </label>
                     <input

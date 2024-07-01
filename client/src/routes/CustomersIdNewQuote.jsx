@@ -5,15 +5,14 @@ import { AgentContext } from '../AgentProvider';
 
 const CustomersIdNewQuote = () => {
 
-    const { accountForm } = useContext(AgentContext);
+    const { newQuotePageStatus } = useContext(AgentContext);
 
-    debugger
-    console.log(accountForm)
+    // STRUGGLING TO MANAGE THE SATE OF ACCOUNTFORM MAY NEED TO BREAK OUT TO SEPARATE BETWEEN SIGNUP AND THIS PAGE
 
     return (
         <div>
             {/* <h2>Create New Account</h2> */}
-            {!accountForm ? <CreateNewQuoteForm /> : <CreateNewConfiguration />}
+            {newQuotePageStatus ? <CreateNewQuoteForm /> : <CreateNewConfiguration />}
         </div>
     );
 }

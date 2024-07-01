@@ -4,15 +4,17 @@ import * as yup from "yup";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import InvalidCredentials from './InvalidCredentials';
+// import InvalidCredentials from './InvalidCredentials';
 import Unauthorized from './Unauthorized';
 import { AgentContext } from '../AgentProvider';
 
 const CreateNewCustomerForm = () => {
 
-    const { account, agent, errors, setErrors, setCustomer } = useContext(AgentContext);
+    const { account, agent, errors, setErrors, setCustomer, newCustomerForQuote, setNewCustomerForQuote, navigate } = useContext(AgentContext);
 
     // NEED TO SORT OUT WHY AGENT IS NOT PERSISTING ACROSS THIS COMPONENT AS WELL AS THE CREATE NEW USER
+
+    console.log(newCustomerForQuote)
 
     const formSchema = yup.object().shape({
         first_name: yup.string().required('Please enter a first name.'),
@@ -55,8 +57,11 @@ const CreateNewCustomerForm = () => {
                 })
                 .then((customer) => {
                     setCustomer(customer);
+                    {newCustomerForQuote ? (navigate(`customers/${customer.id}/new-quote`), setNewCustomerForQuote(false))
+                    : 
                     history.go(-1)
                     alert(`Customer ${customer.id} has been successfully created.`)
+                }
                 })
         }
     })

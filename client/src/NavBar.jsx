@@ -66,7 +66,6 @@ function NavBar() {
                   <Link to="/users" onClick={handleClose}>Users</Link>
                   <Link to='/customers' onClick={handleClose}>Customers</Link>
                   <Link to="/quotes" onClick={handleClose}>Quotes</Link>
-                  <Link to="/new-quote" onClick={handleClose}>New Quote</Link>
                   <Link to='/configurations' onClick={handleClose}>Configurations</Link>
                   <Link to="/support" onClick={handleClose}>Support</Link>
                   <hr />
