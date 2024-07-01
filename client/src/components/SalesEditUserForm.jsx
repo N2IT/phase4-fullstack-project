@@ -8,7 +8,7 @@ import { AgentContext } from '../AgentProvider';
 
 const SalesEditUserForm = ({ id }) => {
 
-    const { user, errors, setErrors, disabled, handleEditClick, handleUpdateUser } = useContext(AgentContext);
+    const { user, errors, setErrors, handleUpdateUser } = useContext(AgentContext);
 
     const [originalValues, setOriginalValues] = useState({
         email: '',
@@ -20,6 +20,7 @@ const SalesEditUserForm = ({ id }) => {
         created_at: '',
         updated_at: '',
         status: '',
+        role_id: '',
     });
 
     useEffect(() => {
@@ -34,6 +35,7 @@ const SalesEditUserForm = ({ id }) => {
                 created_at: `${user.created_at}`,
                 updated_at: `${user.updated_at}`,
                 status: `${user.status}`,
+                role_id: `${user.role_id}`
             });
         }
     }, []);

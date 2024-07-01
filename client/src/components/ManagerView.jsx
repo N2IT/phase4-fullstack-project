@@ -9,7 +9,7 @@ const ManagerView = ({ id }) => {
     return (
         <>
             <div className='account-details'>
-                <h2>Hello, manager:</h2>
+                <h2>Hello, {id}:</h2>
                 <h3>Account Details</h3>
                 <ManagerEditAccountForm id={id} />
             </div>
