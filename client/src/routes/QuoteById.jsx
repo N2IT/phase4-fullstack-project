@@ -59,15 +59,6 @@ const QuoteById = () => {
         return <div> Loading ... </div>
     }
 
-    // if (agent.role_id === 1 && quote || agent.role_id === 2 && quote) {
-    //     return (
-    //         <div className='account-details'>
-    //             <h2>Quote Details</h2>
-    //             <EditQuoteForm id={id} />
-    //         </div>
-    //     );
-    // }
-
     return (
         <>
             {agent ? (

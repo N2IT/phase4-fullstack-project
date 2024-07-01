@@ -167,6 +167,13 @@ def calculate_quote_info(quote_id=None):
     
   db.session.commit()
 
+def update_quote_discount(discount, id):
+  quote = Quote.query.filter(Quote.account_id == id).first()
+  quote.discount = discount
+  
+  db.session.commit()
+  
+
 if __name__ == "__main__":
   with app.app_context():
     print("Clearing db...")

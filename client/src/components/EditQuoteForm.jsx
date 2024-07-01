@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
-import { Formik, FormikContext, FormikProvider, useFormik } from 'formik';
+import { useFormik } from 'formik';
 import * as yup from "yup";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -9,9 +9,7 @@ import { AgentContext } from '../AgentProvider';
 const EditQuoteForm = ({ id }) => {
 
     const { agent, quote, errors, setErrors, disabled, handleEditClick, handleUpdateQuote } = useContext(AgentContext);
-    // const { title, setTitle, markupVariable, setMarkupVariable, notes, setNotes, status, setStatus, converted, setConverted } = useState()
-    // NEED TO WORK OUT HOW TO UPDATE CALCULATION FIELDS ON FRONT END BASED ON UPDATE TO MARKUP VARIABLE AND / OR CONFIGURATIONS
-
+    
     const [originalValues, setOriginalValues] = useState({
         quote_number: '',
         title: '',

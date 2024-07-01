@@ -5,7 +5,7 @@ from flask_restful import Api, Resource
 import random
 from config import app, db, api
 from models import Account, User, Role, Permission, RolePermission, Quote, Customer, Configuration
-from seed import calculate_quote_info
+from seed import calculate_quote_info, update_quote_discount
 
 # just imported Account, User above
 # need to write up the Routes now
@@ -130,9 +130,16 @@ class AccountById(Resource):
         
         # if data.get('status') == 'inactive':
         #   return {'NOTICE' : 'YOUR ACCOUNT IS BEING SET TO INACTIVE!'}
+
+        breakpoint()
         
         db.session.add(account)
         db.session.commit()
+
+        discount = data.get('discount')
+        if discount:
+          update_quote_discount(discount, id)
+          calculate_quote_info()
 
         return make_response(
           account.to_dict(), 

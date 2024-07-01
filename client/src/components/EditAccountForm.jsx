@@ -113,13 +113,13 @@ const EditAccountForm = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.company_name}</p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="discount">Discount &nbsp; </label>
+                            <label htmlFor="discount">Discount %&nbsp; </label>
                             <br />
                             <input
                                 id="discount"
                                 name="discount"
                                 onChange={formik.handleChange}
-                                value={formik.values.discount}
+                                value={(formik.values.discount *100)}
                                 disabled={disabled}
                             />
                             <p style={{ color: 'red' }}> {formik.errors.discount} </p>

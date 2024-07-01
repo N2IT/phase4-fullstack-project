@@ -6,7 +6,7 @@ import { AgentContext } from '../AgentProvider';
 
 const AccountSignupForm = () => {
 
-    const { setAccount, setAccountForm, errors, setErrors  } = useContext(AgentContext);
+    const { setAccount, setAccountForm, errors, setErrors } = useContext(AgentContext);
 
 
     const formSchema = yup.object().shape({
@@ -26,7 +26,7 @@ const AccountSignupForm = () => {
             address_2: "",
             city: "",
             state: "",
-            discount: .10,
+            discount: 10,
             zip_code: "",
             phone: "",
             status: true,
@@ -40,14 +40,14 @@ const AccountSignupForm = () => {
                 },
                 body: JSON.stringify(values),
             })
-                .then((res) => res.json()) 
+                .then((res) => res.json())
                 .then((data) => {
-                    {data.errors ? setErrors(data.errors) : setAccountForm(), setAccount(data)}
+                    { data.errors ? setErrors(data.errors) : setAccountForm(), setAccount(data) }
                 })
-                
+
         }
-})
-                    
+    })
+
     return (
         <>
             <div className="account-details">
@@ -109,6 +109,17 @@ const AccountSignupForm = () => {
                         value={formik.values.phone}
                     />
                     <p style={{ color: 'red' }}> {formik.errors.phone} </p>
+                    {/* <label htmlFor="discount">Discount </label> */}
+                    <input
+                        id="discount"
+                        name="discount"
+                        placeholder="Enter a whole number"
+                        onChange={formik.handleChange}
+                        value={formik.values.discount}
+                        hidden
+                        disabled
+                    />
+                    <p style={{ color: 'red' }}> {formik.errors.discount} </p>
                     <button type="submit">Submit</button>
                 </form>
                 <p style={{ color: 'red' }}>{errors ? errors : null}</p>
