@@ -8,6 +8,13 @@ const CreateNewQuoteForm = () => {
 
     const { agent, customer, account, errors, setErrors, setQuotes, setQuote, onSubmitNewQuoteForm } = useContext(AgentContext);
 
+    if (account === null) {
+        history.go(-1)
+        return (
+            alert('You have refreshed the form. You will now return to the previous page to start again.')
+        )
+    }
+
     useEffect(() => {
         fetch('/api/quotes')
             .then(response => {
@@ -65,7 +72,7 @@ const CreateNewQuoteForm = () => {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    { data.errors ? setErrors(data.errors) : setQuote(data), onSubmitNewQuoteForm() }
+                    { data.errors ? setErrors(data.errors) : setQuote(data), alert(`Quote ${data.quote_number} has succesfully been created.`), onSubmitNewQuoteForm() }
                 })
         }
     })

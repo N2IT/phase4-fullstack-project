@@ -14,8 +14,6 @@ const CreateNewCustomerForm = () => {
 
     // NEED TO SORT OUT WHY AGENT IS NOT PERSISTING ACROSS THIS COMPONENT AS WELL AS THE CREATE NEW USER
 
-    console.log(newCustomerForQuote)
-
     const formSchema = yup.object().shape({
         first_name: yup.string().required('Please enter a first name.'),
         last_name: yup.string().required('Please enter last name.'),

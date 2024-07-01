@@ -24,7 +24,7 @@ const QuotesTableByAccount = () => {
                 </Col>
                 <Col md={6} sm={12}>
                 <div>
-                  <button type="button" onClick={() => navigate('/new-quote')}>Create New Quote</button>
+                  <button type="button" onClick={() => navigate(`accounts/${account.id}/new-quote`)}>Create New Quote</button>
                 </div>
                 </Col>
             </Row>

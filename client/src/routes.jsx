@@ -54,7 +54,7 @@ const routes = [
                 element: <Quotes />
             },
             {
-                path: 'new-quote',
+                path: 'accounts/:id/new-quote',
                 element: <NewQuote />
             },
             {
@@ -78,7 +78,7 @@ const routes = [
                 element: <ConfigurationById />
             },
             {
-                path: 'add-user',
+                path: 'accounts/:id/add-user',
                 element: <CreateNewUserForm />
             },
             {

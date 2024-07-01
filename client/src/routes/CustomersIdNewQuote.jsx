@@ -11,7 +11,6 @@ const CustomersIdNewQuote = () => {
 
     return (
         <div>
-            {/* <h2>Create New Account</h2> */}
             {newQuotePageStatus ? <CreateNewQuoteForm /> : <CreateNewConfiguration />}
         </div>
     );

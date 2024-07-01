@@ -31,7 +31,7 @@ const EditConfigurationForm = ({ id }) => {
                 product_description: `${configuration.product_description}`,
                 cost: `${configuration.cost}`,
                 quote_id: `${configuration.quote_id}`,
-                created_at: `${configuration.ccreated_at}`,
+                created_at: `${configuration.created_at}`,
                 created_by: `${configuration.created_by}`,
                 updated_at: `${configuration.updated_at}`,
                 updated_by: `${configuration.updated_by}`,
@@ -165,12 +165,7 @@ const EditConfigurationForm = ({ id }) => {
                                 onChange={formik.handleChange}
                                 value={formik.values.created_at}
                                 disabled
-                            />
-                            {/* <select id='status' name='status' onChange={formik.handleChange} value={formik.values.status} disabled={disabled}>
-                                <option value='active'>Active</option>
-                                <option value='inactive'>Inactive</option>
-                            </select> */}
-                                
+                            />  
                             <p style={{ color: 'red' }}> {formik.errors.status} </p>
                         </Col>
                     </Row>

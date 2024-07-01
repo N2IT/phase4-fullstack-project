@@ -101,7 +101,7 @@ def create_quotes():
         markup_variable= 2,
         notes=fake.sentence(),
         status = choices(status_list, weights = [10, 1], k=1)[0],
-        converted=False,
+        converted='No',
         created_at=datetime.now(),
         created_by = 1,
     )

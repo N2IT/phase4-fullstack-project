@@ -4,10 +4,11 @@ import * as yup from "yup";
 import { AgentContext } from '../AgentProvider';
 import InvalidCredentials from './InvalidCredentials';
 import Unauthorized from './Unauthorized';
+import { Navigate } from 'react-router-dom';
 
 const CreateNewUserForm = () => {
 
-    const { account, agent, errors, setErrors, isLoading, setUser } = useContext(AgentContext);
+    const { account, agent, errors, setErrors, isLoading, setUser, navigate } = useContext(AgentContext);
 
     const formSchema = yup.object().shape({
         first_name: yup.string().required("Please enter you first name."),
@@ -58,11 +59,9 @@ const CreateNewUserForm = () => {
     }
 
     if (account === null) {
+        history.go(-1)
         return (
-            <div className="account-details">
-                <h2>You have refreshed the page. Please return to previous page to start again.</h2>
-                <p><button className='button' onClick={() => history.go(-1)}>Return to Account Page</button></p>
-            </div>
+            alert('You have refreshed the form. You will now return to the previous page to start again.')
         )
     }
 
