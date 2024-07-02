@@ -12,7 +12,7 @@ import Button from 'react-bootstrap/Button';
 import InvalidCredentials from '../components/InvalidCredentials';
 
 const UserById = () => {
-    const { agent, user, setUser, setAsDisabled, setErrors, isLoading, deleteUserObject, setShow, show, handleClose, handleShow } = useContext(AgentContext)
+    const { agent, user, setUser, isLoading, deleteUserObject, setShow, show, handleClose, handleShow } = useContext(AgentContext)
     const { id } = useParams();
 
     const handleDeleteClick = () => {
@@ -22,30 +22,29 @@ const UserById = () => {
         deleteUserObject(id, user)
         setShow(false)
     }
-    
-    useEffect(() => {
-        if (!agent) {
-            return;
-        }
 
-        fetch(`/api/users/${id}`)
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(data => { throw data; });
-                }
-                return response.json();
-            })
-            .then(data => {
-                setUser(data);
-                setAsDisabled(true);
-                setErrors(null);
-            })
-            .catch(error => {
-                console.error('Errors:', error);
-                setErrors([error.errors] || 'Unknown Error');
-                setUser(null);
-            });
+    useEffect(() => {
+        const storedUser = window.localStorage.getItem('user');
+        if (storedUser) {
+            try {
+                const parsedUser = JSON.parse(storedUser);
+                setUser(parsedUser);
+            } catch (error) {
+                console.error("Error parsing stored user data:", error);
+            }
+        }
     }, []);
+
+    useEffect(() => {
+        if (user) {
+            try {
+                window.localStorage.setItem('user', JSON.stringify(user));
+            } catch (error) {
+                console.error("Error stringifying user data:", error);
+            }
+        }
+    }, [user]);
+
 
     if (isLoading) {
         return <div> Loading ... </div>
