@@ -53,6 +53,12 @@ const UserById = () => {
         )
     }
 
+    if (agent && !user) {
+        return (
+            <InvalidCredentials />
+        )
+    }
+
     if (agent.role_id === 1) {
         return (
             <>
