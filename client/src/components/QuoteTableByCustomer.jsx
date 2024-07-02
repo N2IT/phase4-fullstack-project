@@ -1,23 +1,37 @@
 import { useContext } from 'react'
 import { AgentContext } from '../AgentProvider';
 import Table from 'react-bootstrap/Table';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { Navigate } from 'react-router-dom';
 
 const QuoteTableByCustomer = () => {
 
-    const { quotes, handleIdClick, customer } = useContext(AgentContext);
+    const { quotes, handleIdClick, customer, newConfigurationHandleIdClick } = useContext(AgentContext);
     // debugger
     // console.log(quotes)
-    
+
 
     const quotesByCustomer = quotes.filter(quote => {
-    //    console.log(configuration)
-    //    console.log(quote)
+        //    console.log(configuration)
+        //    console.log(quote)
         return parseInt(quote.customer_id, 10) === customer.id;
     });
 
     return (
         <>
-            <h3>Quote Activity</h3>
+            <Container>
+                <Row>
+                    <Col md={4} sm={12}>
+                        <h3>Quote Activity</h3>
+                    </Col>
+                    <Col md={4} sm={12}>
+                        <button type="button" onClick={() => newConfigurationHandleIdClick(customer)}>Create New Quote</button>
+                    </Col>
+                </Row>
+            </Container>
+
             <Table responsive="sm" striped="columns">
                 <thead>
                     <tr>
@@ -35,7 +49,7 @@ const QuoteTableByCustomer = () => {
                             <td>{quote.quote_number}</td>
                             <td>{quote.title}</td>
                             <td>{quote.total_cost ? "$" + quote.total_cost.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : ""}</td>
-                            <td>{quote.sale_price ? "$" + quote.sale_price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : "" }</td>
+                            <td>{quote.sale_price ? "$" + quote.sale_price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",") : ""}</td>
                             {/* <td>${parseFloat(quote.sale_price).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td> */}
                             <td>{quote.status}</td>
                             <td><p className="view-btn" title="View Quote" onClick={() => handleIdClick(quote)}> View </p></td>

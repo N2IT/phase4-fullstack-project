@@ -21,7 +21,7 @@ const QuotesTable = () => {
                             <th>Sale Price</th>
                             {/* <th>Margin %</th>
                             <th>Margin $</th> */}
-                            <th>Notes</th>
+                            {/* <th>Notes</th> */}
                             <th>Status</th>
                             {/* <th>Converted</th> */}
                             {/* <th>Created By</th> */}
@@ -43,7 +43,7 @@ const QuotesTable = () => {
                                 <td>{quote.sale_price ? "$" + (parseFloat(quote.sale_price).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")): null }</td>
                                 {/* <td>{quote.margin_percentage}</td>
                                 <td>{quote.margin_dollars}</td> */}
-                                <td>{quote.notes}</td>
+                                {/* <td>{quote.notes}</td> */}
                                 <td>{quote.status}</td>
                                 {/* <td>{quote.created_by}</td> */}
                                 <td>{quote.created_at}</td>

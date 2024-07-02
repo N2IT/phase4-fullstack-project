@@ -5,19 +5,28 @@ import EditQuoteForm from '../components/EditQuoteForm';
 import Unauthorized from '../components/Unauthorized';
 import { AgentContext } from '../AgentProvider';
 import ConfigurationsTableByQuote from '../components/ConfigurationsTableByQuote';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 const QuoteById = () => {
-    const { agent, quote, setConfigurations, setQuote, setAsDisabled, errors = [], setErrors, isLoading } = useContext(AgentContext)
+    const { agent, customer, quote, handleClose, handleShow, show, setConfigurations, setQuote, setAsDisabled, errors = [], setErrors, isLoading, deleteQuoteObject } = useContext(AgentContext)
     const { id } = useParams();
+
+    const handleDeleteClick = () => {
+        fetch(`/api/quotes/${id}`, {
+            method: 'DELETE',
+        });
+        deleteQuoteObject(id, quote)
+        setShow(false)
+    }
 
     useEffect(() => {
         if (!agent) {
             return;
         }
-
         fetch(`/api/quotes/${id}`)
             .then(response => {
                 if (!response.ok) {
@@ -53,10 +62,17 @@ const QuoteById = () => {
                 setErrors([error.errors] || ['Unknown Error']);
                 setConfigurations(null);
             });
-    }, [id, agent, setQuote, setAsDisabled, setErrors]);
+    }, []);
 
     if (isLoading) {
         return <div> Loading ... </div>
+    }
+
+    if (customer === null) {
+        history.go(-1)
+        return (
+            alert('You have refreshed the form. You will now return to the previous page to start again.')
+        )
     }
 
     return (
@@ -68,16 +84,19 @@ const QuoteById = () => {
                             <div className='account-details'>
 
                                 <Row>
-                                    <Col md={6} xs={12}>
-                                        <h2>Quote Details</h2>
+                                    <Col md={4} xs={12}>
+                                        <h2>Quote Details for<br /> Customer: {customer.first_name}&nbsp;{customer.last_name}</h2>
                                     </Col>
-                                    <Col md={6} xs={12}>
+                                    <Col md={4} xs={12}>
                                         <button type="button" onClick={() => history.go(-1)}>Return to Prev. page</button>
+                                    </Col>
+                                    <Col md={4} xs={12}>
+                                        {agent.role_id !== 3 ? <button type="button" onClick={() => handleShow()}>Delete Quote</button> : null}
                                     </Col>
                                 </Row>
                                 <Row>
                                     <Col>
-                                        <EditQuoteForm id={id} />
+                                        <EditQuoteForm id={id}/>
                                     </Col>
                                 </Row>
                                 <Row>
@@ -87,6 +106,20 @@ const QuoteById = () => {
                                 </Row>
                             </div>
                         </Container>
+                        <Modal show={show} onHide={handleClose}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Deleting Account</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>!!PLEASE CONFIRM!! Deleting the Quote will delete all associated configurations.  Are you sure you wish to delete?</Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleClose}>
+                                    Close
+                                </Button>
+                                <Button variant="primary" onClick={(handleClose, handleDeleteClick)}>
+                                    Yes, I am sure I want to delete this quote.
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
                     </>
                 ) : (
                     <div className='account-details'>

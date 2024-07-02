@@ -12,8 +12,10 @@ import Button from 'react-bootstrap/Button';
 
 
 const CustomerById = () => {
-    const { agent, customer, deleteCustomerObject, setCustomer, setAsDisabled, setQuotes, errors = [], setErrors, isLoading, show, handleShow, setShow, handleClose } = useContext(AgentContext)
+    const { agent, account, setAccount, customer, deleteCustomerObject, setCustomer, setAsDisabled, setQuotes, errors = [], setErrors, isLoading, show, handleShow, setShow, handleClose } = useContext(AgentContext)
     const { id } = useParams();
+
+    console.log(id)
 
     const handleDeleteClick = () => {
         fetch(`/api/customers/${id}`, {
@@ -21,7 +23,6 @@ const CustomerById = () => {
         });
         deleteCustomerObject(id, customer)
         setShow(false)
-
     }
 
     useEffect(() => {
@@ -40,6 +41,24 @@ const CustomerById = () => {
                 setCustomer(data);
                 setAsDisabled(true);
                 setErrors(null);
+                fetch(`/api/accounts/${data.account_id}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(data => { throw data; });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        setAccount(data);
+                        console.log(data)
+                        setAsDisabled(true);
+                        setErrors(null);
+                    })
+                    .catch(error => {
+                        console.error('Errors:', error);
+                        setErrors([error.errors] || ['Unknown Error']);
+                        setAccount(null);
+                    });
             })
             .catch(error => {
                 console.error('Errors:', error);
@@ -63,7 +82,9 @@ const CustomerById = () => {
                 setErrors([error.errors] || ['Unknown Error']);
                 setQuotes(null);
             });
+
     }, [id, agent, setQuotes, setCustomer, setAsDisabled, setErrors]);
+
 
     if (isLoading) {
         return <div> Loading ... </div>

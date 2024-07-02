@@ -134,9 +134,19 @@ const AgentProvider = ({ children }) => {
         history.go(-1)       
     }
 
+    const deleteQuoteObject = (id, quote) => {
+        const updatedQuotes = quotes.filter((quote) => quote.id !== id);
+        setQuotes(updatedQuotes)
+        alert(`Quote ${quote.title} has successfully been deleted`)
+        history.go(-1)
+        setShow(false)
+    }
+
     const newConfigurationHandleIdClick = (value) => {
+        // console.log(value)
         setCustomer(value)
         setQuotes(quotes)
+        // setAccount(account)
         navigate(`/customers/${value.id}/new-quote`)
     }
 
@@ -167,6 +177,7 @@ const AgentProvider = ({ children }) => {
                 disabled,
                 deleteAccountObject,
                 deleteCustomerObject,
+                deleteQuoteObject,
                 deleteUserObject,
                 errors,
                 handleClose,

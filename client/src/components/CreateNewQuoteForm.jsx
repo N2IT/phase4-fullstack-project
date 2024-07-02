@@ -1,12 +1,14 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 // import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from "yup";
 import { AgentContext } from '../AgentProvider';
 
-const CreateNewQuoteForm = () => {
+const CreateNewQuoteForm = ({ account }) => {
 
-    const { agent, customer, account, errors, setErrors, setQuotes, setQuote, onSubmitNewQuoteForm } = useContext(AgentContext);
+    const { agent, customer, errors, setErrors, setQuote, onSubmitNewQuoteForm } = useContext(AgentContext);
+
+    console.log(account)
 
     if (account === null) {
         history.go(-1)
@@ -14,24 +16,6 @@ const CreateNewQuoteForm = () => {
             alert('You have refreshed the form. You will now return to the previous page to start again.')
         )
     }
-
-    useEffect(() => {
-        fetch('/api/quotes')
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(data => { throw data; });
-                }
-                return response.json();
-            })
-            .then(data => {
-                setQuotes(data);
-            })
-            .catch(error => {
-                console.error('Errors:', error);
-                setErrors([error.errors] || ['Unknown Error']);
-                setQuotes(null);
-            });
-    },[])
 
     const prevQuote = Math.floor(Math.random()*1000)
 

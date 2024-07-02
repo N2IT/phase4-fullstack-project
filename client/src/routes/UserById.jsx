@@ -1,4 +1,4 @@
-import { useEffect, useContext } from 'react';
+import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import EditUserForm from '../components/EditUserForm';
 import SalesEditUserForm from '../components/SalesEditUserForm';
@@ -12,7 +12,7 @@ import Button from 'react-bootstrap/Button';
 import InvalidCredentials from '../components/InvalidCredentials';
 
 const UserById = () => {
-    const { agent, user, setUser, isLoading, deleteUserObject, setShow, show, handleClose, handleShow } = useContext(AgentContext)
+    const { agent, user, isLoading, deleteUserObject, setShow, show, handleClose, handleShow } = useContext(AgentContext)
     const { id } = useParams();
 
     const handleDeleteClick = () => {
@@ -23,28 +23,12 @@ const UserById = () => {
         setShow(false)
     }
 
-    useEffect(() => {
-        const storedUser = window.localStorage.getItem('user');
-        if (storedUser) {
-            try {
-                const parsedUser = JSON.parse(storedUser);
-                setUser(parsedUser);
-            } catch (error) {
-                console.error("Error parsing stored user data:", error);
-            }
-        }
-    }, []);
-
-    useEffect(() => {
-        if (user) {
-            try {
-                window.localStorage.setItem('user', JSON.stringify(user));
-            } catch (error) {
-                console.error("Error stringifying user data:", error);
-            }
-        }
-    }, [user]);
-
+    if (user === null) {
+        history.go(-1)
+        return (
+            alert('You have refreshed the form. You will now return to the previous page to start again.')
+        )
+    }
 
     if (isLoading) {
         return <div> Loading ... </div>
@@ -56,7 +40,7 @@ const UserById = () => {
         )
     }
 
-    if (agent.role_id === 1 && user) {
+    if (agent.role_id === 1) {
         return (
             <>
                 <Container>

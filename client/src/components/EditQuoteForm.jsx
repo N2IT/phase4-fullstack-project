@@ -302,7 +302,7 @@ const EditQuoteForm = ({ id }) => {
                     </Row>
                     <Row>
                     <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="customer_id">Customer ID &nbsp; </label>
+                            <label htmlFor="customer_id">Customer Id &nbsp; </label>
                             <br />
                             <input
                                 id="customer_id"
@@ -314,7 +314,7 @@ const EditQuoteForm = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.customer_id} </p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="account_id">Account ID &nbsp; </label>
+                            {/* <label htmlFor="account_id">Account ID &nbsp; </label> */}
                             <br />
                             <input
                                 id="account_id"
@@ -322,6 +322,7 @@ const EditQuoteForm = ({ id }) => {
                                 onChange={formik.handleChange}
                                 value={formik.values.account_id}
                                 disabled
+                                hidden
                             />
                             <p style={{ color: 'red' }}> {formik.errors.account_id} </p>
                         </Col>

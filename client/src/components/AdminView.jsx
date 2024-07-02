@@ -22,7 +22,6 @@ const AdminView = () => {
         });
         deleteAccountObject(id, account)
         setShow(false)
-
     }
 
     return (

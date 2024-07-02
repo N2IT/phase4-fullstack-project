@@ -1,17 +1,23 @@
 import CreateNewQuoteForm from "../components/CreateNewQuoteForm";
 import CreateNewConfiguration from "../components/CreateNewConfiguration";
 import { useContext } from "react";
+// import { useParams } from "react-router-dom";
 import { AgentContext } from '../AgentProvider';
 
 const CustomersIdNewQuote = () => {
 
-    const { newQuotePageStatus } = useContext(AgentContext);
+    const { agent, customer, account, setAccount, newQuotePageStatus, isLoading } = useContext(AgentContext);
+    // const { id } = useParams();
 
-    // STRUGGLING TO MANAGE THE SATE OF ACCOUNTFORM MAY NEED TO BREAK OUT TO SEPARATE BETWEEN SIGNUP AND THIS PAGE
+    if (isLoading) {
+        return <div>Loading ...</div>;
+    }
+
+    console.log(account)
 
     return (
         <div>
-            {newQuotePageStatus ? <CreateNewQuoteForm /> : <CreateNewConfiguration />}
+            {newQuotePageStatus ? <CreateNewQuoteForm account={account}/> : <CreateNewConfiguration />}
         </div>
     );
 }
