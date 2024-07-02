@@ -106,7 +106,7 @@ const AccountById = () => {
 
     if (agent.role_id !== 1 && agent.account_id.toString() === id) {
         return  (
-            <ManagerView id={id}/>
+            <ManagerView />
         )
     }
 

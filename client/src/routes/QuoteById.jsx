@@ -12,7 +12,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 const QuoteById = () => {
-    const { agent, customer, quote, handleClose, handleShow, show, setCustomer, setConfigurations, setQuote, setAsDisabled, errors = [], setErrors, isLoading, deleteQuoteObject } = useContext(AgentContext)
+    const { agent, customer, quote, handleClose, handleShow, show, setCustomer, setConfigurations, setQuote, setAsDisabled, errors = [], setErrors, setIsLoading, isLoading, deleteQuoteObject } = useContext(AgentContext)
     const { id } = useParams();
 
     const handleDeleteClick = () => {
@@ -23,10 +23,13 @@ const QuoteById = () => {
         setShow(false)
     }
 
+    // debugger
+    // STILL BATTLING PERSISTENCE ISSUE NOW WITH CUSTOMER OBJECT ON THIS PAGE
+
     useEffect(() => {
-        if (!agent) {
-            return;
-        }
+        // if (!agent) {
+        //     return;
+        // }
         fetch(`/api/quotes/${id}`)
             .then(response => {
                 if (!response.ok) {
@@ -36,27 +39,20 @@ const QuoteById = () => {
             })
             .then(data => {
                 setQuote(data);
-                console.log(data)
                 setAsDisabled(true);
                 setErrors(null);
                 fetch(`/api/customers/${data.customer_id}`)
-                    .then(response => {
-                        if (!response.ok) {
-                            return response.json().then(data => { throw data; });
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        setCustomer(data);
-                        console.log(customer)
-                        setAsDisabled(true);
-                        setErrors(null);
-                    })
-                    .catch(error => {
-                        console.error('Errors:', error);
-                        setErrors([error.errors] || ['Unknown Error']);
-                        setCustomer(null);
-                    });
+                .then(response => {
+                    if (!response.ok) {
+                        return response.json().then(data => { throw data; });
+                    }
+                    return response.json();
+                })
+                .then(data => {
+                    setCustomer(data);
+                    setAsDisabled(true);
+                    setErrors(null);
+                })
             })
             .catch(error => {
                 console.error('Errors:', error);
@@ -81,7 +77,7 @@ const QuoteById = () => {
                 setErrors([error.errors] || ['Unknown Error']);
                 setConfigurations(null);
             });
-    }, [agent]);
+    }, [agent, id]);
 
     if (isLoading) {
         return <div> Loading ... </div>
@@ -113,9 +109,11 @@ const QuoteById = () => {
                                         {agent.role_id !== 3 ? <button type="button" onClick={() => handleShow()}>Delete Quote</button> : null}
                                     </Col>
                                 </Row>
+                                {customer ?
                                 <Row>
-                                    <h3>For Customer: {customer.first_name}&nbsp;{customer.last_name}</h3>
+                                     <h3>For Customer: {customer.first_name}&nbsp;{customer.last_name} </h3>
                                 </Row>
+                                : null}
                                 <Row>
                                     <Col>
                                         <EditQuoteForm id={id} />
