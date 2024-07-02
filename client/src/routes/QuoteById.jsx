@@ -83,13 +83,6 @@ const QuoteById = () => {
         return <div> Loading ... </div>
     }
 
-    // if (customer === null) {
-    //     history.go(-1)
-    //     return (
-    //         alert('You have refreshed the form. You will now return to the previous page to start again.')
-    //     )
-    // }
-
     return (
         <>
             {agent ? (

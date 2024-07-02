@@ -1,10 +1,13 @@
 import { useContext } from 'react'
 import { AgentContext } from '../AgentProvider';
 import Table from 'react-bootstrap/Table';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const ConfigurationsTableByQuote = () => {
 
-    const { configurations, quote, handleIdClick } = useContext(AgentContext);
+    const { configurations, quote, handleIdClick, navigate, setNewQuotePageStatus } = useContext(AgentContext);
 
     const quoteConfigurations = configurations.filter(configuration => {
         return parseInt(configuration.quote_id, 10) === quote.id;
@@ -12,7 +15,16 @@ const ConfigurationsTableByQuote = () => {
 
     return (
         <>
-            <h3>Quote Configurations</h3>
+        <Container>
+                <Row>
+                    <Col md={6} sm={12}>
+                        <h3>Quote Configurations</h3>
+                    </Col>
+                    <Col md={6} sm={12}>
+                        <button type="button" onClick={() => (navigate(`customers/${quote.customer_id}/new-quote`), setNewQuotePageStatus(false))}>Add New Configuration</button>
+                    </Col>
+                </Row>
+            </Container>
             <Table responsive="sm" striped="columns">
                 <thead>
                     <tr>

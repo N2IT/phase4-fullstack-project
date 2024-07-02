@@ -6,14 +6,12 @@ import { AgentContext } from '../AgentProvider';
 
 const CustomersIdNewQuote = () => {
 
-    const { agent, customer, account, setAccount, newQuotePageStatus, isLoading } = useContext(AgentContext);
+    const { agent, account, newQuotePageStatus, isLoading } = useContext(AgentContext);
     // const { id } = useParams();
 
     if (isLoading) {
         return <div>Loading ...</div>;
     }
-
-    console.log(account)
 
     return (
         <div>
