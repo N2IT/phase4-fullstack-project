@@ -99,7 +99,7 @@ function NavBar() {
                   <Link to={`/accounts/${valueId}`} onClick={handleClose}>My Account</Link>
                   {/* <Link to="/users" onClick={handleClose}>Users</Link> */}
                   <Link to={`/accounts/${valueId}/quotes`} onClick={handleClose}>My Quotes</Link>
-                  <Link to="/new-quote" onClick={handleClose}>New Quote</Link>
+                  <Link to={`/accounts/${valueId}/new-quote`} onClick={handleClose}>New Quote</Link>
                   <Link to ='/my-customers' onClick={handleClose}>My Customers</Link>
                   <Link to="/support" onClick={handleClose}>Support</Link>
                   <hr />
