@@ -12,10 +12,8 @@ import Button from 'react-bootstrap/Button';
 
 
 const CustomerById = () => {
-    const { agent, account, setAccount, customer, deleteCustomerObject, setCustomer, setAsDisabled, setQuotes, errors = [], setErrors, isLoading, show, handleShow, setShow, handleClose } = useContext(AgentContext)
+    const { agent, setAccount, customer, deleteCustomerObject, setCustomer, setAsDisabled, setQuotes, errors = [], setErrors, isLoading, show, handleShow, setShow, handleClose } = useContext(AgentContext)
     const { id } = useParams();
-
-    console.log(id)
 
     const handleDeleteClick = () => {
         fetch(`/api/customers/${id}`, {
@@ -50,7 +48,6 @@ const CustomerById = () => {
                     })
                     .then(data => {
                         setAccount(data);
-                        console.log(data)
                         setAsDisabled(true);
                         setErrors(null);
                     })
@@ -83,7 +80,7 @@ const CustomerById = () => {
                 setQuotes(null);
             });
 
-    }, [id, agent, setQuotes, setCustomer, setAsDisabled, setErrors]);
+    }, [agent]);
 
 
     if (isLoading) {

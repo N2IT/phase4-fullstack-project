@@ -29,8 +29,13 @@ const AdminView = () => {
             <Container>
                 <div className='account-details'>
                     <Row>
+                        <Col>
+                            <h2>Hello, {agent.username}!</h2>
+                            <h4>Role: Admin</h4>
+                        </Col>
+                    </Row>
+                    <Row>
                         <Col md={4} xs={12}>
-                            <h2>Hello, {agent.username}:</h2>
                             <h3>Account Details</h3>
                         </Col>
                         <Col md={4} xs={12}>

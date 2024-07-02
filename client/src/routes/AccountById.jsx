@@ -84,7 +84,7 @@ const AccountById = () => {
                 setErrors([error.errors] || ['Unknown Error']);
                 setCustomers(null);
             });
-    }, [id, agent, setQuotes, setAccount, setUsers, setAsDisabled, setErrors]);
+    }, [agent]);
 
     if (isLoading) {
         return <div>Loading ...</div>;

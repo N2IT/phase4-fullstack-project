@@ -12,7 +12,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 const QuoteById = () => {
-    const { agent, customer, quote, handleClose, handleShow, show, setConfigurations, setQuote, setAsDisabled, errors = [], setErrors, isLoading, deleteQuoteObject } = useContext(AgentContext)
+    const { agent, customer, quote, handleClose, handleShow, show, setCustomer, setConfigurations, setQuote, setAsDisabled, errors = [], setErrors, isLoading, deleteQuoteObject } = useContext(AgentContext)
     const { id } = useParams();
 
     const handleDeleteClick = () => {
@@ -36,8 +36,27 @@ const QuoteById = () => {
             })
             .then(data => {
                 setQuote(data);
+                console.log(data)
                 setAsDisabled(true);
                 setErrors(null);
+                fetch(`/api/customers/${data.customer_id}`)
+                    .then(response => {
+                        if (!response.ok) {
+                            return response.json().then(data => { throw data; });
+                        }
+                        return response.json();
+                    })
+                    .then(data => {
+                        setCustomer(data);
+                        console.log(customer)
+                        setAsDisabled(true);
+                        setErrors(null);
+                    })
+                    .catch(error => {
+                        console.error('Errors:', error);
+                        setErrors([error.errors] || ['Unknown Error']);
+                        setCustomer(null);
+                    });
             })
             .catch(error => {
                 console.error('Errors:', error);
@@ -62,18 +81,18 @@ const QuoteById = () => {
                 setErrors([error.errors] || ['Unknown Error']);
                 setConfigurations(null);
             });
-    }, []);
+    }, [agent]);
 
     if (isLoading) {
         return <div> Loading ... </div>
     }
 
-    if (customer === null) {
-        history.go(-1)
-        return (
-            alert('You have refreshed the form. You will now return to the previous page to start again.')
-        )
-    }
+    // if (customer === null) {
+    //     history.go(-1)
+    //     return (
+    //         alert('You have refreshed the form. You will now return to the previous page to start again.')
+    //     )
+    // }
 
     return (
         <>
@@ -85,7 +104,7 @@ const QuoteById = () => {
 
                                 <Row>
                                     <Col md={4} xs={12}>
-                                        <h2>Quote Details for<br /> Customer: {customer.first_name}&nbsp;{customer.last_name}</h2>
+                                        <h2>Quote Details</h2>
                                     </Col>
                                     <Col md={4} xs={12}>
                                         <button type="button" onClick={() => history.go(-1)}>Return to Prev. page</button>
@@ -95,8 +114,11 @@ const QuoteById = () => {
                                     </Col>
                                 </Row>
                                 <Row>
+                                    <h3>For Customer: {customer.first_name}&nbsp;{customer.last_name}</h3>
+                                </Row>
+                                <Row>
                                     <Col>
-                                        <EditQuoteForm id={id}/>
+                                        <EditQuoteForm id={id} />
                                     </Col>
                                 </Row>
                                 <Row>
