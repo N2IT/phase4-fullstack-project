@@ -12,7 +12,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 const QuoteById = () => {
-    const { agent, customer, quote, handleClose, handleShow, show, setCustomer, setConfigurations, setQuote, setAsDisabled, errors = [], setErrors, setIsLoading, isLoading, deleteQuoteObject } = useContext(AgentContext)
+    const { agent, customer, quote, handleClose, handleShow, show, setShow, setCustomer, setConfigurations, setQuote, setAsDisabled, errors = [], setErrors, isLoading, deleteQuoteObject } = useContext(AgentContext)
     const { id } = useParams();
 
     const handleDeleteClick = () => {
@@ -23,8 +23,6 @@ const QuoteById = () => {
         setShow(false)
     }
 
-    // debugger
-    // STILL BATTLING PERSISTENCE ISSUE NOW WITH CUSTOMER OBJECT ON THIS PAGE
 
     useEffect(() => {
         // if (!agent) {

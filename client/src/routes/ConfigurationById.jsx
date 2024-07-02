@@ -3,10 +3,23 @@ import { useParams } from 'react-router-dom';
 import { AgentContext } from '../AgentProvider';
 import Unauthorized from '../components/Unauthorized';
 import EditConfigurationForm from '../components/EditConfigurationForm';
+import Modal from 'react-bootstrap/Modal';
+import Button from 'react-bootstrap/Button';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const AccountById = () => {
-    const { agent, isLoading, configuration, setConfiguration, setAsDisabled, setErrors, errors } = useContext(AgentContext);
+    const { agent, isLoading, configuration, setShow, deleteConfigurationObject, setConfiguration, setAsDisabled, setErrors, errors, show, handleClose, handleShow } = useContext(AgentContext);
     const { id } = useParams();
+
+    const handleDeleteClick = () => {
+        fetch(`/api/configurations/${id}`, {
+            method: 'DELETE',
+        });
+        deleteConfigurationObject(id, configuration)
+        setShow(false)
+    }
 
     useEffect(() => {
         if (!agent) {
@@ -49,8 +62,36 @@ const AccountById = () => {
             {agent.role_id ? (
                 configuration ? (
                     <div className='account-details'>
-                        <h2>Configuration Details</h2>
-                        <EditConfigurationForm id={id} />
+                        <Container>
+                            <Row>
+                                <Col md={4} sm={12}>
+                                    <h2>Configuration Details</h2>
+                                </Col>
+                                <Col md={4} sm={12}>
+                                    <button type="button" onClick={() => history.go(-1)}>Return to Prev. page</button>
+                                </Col>
+                                <Col md={4} sm={12}>
+                                    {agent.role_id !== 3 ? <button type="button" onClick={() => handleShow()}>Delete Configuration</button> : null}
+                                </Col>
+                            </Row>
+                            <Row>
+                                <EditConfigurationForm id={id} />
+                            </Row>
+                        </Container>
+                        <Modal show={show} onHide={handleClose}>
+                            <Modal.Header closeButton>
+                                <Modal.Title>Deleting Account</Modal.Title>
+                            </Modal.Header>
+                            <Modal.Body>!!PLEASE CONFIRM!! Are you sure you wish to delete this Configuration?</Modal.Body>
+                            <Modal.Footer>
+                                <Button variant="secondary" onClick={handleClose}>
+                                    Close
+                                </Button>
+                                <Button variant="primary" onClick={(handleClose, handleDeleteClick)}>
+                                    Yes, I am sure I want to delete this quote.
+                                </Button>
+                            </Modal.Footer>
+                        </Modal>
                     </div>
                 ) : (
                     <div className='account-details'>

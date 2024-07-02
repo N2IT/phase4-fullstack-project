@@ -28,8 +28,6 @@ const CustomerById = () => {
             return;
         }
 
-        
-
         fetch(`/api/customers/${id}`)
             .then(response => {
                 if (!response.ok) {

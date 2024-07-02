@@ -8,15 +8,6 @@ const CreateNewQuoteForm = ({ account }) => {
 
     const { agent, customer, errors, setErrors, setQuote, onSubmitNewQuoteForm } = useContext(AgentContext);
 
-    console.log(account)
-
-    if (account === null) {
-        history.go(-1)
-        return (
-            alert('You have refreshed the form. You will now return to the previous page to start again.')
-        )
-    }
-
     const prevQuote = Math.floor(Math.random()*1000)
 
     const formSchema = yup.object().shape({

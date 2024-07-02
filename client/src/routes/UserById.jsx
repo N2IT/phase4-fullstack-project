@@ -23,13 +23,6 @@ const UserById = () => {
         setShow(false)
     }
 
-    if (user === null) {
-        history.go(-1)
-        return (
-            alert('You have refreshed the form. You will now return to the previous page to start again.')
-        )
-    }
-
     if (isLoading) {
         return <div> Loading ... </div>
     }
