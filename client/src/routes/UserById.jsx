@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import EditUserForm from '../components/EditUserForm';
 import SalesEditUserForm from '../components/SalesEditUserForm';
@@ -12,8 +12,28 @@ import Button from 'react-bootstrap/Button';
 import InvalidCredentials from '../components/InvalidCredentials';
 
 const UserById = () => {
-    const { agent, user, isLoading, deleteUserObject, setShow, show, handleClose, handleShow } = useContext(AgentContext)
+    const { agent, setUser, user, isLoading, deleteUserObject, setAsDisabled, setShow, show, handleClose, handleShow, setErrors } = useContext(AgentContext)
     const { id } = useParams();
+
+    useEffect(() => {
+        fetch(`/api/users/${id}`)
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(data => { throw data; });
+                }
+                return response.json();
+            })
+            .then(user => {
+                setUser(user);
+                setAsDisabled(true);
+                setErrors(null);
+            })
+            .catch(error => {
+                console.error('Errors:', error);
+                setErrors([error.errors] || ['Unknown Error']);
+                setUser(null);
+            });
+    }, [agent,id]);
 
     const handleDeleteClick = () => {
         fetch(`/api/users/${id}`, {
@@ -82,7 +102,7 @@ const UserById = () => {
                     <div className="account-details">
                         <Row>
                             <Col md={4} xs={12}>
-                                <h2>Hello, {user.username}</h2>
+                                <h2>Hello, {agent.username}</h2>
                                 <h3>User Details</h3>
                             </Col>
                             <Col md={4} xs={12}>

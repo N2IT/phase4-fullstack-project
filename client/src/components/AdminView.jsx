@@ -13,7 +13,7 @@ import { AgentContext } from '../AgentProvider';
 
 const AdminView = () => {
 
-    const { agent, account, show, handleClose, deleteAccountObject, setShow, handleShow } = useContext(AgentContext);
+    const { agent, user, account, show, handleClose, deleteAccountObject, setShow, handleShow } = useContext(AgentContext);
     const { id } = useParams();
 
     const handleDeleteClick = () => {

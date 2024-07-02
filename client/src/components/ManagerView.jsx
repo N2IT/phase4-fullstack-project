@@ -9,7 +9,7 @@ import { useParams } from 'react-router-dom';
 
 const ManagerView = () => {
 
-    const { agent, account, show, handleClose, deleteAccountObject, setShow, handleShow } = useContext(AgentContext);
+    const { agent } = useContext(AgentContext);
     const { id } = useParams()
     return (
         <>

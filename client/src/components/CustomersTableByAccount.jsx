@@ -16,14 +16,16 @@ const CustomersTable = () => {
     return (
         <>
             <Container>
-                <Row>
-                    <Col md={6} sm={12}>
-                        <h3>Account Customers</h3>
-                    </Col>
-                    <Col md={6} sm={12}>
-                        <button type="button" onClick={() => (navigate('add-customer'), setNewCustomerForQuote(false))}>Add New Customer</button>
-                    </Col>
-                </Row>
+                <div className="account-details">
+                    <Row>
+                        <Col md={6} sm={12}>
+                            <h3>Account Customers</h3>
+                        </Col>
+                        <Col md={6} sm={12}>
+                            <button type="button" onClick={() => (navigate('add-customer'), setNewCustomerForQuote(false))}>Add New Customer</button>
+                        </Col>
+                    </Row>
+                </div>
             </Container>
             {isLoading ? <h2>Loading...</h2> :
                 <Table responsive="sm" striped="columns">

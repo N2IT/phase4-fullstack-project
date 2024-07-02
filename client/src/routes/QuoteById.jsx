@@ -23,11 +23,7 @@ const QuoteById = () => {
         setShow(false)
     }
 
-
     useEffect(() => {
-        // if (!agent) {
-        //     return;
-        // }
         fetch(`/api/quotes/${id}`)
             .then(response => {
                 if (!response.ok) {
@@ -90,7 +86,7 @@ const QuoteById = () => {
                             <div className='account-details'>
 
                                 <Row>
-                                    <Col md={4} xs={12}>
+                                    <Col md={4} sm={12}>
                                         <h2>Quote Details</h2>
                                     </Col>
                                     <Col md={4} xs={12}>

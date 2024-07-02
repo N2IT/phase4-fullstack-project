@@ -74,16 +74,18 @@ const QuotesTableByAccount = () => {
     return (
         <>
             <Container>
-                <Row>
-                    <Col md={6} sm={12}>
-                        <h3>Quote Activity</h3>
-                    </Col>
-                    <Col md={6} sm={12}>
-                        <div>
-                            <button type="button" onClick={() => navigate(`accounts/${account.id}/new-quote`)}>Create New Quote</button>
-                        </div>
-                    </Col>
-                </Row>
+                <div className="account-details">
+                    <Row>
+                        <Col md={6} sm={12}>
+                            <h3>Quote Activity</h3>
+                        </Col>
+                        <Col md={6} sm={12}>
+                            <div>
+                                <button type="button" onClick={() => navigate(`accounts/${account.id}/new-quote`)}>Create New Quote</button>
+                            </div>
+                        </Col>
+                    </Row>
+                </div>
             </Container>
 
             <Table responsive="sm" striped="columns">

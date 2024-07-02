@@ -102,17 +102,15 @@ const AccountById = () => {
         );
     }
 
-    // debugger
-
     if (agent.role_id !== 1 && agent.account_id.toString() === id) {
-        return  (
+        return (
             <ManagerView />
         )
     }
 
     return (
         <>
-            <InvalidCredentials/>
+            <InvalidCredentials />
         </>
     );
 };

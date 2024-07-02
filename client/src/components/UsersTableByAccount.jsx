@@ -17,14 +17,16 @@ const UsersTableByAccount = () => {
     return (
         <>
             <Container>
-                <Row>
-                    <Col md={6} sm={12}>
-                        <h3>Account Users</h3>
-                    </Col>
-                    <Col md={6} sm={12}>
-                        {agent.role_id === 3 ? null : <button type="button" onClick={() => navigate(`accounts/${account.id}/add-user`)}>Add New User</button>}
-                    </Col>
-                </Row>
+                <div className="account-details">
+                    <Row>
+                        <Col md={6} sm={12}>
+                            <h3>Account Users</h3>
+                        </Col>
+                        <Col md={6} sm={12}>
+                            {agent.role_id === 3 ? null : <button type="button" onClick={() => navigate(`accounts/${account.id}/add-user`)}>Add New User</button>}
+                        </Col>
+                    </Row>
+                </div>
             </Container>
 
             <Table responsive="sm" striped="columns">
