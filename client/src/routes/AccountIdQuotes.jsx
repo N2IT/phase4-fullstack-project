@@ -1,8 +1,9 @@
 import { useContext } from "react"
 import { useParams } from "react-router-dom";
 import { AgentContext } from '../AgentProvider';
-import CreateNewCustomerForm from "../components/CreateNewCustomerForm"
+import QuotesTableByAccount from "../components/QuotesTableByAccount";
 import InvalidCredentials from "../components/InvalidCredentials";
+import Unauthorized from "../components/Unauthorized";
 
 const AddCustomer = () => {
 
@@ -24,7 +25,7 @@ const AddCustomer = () => {
     if (agent.role_id === 1) {
         return (
             <div>
-                <CreateNewCustomerForm />
+                <QuotesTableByAccount />
             </div>
         );
     }
@@ -32,7 +33,7 @@ const AddCustomer = () => {
     if (agent.role_id !== 1 && agent.account_id.toString() === id) {
         return (
             <div>
-                <CreateNewCustomerForm />
+                <QuotesTableByAccount />
             </div>
         );
 

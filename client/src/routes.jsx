@@ -5,7 +5,7 @@ import ErrorPage from './components/ErrorPage';
 import Accounts from './routes/Accounts';
 import Users from './routes/Users';
 import Quotes from './routes/Quotes';
-import QuotesTableByAccount from './components/QuotesTableByAccount';
+import AccountIdQuotes from './routes/AccountIdQuotes';
 import NewQuote from './routes/NewQuote';
 import Support from './routes/Support';
 import AccountById from './routes/AccountById';
@@ -56,7 +56,7 @@ const routes = [
             },
             {
                 path: 'accounts/:id/quotes',
-                element: <QuotesTableByAccount />
+                element: <AccountIdQuotes />
             },
             {
                 path: 'accounts/:id/new-quote',

@@ -49,7 +49,7 @@ const NewQuoteCustomersTableByAccount = () => {
                 </tbody>
             </Table>
             <h3>OR</h3>
-            <p><button className="button" onClick={() => (setNewCustomerForQuote(true), navigate('add-customer'))}>Create New Customer</button></p>
+            <p><button className="button" onClick={() => (setNewCustomerForQuote(true), navigate(`accounts/${account.id}/add-customer`))}>Create New Customer</button></p>
         </>
     )
 }
