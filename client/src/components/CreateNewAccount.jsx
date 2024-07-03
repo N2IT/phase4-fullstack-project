@@ -6,6 +6,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import InvalidCredentials from './InvalidCredentials';
+import Unauthorized from './Unauthorized';
 
 
 const CreateNewAccount = () => {
@@ -57,7 +58,11 @@ const CreateNewAccount = () => {
         return <div> Loading ... </div>
       }
     
-    if (!agent || agent.role_id !== 1) {
+    if (!agent) {
+        return <Unauthorized />
+    }
+
+    if (agent.role_id !== 1) {
         return <InvalidCredentials />
     }
    
