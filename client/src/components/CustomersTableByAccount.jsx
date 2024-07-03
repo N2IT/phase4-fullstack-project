@@ -22,7 +22,7 @@ const CustomersTable = () => {
                             <h3>Account Customers</h3>
                         </Col>
                         <Col md={6} sm={12}>
-                            <button type="button" onClick={() => (navigate('add-customer'), setNewCustomerForQuote(false))}>Add New Customer</button>
+                            <button type="button" onClick={() => (navigate(`accounts/${account.id}/add-customer`), setNewCustomerForQuote(false))}>Add New Customer</button>
                         </Col>
                     </Row>
                 </div>

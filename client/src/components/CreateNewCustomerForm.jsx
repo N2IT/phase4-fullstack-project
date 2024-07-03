@@ -1,5 +1,4 @@
-import React, { useContext, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as yup from "yup";
 import Container from 'react-bootstrap/Container';
@@ -8,46 +7,12 @@ import Col from 'react-bootstrap/Col';
 // import InvalidCredentials from './InvalidCredentials';
 import Unauthorized from './Unauthorized';
 import { AgentContext } from '../AgentProvider';
+import { useParams } from 'react-router-dom';
 
 const CreateNewCustomerForm = () => {
 
-    const { account, agent, customer, errors, setErrors, setCustomer, newCustomerForQuote, setNewCustomerForQuote, navigate } = useContext(AgentContext);
+    const { agent, errors, setErrors, setCustomer, newCustomerForQuote, setNewCustomerForQuote, navigate } = useContext(AgentContext);
     const { id } = useParams()
-
-    if (!agent) {
-        return (
-            <Unauthorized />
-        )
-    }
-
-
-
-    // useEffect(() => {
-    //     fetch(`/api/customers/${id}`)
-    //         .then(response => {
-    //             if (!response.ok) {
-    //                 return response.json().then(data => { throw data; });
-    //             }
-    //             return response.json();
-    //         })
-    //         .then(data => {
-    //             setCustomer(data);
-    //             setAsDisabled(true);
-    //             setErrors(null);
-    //         })
-    //         .catch(error => {
-    //             console.error('Errors:', error);
-    //             setErrors([error.errors] || ['Unknown Error']);
-    //             setQuotes(null);
-    //         });
-    // }, []);
-
-    if (account === null) {
-        history.go(-1)
-        return (
-            alert('You have refreshed the form. You will now return to the previous page to start again.')
-        )
-    }
 
     const formSchema = yup.object().shape({
         first_name: yup.string().required('Please enter a first name.'),
@@ -100,7 +65,7 @@ const CreateNewCustomerForm = () => {
         }
     })
 
-    if (agent.role_id === 1 && account || agent.role_id !== 1 && agent.account_id === account.id) {
+    if (agent.role_id === 1 || agent.role_id !== 1 && agent.account_id.toString() === id) {
         return (
             <>
                 <Container fluid>
@@ -172,7 +137,7 @@ const CreateNewCustomerForm = () => {
                                         id="account_id"
                                         name="account_id"
                                         onChange={formik.handleChange}
-                                        value={formik.values.account_id = account.id}
+                                        value={formik.values.account_id = id}
                                         disabled
                                     />
                                     <p style={{ color: 'red' }}> {formik.errors.account_id} </p>
@@ -200,6 +165,10 @@ const CreateNewCustomerForm = () => {
             </>
         );
     }
+
+    return (
+        <Unauthorized />
+    )
 
 };
 

@@ -4,22 +4,17 @@ import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { Navigate } from 'react-router-dom';
 
 const QuoteTableByCustomer = () => {
 
     const { quotes, handleIdClick, customer, newConfigurationHandleIdClick } = useContext(AgentContext);
-    // debugger
-    // console.log(quotes)
 
 
     const quotesByCustomer = quotes.filter(quote => {
-        //    console.log(configuration)
-        //    console.log(quote)
         return parseInt(quote.customer_id, 10) === customer.id;
     });
 
-    return (
+    return ( 
         <>
             <Container>
                 <Row>
