@@ -1,4 +1,5 @@
 import React, { useContext, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from "yup";
 import Container from 'react-bootstrap/Container';
@@ -10,7 +11,36 @@ import { AgentContext } from '../AgentProvider';
 
 const CreateNewCustomerForm = () => {
 
-    const { account, agent, errors, setErrors, setCustomer, newCustomerForQuote, setNewCustomerForQuote, navigate } = useContext(AgentContext);
+    const { account, agent, customer, errors, setErrors, setCustomer, newCustomerForQuote, setNewCustomerForQuote, navigate } = useContext(AgentContext);
+    const { id } = useParams()
+
+    if (!agent) {
+        return (
+            <Unauthorized />
+        )
+    }
+
+
+
+    // useEffect(() => {
+    //     fetch(`/api/customers/${id}`)
+    //         .then(response => {
+    //             if (!response.ok) {
+    //                 return response.json().then(data => { throw data; });
+    //             }
+    //             return response.json();
+    //         })
+    //         .then(data => {
+    //             setCustomer(data);
+    //             setAsDisabled(true);
+    //             setErrors(null);
+    //         })
+    //         .catch(error => {
+    //             console.error('Errors:', error);
+    //             setErrors([error.errors] || ['Unknown Error']);
+    //             setQuotes(null);
+    //         });
+    // }, []);
 
     if (account === null) {
         history.go(-1)
@@ -60,21 +90,22 @@ const CreateNewCustomerForm = () => {
                 })
                 .then((customer) => {
                     setCustomer(customer);
-                    {newCustomerForQuote ? (navigate(`customers/${customer.id}/new-quote`), setNewCustomerForQuote(false))
-                    : 
-                    history.go(-1)
-                    alert(`Customer ${customer.id} has been successfully created.`)
-                }
+                    {
+                        newCustomerForQuote ? (navigate(`customers/${customer.id}/new-quote`), setNewCustomerForQuote(false))
+                            :
+                            history.go(-1)
+                        alert(`Customer ${customer.id} has been successfully created.`)
+                    }
                 })
         }
     })
 
-    if (agent.role_id && account) {
+    if (agent.role_id === 1 && account || agent.role_id !== 1 && agent.account_id === account.id) {
         return (
             <>
                 <Container fluid>
                     <div className="account-details">
-                    <h2>Fill in new customer details below:</h2>
+                        <h2>Fill in new customer details below:</h2>
                         <form onSubmit={formik.handleSubmit}>
                             <Row>
                                 <Col>
@@ -169,8 +200,7 @@ const CreateNewCustomerForm = () => {
             </>
         );
     }
-    else
-        <Unauthorized />
+
 };
 
 export default CreateNewCustomerForm;
