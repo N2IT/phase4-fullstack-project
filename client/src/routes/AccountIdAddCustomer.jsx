@@ -4,12 +4,10 @@ import { AgentContext } from '../AgentProvider';
 import CreateNewCustomerForm from "../components/CreateNewCustomerForm"
 import InvalidCredentials from "../components/InvalidCredentials";
 
-const AddCustomer = () => {
+const AccountIdAddCustomer = () => {
 
     const { agent, isLoading } = useContext(AgentContext);
     const { id } = useParams()
-
-    debugger
 
     if (isLoading) {
         return <div>Loading ...</div>;
@@ -46,4 +44,4 @@ const AddCustomer = () => {
 
 }
 
-export default AddCustomer
+export default AccountIdAddCustomer

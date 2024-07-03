@@ -15,8 +15,8 @@ import Configurations from './routes/Configurations';
 import ConfigurationById from './routes/ConfigurationById';
 import Customers from './routes/Customers';
 import CustomerById from './routes/CustomerById';
-import CreateNewUserForm from './components/CreateNewUserForm';
-import AddCustomer from './routes/AddCustomer';
+import AddUsersToAccount from './routes/AddUsersToAccount';
+import AccountIdAddCustomer from './routes/AccountIdAddCustomer';
 import CreateNewAccount from './components/CreateNewAccount';
 import CustomersIdNewQuote from './routes/CustomersIdNewQuote';
 
@@ -84,7 +84,7 @@ const routes = [
             },
             {
                 path: 'accounts/:id/add-user',
-                element: <CreateNewUserForm />
+                element: <AddUsersToAccount />
             },
             {
                 path: 'create-new-account',
@@ -92,7 +92,7 @@ const routes = [
             },
             {
                 path: 'accounts/:id/add-customer',
-                element: <AddCustomer />
+                element: <AccountIdAddCustomer />
             },
             {
                 path: 'customers/:id/new-quote',

@@ -1,11 +1,11 @@
 import { useContext } from "react"
 import { useParams } from "react-router-dom";
 import { AgentContext } from '../AgentProvider';
-import QuotesTableByAccount from "../components/QuotesTableByAccount";
+import CreateNewUserForm from '../components/CreateNewUserForm';
 import InvalidCredentials from "../components/InvalidCredentials";
 import Unauthorized from "../components/Unauthorized";
 
-const ViewQuotesByAccount = () => {
+const AddUsersToAccount = () => {
 
     const { agent, isLoading } = useContext(AgentContext);
     const { id } = useParams()
@@ -23,15 +23,15 @@ const ViewQuotesByAccount = () => {
     if (agent.role_id === 1) {
         return (
             <div>
-                <QuotesTableByAccount />
+                <CreateNewUserForm />
             </div>
         );
     }
 
-    if (agent.role_id !== 1 && agent.account_id.toString() === id) {
+    if (agent.role_id === 2 && agent.account_id.toString() === id) {
         return (
             <div>
-                <QuotesTableByAccount />
+                <CreateNewUserForm />
             </div>
         );
 
@@ -45,4 +45,4 @@ const ViewQuotesByAccount = () => {
 
 }
 
-export default ViewQuotesByAccount
+export default AddUsersToAccount
