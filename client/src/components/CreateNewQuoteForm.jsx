@@ -4,11 +4,14 @@ import { useFormik } from 'formik';
 import * as yup from "yup";
 import { AgentContext } from '../AgentProvider';
 
-const CreateNewQuoteForm = ({ account }) => {
+const CreateNewQuoteForm = () => {
 
-    const { agent, customer, errors, setErrors, setQuote, onSubmitNewQuoteForm } = useContext(AgentContext);
+    const { agent, account, customer, errors, setErrors, setQuote, onSubmitNewQuoteForm } = useContext(AgentContext);
 
+    
     const prevQuote = Math.floor(Math.random()*1000)
+
+    console.log('form', account)
 
     const formSchema = yup.object().shape({
         title: yup.string().required("Please enter a title"),
