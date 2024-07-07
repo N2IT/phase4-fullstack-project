@@ -107,7 +107,6 @@ const AdminEditAccountForm = ({ id }) => {
                                 id="account_number"
                                 name="account_number"
                                 onChange={formik.handleChange}
-                                // placeholder={account.account_number}
                                 value={formik.values.account_number}
                                 disabled
                             />
@@ -120,7 +119,6 @@ const AdminEditAccountForm = ({ id }) => {
                                 id="company_name"
                                 name="company_name"
                                 onChange={formik.handleChange}
-                                // placeholder={account.company_name}
                                 value={formik.values.company_name}
                                 disabled={disabled}
                             />
