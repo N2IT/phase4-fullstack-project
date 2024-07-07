@@ -6,7 +6,9 @@ import InvalidCredentials from "../components/InvalidCredentials";
 
 const AccountIdAddCustomer = () => {
 
-    const { agent, isLoading } = useContext(AgentContext);
+    //LEAVING OFF HERE. REPEAT STEPS AS DONE PREVIOUSLY ON ADDUSERSTOACCOUNT TO PREVENT ADDING CUSTOMERS TO ACCOUNTS THAT DO NOT EXIST
+
+    const { agent, isLoading, errors } = useContext(AgentContext);
     const { id } = useParams()
 
     if (isLoading) {
@@ -17,6 +19,11 @@ const AccountIdAddCustomer = () => {
         return (
             <Unauthorized />
         )
+    }
+
+    if (agent.role_id === 1 && errors) {
+        alert('Cmon admin! You cant get away with that!')
+        history.go(-1)
     }
 
     if (agent.role_id === 1) {

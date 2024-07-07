@@ -7,7 +7,7 @@ import Unauthorized from "../components/Unauthorized";
 
 const AddUsersToAccount = () => {
 
-    const { agent, setAccount, setErrors, setAsDisabled, account, isLoading, errors } = useContext(AgentContext);
+    const { agent, setAccount, setErrors, setAsDisabled, isLoading, errors } = useContext(AgentContext);
     const { id } = useParams()
 
     useEffect(() => {
