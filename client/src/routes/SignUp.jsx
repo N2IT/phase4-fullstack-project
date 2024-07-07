@@ -1,5 +1,5 @@
-import UserSignupForm from "../components/UserSignupForm";
-import AccountSignupForm from "../components/AccountSignupForm";
+import UserSignupForm from "../components/forms/UserSignupForm";
+import AccountSignupForm from "../components/forms/AccountSignupForm";
 import { useContext } from "react";
 import { AgentContext } from '../AgentProvider';
 

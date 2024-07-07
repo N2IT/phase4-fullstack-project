@@ -17,7 +17,7 @@ import Customers from './routes/Customers';
 import CustomerById from './routes/CustomerById';
 import AddUsersToAccount from './routes/AddUsersToAccount';
 import AccountIdAddCustomer from './routes/AccountIdAddCustomer';
-import CreateNewAccount from './components/CreateNewAccount';
+import CreateNewAccount from './components/forms/CreateNewAccount';
 import CustomersIdNewQuote from './routes/CustomersIdNewQuote';
 
 const routes = [

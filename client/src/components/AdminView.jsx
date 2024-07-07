@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import UsersTableByAccount from '../components/UsersTableByAccount';
-import AdminEditAccountForm from '../components/AdminEditAccountForm';
+import AdminEditAccountForm from './forms/AdminEditAccountForm';
 import QuotesTableByAccount from '../components/QuotesTableByAccount';
 import CustomersTableByAccount from '../components/CustomersTableByAccount';
 import Container from 'react-bootstrap/Container';

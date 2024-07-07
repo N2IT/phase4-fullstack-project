@@ -4,7 +4,7 @@ import * as yup from "yup";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { AgentContext } from '../AgentProvider';
+import { AgentContext } from '../../AgentProvider';
 
 const AdminEditAccountForm = ({ id }) => {
     const { agent, account, disabled, errors, setErrors, handleEditClick, handleUpdateAccount } = useContext(AgentContext)
