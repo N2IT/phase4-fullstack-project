@@ -6,8 +6,6 @@ import InvalidCredentials from "../components/InvalidCredentials";
 
 const AccountIdAddCustomer = () => {
 
-    //LEAVING OFF HERE. REPEAT STEPS AS DONE PREVIOUSLY ON ADDUSERSTOACCOUNT TO PREVENT ADDING CUSTOMERS TO ACCOUNTS THAT DO NOT EXIST
-
     const { agent, isLoading, errors } = useContext(AgentContext);
     const { id } = useParams()
 
