@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import EditUserForm from '../components/EditUserForm';
-import SalesEditUserForm from '../components/SalesEditUserForm';
+import EditUserForm from '../components/forms/EditUserForm';
+import SalesEditUserForm from '../components/forms/SalesEditUserForm';
 import Unauthorized from '../components/Unauthorized';
 import { AgentContext } from '../AgentProvider';
 import Container from 'react-bootstrap/Container';

@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react"
 import { useParams } from "react-router-dom";
 import { AgentContext } from '../AgentProvider';
-import CreateNewUserForm from '../components/CreateNewUserForm';
+import CreateNewUserForm from '../components/forms/CreateNewUserForm';
 import InvalidCredentials from "../components/InvalidCredentials";
 import Unauthorized from "../components/Unauthorized";
 

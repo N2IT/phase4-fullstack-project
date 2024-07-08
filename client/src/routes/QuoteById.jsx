@@ -1,6 +1,6 @@
 import { useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import EditQuoteForm from '../components/EditQuoteForm';
+import EditQuoteForm from '../components/forms/EditQuoteForm';
 // import SalesEditUserForm from '../components/SalesEditUserForm';
 import Unauthorized from '../components/Unauthorized';
 import { AgentContext } from '../AgentProvider';

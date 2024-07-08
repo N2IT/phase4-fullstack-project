@@ -1,6 +1,6 @@
 import { useEffect, useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import EditCustomerForm from '../components/EditCustomerForm';
+import EditCustomerForm from '../components/forms/EditCustomerForm';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';

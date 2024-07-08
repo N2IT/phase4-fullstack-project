@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { useParams } from "react-router-dom";
 import { AgentContext } from '../AgentProvider';
-import CreateNewCustomerForm from "../components/CreateNewCustomerForm"
+import CreateNewCustomerForm from "../components/forms/CreateNewCustomerForm"
 import InvalidCredentials from "../components/InvalidCredentials";
 
 const AccountIdAddCustomer = () => {

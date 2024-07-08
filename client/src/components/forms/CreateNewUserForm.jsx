@@ -1,7 +1,7 @@
 import { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as yup from "yup";
-import { AgentContext } from '../AgentProvider';
+import { AgentContext } from '../../AgentProvider';
 import { useParams } from 'react-router-dom';
 
 const CreateNewUserForm = () => {

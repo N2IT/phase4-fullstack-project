@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import ManagerEditAccountForm from '../components/ManagerEditAccountForm';
+import ManagerEditAccountForm from './forms/EditAccountForm';
 import UsersTableByAccount from './UsersTableByAccount';
 import QuotesTableByAccount from './QuotesTableByAccount';
 import CustomersTableByAccount from './CustomersTableByAccount';

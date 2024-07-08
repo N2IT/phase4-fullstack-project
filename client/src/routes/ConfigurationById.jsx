@@ -2,7 +2,7 @@ import { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { AgentContext } from '../AgentProvider';
 import Unauthorized from '../components/Unauthorized';
-import EditConfigurationForm from '../components/EditConfigurationForm';
+import EditConfigurationForm from '../components/forms/EditConfigurationForm';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';

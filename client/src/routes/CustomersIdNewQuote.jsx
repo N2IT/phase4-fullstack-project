@@ -1,5 +1,5 @@
-import CreateNewQuoteForm from "../components/CreateNewQuoteForm";
-import CreateNewConfiguration from "../components/CreateNewConfiguration";
+import CreateNewQuoteForm from "../components/forms/CreateNewQuoteForm";
+import CreateNewConfiguration from "../components/forms/CreateNewConfiguration";
 import Unauthorized from "../components/Unauthorized";
 import { useContext } from "react";
 // import { useParams } from "react-router-dom";
