@@ -9,7 +9,7 @@ import InvalidCredentials from '../InvalidCredentials';
 import Unauthorized from '../Unauthorized';
 
 
-const CreateNewAccount = () => {
+const AdminOnlyCreateNewAccountForm = () => {
 
     const { agent, isLoading, setAccount, errors, navigate, setErrors } = useContext(AgentContext);
 
@@ -172,4 +172,4 @@ const CreateNewAccount = () => {
     )
 }
 
-export default CreateNewAccount
+export default AdminOnlyCreateNewAccountForm

@@ -1,7 +1,7 @@
 import { useContext } from "react"
 import { useParams } from "react-router-dom";
 import { AgentContext } from '../AgentProvider';
-import QuotesTableByAccount from "../components/QuotesTableByAccount";
+import QuotesTableByAccount from "../components/tables/QuotesTableByAccount";
 import InvalidCredentials from "../components/InvalidCredentials";
 import Unauthorized from "../components/Unauthorized";
 

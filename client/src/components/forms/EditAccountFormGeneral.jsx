@@ -6,8 +6,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { AgentContext } from '../../AgentProvider';
 
-const AdminEditAccountForm = ({ id }) => {
-    const { agent, account, disabled, errors, setErrors, handleEditClick, handleUpdateAccount } = useContext(AgentContext)
+const EditAccountFormGeneral = ({ id }) => {
+    const { account, errors, setErrors, handleUpdateAccount } = useContext(AgentContext)
 
     const [originalValues, setOriginalValues] = useState({
         account_number: '',
@@ -19,12 +19,10 @@ const AdminEditAccountForm = ({ id }) => {
         zip_code: '',
         phone: '',
         discount: '',
-        markup_variable: '',
         created_at: '',
         created_by: '',
         updated_at: '',
-        updated_by: '',
-        status: '',
+        status: "",
     });
 
     useEffect(() => {
@@ -39,11 +37,9 @@ const AdminEditAccountForm = ({ id }) => {
                 zip_code: `${account.zip_code}`,
                 phone: `${account.phone}`,
                 discount: `${account.discount}`,
-                markup_variable: `${account.markup_variable}`,
                 created_at: `${account.created_at}`,
                 created_by: `${account.created_by}`,
-                updated_at: account.updated_at ? `${account.updated_at}` : '',
-                updated_by: account.updated_by ? `${account.updated_by}` : '',
+                updated_at: `${account.updated_at}`,
                 status: `${account.status}`,
             });
         }
@@ -80,7 +76,6 @@ const AdminEditAccountForm = ({ id }) => {
                         setErrors(data.errors);
                     } else {
                         handleUpdateAccount(data);
-                        location.reload()
                     }
                 });
         }
@@ -107,6 +102,7 @@ const AdminEditAccountForm = ({ id }) => {
                                 id="account_number"
                                 name="account_number"
                                 onChange={formik.handleChange}
+                                // placeholder={account.account_number}
                                 value={formik.values.account_number}
                                 disabled
                             />
@@ -119,8 +115,9 @@ const AdminEditAccountForm = ({ id }) => {
                                 id="company_name"
                                 name="company_name"
                                 onChange={formik.handleChange}
+                                // placeholder={account.company_name}
                                 value={formik.values.company_name}
-                                disabled={disabled}
+                                disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.company_name}</p>
                         </Col>
@@ -132,7 +129,7 @@ const AdminEditAccountForm = ({ id }) => {
                                 name="discount"
                                 onChange={formik.handleChange}
                                 value={formik.values.discount}
-                                disabled={disabled}
+                                disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.discount} </p>
                         </Col>
@@ -146,7 +143,7 @@ const AdminEditAccountForm = ({ id }) => {
                                 name="phone"
                                 onChange={formik.handleChange}
                                 value={formik.values.phone}
-                                disabled={disabled}
+                                disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.phone} </p>
                         </Col>
@@ -158,7 +155,7 @@ const AdminEditAccountForm = ({ id }) => {
                                 name="city"
                                 onChange={formik.handleChange}
                                 value={formik.values.city}
-                                disabled={disabled}
+                                disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.city} </p>
                         </Col>
@@ -170,7 +167,7 @@ const AdminEditAccountForm = ({ id }) => {
                                 name="state"
                                 onChange={formik.handleChange}
                                 value={formik.values.state}
-                                disabled={disabled}
+                                disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.state} </p>
                         </Col>
@@ -182,7 +179,7 @@ const AdminEditAccountForm = ({ id }) => {
                                 name="address_1"
                                 onChange={formik.handleChange}
                                 value={formik.values.address_1}
-                                disabled={disabled}
+                                disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.address_1} </p>
                         </Col>
@@ -196,7 +193,7 @@ const AdminEditAccountForm = ({ id }) => {
                                 name="address_2"
                                 onChange={formik.handleChange}
                                 value={formik.values.address_2}
-                                disabled={disabled}
+                                disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.address_2} </p>
                         </Col>
@@ -208,12 +205,10 @@ const AdminEditAccountForm = ({ id }) => {
                                 name="zip_code"
                                 onChange={formik.handleChange}
                                 value={formik.values.zip_code}
-                                disabled={disabled}
+                                disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.zip_code} </p>
                         </Col>
-                    </Row>
-                    <Row>
                         <Col lg={3} md={6} xs={12}>
                             <label htmlFor="created_at">Created At &nbsp; </label>
                             <br />
@@ -257,28 +252,19 @@ const AdminEditAccountForm = ({ id }) => {
                                 id="updated_by"
                                 name="updated_by"
                                 onChange={formik.handleChange}
-                                value={originalValues.company_name !== formik.values.company_name
-                                    || originalValues.discount !== formik.values.discount
-                                    || originalValues.phone !== formik.values.phone
-                                    || originalValues.city !== formik.values.city
-                                    || originalValues.state !== formik.values.state
-                                    || originalValues.address_1 !== formik.values.address_1
-                                    || originalValues.address_2 !== formik.values.address_2
-                                    || originalValues.zip_code !== formik.values.zip_code
-                                    || originalValues.status !== formik.values.status
-                                    ? formik.values.updated_by = agent.id : formik.values.updated_by}
+                                value={formik.values.updated_by}
                                 disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.updated_by} </p>
                         </Col>
                     </Row>
-                    {disabled ?
-                        <p className="view-btn" title="Edit Account" onClick={() => handleEditClick()}> Edit Account </p> :
+                    {/* {disabled ?
+                        <p className="view-btn" title="Edit Account" onClick={() => handleEditClick()}> Edit Markup Variable </p> :
                         <>
-                            <p><button type="submit">Save Changes</button></p>
+                            <p><button type="submit">Save Changes</button></p> 
                             <p className="view-btn" title="Edit Account" onClick={() => handleEditClick()}> Cancel </p>
                         </>
-                    }
+                    } */}
                 </form>
                 <p style={{ color: 'red' }}>{errors ? errors : null}</p>
             </Container >
@@ -286,6 +272,6 @@ const AdminEditAccountForm = ({ id }) => {
     );
 };
 
-export default AdminEditAccountForm;
+export default EditAccountFormGeneral;
 
 

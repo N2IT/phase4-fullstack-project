@@ -1,5 +1,5 @@
 import { useContext } from 'react';
-import ManagerEditAccountForm from './forms/EditAccountForm';
+import EditAccountFormGeneral from './forms/EditAccountFormGeneral';
 import UsersTableByAccount from './tables/UsersTableByAccount';
 import QuotesTableByAccount from './tables/QuotesTableByAccount';
 import CustomersTableByAccount from './tables/CustomersTableByAccount';
@@ -16,7 +16,7 @@ const ManagerView = () => {
             <div className='account-details'>
                 <h2>Hello, {agent.username}:</h2>
                 <h3>Account Details</h3>
-                <ManagerEditAccountForm id={id} />
+                <EditAccountFormGeneral id={id} />
             </div>
             <div>
                 <UsersTableByAccount />

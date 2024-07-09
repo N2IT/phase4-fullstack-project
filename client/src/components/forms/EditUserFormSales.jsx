@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { AgentContext } from '../../AgentProvider';
 
-const SalesEditUserForm = ({ id }) => {
+const EditUserFormSales = ({ id }) => {
 
     const { user, errors, setErrors, handleUpdateUser } = useContext(AgentContext);
 
@@ -218,6 +218,6 @@ const SalesEditUserForm = ({ id }) => {
     );
 };
 
-export default SalesEditUserForm;
+export default EditUserFormSales;
 
 

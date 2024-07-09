@@ -4,7 +4,7 @@ import { useFormik } from 'formik';
 import * as yup from "yup";
 import { AgentContext } from '../../AgentProvider';
 
-const UserSignupForm = () => {
+const SignupPageUserForm = () => {
 
     const { setAgent, account, errors, setErrors, navigate } = useContext(AgentContext);
 
@@ -130,4 +130,4 @@ const UserSignupForm = () => {
     )
 }
 
-export default UserSignupForm
+export default SignupPageUserForm

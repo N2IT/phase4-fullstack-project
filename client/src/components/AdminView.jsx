@@ -3,7 +3,7 @@ import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import Button from 'react-bootstrap/Button';
 import UsersTableByAccount from './tables/UsersTableByAccount';
-import AdminEditAccountForm from './forms/AdminEditAccountForm';
+import EditAccountFormAdmin from './forms/EditAccountFormAdmin';
 import QuotesTableByAccount from './tables/QuotesTableByAccount';
 import CustomersTableByAccount from './tables/CustomersTableByAccount';
 import Container from 'react-bootstrap/Container';
@@ -47,7 +47,7 @@ const AdminView = () => {
                     </Row>
                     <Row>
                         <Col>
-                            <AdminEditAccountForm id={id} />
+                            <EditAccountFormAdmin id={id} />
                         </Col>
                     </Row>
                     <Row>

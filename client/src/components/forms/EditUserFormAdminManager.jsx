@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { AgentContext } from '../../AgentProvider';
 
-const EditUserForm = ({ id }) => {
+const EditUserFormAdminManager = ({ id }) => {
 
     const { user, errors, setErrors, disabled, handleEditClick, handleUpdateUser } = useContext(AgentContext);
 
@@ -219,6 +219,6 @@ const EditUserForm = ({ id }) => {
     );
 };
 
-export default EditUserForm;
+export default EditUserFormAdminManager;
 
 

@@ -1,7 +1,7 @@
 import { useContext, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import EditUserForm from '../components/forms/EditUserForm';
-import SalesEditUserForm from '../components/forms/SalesEditUserForm';
+import EditUserFormAdminManager from '../components/forms/EditUserFormAdminManager';
+import EditUserFormSales from '../components/forms/EditUserFormSales';
 import Unauthorized from '../components/Unauthorized';
 import { AgentContext } from '../AgentProvider';
 import Container from 'react-bootstrap/Container';
@@ -78,7 +78,7 @@ const UserById = () => {
                         </Row>
                         <Row>
                             <Col>
-                                <EditUserForm id={id} />
+                                <EditUserFormAdminManager id={id} />
                             </Col>
                         </Row>
                     </div>
@@ -120,7 +120,7 @@ const UserById = () => {
                         </Row>
                         <Row>
                             <Col>
-                                <EditUserForm id={id} />
+                                <EditUserFormAdminManager id={id} />
                             </Col>
                         </Row>
                     </div>
@@ -157,7 +157,7 @@ const UserById = () => {
                             </Col>
                         </Row>
                         <Row>
-                            <SalesEditUserForm id={id} />
+                            <EditUserFormSales id={id} />
                         </Row>
                     </div>
                 </Container>

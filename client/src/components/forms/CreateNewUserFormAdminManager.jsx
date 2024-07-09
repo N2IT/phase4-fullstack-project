@@ -4,7 +4,7 @@ import * as yup from "yup";
 import { AgentContext } from '../../AgentProvider';
 import { useParams } from 'react-router-dom';
 
-const CreateNewUserForm = () => {
+const CreateNewUserFormAdminManager = () => {
 
     const { agent, errors, setErrors, isLoading, setUser} = useContext(AgentContext);
     const { id } = useParams()
@@ -146,4 +146,4 @@ const CreateNewUserForm = () => {
     )
 }
 
-export default CreateNewUserForm
+export default CreateNewUserFormAdminManager
