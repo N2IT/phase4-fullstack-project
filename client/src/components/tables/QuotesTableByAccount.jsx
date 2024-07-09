@@ -8,44 +8,10 @@ import Col from 'react-bootstrap/Col';
 
 const QuotesTableByAccount = () => {
 
-    const { quotes, handleIdClick, account, navigate, setAccount, setCustomers, setErrors, setAsDisabled, setQuotes } = useContext(AgentContext);
+    const { quotes, handleIdClick, navigate, setErrors, setAsDisabled, setQuotes } = useContext(AgentContext);
     const { id } = useParams();
 
     useEffect(() => {
-        // fetch(`/api/accounts/${id}`)
-        //     .then(response => {
-        //         if (!response.ok) {
-        //             return response.json().then(data => { throw data; });
-        //         }
-        //         return response.json();
-        //     })
-        //     .then(data => {
-        //         setAccount(data);
-        //         setAsDisabled(true);
-        //         setErrors(null);
-        //     })
-        //     .catch(error => {
-        //         console.error('Errors:', error);
-        //         setErrors([error.errors] || ['Unknown Error']);
-        //         setAccount(null);
-        //     });
-        // fetch('/api/customers')
-        //     .then(response => {
-        //         if (!response.ok) {
-        //             return response.json().then(data => { throw data; });
-        //         }
-        //         return response.json();
-        //     })
-        //     .then(data => {
-        //         setCustomers(data);
-        //         setAsDisabled(true);
-        //         // setErrors(null);
-        //     })
-        //     .catch(error => {
-        //         console.error('Errors:', error);
-        //         setErrors([error.errors] || ['Unknown Error']);
-        //         setCustomers(null);
-        //     });
         fetch('/api/quotes')
             .then(response => {
                 if (!response.ok) {
@@ -69,7 +35,6 @@ const QuotesTableByAccount = () => {
         return quote.account_id.toString() === id;
     });
     
-
     return (
         <>
             <Container>
