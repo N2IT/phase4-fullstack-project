@@ -22,11 +22,9 @@ const Users = () => {
       .catch(error => console.error('Error:', error));
   }, [])
 
-
   if (isLoading) {
     return <div> Loading ... </div>
   }
-
 
   return (
     <>

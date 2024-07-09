@@ -156,16 +156,23 @@ const AgentProvider = ({ children }) => {
 
     useEffect(() => {
         fetch('/api/check-session')
-            .then((r) => r.json())
-            .then((agent) => {
-                setAgent(agent)
-                setIsLoading(false)
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
+                } else {
+                    throw new Error(`HTTP error status: ${response.status}`);
+                }
+            })
+            .then(agent => {
+                setAgent(agent);
+                setIsLoading(false);
             })
             .catch(error => {
                 console.error('Error fetching agent data:', error);
                 setIsLoading(false);
+                setAgent(null);
             });
-    }, [])
+    }, []);
 
     return (
         <AgentContext.Provider value={

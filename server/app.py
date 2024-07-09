@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from flask import request, session, make_response
+from flask import request, session, make_response, jsonify
 from flask_restful import Api, Resource
 import random
 from config import app, db, api
@@ -10,21 +10,25 @@ from seed import calculate_quote_info, update_quote_discount
 # just imported Account, User above
 # need to write up the Routes now
 
+# user_id = session.get("user_id")
+#         if not user_id:
+#             return {"error": "Unauthorized"}, 403
+# create a custom decorator to conduct session check and apply to each of the resources
+
 @app.before_request
 def check_if_logged_in():
   if session.get('user_id') is None:
-    session['user_id'] = None
-    return {'errors' : '401: Unauthorized'}
+    session.clear()
+    # return {'errors': 'Unauthorized Access'}, 401
   else:
-    print('User is logged in')
-    print(session['user_id'])
+      print('User is logged in')
+      print(session['user_id'])
 
 
 class Accounts(Resource):
   def get(self):
     try:
       accounts = [account.to_dict(rules = ('-updated_at',)) for account in Account.query.all()]
-      # exmaple for visibility by role if account.role == 'admin'
 
       if not accounts:
         return {'errors' : '204: No content available'}, 204
@@ -40,71 +44,71 @@ class Accounts(Resource):
 
   
   def post(self):
-      try:
-        form_data = request.get_json()
+    try:
+      form_data = request.get_json()
+      
+      account_number = int(random.random()*1000)
+      company_name = form_data.get('company_name')
+      address_1 = form_data.get('address_1')
+      address_2 = form_data.get('address_2')
+      city = form_data.get('city')
+      state = form_data.get('state')
+      zip_code = form_data.get('zip_code')
+      phone = form_data.get('phone')
+      discount = form_data.get('discount')
+      created_by = form_data.get('created_by')
+
+      errors = []
+
+      if form_data:
+        if not account_number:
+          errors.append('An account number must be entered.')
+        elif Account.query.filter(Account.account_number == account_number).first():
+          errors.append('The account number must be unique.')
+        elif not company_name:
+          errors.append('A company name must be entered.')
+        elif Account.query.filter(Account.company_name == company_name).first():
+          errors.append('A company by that name already exists. Please enter another, or login in to your account.')
+        elif not address_1:
+          errors.append('An address must be entered.')
+        elif not city:
+          errors.append('Please enter the city where the business is located.')
+        elif not state:
+          errors.append('Please enter the state where the business is located.')
+        elif not zip_code:
+          errors.append('Please enter the zip code where the business is located.')
+        elif not phone:
+          errors.append('Please enter a phone number for your business')
+        elif not discount:
+          errors.append('Please enter a discount number for this account')
         
-        account_number = int(random.random()*1000)
-        company_name = form_data.get('company_name')
-        address_1 = form_data.get('address_1')
-        address_2 = form_data.get('address_2')
-        city = form_data.get('city')
-        state = form_data.get('state')
-        zip_code = form_data.get('zip_code')
-        phone = form_data.get('phone')
-        discount = form_data.get('discount')
-        created_by = form_data.get('created_by')
+        if errors:
+          return {'errors' : errors }, 422
+        
+        new_account = Account(
+          account_number = account_number,
+          company_name = company_name,
+          address_1 = address_1,
+          address_2 = address_2,
+          city = city,
+          state = state,
+          zip_code = zip_code,
+          phone = phone,
+          discount = int(discount) / 100,
+          created_by = created_by,
+          status = 'active'
+        )
 
-        errors = []
+        db.session.add(new_account)
+        db.session.commit()
 
-        if form_data:
-          if not account_number:
-            errors.append('An account number must be entered.')
-          elif Account.query.filter(Account.account_number == account_number).first():
-            errors.append('The account number must be unique.')
-          elif not company_name:
-            errors.append('A company name must be entered.')
-          elif Account.query.filter(Account.company_name == company_name).first():
-            errors.append('A company by that name already exists. Please enter another, or login in to your account.')
-          elif not address_1:
-            errors.append('An address must be entered.')
-          elif not city:
-            errors.append('Please enter the city where the business is located.')
-          elif not state:
-            errors.append('Please enter the state where the business is located.')
-          elif not zip_code:
-            errors.append('Please enter the zip code where the business is located.')
-          elif not phone:
-            errors.append('Please enter a phone number for your business')
-          elif not discount:
-            errors.append('Please enter a discount number for this account')
-          
-          if errors:
-            return {'errors' : errors }, 422
-          
-          new_account = Account(
-            account_number = account_number,
-            company_name = company_name,
-            address_1 = address_1,
-            address_2 = address_2,
-            city = city,
-            state = state,
-            zip_code = zip_code,
-            phone = phone,
-            discount = int(discount) / 100,
-            created_by = created_by,
-            status = 'active'
-          )
-
-          db.session.add(new_account)
-          db.session.commit()
-
-          return new_account.to_dict(), 201
-        else:
-          return {'errors' : '422: Unprocessable Entry'}, 422
-      except ValueError as e:
-        return {'errors' : str(e)}, 404
-      except Exception as e:
-        return {'errors' : str(e)}, 500
+        return new_account.to_dict(), 201
+      else:
+        return {'errors' : '422: Unprocessable Entry'}, 422
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
+    except Exception as e:
+      return {'errors' : str(e)}, 500
 
 
 class AccountById(Resource):
@@ -314,12 +318,18 @@ class Users(Resource):
 
 class CheckSession(Resource):
   def get(self):
-    user = User.query.filter(User.id == session.get('user_id')).first()
-    if user:
-      return user.to_dict(),200
-    
+    user_id = session.get('user_id')
+    # user = User.query.filter(User.id == session.get('user_id')).first()
+    if user_id:
+      user = User.query.filter(User.id == user_id).first()
+      if user:
+        return user.to_dict(),200
+      else:
+        # User ID in session but user not found in database
+        return {'error': 'User not found'}, 404
     else:
-        return {}, 204
+      # No user ID in session, hence not logged in
+      return {'error': 'Unauthorized Access'}, 401
 
 
 class Login(Resource):
