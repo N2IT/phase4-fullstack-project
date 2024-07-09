@@ -14,6 +14,7 @@ from seed import calculate_quote_info, update_quote_discount
 def check_if_logged_in():
   if session.get('user_id') is None:
     session['user_id'] = None
+    return {'errors' : '401: Unauthorized'}
   else:
     print('User is logged in')
     print(session['user_id'])
