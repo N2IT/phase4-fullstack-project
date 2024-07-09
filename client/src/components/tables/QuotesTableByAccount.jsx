@@ -1,6 +1,6 @@
 import { useContext, useEffect } from 'react'
 import { useParams } from 'react-router-dom';
-import { AgentContext } from '../AgentProvider';
+import { AgentContext } from '../../AgentProvider';
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';

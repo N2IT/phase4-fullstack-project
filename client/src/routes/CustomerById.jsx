@@ -6,7 +6,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Unauthorized from '../components/Unauthorized';
 import { AgentContext } from '../AgentProvider';
-import QuoteTableByCustomer from '../components/QuoteTableByCustomer';
+import QuoteTableByCustomer from '../components/tables/QuoteTableByCustomer';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 

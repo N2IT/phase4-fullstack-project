@@ -1,8 +1,8 @@
 import { useContext } from 'react';
 import ManagerEditAccountForm from './forms/EditAccountForm';
-import UsersTableByAccount from './UsersTableByAccount';
-import QuotesTableByAccount from './QuotesTableByAccount';
-import CustomersTableByAccount from './CustomersTableByAccount';
+import UsersTableByAccount from './tables/UsersTableByAccount';
+import QuotesTableByAccount from './tables/QuotesTableByAccount';
+import CustomersTableByAccount from './tables/CustomersTableByAccount';
 import { AgentContext } from '../AgentProvider';
 import { useParams } from 'react-router-dom';
 

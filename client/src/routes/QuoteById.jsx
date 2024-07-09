@@ -4,7 +4,7 @@ import EditQuoteForm from '../components/forms/EditQuoteForm';
 // import SalesEditUserForm from '../components/SalesEditUserForm';
 import Unauthorized from '../components/Unauthorized';
 import { AgentContext } from '../AgentProvider';
-import ConfigurationsTableByQuote from '../components/ConfigurationsTableByQuote';
+import ConfigurationsTableByQuote from '../components/tables/ConfigurationsTableByQuote';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';

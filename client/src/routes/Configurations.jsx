@@ -1,6 +1,6 @@
 import { useEffect, useContext } from 'react';
 import Unauthorized from '../components/Unauthorized';
-import ConfigurationsTable from '../components/ConfigurationsTable'
+import ConfigurationsTable from '../components/tables/ConfigurationsTable'
 import { AgentContext } from '../AgentProvider';
 import InvalidCredentials from '../components/InvalidCredentials';
 

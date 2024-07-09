@@ -1,7 +1,7 @@
 import { useEffect, useContext } from 'react';
 import Unauthorized from '../components/Unauthorized';
 import { AgentContext } from '../AgentProvider'
-import UsersTable from '../components/UsersTable'
+import UsersTable from '../components/tables/UsersTable'
 import InvalidCredentials from '../components/InvalidCredentials';
 
 const Users = () => {

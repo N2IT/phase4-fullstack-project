@@ -1,11 +1,8 @@
-
-// import { Link } from 'react-router-dom';
 import { useContext, useEffect } from 'react'
 import { AgentContext } from '../AgentProvider';
 import Unauthorized from '../components/Unauthorized';
-import NewQuoteCustomersTableByAccount from '../components/NewQuoteCustomersTableByAccount';
+import NewQuoteCustomersTableByAccount from '../components/tables/NewQuoteCustomersTableByAccount';
 import { useParams } from 'react-router-dom';
-// import { useEffect } from 'react';
 
 const NewQuote = () => {
 
