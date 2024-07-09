@@ -12,40 +12,40 @@ const QuotesTableByAccount = () => {
     const { id } = useParams();
 
     useEffect(() => {
-        fetch(`/api/accounts/${id}`)
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(data => { throw data; });
-                }
-                return response.json();
-            })
-            .then(data => {
-                setAccount(data);
-                setAsDisabled(true);
-                setErrors(null);
-            })
-            .catch(error => {
-                console.error('Errors:', error);
-                setErrors([error.errors] || ['Unknown Error']);
-                setAccount(null);
-            });
-        fetch('/api/customers')
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(data => { throw data; });
-                }
-                return response.json();
-            })
-            .then(data => {
-                setCustomers(data);
-                setAsDisabled(true);
-                // setErrors(null);
-            })
-            .catch(error => {
-                console.error('Errors:', error);
-                setErrors([error.errors] || ['Unknown Error']);
-                setCustomers(null);
-            });
+        // fetch(`/api/accounts/${id}`)
+        //     .then(response => {
+        //         if (!response.ok) {
+        //             return response.json().then(data => { throw data; });
+        //         }
+        //         return response.json();
+        //     })
+        //     .then(data => {
+        //         setAccount(data);
+        //         setAsDisabled(true);
+        //         setErrors(null);
+        //     })
+        //     .catch(error => {
+        //         console.error('Errors:', error);
+        //         setErrors([error.errors] || ['Unknown Error']);
+        //         setAccount(null);
+        //     });
+        // fetch('/api/customers')
+        //     .then(response => {
+        //         if (!response.ok) {
+        //             return response.json().then(data => { throw data; });
+        //         }
+        //         return response.json();
+        //     })
+        //     .then(data => {
+        //         setCustomers(data);
+        //         setAsDisabled(true);
+        //         // setErrors(null);
+        //     })
+        //     .catch(error => {
+        //         console.error('Errors:', error);
+        //         setErrors([error.errors] || ['Unknown Error']);
+        //         setCustomers(null);
+        //     });
         fetch('/api/quotes')
             .then(response => {
                 if (!response.ok) {
@@ -63,13 +63,12 @@ const QuotesTableByAccount = () => {
                 setErrors([error.errors] || ['Unknown Error']);
                 setQuotes(null);
             });
-    }, []);
+    }, [id]);
 
     const quotesByAccount = quotes.filter(quote => {
-        //    console.log(configuration)
-        //    console.log(quote)
-        return parseInt(quote.account.id, 10) === account.id;
+        return quote.account_id.toString() === id;
     });
+    
 
     return (
         <>
@@ -81,7 +80,7 @@ const QuotesTableByAccount = () => {
                         </Col>
                         <Col md={6} sm={12}>
                             <div>
-                                <button type="button" onClick={() => navigate(`accounts/${account.id}/new-quote`)}>Create New Quote</button>
+                                <button type="button" onClick={() => navigate(`accounts/${id}/new-quote`)}>Create New Quote</button>
                             </div>
                         </Col>
                     </Row>

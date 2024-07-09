@@ -19,6 +19,7 @@ import AddUsersToAccount from './routes/AddUsersToAccount';
 import AccountIdAddCustomer from './routes/AccountIdAddCustomer';
 import CreateNewAccountFormAdmin from './components/forms/CreateNewAccountFormAdmin';
 import CustomersIdNewQuote from './routes/CustomersIdNewQuote';
+import CustomersByAccountId from './routes/CustomersByAccountId';
 
 const routes = [
     {
@@ -31,10 +32,6 @@ const routes = [
                 element: <Home />
             },
             {
-                path: 'sign-up',
-                element: <SignUp />
-            },
-            {
                 path: 'accounts',
                 element: <Accounts />
             },
@@ -43,36 +40,24 @@ const routes = [
                 element: <AccountById />
             },
             {
-                path: 'users',
-                element: <Users />
+                path: 'accounts/:id/add-customer',
+                element: <AccountIdAddCustomer />
             },
             {
-                path: 'users/:id',
-                element: <UserById />
+                path: 'accounts/:id/add-user',
+                element: <AddUsersToAccount />
             },
             {
-                path: 'quotes',
-                element: <Quotes />
-            },
-            {
-                path: 'accounts/:id/quotes',
-                element: <AccountIdQuotes />
+                path: 'accounts/:id/customers',
+                element: <CustomersByAccountId />
             },
             {
                 path: 'accounts/:id/new-quote',
                 element: <NewQuote />
             },
             {
-                path: 'quotes/:id',
-                element: <QuoteById />
-            },
-            {
-                path: 'customers',
-                element: <Customers />
-            },
-            {
-                path: 'customers/:id',
-                element: <CustomerById />
+                path: 'accounts/:id/quotes',
+                element: <AccountIdQuotes />
             },
             {
                 path: 'configurations',
@@ -83,25 +68,46 @@ const routes = [
                 element: <ConfigurationById />
             },
             {
-                path: 'accounts/:id/add-user',
-                element: <AddUsersToAccount />
+                path: 'customers',
+                element: <Customers />
             },
             {
-                path: 'create-new-account',
-                element: <CreateNewAccountFormAdmin />
-            },
-            {
-                path: 'accounts/:id/add-customer',
-                element: <AccountIdAddCustomer />
+                path: 'customers/:id',
+                element: <CustomerById />
             },
             {
                 path: 'customers/:id/new-quote',
                 element: <CustomersIdNewQuote />
             },
             {
+                path: 'create-new-account',
+                element: <CreateNewAccountFormAdmin />
+            },
+            {
+                path: 'quotes',
+                element: <Quotes />
+            },
+            {
+                path: 'quotes/:id',
+                element: <QuoteById />
+            },
+            {
+                path: 'sign-up',
+                element: <SignUp />
+            },            
+            {
                 path: 'support',
                 element: <Support />
-            }
+            },
+            {
+                path: 'users',
+                element: <Users />
+            },
+            {
+                path: 'users/:id',
+                element: <UserById />
+            },
+            
         ]
 
     }

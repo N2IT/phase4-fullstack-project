@@ -4,10 +4,12 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
+import { useParams } from 'react-router-dom';
 
 const CustomersTable = () => {
 
     const { handleIdClick, isLoading, customers, account, navigate, setNewCustomerForQuote } = useContext(AgentContext);
+    const { id } = useParams()
 
     const customersByAccount = customers.filter(customer => {
         return parseInt(customer.account_id, 10) === account.id;
@@ -22,7 +24,7 @@ const CustomersTable = () => {
                             <h3>Account Customers</h3>
                         </Col>
                         <Col md={6} sm={12}>
-                            <button type="button" onClick={() => (navigate(`accounts/${account.id}/add-customer`), setNewCustomerForQuote(false))}>Add New Customer</button>
+                            <button type="button" onClick={() => (navigate(`accounts/${id}/add-customer`), setNewCustomerForQuote(false))}>Add New Customer</button>
                         </Col>
                     </Row>
                 </div>
