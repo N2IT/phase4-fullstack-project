@@ -17,7 +17,7 @@ import Customers from './routes/Customers';
 import CustomerById from './routes/CustomerById';
 import AddUsersToAccount from './routes/AddUsersToAccount';
 import AccountIdAddCustomer from './routes/AccountIdAddCustomer';
-import AdminOnlyCreateNewAccountForm from './components/forms/AdminOnlyCreateNewAccountForm';
+import CreateNewAccountFormAdmin from './components/forms/CreateNewAccountFormAdmin';
 import CustomersIdNewQuote from './routes/CustomersIdNewQuote';
 
 const routes = [
@@ -88,7 +88,7 @@ const routes = [
             },
             {
                 path: 'create-new-account',
-                element: <AdminOnlyCreateNewAccountForm />
+                element: <CreateNewAccountFormAdmin />
             },
             {
                 path: 'accounts/:id/add-customer',

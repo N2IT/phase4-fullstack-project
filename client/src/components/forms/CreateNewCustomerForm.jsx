@@ -57,7 +57,7 @@ const CreateNewCustomerForm = () => {
                         newCustomerForQuote ? (navigate(`customers/${customer.id}/new-quote`), setNewCustomerForQuote(false))
                             :
                             history.go(-1)
-                        alert(`Customer ${customer.id} has been successfully created.`)
+                        alert(`Customer ${customer.last_name}, ${customer.first_name} has been successfully created.`)
                     }
                 })
         }

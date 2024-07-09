@@ -47,7 +47,7 @@ const CreateNewQuoteForm = () => {
             })
                 .then((res) => res.json())
                 .then((data) => {
-                    { data.errors ? setErrors(data.errors) : setQuote(data), alert(`Quote ${data.quote_number} has succesfully been created.`), onSubmitNewQuoteForm() }
+                    { data.errors ? setErrors(data.errors) : setQuote(data), alert(`Quote ${data.title} has succesfully been created.`), onSubmitNewQuoteForm() }
                 })
         }
     })
