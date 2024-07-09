@@ -96,10 +96,6 @@ const routes = [
                 element: <SignUp />
             },            
             {
-                path: 'support',
-                element: <Support />
-            },
-            {
                 path: 'users',
                 element: <Users />
             },

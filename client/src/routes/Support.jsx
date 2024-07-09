@@ -6,7 +6,8 @@ import { AgentContext } from '../AgentProvider';
 
 const Support = () => {
 
-  const { agent, isLoading } = useContext(AgentContext)
+  const { agent, user, isLoading } = useContext(AgentContext)
+
 
   if (isLoading) {
     return <div> Loading ... </div>
@@ -16,7 +17,7 @@ const Support = () => {
     <>
       <div className="account-details">
         {agent ? (
-          <h2>Welcome to the Support page, {user.username}!</h2>
+          <h2>Welcome to the Support page.</h2>
         ) :
           <div>
             <h2>Unauthorized</h2>

@@ -1,4 +1,4 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AgentContext } from '../../AgentProvider';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -8,11 +8,31 @@ import { useParams } from 'react-router-dom';
 
 const CustomersTable = () => {
 
-    const { handleIdClick, isLoading, customers, account, navigate, setNewCustomerForQuote } = useContext(AgentContext);
+    const { handleIdClick, isLoading, customers, navigate, setCustomers, setNewCustomerForQuote, setErrors, setAsDisabled } = useContext(AgentContext);
     const { id } = useParams()
 
+    useEffect(() => {
+        fetch('/api/customers')
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(data => { throw data; });
+                }
+                return response.json();
+            })
+            .then(data => {
+                setCustomers(data);
+                setAsDisabled(true);
+                // setErrors(null);
+            })
+            .catch(error => {
+                console.error('Errors:', error);
+                setErrors([error.errors] || ['Unknown Error']);
+                setCustomers(null);
+            });
+    }, [id]);
+
     const customersByAccount = customers.filter(customer => {
-        return parseInt(customer.account_id, 10) === account.id;
+        return customer.account_id.toString() === id;
     })
 
     return (
@@ -35,13 +55,8 @@ const CustomersTable = () => {
                         <tr>
                             <th>Number</th>
                             <th>First Name</th>
-                            {/* <th>Quote Title</th> */}
                             <th>Last Name</th>
-                            {/* <th>Discount</th>
-                            <th>M. Variable</th> */}
                             <th>Email</th>
-                            {/* <th>Margin %</th>
-                            <th>Margin $</th> */}
                             <th>Phone</th>
                             <th>Actions</th>
                         </tr>

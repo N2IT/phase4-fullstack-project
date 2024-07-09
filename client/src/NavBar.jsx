@@ -2,6 +2,7 @@ import Container from 'react-bootstrap/Container';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Offcanvas from 'react-bootstrap/Offcanvas';
+import ButtonMailto from './components/ButtonMailTo';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
 import { AgentContext } from './AgentProvider';
@@ -67,7 +68,7 @@ function NavBar() {
                   <Link to='/customers' onClick={handleClose}>Customers</Link>
                   <Link to="/quotes" onClick={handleClose}>Quotes</Link>
                   <Link to='/configurations' onClick={handleClose}>Configurations</Link>
-                  <Link to="/support" onClick={handleClose}>Support</Link>
+                  <ButtonMailto label="Support" mailto="mailto:tonyeder11@gmail.com?subject=Quote Pro Assistance Needed&body=Hello Admin, I could use some help with the following items:" />
                   <hr />
                   <button onClick={handleLogoutClick}>Logout</button>
                 </Nav>
@@ -101,8 +102,9 @@ function NavBar() {
                   <Link to={`/accounts/${valueId}/quotes`} onClick={handleClose}>My Quotes</Link>
                   <Link to={`/accounts/${valueId}/new-quote`} onClick={handleClose}>New Quote</Link>
                   <Link to ={`/accounts/${valueId}/customers`} onClick={handleClose}>My Customers</Link>
-                  <Link to="/support" onClick={handleClose}>Support</Link>
+                  <ButtonMailto label="Support" mailto="mailto:tonyeder11@gmail.com?subject=Quote Pro Assistance Needed&body=Hello Admin, I could use some help with the following items:" />
                   <hr />
+                  
                   <button onClick={handleLogoutClick}>Logout</button>
                 </Nav>
               </Offcanvas.Body>
