@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { useParams } from "react-router-dom";
 import { AgentContext } from '../AgentProvider';
 import CreateNewCustomerForm from "../components/forms/CreateNewCustomerForm"
@@ -7,8 +7,30 @@ import InvalidCredentials from "../components/InvalidCredentials";
 
 const AccountIdAddCustomer = () => {
 
-    const { agent, isLoading, errors } = useContext(AgentContext);
+    const { agent, isLoading, setAccount, setAsDisabled, setErrors } = useContext(AgentContext);
     const { id } = useParams()
+
+    useEffect(() => {
+        fetch(`/api/accounts/${id}`)
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(data => { throw data; });
+                }
+                return response.json();
+            })
+            .then(data => {
+                setAccount(data);
+                setAsDisabled(true);
+                setErrors(null);
+            })
+            .catch(error => {
+                console.error('Errors:', error);
+                setErrors([error.errors] || ['Unknown Error']);
+                // setAccount(null);
+                alert([error.errors])
+                history.go(-1)
+            });
+        },[id])
 
     if (isLoading) {
         return <div>Loading ...</div>;
@@ -18,11 +40,6 @@ const AccountIdAddCustomer = () => {
         return (
             <Unauthorized />
         )
-    }
-
-    if (agent.role_id === 1 && errors) {
-        alert('Cmon admin! You cant get away with that!')
-        history.go(-1)
     }
 
     if (agent.role_id === 1) {
