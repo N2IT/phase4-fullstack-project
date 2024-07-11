@@ -11,6 +11,8 @@ const CustomersIdNewQuote = () => {
     const { agent, account, setAccount, setCustomer, setErrors, newQuotePageStatus, isLoading, setAsDisabled } = useContext(AgentContext);
     const { id } = useParams()
 
+    console.log('before useEffect')
+
     useEffect(() => {
         fetch(`/api/customers/${id}`)
             .then(response => {
@@ -23,6 +25,7 @@ const CustomersIdNewQuote = () => {
                 setCustomer(data);
                 setAsDisabled(true);
                 setErrors(null);
+                console.log('in useEffect', data)
                 fetch(`/api/accounts/${data.account_id}`)
                     .then(response => {
                         if (!response.ok) {
@@ -41,12 +44,14 @@ const CustomersIdNewQuote = () => {
                         setAccount(null);
                     });
             })
-        },[])
+        },[id, agent])
 
-    // if (!account) {
-    //     alert('Refreshing the form requires you start again.')
-    //     history.go(-1)
-    // }
+        console.log('after useEffect')
+
+    if (!account) {
+        alert('Refreshing the form requires you start again.')
+        history.go(-1)
+    }
 
     if (isLoading) {
         return <div>Loading ...</div>;

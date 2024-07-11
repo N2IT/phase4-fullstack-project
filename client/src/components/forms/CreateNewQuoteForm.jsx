@@ -6,8 +6,6 @@ import { useParams } from 'react-router-dom';
 
 const CreateNewQuoteForm = ({ account }) => {
 
-    console.log(account)
-
     // LEAVING OFF HERE STILL TRYING TO SORT OUT PERSISTENCE OF ACCOUNT FOR CREATENEWQUOTEOFORM
 
     const { agent, setAccount, setAsDisabled, setCustomer, customer, errors, setErrors, setQuote, onSubmitNewQuoteForm } = useContext(AgentContext);
