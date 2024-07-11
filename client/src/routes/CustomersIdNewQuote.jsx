@@ -1,35 +1,13 @@
 import CreateNewQuoteForm from "../components/forms/CreateNewQuoteForm";
 import CreateNewConfiguration from "../components/forms/CreateNewConfiguration";
 import Unauthorized from "../components/Unauthorized";
-import { useContext, useEffect } from "react";
+import { useContext } from "react";
 import { AgentContext } from '../AgentProvider';
-import { useParams } from "react-router-dom";
 import InvalidCredentials from "../components/InvalidCredentials";
 
 const CustomersIdNewQuote = () => {
 
-    const { agent, account, setCustomer, customer, newQuotePageStatus, isLoading, setAsDisabled, setErrors } = useContext(AgentContext);
-    const { id } = useParams()
-    
-    useEffect(() => {
-        fetch(`/api/customers/${id}`)
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(data => { throw data; });
-                }
-                return response.json();
-            })
-            .then(data => {
-                setCustomer(data);
-                setAsDisabled(true);
-                setErrors(null);
-            })
-            .catch(error => {
-                console.error('Errors:', error);
-                setErrors([error.errors] || 'Unknown Error');
-                setCustomer(null);
-            });
-    },[id])
+    const { agent, account, customer, newQuotePageStatus, isLoading } = useContext(AgentContext);
 
     if (!account) {
         alert('Refreshing the form requires you start again.')
