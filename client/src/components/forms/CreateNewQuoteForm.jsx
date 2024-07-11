@@ -1,49 +1,15 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as yup from "yup";
 import { AgentContext } from '../../AgentProvider';
 import { useParams } from 'react-router-dom';
 
-const CreateNewQuoteForm = ({ account }) => {
+const CreateNewQuoteForm = () => {
 
-    // LEAVING OFF HERE STILL TRYING TO SORT OUT PERSISTENCE OF ACCOUNT FOR CREATENEWQUOTEOFORM
-
-    const { agent, setAccount, setAsDisabled, setCustomer, customer, errors, setErrors, setQuote, onSubmitNewQuoteForm } = useContext(AgentContext);
+    const { agent, account, customer, errors, setErrors, setQuote, onSubmitNewQuoteForm } = useContext(AgentContext);
     const { id } = useParams()
 
     const prevQuote = Math.floor(Math.random()*1000)
-
-    // useEffect(() => {
-    //     fetch(`/api/customers/${id}`)
-    //         .then(response => {
-    //             if (!response.ok) {
-    //                 return response.json().then(data => { throw data; });
-    //             }
-    //             return response.json();
-    //         })
-    //         .then(data => {
-    //             setCustomer(data);
-    //             setAsDisabled(true);
-    //             setErrors(null);
-    //             fetch(`/api/accounts/${data.account_id}`)
-    //                 .then(response => {
-    //                     if (!response.ok) {
-    //                         return response.json().then(data => { throw data; });
-    //                     }
-    //                     return response.json();
-    //                 })
-    //                 .then(data => {
-    //                     setAccount(data);
-    //                     setAsDisabled(true);
-    //                     setErrors(null);
-    //                 })
-    //                 .catch(error => {
-    //                     console.error('Errors:', error);
-    //                     setErrors([error.errors] || ['Unknown Error']);
-    //                     setAccount(null);
-    //                 });
-    //         })
-    //     },[id])
 
     const formSchema = yup.object().shape({
         title: yup.string().required("Please enter a title"),

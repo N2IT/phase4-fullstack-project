@@ -8,45 +8,13 @@ import InvalidCredentials from "../components/InvalidCredentials";
 
 const CustomersIdNewQuote = () => {
 
-    const { agent, account, setAccount, setCustomer, setErrors, newQuotePageStatus, isLoading, setAsDisabled } = useContext(AgentContext);
+    const { agent, account, setAccount, newQuotePageStatus, isLoading } = useContext(AgentContext);
     const { id } = useParams()
 
-    console.log('before useEffect')
-
     useEffect(() => {
-        fetch(`/api/customers/${id}`)
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(data => { throw data; });
-                }
-                return response.json();
-            })
-            .then(data => {
-                setCustomer(data);
-                setAsDisabled(true);
-                setErrors(null);
-                console.log('in useEffect', data)
-                fetch(`/api/accounts/${data.account_id}`)
-                    .then(response => {
-                        if (!response.ok) {
-                            return response.json().then(data => { throw data; });
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        setAccount(data);
-                        setAsDisabled(true);
-                        setErrors(null);
-                    })
-                    .catch(error => {
-                        console.error('Errors:', error);
-                        setErrors([error.errors] || ['Unknown Error']);
-                        setAccount(null);
-                    });
-            })
-        },[id, agent])
-
-        console.log('after useEffect')
+        setAccount(account)
+        console.log(account)
+    },[])
 
     if (!account) {
         alert('Refreshing the form requires you start again.')
@@ -63,16 +31,10 @@ const CustomersIdNewQuote = () => {
         )
     }
 
-    // if (agent && !customer) {
-    //     return (
-    //         <InvalidCredentials />
-    //     )
-    // }
-
     if (agent.role_id === 1) {
         return (
             <div>
-                {newQuotePageStatus ? <CreateNewQuoteForm account={account}/> : <CreateNewConfiguration account={account}/>}
+                {newQuotePageStatus ? <CreateNewQuoteForm /> : <CreateNewConfiguration />}
             </div>
         );
     }
@@ -83,7 +45,6 @@ const CustomersIdNewQuote = () => {
                 {newQuotePageStatus ? <CreateNewQuoteForm /> : <CreateNewConfiguration />}
             </div>
         );
-
     }
 
     return (
@@ -91,10 +52,6 @@ const CustomersIdNewQuote = () => {
             <InvalidCredentials />
         </div>
     );
-
-
-
-
 }
 
 export default CustomersIdNewQuote
