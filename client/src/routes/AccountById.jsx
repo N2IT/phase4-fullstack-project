@@ -50,40 +50,6 @@ const AccountById = () => {
                 setErrors([error.errors] || ['Unknown Error']);
                 setUsers(null);
             });
-        fetch('/api/quotes')
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(data => { throw data; });
-                }
-                return response.json();
-            })
-            .then(data => {
-                setQuotes(data);
-                setAsDisabled(true);
-                // setErrors(null);
-            })
-            .catch(error => {
-                console.error('Errors:', error);
-                setErrors([error.errors] || ['Unknown Error']);
-                setQuotes(null);
-            });
-        fetch('/api/customers')
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(data => { throw data; });
-                }
-                return response.json();
-            })
-            .then(data => {
-                setCustomers(data);
-                setAsDisabled(true);
-                // setErrors(null);
-            })
-            .catch(error => {
-                console.error('Errors:', error);
-                setErrors([error.errors] || ['Unknown Error']);
-                setCustomers(null);
-            });
     }, [agent]);
 
     if (isLoading) {
