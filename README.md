@@ -1,4 +1,60 @@
-# IDEA
+# Quote Pro Application
+
+Welcome to the quote pro application. Sign up to use this application to demo CRUD permissions by role.  There are three roles to choose from, each of which authorize access to certain resources.  As an admin you have total access to create, read, update, and delete any resource.  Sign up to be a Manager to oversee users, quotes, customers, and configurations specific to your account. Add users to your team to focus on reaching out and managing customers and generating new quotes.  Or join as a User to focus on managing customers, quotes, and configurations for you account.
+
+## Key Features
+
+- Resources include Account, User, Customer, Quotes, & Configurations
+
+- As an Aministrator you have full CRUD permissions: Create, Read, Update, or Delete all resources within the application.
+
+- As a Manager you have more limited CRUD permissions by resource: Create, Read, Update, or Delete any resource except for Account.
+
+- As a Sales role your permissions are further restricted so you focus more on customer acquisition and quote management.
+
+## Table Highlighting Permissions by Role
+
+<table>
+    <tr>
+        <th>Permissions</th>
+        <th>Admin</th>
+        <th>Manager</th>
+        <th>Sales</th>
+    </tr>
+    <tr>
+        <td>Create Account</td>
+        <td>X</td>
+        <td></td>
+        <td></td>
+    </tr>
+</table>
+
+
+
+## Getting Started
+
+To begin using the FITNESS CLI, simply clone this repository to your local machine. Follow the setup instructions detailed below to install any necessary dependencies and start tailoring your fitness routine today!
+
+## Installation
+
+```bash
+# Clone the repository
+git clone [p3-cli-project]
+
+# Navigate to the program directory
+cd p3-cli-project
+
+# Install dependencies
+Ensure you have Python installed on your system. This application is developed with Python 3. Ensure your Python version is compatible by checking with python --version or python3 --version.
+
+# Seed the database (optional)
+python lib/seed_data.py
+
+# Run the application
+python lib/cli.py
+```
+# USAGE
+
 seeding the app will create you as the primary admin where you will have full access.
 Logout to test usecase as potential new user / account
 new users can create accounts but will need admin approval before gaining additional features and access
