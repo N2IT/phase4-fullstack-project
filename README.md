@@ -234,6 +234,6 @@ Once you have access to the application in your web browser, follow the Signup l
 
 Repo origingally cloned from https://github.com/Enoch2k2/flatiron-flask-project-generator. Configured for Flask and React frontend and used to assist with the creation of this phase 4 project for Flatiron School - Software Engineering program.
 
-All other code contributed by me. 
+All other code contributed by [me](https://github.com/N2IT). 
 
 I welcome contributions from the community! If you have suggestions for improvements or bug fixes, please feel free to fork the repository and submit a pull request.
