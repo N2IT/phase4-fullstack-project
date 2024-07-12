@@ -25,6 +25,11 @@ def check_if_logged_in():
       print(session['user_id'])
 
 
+class Home(Resource):
+  def get(self):
+    return {'message' : 'Welcome to QP Server'}, 200
+  
+
 class Accounts(Resource):
   def get(self):
     try:
@@ -823,6 +828,7 @@ class ConfigurationById(Resource):
 #     except ValueError as e:
 #       return {'errors' : str(e)}, 404
 
+api.add_resource(Home, '/')
 api.add_resource(Accounts, '/accounts')
 api.add_resource(AccountById, '/accounts/<int:id>')
 api.add_resource(Users, '/users')

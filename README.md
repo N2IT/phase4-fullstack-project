@@ -187,6 +187,20 @@ Open a new terminal window and navigate to the frontend directory:
 npm install
 cd client
 ```
+### Frontend Dependencies
+
+After running `npm install`, the following main dependencies will be installed:
+- **React** (`react`, `react-dom`): A JavaScript library for building user interfaces.
+- **React Router** (`react-router-dom`): Declarative routing for React apps.
+- **Formik** and **Yup**: Handling forms and validation.
+
+Development dependencies include:
+- **Vite**: Next generation frontend tooling.
+- **ESLint**: For linting and maintaining code quality.
+- **@vitejs/plugin-react**: Enables React fast refresh and other optimizations in Vite.
+
+These dependencies are critical for the development and functioning of the frontend application. They are automatically managed through `npm`.
+
 
 Start the frontend development server
 ```bash
@@ -196,7 +210,6 @@ npm run dev
 ## Accessing the Application
 
 Once both servers are running, you can access the application by navigating to 'http://localhost:5173/' for the frontend and 'http://127.0.0.1:5555/' for the backend in your web browser.
-
 
 
 # USAGE
