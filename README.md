@@ -27,6 +27,120 @@ Welcome to the quote pro application. Sign up to use this application to demo CR
         <td></td>
         <td></td>
     </tr>
+    <tr>
+        <td>Read Account</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>Update Account</td>
+        <td>X</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Delete Account</td>
+        <td>X</td>
+        <td></td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Create User</td>
+        <td>X</td>
+        <td>X</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Read User</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>Update User</td>
+        <td>X</td>
+        <td>X</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Delete User</td>
+        <td>X</td>
+        <td>X</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Create Quote</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>Read Quote</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>Update Quote</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>Delete Quote</td>
+        <td>X</td>
+        <td>X</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Create Configuration</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>Read Configuration</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>Update Configuration</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>Delete Configuration</td>
+        <td>X</td>
+        <td>X</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>Create Customer</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>Read Customer</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>Update Customer</td>
+        <td>X</td>
+        <td>X</td>
+        <td>X</td>
+    </tr>
+    <tr>
+        <td>Delete Customer</td>
+        <td>X</td>
+        <td>X</td>
+        <td></td>
+    </tr>
 </table>
 
 
