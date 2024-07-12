@@ -13,7 +13,7 @@ Welcome to the quote pro application where you have total control over your cust
 
 - As a Sales role your permissions are further restricted so you focus more on customer acquisition and quote management.
 
-## Table Highlighting Permissions by Role
+## Permissions by Role
 
 <table>
     <tr>
@@ -227,20 +227,13 @@ Once both servers are running, you can access the application by navigating to '
 
 # Usage
 
-seeding the app will create you as the primary admin where you will have full access.
-Logout to test usecase as potential new user / account
-new users can create accounts but will need admin approval before gaining additional features and access
-- account id will be assigned, but no discount - pending admin approval
-- initially have 'sales' access which includes:
-Read Account,
-Read User,
-Create Quote,
-Read Quote,
-Update Quote (associated to their user account)
+Once you have access to the application in your web browser, follow the Signup link to create your account and user profile.  When creating your user profile you will be asked to select a role. As stated above, each role offers specific capabilities to use throughout the application.  Try each role to get an idea of how each one differs by resource! Take total control with the Admin role. Or be a Manager and build out your team of users to manage your customer database and quote activity.
 
-Admin - full access
 
-Manager - same as admin access EXCEPT:
-Cannot Create new account on behalf of new user
-Cannot update account details without admin permissions
-Cannot delete account
+# Contribution
+
+Repo origingally cloned from https://github.com/Enoch2k2/flatiron-flask-project-generator. Configured for Flask and React frontend and used to assist with the creation of this phase 4 project for Flatiron School - Software Engineering program.
+
+All other code contributed by me. 
+
+I welcome contributions from the community! If you have suggestions for improvements or bug fixes, please feel free to fork the repository and submit a pull request.
