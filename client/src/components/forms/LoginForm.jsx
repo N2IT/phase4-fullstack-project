@@ -41,7 +41,6 @@ const LoginForm = () => {
             //     console.error('Error during login:', error.message);
             //     setErrors({ api: error.message });
             // });
-            // THIS CATCH ERROR WAS CAUSING MAJOR ISSUES.LEAVING FOR NOW AS REFERENCE
         },
     });
 

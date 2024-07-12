@@ -7,7 +7,7 @@ import AdminView from '../components/AdminView';
 import ManagerView from '../components/ManagerView';
 
 const AccountById = () => {
-    const { agent, account, isLoading, setQuotes, setAccount, setCustomers, setUsers, setAsDisabled, setErrors } = useContext(AgentContext);
+    const { agent, account, isLoading, setAccount, setUsers, setAsDisabled, setErrors } = useContext(AgentContext);
     const { id } = useParams();
 
     useEffect(() => {
@@ -26,6 +26,7 @@ const AccountById = () => {
                 setAccount(data);
                 setAsDisabled(true);
                 setErrors(null);
+                localStorage.setItem('account', JSON.stringify(account))
             })
             .catch(error => {
                 console.error('Errors:', error);

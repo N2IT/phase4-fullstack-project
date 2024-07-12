@@ -24,13 +24,8 @@ const NewQuoteCustomersTableByAccount = () => {
                     <tr>
                         <th>Number</th>
                         <th>First Name</th>
-                        {/* <th>Quote Title</th> */}
                         <th>Last Name</th>
-                        {/* <th>Discount</th>
-                            <th>M. Variable</th> */}
                         <th>Email</th>
-                        {/* <th>Margin %</th>
-                            <th>Margin $</th> */}
                         <th>Phone</th>
                         <th>Actions</th>
                     </tr>
@@ -43,7 +38,7 @@ const NewQuoteCustomersTableByAccount = () => {
                             <td>{customer.last_name}</td>
                             <td>{customer.email}</td>
                             <td>{customer.phone}</td>
-                            <td><p className="view-btn" title="View Quote" onClick={() => newConfigurationHandleIdClick(customer)}> New Quote </p></td>
+                            <td><p className="view-btn" title="New Quote" onClick={() => newConfigurationHandleIdClick(customer)}> New Quote </p></td>
                         </tr>
                     ))}
                 </tbody>

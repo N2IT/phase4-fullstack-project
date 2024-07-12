@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 
 const NewQuote = () => {
 
-  const { agent, isLoading, setAccount, setCustomers, setErrors, setAsDisabled } = useContext(AgentContext)
+  const { agent, isLoading, setAccount, setCustomers, setErrors, setAsDisabled, errors } = useContext(AgentContext)
   const { id } = useParams();
 
   useEffect(() => {

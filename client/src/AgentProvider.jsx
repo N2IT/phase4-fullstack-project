@@ -150,7 +150,7 @@ const AgentProvider = ({ children }) => {
 
     const newConfigurationHandleIdClick = (value) => {
         setCustomer(value)
-        setQuotes(quotes)
+        // setQuotes(quotes)
         navigate(`/customers/${value.id}/new-quote`)
     }
 

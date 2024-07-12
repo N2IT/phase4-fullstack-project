@@ -16,12 +16,14 @@ const CreateNewQuoteForm = () => {
         markup_variable: yup.string().required("Please enter you desired markup percentage for this quote.")
     })
 
+    // debugger
+
     const formik = useFormik({
         initialValues: {
             quote_number: `${prevQuote}`,
             title: '',
             total_cost: '',
-            discount: `${account.discount}`,
+            discount: `${localStorage.getItem(account.discount)}`,
             savings: '',
             markup_variable: '',
             sale_price: '',
