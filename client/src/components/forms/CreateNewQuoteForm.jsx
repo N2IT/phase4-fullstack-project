@@ -6,7 +6,7 @@ import { useParams } from 'react-router-dom';
 
 const CreateNewQuoteForm = () => {
 
-    const { agent, account, customer, errors, setErrors, setQuote, onSubmitNewQuoteForm } = useContext(AgentContext);
+    const { agent, customer, errors, setErrors, setQuote, onSubmitNewQuoteForm } = useContext(AgentContext);
     const { id } = useParams()
 
     const prevQuote = Math.floor(Math.random()*1000)
