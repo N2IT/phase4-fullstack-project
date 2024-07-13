@@ -28,7 +28,9 @@ function NavBar() {
           setAgent(null);
           setAccountForm(true)
           navigate('/');
-          localStorage.removeItem()
+          localStorage.removeItem('account.id')
+          localStorage.removeItem('account.discount')
+          // localStorage.clear()
         }
       });
   };
@@ -65,10 +67,11 @@ function NavBar() {
                   <p>Welcome, {agent.username}!</p>
                   <Link to="/" onClick={handleClose}>Home</Link>
                   <Link to="/accounts" onClick={handleClose}>Accounts</Link>
-                  <Link to="/users" onClick={handleClose}>Users</Link>
-                  <Link to='/customers' onClick={handleClose}>Customers</Link>
-                  <Link to="/quotes" onClick={handleClose}>Quotes</Link>
-                  <Link to='/configurations' onClick={handleClose}>Configurations</Link>
+                  <Link to="/users" onClick={() => (handleClose(), localStorage.removeItem('account.id'), localStorage.removeItem('account.discount'))}>Users</Link>
+                  {/* <Link to="/users" onClick={handleClose}>Users</Link> */}
+                  <Link to='/customers' onClick={() => (handleClose(), localStorage.removeItem('account.id'), localStorage.removeItem('account.discount'))}>Customers</Link>
+                  <Link to="/quotes" onClick={() => (handleClose(), localStorage.removeItem('account.id'), localStorage.removeItem('account.discount'))}>Quotes</Link>
+                  <Link to='/configurations' onClick={() => (handleClose(), localStorage.removeItem('account.id'), localStorage.removeItem('account.discount'))}>Configurations</Link>
                   <ButtonMailto label="Support" mailto="mailto:tonyeder11@gmail.com?subject=Quote Pro Assistance Needed&body=Hello Admin, I could use some help with the following items:" />
                   <hr />
                   <button onClick={handleLogoutClick}>Logout</button>

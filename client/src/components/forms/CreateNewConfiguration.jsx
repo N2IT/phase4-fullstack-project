@@ -37,7 +37,6 @@ const CreateNewConfiguration = () => {
                 .then((data) => {
                     {data.errors ? setErrors(data.errors) : setConfiguration(data), onSubmitNewQuoteForm(), navigate(`/quotes/${quote.id}`)}
                 })
-                
         }
 })
                     

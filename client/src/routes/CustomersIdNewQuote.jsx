@@ -1,4 +1,3 @@
-import { useState } from "react";
 import CreateNewQuoteForm from "../components/forms/CreateNewQuoteForm";
 import CreateNewConfiguration from "../components/forms/CreateNewConfiguration";
 import Unauthorized from "../components/Unauthorized";
@@ -9,12 +8,10 @@ import { useParams } from "react-router-dom";
 
 const CustomersIdNewQuote = () => {
 
-    const { agent, setAccount, setCustomer, setAsDisabled, setErrors, customer, newQuotePageStatus, isLoading } = useContext(AgentContext);
+    const { agent, setCustomer, setAsDisabled, setErrors, customer, newQuotePageStatus, isLoading } = useContext(AgentContext);
     const { id } = useParams()
 
     useEffect(() => {
-        // const account = JSON.parse(localStorage.getItem('account'));
-        // setAccount(account)
         fetch(`/api/customers/${id}`)
         .then(response => {
             if (!response.ok) {

@@ -37,10 +37,6 @@ const LoginForm = () => {
                     setAgent(agent);
                     navigate('/');
                 })
-            // .catch((error) => {
-            //     console.error('Error during login:', error.message);
-            //     setErrors({ api: error.message });
-            // });
         },
     });
 

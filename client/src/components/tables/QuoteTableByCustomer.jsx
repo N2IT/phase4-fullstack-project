@@ -7,23 +7,28 @@ import Col from 'react-bootstrap/Col';
 
 const QuoteTableByCustomer = () => {
 
-    const { quotes, handleIdClick, customer, newConfigurationHandleIdClick } = useContext(AgentContext);
+    const { agent, quotes, handleIdClick, customer, newConfigurationHandleIdClick } = useContext(AgentContext);
 
 
     const quotesByCustomer = quotes.filter(quote => {
         return parseInt(quote.customer_id, 10) === customer.id;
     });
 
-    return ( 
+    return (
         <>
             <Container>
                 <Row>
                     <Col md={4} sm={12}>
                         <h3>Quote Activity</h3>
                     </Col>
-                    <Col md={4} sm={12}>
-                        <button type="button" onClick={() => newConfigurationHandleIdClick(customer)}>Create New Quote</button>
-                    </Col>
+                    {
+                        agent.role_id === 1
+                            ? null
+                            :
+                            <Col md={4} sm={12}>
+                                <button type="button" onClick={() => newConfigurationHandleIdClick(customer)}>Create New Quote</button>
+                            </Col>
+                    }
                 </Row>
             </Container>
 
