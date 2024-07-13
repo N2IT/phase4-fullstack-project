@@ -26,7 +26,8 @@ const AccountById = () => {
                 setAccount(data);
                 setAsDisabled(true);
                 setErrors(null);
-                localStorage.setItem('account', JSON.stringify(account))
+                localStorage.setItem('account.id', JSON.stringify(data.id))
+                localStorage.setItem('account.discount', JSON.stringify(data.discount))
             })
             .catch(error => {
                 console.error('Errors:', error);
@@ -51,7 +52,7 @@ const AccountById = () => {
                 setErrors([error.errors] || ['Unknown Error']);
                 setUsers(null);
             });
-    }, [agent]);
+    }, [id,agent]);
 
     if (isLoading) {
         return <div>Loading ...</div>;

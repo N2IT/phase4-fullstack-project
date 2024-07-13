@@ -13,8 +13,8 @@ const CustomersIdNewQuote = () => {
     const { id } = useParams()
 
     useEffect(() => {
-        const account = JSON.parse(localStorage.getItem('account'));
-        setAccount(account)
+        // const account = JSON.parse(localStorage.getItem('account'));
+        // setAccount(account)
         fetch(`/api/customers/${id}`)
         .then(response => {
             if (!response.ok) {

@@ -28,6 +28,7 @@ function NavBar() {
           setAgent(null);
           setAccountForm(true)
           navigate('/');
+          localStorage.removeItem()
         }
       });
   };
