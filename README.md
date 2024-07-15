@@ -2,6 +2,9 @@
 
 Unlock the full potential of your sales and management efforts with the Quote Pro application. Designed to help streamline your customer and quote management processes, my application empowers your team with targeted functionalities designed for each role. Sign up today to take command of your business operations!
 
+
+# Key Features
+
 ## Roles and Permissions:
 <ul>
     <li>Administrator: Gain comprehensive control with the ability to create, update, read, and delete any resource in the database.</li>
@@ -11,16 +14,6 @@ Unlock the full potential of your sales and management efforts with the Quote Pr
 
 Start with Quote Pro now and explore how our tailored roles can enhance your business's efficiency and productivity. Each role is designed to fit seamlessly into your workflow, ensuring you and your team can achieve more, faster.</li>
 
-
-## Key Features
-
-- Resources include Account, User, Customer, Quotes, & Configurations
-
-- As an Aministrator you have full CRUD permissions: Create, Read, Update, or Delete all resources within the application.
-
-- As a Manager you have more limited CRUD permissions by resource: Create, Read, Update, or Delete any resource except for Account.
-
-- As a Sales role your permissions are further restricted so you focus more on customer acquisition and quote management.
 
 ## Permissions by Role
 
