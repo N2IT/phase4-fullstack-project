@@ -1,6 +1,15 @@
 # Quote Pro Application
 
-Welcome to the quote pro application where you have total control over your customer base and quote management specific to your business. Sign up to use this application and demo CRUD permissions by each role.  There are three roles to choose from, each of which authorize access and capabilities within each resource.  As an admininstrator you take total control over the application as you can create, update, read, or delete any resource within the database.  Or sign up to be a Manager to oversee users, quotes, customers, and configurations specific to your business.  Add new leads to the customers table, then initiate new quotes for those new (or returning) customers. Need a sales rep to soley focus on customer acquisition and generating new quotes? Add a new user to your team and provide them restricted access so they focus on lead generation and converting quotes.
+Unlock the full potential of your sales and management efforts with the Quote Pro application. Designed to help streamline your customer and quote management processes, my application empowers your team with targeted functionalities designed for each role. Sign up today to take command of your business operations!
+
+## Roles and Permissions:
+<ul>
+    <li>Administrator: Gain comprehensive control with the ability to create, update, read, and delete any resource in the database.</li>
+    <li>Manager: Oversee users, quotes, customers, and configurations. Add new leads, manage customer information, and initiate quotes, enhancing oversight and efficiency.</li>
+    <li>Sales: Concentrate on lead generation and quote management. Perfect for roles focused on expanding customer reach and securing new business.</li>
+</ul>
+
+Start with Quote Pro now and explore how our tailored roles can enhance your business's efficiency and productivity. Each role is designed to fit seamlessly into your workflow, ensuring you and your team can achieve more, faster.</li>
 
 
 ## Key Features
