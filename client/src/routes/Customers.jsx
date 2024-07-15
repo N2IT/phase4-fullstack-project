@@ -14,6 +14,9 @@ const Customers = () => {
       .then((customer) => setCustomers(customer))
       .then(() => setIsLoading(false))
       .catch(error => console.error("Error:", error));
+    
+    localStorage.removeItem('account.id')
+    localStorage.removeItem('account.discount')
 
   }, [])
 

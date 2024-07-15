@@ -14,6 +14,9 @@ const Quotes = () => {
       .then((quote) => setQuotes(quote))
       .then(() => setIsLoading(false))
       .catch(error => console.error("Error:", error));
+  
+    localStorage.removeItem('account.id')
+    localStorage.removeItem('account.discount')
 
   }, [])
 

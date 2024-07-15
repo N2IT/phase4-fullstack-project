@@ -43,6 +43,7 @@ const ConfigurationById = () => {
                 setErrors([error.errors] || ['Unknown Error']);
                 setConfiguration(null);
             });
+
     }, [id, agent]);
 
     if (isLoading) {
