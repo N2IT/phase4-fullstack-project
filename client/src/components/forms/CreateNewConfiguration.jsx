@@ -20,7 +20,7 @@ const CreateNewConfiguration = () => {
             product_title: "",
             product_description: "",
             cost: "",
-            quote_id: `${quote.id}`,
+            quote_id: !quote.id ? location.reload() : `${quote.id}`,
             created_by: `${agent.id}`,
             status: true,
         },
