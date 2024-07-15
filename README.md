@@ -1,6 +1,6 @@
 # Quote Pro Application
 
-Unlock the full potential of your sales and management efforts with the Quote Pro application. Designed to help streamline your customer and quote management processes, my application empowers your team with targeted functionalities designed for each role. Sign up today to take command of your business operations!
+Unlock the full potential of your sales and management efforts with the Quote Pro application. Designed to help streamline your customer and quote management processes, Quote Pro empowers your team with targeted functionalities designed for each role. Sign up today to take command of your business operations!
 
 
 # Key Features
