@@ -8,7 +8,7 @@ Unlock the full potential of your sales and management efforts with the Quote Pr
 ## Roles and Permissions:
 <ul>
     <li>Administrator: Gain comprehensive control with the ability to create, update, read, and delete any resource in the database.</li>
-    <li>Manager: Oversee users, quotes, customers, and configurations. Add new leads, manage customer information, and initiate quotes, enhancing oversight and efficiency.</li>
+    <li>Manager: Oversee users, quotes, customers, and configurations. Add users to your team, create new new leads or manage existing customer information, and initiate quotes, all of which enhances your oversight and efficiency.</li>
     <li>Sales: Concentrate on lead generation and quote management. Perfect for roles focused on expanding customer reach and securing new business.</li>
 </ul>
 
