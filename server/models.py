@@ -57,7 +57,7 @@ class User(db.Model,SerializerMixin):
 
     id = db.Column(db.Integer, primary_key = True)
     email = db.Column(db.String, nullable=False, unique = True)
-    username = db.Column(db.String(3), nullable=False, unique=True)
+    username = db.Column(db.String, nullable=False, unique=True)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     created_by = db.Column(db.Integer)
@@ -91,20 +91,20 @@ class User(db.Model,SerializerMixin):
             return {'errors' : '402: First and / or last name fields must be populated.'}
         return name
 
-    @validates('username')
-    def validate_username(self, key, username):
-        try:
-            if username == "":
-                return {'errors' : '422: A username must contain 3 or more characters'}, 422
-            elif len(username) < 3:
-                return {'errors' : '422: A username must contain 3 or more characters'}, 422
-            elif User.query.filter(User.username == username).first():
-                return {'errors' : '422: The username value entered is not unique.'}, 422
-            return username
-        except ValidationError as e:
-            raise ValidationError(f'Email validation error: {str(e)}')
-        except Exception as e:
-            raise ValidationError(f'An unexpected error occurred: {str(e)}')
+    # @validates('username')
+    # def validate_username(self, key, username):
+    #     try:
+    #         if username == "":
+    #             return {'errors' : '422: A username must contain 3 or more characters'}, 422
+    #         elif len(username) < 3:
+    #             return {'errors' : '422: A username must contain 3 or more characters'}, 422
+    #         elif User.query.filter(User.username == username).first():
+    #             return {'errors' : '422: The username value entered is not unique.'}, 422
+    #         return username
+    #     except ValidationError as e:
+    #         raise ValidationError(f'Email validation error: {str(e)}')
+    #     except Exception as e:
+    #         raise ValidationError(f'An unexpected error occurred: {str(e)}')
     
     @validates('email')
     def validate_email(self, key, address):
