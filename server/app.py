@@ -3,8 +3,8 @@
 from flask import request, session, make_response, jsonify
 from flask_restful import Api, Resource
 import random
-from config import app, db, api
-from models import Account, User, Role, Permission, RolePermission, Quote, Customer, Configuration
+from config import *
+from models import *
 from seed import calculate_quote_info, update_quote_discount
 
 # just imported Account, User above
