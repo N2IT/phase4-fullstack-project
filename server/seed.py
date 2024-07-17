@@ -7,13 +7,12 @@ from models import *
 
 fake = Faker()
 status_list = ['active', 'inactive']
-roles = [1, 2, 3]
 
 def create_accounts():
   accounts = []
   for _ in range(10):
     a = Account(
-      account_number = rc(range(0, 1000)),
+      account_number = fake.unique.pyint(min_value=1, max_value=1000),
       company_name = fake.company(),
       address_1 = fake.street_address(),
       address_2 = fake.building_number(),
@@ -34,6 +33,8 @@ def create_accounts():
 
 def create_users():
 
+  # roles = Roles.query.all()
+
   users = []
   for _ in range(20):
     u = User(
@@ -44,7 +45,7 @@ def create_users():
       created_by = 1,
       created_at = datetime.now(),
       status = choices(status_list, weights = [10, 1], k=1)[0],
-      role_id = choices(roles, weights = [1, 5, 10], k=1)[0],
+      role_id = rc([role.id for role in Role.query.all()]),
       account_id = rc([account.id for account in accounts]),
     )
 
@@ -93,7 +94,7 @@ def create_quotes():
     account_data = customer_account_data[selected_customer_id]
 
     q = Quote(
-        quote_number=rc(range(0, 1000)),
+        quote_number=fake.unique.pyint(min_value=1, max_value=1000),
         title=fake.name(),
         customer_id=selected_customer_id,
         account_id=account_data['account_id'],
@@ -192,16 +193,10 @@ if __name__ == "__main__":
     db.session.add_all(accounts)
     db.session.commit()
 
-    print('Seeding users...')
-    users = create_users()
-    db.session.add_all(users)
-    db.session.commit()
-
     print('Creating Roles...')
     role0=Role(title="admin")
     role1=Role(title="manager")
     role2=Role(title="sales")
-    role3=Role(title="guest")
 
     db.session.add_all([role0, role1, role2])
     db.session.commit()
@@ -256,17 +251,22 @@ if __name__ == "__main__":
     rp23 = RolePermission(role = role2, permission = p9, status = 'active')
     rp24 = RolePermission(role = role2, permission = p10, status = 'active') 
 
-    print('Adding roles_permissions to guest...')
-    rp25 = RolePermission(role = role3, permission = p1, status = 'active')
-    rp26 = RolePermission(role = role3, permission = p4, status = 'active')
-    rp27 = RolePermission(role = role3, permission = p5, status = 'active')
-    rp28 = RolePermission(role = role3, permission = p6, status = 'active')
-    rp29 = RolePermission(role = role3, permission = p8, status = 'active')
-    rp30 = RolePermission(role = role3, permission = p9, status = 'active')
-    rp31= RolePermission(role = role3, permission = p10, status = 'active')
-    rp32 = RolePermission(role = role3, permission = p11, status = 'active')
+    # print('Adding roles_permissions to guest...')
+    # rp25 = RolePermission(role = role3, permission = p1, status = 'active')
+    # rp26 = RolePermission(role = role3, permission = p4, status = 'active')
+    # rp27 = RolePermission(role = role3, permission = p5, status = 'active')
+    # rp28 = RolePermission(role = role3, permission = p6, status = 'active')
+    # rp29 = RolePermission(role = role3, permission = p8, status = 'active')
+    # rp30 = RolePermission(role = role3, permission = p9, status = 'active')
+    # rp31= RolePermission(role = role3, permission = p10, status = 'active')
+    # rp32 = RolePermission(role = role3, permission = p11, status = 'active')
 
-    db.session.add_all([rp0,rp1,rp2,rp3,rp4,rp5,rp6,rp7,rp8,rp9,rp10,rp11,rp12,rp13,rp14,rp15,rp16,rp17,rp18,rp19,rp20,rp21,rp22,rp23,rp24,rp25,rp26,rp27,rp28,rp29,rp30,rp31,rp32])
+    db.session.add_all([rp0,rp1,rp2,rp3,rp4,rp5,rp6,rp7,rp8,rp9,rp10,rp11,rp12,rp13,rp14,rp15,rp16,rp17,rp18,rp19,rp20,rp21,rp22,rp23,rp24])
+    db.session.commit()
+
+    print('Seeding users...')
+    users = create_users()
+    db.session.add_all(users)
     db.session.commit()
 
     print('seeding customers...')
