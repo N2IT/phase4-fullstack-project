@@ -1,7 +1,7 @@
 """second attempt at recent db update
 
 Revision ID: 1864b1a64432
-Revises: 11f94b7aaf63
+Revises: f0e7755eebed
 Create Date: 2024-06-24 10:32:39.861865
 
 """
@@ -11,7 +11,7 @@ import sqlalchemy as sa
 
 # revision identifiers, used by Alembic.
 revision = '1864b1a64432'
-down_revision = '11f94b7aaf63'
+down_revision = 'f0e7755eebed'
 branch_labels = None
 depends_on = None
 
