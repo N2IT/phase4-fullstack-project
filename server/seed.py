@@ -7,7 +7,7 @@ from models import *
 
 fake = Faker()
 status_list = ['active', 'inactive']
-roles = [1, 2, 3, 4]
+roles = [1, 2, 3]
 
 def create_accounts():
   accounts = []
@@ -32,27 +32,27 @@ def create_accounts():
   return accounts
 
 
-# def create_users():
+def create_users():
 
-#   users = []
-#   for _ in range(20):
-#     u = User(
-#       first_name = fake.first_name(),
-#       last_name = fake.last_name(),
-#       email = fake.profile(fields=['mail'])['mail'],
-#       username=fake.profile(fields=['username'])['username'],
-#       created_by = 1,
-#       created_at = datetime.now(),
-#       status = choices(status_list, weights = [10, 1], k=1)[0],
-#       role_id = choices(roles, weights = [1, 5, 10, 2], k=1)[0],
-#       account_id = rc([account.id for account in accounts]),
-#     )
+  users = []
+  for _ in range(20):
+    u = User(
+      first_name = fake.first_name(),
+      last_name = fake.last_name(),
+      email = fake.profile(fields=['mail'])['mail'],
+      username=fake.profile(fields=['username'])['username'],
+      created_by = 1,
+      created_at = datetime.now(),
+      status = choices(status_list, weights = [10, 1], k=1)[0],
+      role_id = choices(roles, weights = [1, 5, 10], k=1)[0],
+      account_id = rc([account.id for account in accounts]),
+    )
 
-#     u.password_hash = fake.password(length=3, special_chars=False, upper_case=False)
+    u.password_hash = fake.password(length=3, special_chars=False, upper_case=False)
   
-#     users.append(u)
+    users.append(u)
 
-#   return users
+  return users
 
 def create_customers():
   customers = []
@@ -177,25 +177,25 @@ def update_quote_discount(discount, id):
 if __name__ == "__main__":
   with app.app_context():
     print("Clearing db...")
-    db.session.commit()
-    Account.query.delete()
+    Configuration.query.delete()
     User.query.delete()
     RolePermission.query.delete()
     Role.query.delete()
     Permission.query.delete()
-    Customer.query.delete()
-    Configuration.query.delete()
     Quote.query.delete()
+    Customer.query.delete()
+    Account.query.delete()
+    db.session.commit()
 
     print("Seeding accounts...")
     accounts = create_accounts()
     db.session.add_all(accounts)
     db.session.commit()
 
-    # print('Seeding users...')
-    # users = create_users()
-    # db.session.add_all(users)
-    # db.session.commit()
+    print('Seeding users...')
+    users = create_users()
+    db.session.add_all(users)
+    db.session.commit()
 
     print('Creating Roles...')
     role0=Role(title="admin")
