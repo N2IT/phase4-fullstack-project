@@ -32,27 +32,27 @@ def create_accounts():
   return accounts
 
 
-def create_users():
+# def create_users():
 
-  users = []
-  for _ in range(20):
-    u = User(
-      first_name = fake.first_name(),
-      last_name = fake.last_name(),
-      email = fake.profile(fields=['mail'])['mail'],
-      username=fake.profile(fields=['username'])['username'],
-      created_by = 1,
-      created_at = datetime.now(),
-      status = choices(status_list, weights = [10, 1], k=1)[0],
-      role_id = choices(roles, weights = [1, 5, 10, 2], k=1)[0],
-      account_id = rc([account.id for account in accounts]),
-    )
+#   users = []
+#   for _ in range(20):
+#     u = User(
+#       first_name = fake.first_name(),
+#       last_name = fake.last_name(),
+#       email = fake.profile(fields=['mail'])['mail'],
+#       username=fake.profile(fields=['username'])['username'],
+#       created_by = 1,
+#       created_at = datetime.now(),
+#       status = choices(status_list, weights = [10, 1], k=1)[0],
+#       role_id = choices(roles, weights = [1, 5, 10, 2], k=1)[0],
+#       account_id = rc([account.id for account in accounts]),
+#     )
 
-    u.password_hash = fake.password(length=7, special_chars=False, upper_case=False)
+#     u.password_hash = fake.password(length=3, special_chars=False, upper_case=False)
   
-    users.append(u)
+#     users.append(u)
 
-  return users
+#   return users
 
 def create_customers():
   customers = []
@@ -192,10 +192,10 @@ if __name__ == "__main__":
     db.session.add_all(accounts)
     db.session.commit()
 
-    print('Seeding users...')
-    users = create_users()
-    db.session.add_all(users)
-    db.session.commit()
+    # print('Seeding users...')
+    # users = create_users()
+    # db.session.add_all(users)
+    # db.session.commit()
 
     print('Creating Roles...')
     role0=Role(title="admin")

@@ -198,7 +198,7 @@ class Customer(db.Model, SerializerMixin):
     first_name = db.Column(db.String, nullable = False)
     last_name = db.Column(db.String, nullable = False)
     email = db.Column(db.String, nullable = False, unique = True)
-    phone = db.Column(db.Integer, nullable = False, unique = True)
+    phone = db.Column(db.String, nullable = False, unique = True)
     address_1 = db.Column(db.String)
     address_2 = db.Column(db.String)
     city = db.Column(db.String)
