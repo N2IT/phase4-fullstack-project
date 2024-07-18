@@ -106,6 +106,7 @@ class Accounts(Resource):
 
         db.session.add(new_account)
         db.session.commit()
+        # db.session.close()
 
         return new_account.to_dict(), 201
       else:
