@@ -808,26 +808,6 @@ class ConfigurationById(Resource):
     except ValueError as e:
       return {'errors' : str(e)}, 404
 
-# class QuoteConfigurations(Resource):
-#   def get(self, id):
-#     try:
-#       associated_configs = []
-#       quote = Quote.query.filter(Quote.id == id).first()
-#       configurations = quote.configurations
-#       for configuration in configurations:
-#         configs_to_dict = configuration.to_dict()
-#         associated_configs.append(configs_to_dict)
-#       if not associated_configs:
-#         return {'errors' : 'There are no configurations associated to this quote'}, 200
-#       else:
-#         return (
-#           associated_configs,
-#           200
-#         )
-#     except Exception as e:
-#       return {'errors' : str(e)}, 500
-#     except ValueError as e:
-#       return {'errors' : str(e)}, 404
 
 api.add_resource(Home, '/')
 api.add_resource(Accounts, '/accounts')
@@ -843,7 +823,6 @@ api.add_resource(Customers, '/customers')
 api.add_resource(CustomerById, '/customers/<int:id>')
 api.add_resource(Configurations, '/configurations')
 api.add_resource(ConfigurationById, '/configurations/<int:id>')
-# api.add_resource(QuoteConfigurations, '/quotes/<int:id>/configurations')
 
 if __name__ == "__main__":
   app.run(port=5555, debug=True)
