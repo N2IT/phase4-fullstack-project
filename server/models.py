@@ -18,7 +18,7 @@ class Account(db.Model, SerializerMixin):
     state = db.Column(db.String)
     zip_code = db.Column(db.Integer)
     phone = db.Column(db.String)
-    discount = db.Column(db.Float)
+    discount = db.Column(db.Float, nullable=False)
     status = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     created_by = db.Column(db.Integer)
@@ -57,7 +57,7 @@ class User(db.Model,SerializerMixin):
 
     id = db.Column(db.Integer, primary_key = True)
     email = db.Column(db.String, nullable=False, unique = True)
-    username = db.Column(db.String, nullable=False, unique=True)
+    username = db.Column(db.String(3), nullable=False, unique=True)
     first_name = db.Column(db.String, nullable=False)
     last_name = db.Column(db.String, nullable=False)
     created_by = db.Column(db.Integer)
@@ -66,7 +66,7 @@ class User(db.Model,SerializerMixin):
     updated_by = db.Column(db.Integer)
     status = db.Column(db.String)
     account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'), nullable = False)
-    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
+    role_id = db.Column(db.Integer, db.ForeignKey('roles.id'), nullable = False)
     _password_hash = db.Column(db.String)
 
     @hybrid_property
