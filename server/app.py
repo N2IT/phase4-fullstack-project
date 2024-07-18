@@ -808,6 +808,21 @@ class ConfigurationById(Resource):
     except ValueError as e:
       return {'errors' : str(e)}, 404
 
+# class AccountsDiscountGreaterTen(Resource):
+#   def get(self):
+#     try:
+      # fetch all accounts
+      # accounts = Account.query.filter(Account.discount > .10).all()
+      # return [account.to_dict() for account in Account.query.all() if account.discount > .10]
+      # greaterThan = [account.to_dict() for account in accounts if account.discount > .10]
+      # return accounts with discount > 10 %
+      # return make_response(
+      #   accounts.to_dict(),
+      #   200
+      # )
+    # except Exception as e:
+    #   return {'errors' : str(e)}
+
 
 api.add_resource(Home, '/')
 api.add_resource(Accounts, '/accounts')
@@ -823,6 +838,7 @@ api.add_resource(Customers, '/customers')
 api.add_resource(CustomerById, '/customers/<int:id>')
 api.add_resource(Configurations, '/configurations')
 api.add_resource(ConfigurationById, '/configurations/<int:id>')
+# api.add_resource(AccountsDiscountGreaterTen, '/accounts-greater')
 
 if __name__ == "__main__":
   app.run(port=5555, debug=True)
