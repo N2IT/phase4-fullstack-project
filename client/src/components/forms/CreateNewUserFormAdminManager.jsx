@@ -112,7 +112,7 @@ const CreateNewUserFormAdminManager = () => {
                     <label htmlFor="role_id">Role &nbsp; </label>
                     <select id='role_id' name='role_id' onChange={formik.handleChange} value={formik.values.role_id}>
                         <option value="" disabled defaultValue>Select a role</option>
-                        <option value='1'>Admin</option>
+                        {agent.role_id ===1 ? <option value='1'>Admin</option> : null}
                         <option value='2'>Manager</option>
                         <option value='3'>Sales</option>
                     </select>
