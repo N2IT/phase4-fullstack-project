@@ -12,7 +12,7 @@ class Account(db.Model, SerializerMixin):
     id = db.Column(db.Integer, primary_key = True)
     account_number = db.Column(db.Integer, nullable=False)
     company_name = db.Column(db.String, nullable=False, unique=True)
-    address_1 = db.Column(db.String)
+    address_1 = db.Column(db.String, nullable=False)
     address_2 = db.Column(db.String)
     city = db.Column(db.String)
     state = db.Column(db.String)
