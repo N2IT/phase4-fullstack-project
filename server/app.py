@@ -389,7 +389,6 @@ class Quotes(Resource):
   def post(self):
     try:
       form_data = request.get_json()
-      breakpoint()
 
       quote_number = int(form_data.get('quote_number'))
       title = form_data.get('title')
