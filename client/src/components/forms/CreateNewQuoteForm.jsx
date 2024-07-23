@@ -11,8 +11,6 @@ const CreateNewQuoteForm = () => {
 
     const prevQuote = Math.floor(Math.random()*1000)
 
-    const acctDiscount = parseFloat(localStorage.getItem('account.discount'))
-
     const formSchema = yup.object().shape({
         title: yup.string().required("Please enter a title"),
         markup_variable: yup.string().required("Please enter you desired markup percentage for this quote.")
