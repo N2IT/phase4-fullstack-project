@@ -11,6 +11,8 @@ const CreateNewQuoteForm = () => {
 
     const prevQuote = Math.floor(Math.random()*1000)
 
+    const acctDiscount = parseFloat(localStorage.getItem('account.discount'))
+
     const formSchema = yup.object().shape({
         title: yup.string().required("Please enter a title"),
         markup_variable: yup.string().required("Please enter you desired markup percentage for this quote.")
@@ -24,11 +26,12 @@ const CreateNewQuoteForm = () => {
             title: '',
             total_cost: '',
             discount: localStorage.length !== 0 ? `${localStorage.getItem('account.discount')}` : history.go(-1),
-            savings: '',
+            // discount: `${acctDiscount}`,
+            // savings: '',
             markup_variable: '',
-            sale_price: '',
-            margin_percentage: '',
-            margin_dollars: '',
+            // sale_price: '',
+            // margin_percentage: '',
+            // margin_dollars: '',
             notes: '',
             status: 'active',
             converted: '',
@@ -90,7 +93,6 @@ const CreateNewQuoteForm = () => {
                         id="markup_variable"
                         name="markup_variable"
                         onChange={formik.handleChange}
-                        placeholder='Ex: 2.23'
                         value={formik.values.markup_variable}
                     />
                     <p style={{ color: 'red' }}> {formik.errors.markup_variable} </p>
