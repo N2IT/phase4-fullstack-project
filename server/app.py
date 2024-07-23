@@ -391,20 +391,20 @@ class Quotes(Resource):
     try:
       form_data = request.get_json()
 
-      quote_number = form_data.get('quote_number')
+      quote_number = int(form_data.get('quote_number'))
       title = form_data.get('title')
-      discount = form_data.get('discount')
+      discount = float(form_data.get('discount'))
       savings = form_data.get('savings')
-      markup_variable = form_data.get('markup_variable')
+      markup_variable = float(form_data.get('markup_variable'))
       sale_price = form_data.get('sale_price')
       margin_percentage = form_data.get('margin_percentage')
       margin_dollars = form_data.get('margin_dollars')
       notes = form_data.get('notes')
       status = form_data.get('status')
       converted = form_data.get('converted')
-      customer_id = form_data.get('customer_id')
-      created_by = form_data.get('created_by')
-      account_id = form_data.get('account_id')
+      customer_id = int(form_data.get('customer_id'))
+      created_by = int(form_data.get('created_by'))
+      account_id = int(form_data.get('account_id'))
 
       errors = []
 
