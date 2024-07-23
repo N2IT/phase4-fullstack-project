@@ -15,9 +15,9 @@ from seed import calculate_quote_info, update_quote_discount
 #             return {"error": "Unauthorized"}, 403
 # create a custom decorator to conduct session check and apply to each of the resources
 
-@app.errorhandler(404)
-def not_found(e):
-    return render_template("index.html")
+@app.route('/<int:id>')
+def index(id=0):
+  return render_template('index.html')
 
 @app.before_request
 def check_if_logged_in():
@@ -31,7 +31,7 @@ def check_if_logged_in():
 
 class Home(Resource):
   def get(self):
-    return {'message' : 'Welcome to QP Server'}, 200
+    return render_template("index.html")
   
 
 class Accounts(Resource):
