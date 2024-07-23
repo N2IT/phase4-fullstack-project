@@ -25,13 +25,22 @@ def check_if_logged_in():
       print('User is logged in')
       print(session['user_id'])
 
+
+# activating these routes along with appending /api to routes renders all to frontend
+
+
+@app.route('/')
 @app.route('/<int:id>')
 def index(id=0):
     return render_template("index.html")
+    
+api = Api(app, prefix="/api")
 
-class Home(Resource):
-  def get(self):
-    return {'message' : 'Welcome to QP Server'}, 200
+
+# class Home(Resource):
+#   def get(self):
+#     return render_template("index.html")
+#     # Activating this causes the <!doctype> html to render on frontend
   
 
 class Accounts(Resource):
