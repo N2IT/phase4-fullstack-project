@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from flask import request, session, make_response, jsonify
+from flask import request, session, make_response, jsonify, render_template
 from flask_restful import Api, Resource
 import random
 from config import app, db, api
@@ -15,6 +15,7 @@ from seed import calculate_quote_info, update_quote_discount
 #             return {"error": "Unauthorized"}, 403
 # create a custom decorator to conduct session check and apply to each of the resources
 
+
 @app.before_request
 def check_if_logged_in():
   if session.get('user_id') is None:
@@ -24,6 +25,9 @@ def check_if_logged_in():
       print('User is logged in')
       print(session['user_id'])
 
+@app.route('/<int:id>')
+def index(id=0):
+    return render_template("index.html")
 
 class Home(Resource):
   def get(self):
@@ -843,11 +847,6 @@ api.add_resource(CustomerById, '/customers/<int:id>')
 api.add_resource(Configurations, '/configurations')
 api.add_resource(ConfigurationById, '/configurations/<int:id>')
 # api.add_resource(QuoteConfigurations, '/quotes/<int:id>/configurations')
-
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def catch_all(path):
-    return render_template("index.html")
 
 if __name__ == "__main__":
   app.run(port=5555, debug=True)
