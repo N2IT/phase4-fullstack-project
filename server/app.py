@@ -827,7 +827,6 @@ class ConfigurationById(Resource):
     # except Exception as e:
     #   return {'errors' : str(e)}
 
-
 api.add_resource(Home, '/')
 api.add_resource(Accounts, '/accounts')
 api.add_resource(AccountById, '/accounts/<int:id>')
@@ -845,4 +844,4 @@ api.add_resource(ConfigurationById, '/configurations/<int:id>')
 # api.add_resource(AccountsDiscountGreaterTen, '/accounts-greater')
 
 if __name__ == "__main__":
-  app.run(port=5555, debug=True)
+  app.run(port=5000, debug=True)

@@ -26,8 +26,8 @@ metadata = MetaData(naming_convention=naming_convention)
 app = Flask(
     __name__,
     static_url_path='',
-    static_folder='../client/build',
-    template_folder='../client/build'
+    static_folder='../client/dist',
+    template_folder='../client/dist'
 )
 
 app.secret_key = os.getenv("FLASK_SECRET_KEY")
