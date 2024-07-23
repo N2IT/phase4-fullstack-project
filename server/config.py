@@ -38,15 +38,6 @@ db = SQLAlchemy(app=app, metadata=metadata)
 
 migrate = Migrate(app=app, db=db)
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def catch_all(path):
-    return render_template("index.html")
-
-# @app.errorhandler(404)
-# def not_found(e):
-#     return render_template("index.html")
-
 bcrypt = Bcrypt(app=app)
 
 api = Api(app=app)
