@@ -844,10 +844,5 @@ api.add_resource(Configurations, '/configurations')
 api.add_resource(ConfigurationById, '/configurations/<int:id>')
 # api.add_resource(QuoteConfigurations, '/quotes/<int:id>/configurations')
 
-@app.route('/', defaults={'path': ''})
-@app.route('/<path:path>')
-def catch_all(path):
-    return render_template("index.html")
-
 if __name__ == "__main__":
   app.run(port=5555, debug=True)
