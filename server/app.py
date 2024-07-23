@@ -15,9 +15,10 @@ from seed import calculate_quote_info, update_quote_discount
 #             return {"error": "Unauthorized"}, 403
 # create a custom decorator to conduct session check and apply to each of the resources
 
-@app.route('/<int:id>')
-def index(id=0):
-  return render_template('index.html')
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def index(path):
+    return render_template("index.html")
 
 @app.before_request
 def check_if_logged_in():
@@ -29,9 +30,9 @@ def check_if_logged_in():
       print(session['user_id'])
 
 
-class Home(Resource):
-  def get(self):
-    return render_template("index.html")
+# class Home(Resource):
+#   def get(self):
+#     return render_template("index.html")
   
 
 class Accounts(Resource):
@@ -827,7 +828,9 @@ class ConfigurationById(Resource):
     # except Exception as e:
     #   return {'errors' : str(e)}
 
-api.add_resource(Home, '/')
+
+api = Api(app, prefix="/api")
+# api.add_resource(Home, '/')
 api.add_resource(Accounts, '/accounts')
 api.add_resource(AccountById, '/accounts/<int:id>')
 api.add_resource(Users, '/users')
