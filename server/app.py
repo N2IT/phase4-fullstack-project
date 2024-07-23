@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from flask import request, session, make_response, jsonify
+from flask import request, session, make_response, jsonify, render_template
 from flask_restful import Api, Resource
 import random
 from config import app, db, api
@@ -14,6 +14,10 @@ from seed import calculate_quote_info, update_quote_discount
 #         if not user_id:
 #             return {"error": "Unauthorized"}, 403
 # create a custom decorator to conduct session check and apply to each of the resources
+
+@app.errorhandler(404)
+def not_found(e):
+    return render_template("index.html")
 
 @app.before_request
 def check_if_logged_in():
