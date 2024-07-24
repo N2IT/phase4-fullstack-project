@@ -35,6 +35,7 @@ def check_if_logged_in():
 # class Home(Resource):
 #   def get(self):
 #     return {'message' : 'Welcome to QP Development Database'}, 200
+# creating nothing to redeploy with internal database
   
 
 class Accounts(Resource):
