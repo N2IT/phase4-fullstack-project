@@ -29,7 +29,7 @@ def check_if_logged_in():
 # activating these routes along with appending /api to routes renders all to frontend
 
 
-@app.route('/')
+# @app.route('/')
 @app.route('/<int:id>')
 def index(id=0):
     return render_template("index.html")
@@ -37,9 +37,9 @@ def index(id=0):
 api = Api(app, prefix="/api")
 
 
-# class Home(Resource):
-#   def get(self):
-#     return render_template("index.html")
+class Home(Resource):
+  def get(self):
+    return render_template("index.html")
 #     # Activating this causes the <!doctype> html to render on frontend
   
 
