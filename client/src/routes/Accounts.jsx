@@ -18,7 +18,7 @@ const Accounts = () => {
       .then(() => setIsLoading(false))
       .catch(error => console.error("Error:", error));
 
-  }, [])
+  }, [agent])
 
   if (isLoading) {
     return <div> Loading ... </div>
