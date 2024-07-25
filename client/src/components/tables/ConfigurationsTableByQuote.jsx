@@ -11,9 +11,7 @@ const ConfigurationsTableByQuote = () => {
     const { configurations, quote, handleIdClick, navigate, setNewQuotePageStatus } = useContext(AgentContext);
     const {id} = useParams()
 
-    const quoteConfigurations = quote.configurations.filter(configuration => {
-        return quote.id.toString() === id;
-    });
+    const quoteConfigurations = quote.configurations
 
     return (
         <>

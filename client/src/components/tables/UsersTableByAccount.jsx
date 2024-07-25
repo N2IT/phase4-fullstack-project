@@ -11,10 +11,11 @@ const UsersTableByAccount = () => {
     const { account, handleIdClick, agent, navigate } = useContext(AgentContext);
     const { id } = useParams()
 
-    const accountUsers = account.users.filter(user => {
-        // console.log(typeof user.account_id, typeof account.id);
-        return account.id.toString() === id;
-    });
+    // const accountUsers = account.users.filter(user => {
+    //     // console.log(typeof user.account_id, typeof account.id);
+    //     return account.id.toString() === id;
+    // });
+    const accountUsers = account.users
 
     return (
         <>

@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { useParams } from 'react-router-dom';
 import { AgentContext } from '../../AgentProvider';
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
@@ -8,11 +9,9 @@ import Col from 'react-bootstrap/Col';
 const QuoteTableByCustomer = () => {
 
     const { agent, quotes, handleIdClick, customer, newConfigurationHandleIdClick } = useContext(AgentContext);
+    const { id } = useParams()
 
-
-    const quotesByCustomer = quotes.filter(quote => {
-        return parseInt(quote.customer_id, 10) === customer.id;
-    });
+    const quotesByCustomer = customer.quotes
 
     return (
         <>

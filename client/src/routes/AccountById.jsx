@@ -33,24 +33,6 @@ const AccountById = () => {
                 setErrors([error.errors] || ['Unknown Error']);
                 setAccount(null);
             });
-
-        // fetch('/api/users')
-        //     .then(response => {
-        //         if (!response.ok) {
-        //             return response.json().then(data => { throw data; });
-        //         }
-        //         return response.json();
-        //     })
-        //     .then(data => {
-        //         setUsers(data);
-        //         setAsDisabled(true);
-        //         // setErrors(null);
-        //     })
-        //     .catch(error => {
-        //         console.error('Errors:', error);
-        //         setErrors([error.errors] || ['Unknown Error']);
-        //         setUsers(null);
-        //     });
     }, [id, agent]);
 
     if (isLoading) {

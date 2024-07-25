@@ -46,7 +46,7 @@ class Account(db.Model, SerializerMixin):
     customers = db.relationship('Customer', back_populates = 'account', cascade='all, delete')
     quotes = db.relationship('Quote', back_populates = 'account', cascade='all, delete')
 
-    serialize_rules = ('-users.status', '-users._password_hash','-users.account.customers', '-customers.account_id', '-customers.created_at', '-customers.create_by', '-customers.notes', '-customers.quotes', '-customers.updated_at', '-customers.updated_by', '-quotes.customer',)
+    serialize_rules = ('-users.status', '-users._password_hash','-users.account.customers', '-quotes.customer', '-customers.quotes.customer')
 
     def __repr__(self):
         return f'Account {self.id}, {self.account_number}, {self.company_name}, {self.address_1}, {self.address_2}, {self.city}, {self.state}, {self.zip_code}, {self.phone}, {self.discount}, {self.markup_variable}, {self.created_at}, {self.updated_at}'

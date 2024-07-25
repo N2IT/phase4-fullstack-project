@@ -5,7 +5,7 @@ import { AgentContext } from '../../AgentProvider';
 
 const CreateNewConfiguration = () => {
 
-    const { agent, setConfiguration, errors, setErrors, quote, navigate, onSubmitNewQuoteForm  } = useContext(AgentContext);
+    const { agent, setConfiguration, errors, setErrors, quote, navigate, onSubmitNewQuoteForm } = useContext(AgentContext);
 
     const formSchema = yup.object().shape({
         sku: yup.string().required("Please enter the sku for the product to quote"),
@@ -33,13 +33,27 @@ const CreateNewConfiguration = () => {
                 },
                 body: JSON.stringify(values),
             })
-                .then((res) => res.json()) 
-                .then((data) => {
-                    {data.errors ? setErrors(data.errors) : setConfiguration(data), onSubmitNewQuoteForm(), navigate(`/quotes/${quote.id}`)}
+                .then((response) => {
+                    if (!response.ok) {
+                        response.json().then((data) => {
+                            setErrors(data.errors);
+                        });
+                    }
+                    return response.json();
                 })
+                .then((data) => {
+                    setConfiguration(data);
+                    onSubmitNewQuoteForm()
+                    alert(`Configuration ${data.id} has been successfully created.`)
+                    navigate(`/quotes/${quote.id}`)
+                })
+                // .then((res) => res.json())
+                // .then((data) => {
+                //     { data.errors ? setErrors(data.errors) : setConfiguration(data), onSubmitNewQuoteForm(), navigate(`/quotes/${quote.id}`) }
+                // })
         }
-})
-                    
+    })
+
     return (
         <>
             <div className="account-details">

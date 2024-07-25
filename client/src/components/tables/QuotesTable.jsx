@@ -13,8 +13,8 @@ const QuotesTable = () => {
                     <thead>
                         <tr>
                             <th>Quote Number</th>
-                            <th>Dealer</th>
-                            {/* <th>Quote Title</th> */}
+                            {/* <th>Dealer</th> */}
+                            <th>Quote Title</th>
                             <th>Total Cost</th>
                             {/* <th>Discount</th>
                             <th>M. Variable</th> */}
@@ -35,7 +35,7 @@ const QuotesTable = () => {
                         {quotes.map((quote) => (
                             <tr key={quote.id} className="">
                                 <td>{quote.quote_number}</td>
-                                <td>{quote.account.company_name}</td>
+                                <td>{quote.title}</td>
                                 {/* <td>{quote.quote_number}</td> */}
                                 <td>{quote.total_cost ? "$" + (parseFloat(quote.total_cost).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")) : null}</td>
                                 {/* <td>{quote.discount}</td>

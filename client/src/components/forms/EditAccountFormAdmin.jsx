@@ -80,7 +80,7 @@ const EditAccountFormAdmin = ({ id }) => {
                         setErrors(data.errors);
                     } else {
                         handleUpdateAccount(data);
-                        location.reload()
+                        // location.reload()
                     }
                 });
         }
