@@ -39,45 +39,11 @@ const CustomerById = () => {
                 setCustomer(data);
                 setAsDisabled(true);
                 setErrors(null);
-                fetch(`/api/accounts/${data.account_id}`)
-                    .then(response => {
-                        if (!response.ok) {
-                            return response.json().then(data => { throw data; });
-                        }
-                        return response.json();
-                    })
-                    .then(data => {
-                        setAccount(data);
-                        setAsDisabled(true);
-                        setErrors(null);
-                    })
-                    .catch(error => {
-                        console.error('Errors:', error);
-                        setErrors([error.errors] || ['Unknown Error']);
-                        setAccount(null);
-                    });
             })
             .catch(error => {
                 console.error('Errors:', error);
                 setErrors([error.errors] || 'Unknown Error');
                 setCustomer(null);
-            });
-        fetch('/api/quotes')
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(data => { throw data; });
-                }
-                return response.json();
-            })
-            .then(data => {
-                setQuotes(data);
-                setAsDisabled(true);
-                // setErrors(null);
-            })
-            .catch(error => {
-                console.error('Errors:', error);
-                setErrors([error.errors] || ['Unknown Error']);
-                setQuotes(null);
             });
     }, [agent]);
 

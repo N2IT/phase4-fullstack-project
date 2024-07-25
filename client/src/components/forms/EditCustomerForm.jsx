@@ -5,10 +5,12 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { AgentContext } from '../../AgentProvider';
+import { useParams } from 'react-router-dom';
 
 const EditCustomerForm = () => {
 
-    const { agent, customer, errors, setErrors, disabled, handleEditClick, handleUpdateCustomer } = useContext(AgentContext);
+    const { agent, customer, errors, setErrors, disabled, setAsDisabled, handleEditClick, handleUpdateCustomer } = useContext(AgentContext);
+    const { id } = useParams()
 
     const [originalValues, setOriginalValues] = useState({
         // status: ''
@@ -64,6 +66,7 @@ const EditCustomerForm = () => {
                         setErrors(data.errors);
                     } else {
                         handleUpdateCustomer(data);
+                        setAsDisabled(!disabled)
                     }
                 });
         }
