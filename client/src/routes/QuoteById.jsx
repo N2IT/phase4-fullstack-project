@@ -98,7 +98,7 @@ const QuoteById = () => {
                                 </Row>
                                 {customer ?
                                 <Row>
-                                     <h3>For Customer: {customer.first_name}&nbsp;{customer.last_name} </h3>
+                                     <h3>For Customer: {quote.customer.first_name}&nbsp;{quote.customer.last_name} </h3>
                                 </Row>
                                 : null}
                                 <Row>
