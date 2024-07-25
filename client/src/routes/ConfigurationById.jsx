@@ -22,29 +22,29 @@ const ConfigurationById = () => {
         setShow(false)
     }
 
-    useEffect(() => {
-        if (!agent) {
-            return;
-        }
-        fetch(`/api/configurations/${id}`)
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(data => { throw data; });
-                }
-                return response.json();
-            })
-            .then(data => {
-                setConfiguration(data);
-                setAsDisabled(true);
-                setErrors(null);
-            })
-            .catch(error => {
-                console.error('Errors:', error);
-                setErrors([error.errors] || ['Unknown Error']);
-                setConfiguration(null);
-            });
+    // useEffect(() => {
+    //     if (!agent) {
+    //         return;
+    //     }
+    //     fetch(`/api/configurations/${id}`)
+    //         .then(response => {
+    //             if (!response.ok) {
+    //                 return response.json().then(data => { throw data; });
+    //             }
+    //             return response.json();
+    //         })
+    //         .then(data => {
+    //             setConfiguration(data);
+    //             setAsDisabled(true);
+    //             setErrors(null);
+    //         })
+    //         .catch(error => {
+    //             console.error('Errors:', error);
+    //             setErrors([error.errors] || ['Unknown Error']);
+    //             setConfiguration(null);
+    //         });
 
-    }, [id, agent]);
+    // }, [id, agent]);
 
     if (isLoading) {
         return <div>Loading ...</div>;
