@@ -37,6 +37,9 @@ const CreateNewConfiguration = () => {
                     if (!response.ok) {
                         response.json().then((data) => {
                             setErrors(data.errors);
+                            if (data.errors) {
+                                alert(data.errors)
+                            }
                         });
                     }
                     return response.json();

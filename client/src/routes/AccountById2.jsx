@@ -33,7 +33,7 @@ const AccountById = () => {
                 setErrors([error.errors] || ['Unknown Error']);
                 setAccount(null);
             });
-    }, []);
+    }, [id]);
 
     if (isLoading) {
         return <div>Loading ...</div>;
