@@ -16,11 +16,11 @@ from seed import calculate_quote_info, update_quote_discount
 # create a custom decorator to conduct session check and apply to each of the resources
 
 # COMMENT THIS BACK FOR PRODUCTION
-# @app.route("/", defaults={"path": ""})
-# @app.route("/<path:path>")
-# def index(path):
-#     return render_template("index.html")
-# api = Api(app, prefix="/api")
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def index(path):
+    return render_template("index.html")
+api = Api(app, prefix="/api")
 
 @app.before_request
 def check_if_logged_in():
@@ -32,9 +32,9 @@ def check_if_logged_in():
       print(session['user_id'])
 
 #COMMENT OUT THIS AS WELL AS THE ROUTE DOWN BELOW FOR DEV
-class Home(Resource):
-  def get(self):
-    return {'message' : 'Welcome to QP Development Database'}, 200
+# class Home(Resource):
+#   def get(self):
+#     return {'message' : 'Welcome to QP Development Database'}, 200
   
 
 class Accounts(Resource):
