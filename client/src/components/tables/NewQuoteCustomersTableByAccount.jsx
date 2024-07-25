@@ -9,9 +9,7 @@ const NewQuoteCustomersTableByAccount = () => {
 
     const { newConfigurationHandleIdClick, isLoading, customers, account, navigate, setNewCustomerForQuote } = useContext(AgentContext);
 
-    const customersByAccount = customers.filter(customer => {
-        return parseInt(customer.account_id, 10) === account.id;
-    })
+    const customersByAccount = account.customers
 
     if (isLoading) {
         return <div> Loading ... </div>
