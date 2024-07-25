@@ -8,31 +8,31 @@ import Col from 'react-bootstrap/Col';
 
 const QuotesTableByAccount = () => {
 
-    const { quotes, handleIdClick, navigate, setErrors, setAsDisabled, setQuotes } = useContext(AgentContext);
+    const { quotes, account, handleIdClick, navigate, setErrors, setAsDisabled, setQuotes } = useContext(AgentContext);
     const { id } = useParams();
 
-    useEffect(() => {
-        fetch('/api/quotes')
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(data => { throw data; });
-                }
-                return response.json();
-            })
-            .then(data => {
-                setQuotes(data);
-                setAsDisabled(true);
-                // setErrors(null);
-            })
-            .catch(error => {
-                console.error('Errors:', error);
-                setErrors([error.errors] || ['Unknown Error']);
-                setQuotes(null);
-            });
-    }, [id]);
+    // useEffect(() => {
+    //     fetch('/api/quotes')
+    //         .then(response => {
+    //             if (!response.ok) {
+    //                 return response.json().then(data => { throw data; });
+    //             }
+    //             return response.json();
+    //         })
+    //         .then(data => {
+    //             setQuotes(data);
+    //             setAsDisabled(true);
+    //             // setErrors(null);
+    //         })
+    //         .catch(error => {
+    //             console.error('Errors:', error);
+    //             setErrors([error.errors] || ['Unknown Error']);
+    //             setQuotes(null);
+    //         });
+    // }, [id]);
 
-    const quotesByAccount = quotes.filter(quote => {
-        return quote.account_id.toString() === id;
+    const quotesByAccount = account.quotes.filter(quote => {
+        return account.id.toString() === id;
     });
     
     return (

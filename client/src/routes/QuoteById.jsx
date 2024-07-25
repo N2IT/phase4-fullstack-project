@@ -23,55 +23,55 @@ const QuoteById = () => {
         setShow(false)
     }
 
-    useEffect(() => {
-        fetch(`/api/quotes/${id}`)
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(data => { throw data; });
-                }
-                return response.json();
-            })
-            .then(data => {
-                setQuote(data);
-                setAsDisabled(true);
-                setErrors(null);
-                fetch(`/api/customers/${data.customer_id}`)
-                .then(response => {
-                    if (!response.ok) {
-                        return response.json().then(data => { throw data; });
-                    }
-                    return response.json();
-                })
-                .then(data => {
-                    setCustomer(data);
-                    setAsDisabled(true);
-                    setErrors(null);
-                })
-            })
-            .catch(error => {
-                console.error('Errors:', error);
-                setErrors([error.errors] || 'Unknown Error');
-                setQuote(null);
-            });
+    // useEffect(() => {
+    //     fetch(`/api/quotes/${id}`)
+    //         .then(response => {
+    //             if (!response.ok) {
+    //                 return response.json().then(data => { throw data; });
+    //             }
+    //             return response.json();
+    //         })
+    //         .then(data => {
+    //             setQuote(data);
+    //             setAsDisabled(true);
+    //             setErrors(null);
+    //             fetch(`/api/customers/${data.customer_id}`)
+    //             .then(response => {
+    //                 if (!response.ok) {
+    //                     return response.json().then(data => { throw data; });
+    //                 }
+    //                 return response.json();
+    //             })
+    //             .then(data => {
+    //                 setCustomer(data);
+    //                 setAsDisabled(true);
+    //                 setErrors(null);
+    //             })
+    //         })
+    //         .catch(error => {
+    //             console.error('Errors:', error);
+    //             setErrors([error.errors] || 'Unknown Error');
+    //             setQuote(null);
+    //         });
 
-        fetch('/api/configurations')
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(data => { throw data; });
-                }
-                return response.json();
-            })
-            .then(data => {
-                setConfigurations(data);
-                setAsDisabled(true);
-                // setErrors(null);
-            })
-            .catch(error => {
-                console.error('Errors:', error);
-                setErrors([error.errors] || ['Unknown Error']);
-                setConfigurations(null);
-            });
-    }, [agent, id]);
+    //     fetch('/api/configurations')
+    //         .then(response => {
+    //             if (!response.ok) {
+    //                 return response.json().then(data => { throw data; });
+    //             }
+    //             return response.json();
+    //         })
+    //         .then(data => {
+    //             setConfigurations(data);
+    //             setAsDisabled(true);
+    //             // setErrors(null);
+    //         })
+    //         .catch(error => {
+    //             console.error('Errors:', error);
+    //             setErrors([error.errors] || ['Unknown Error']);
+    //             setConfigurations(null);
+    //         });
+    // }, [agent, id]);
 
     if (isLoading) {
         return <div> Loading ... </div>
