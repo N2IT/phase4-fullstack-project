@@ -14,7 +14,6 @@ const AccountById = () => {
         if (!agent) {
             return;
         }
-
         fetch(`/api/accounts/${id}`)
             .then(response => {
                 if (!response.ok) {
@@ -52,7 +51,7 @@ const AccountById = () => {
         //         setErrors([error.errors] || ['Unknown Error']);
         //         setUsers(null);
         //     });
-    }, [agent]);
+    }, [id, agent]);
 
     if (isLoading) {
         return <div>Loading ...</div>;
