@@ -10,6 +10,9 @@ const EditUserFormAdminManager = ({ id }) => {
 
     const { user, errors, setErrors, disabled, handleEditClick, handleUpdateUser } = useContext(AgentContext);
 
+    // debugger
+    // console.log(account)
+
     const [originalValues, setOriginalValues] = useState({
         email: '',
         username: '',

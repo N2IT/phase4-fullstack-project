@@ -7,14 +7,13 @@ import AdminView from '../components/AdminView';
 import ManagerView from '../components/ManagerView';
 
 const AccountById = () => {
-    const { agent, account, isLoading, setAccount, setUsers, setAsDisabled, setErrors } = useContext(AgentContext);
+    const { agent, account, isLoading, setAccount, setAsDisabled, setErrors } = useContext(AgentContext);
     const { id } = useParams();
 
     useEffect(() => {
         if (!agent) {
             return;
         }
-
         fetch(`/api/accounts/${id}`)
             .then(response => {
                 if (!response.ok) {
@@ -34,25 +33,7 @@ const AccountById = () => {
                 setErrors([error.errors] || ['Unknown Error']);
                 setAccount(null);
             });
-
-        // fetch('/api/users')
-        //     .then(response => {
-        //         if (!response.ok) {
-        //             return response.json().then(data => { throw data; });
-        //         }
-        //         return response.json();
-        //     })
-        //     .then(data => {
-        //         setUsers(data);
-        //         setAsDisabled(true);
-        //         // setErrors(null);
-        //     })
-        //     .catch(error => {
-        //         console.error('Errors:', error);
-        //         setErrors([error.errors] || ['Unknown Error']);
-        //         setUsers(null);
-        //     });
-    }, [agent]);
+    }, []);
 
     if (isLoading) {
         return <div>Loading ...</div>;

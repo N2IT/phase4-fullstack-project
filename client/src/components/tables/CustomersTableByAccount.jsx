@@ -8,31 +8,31 @@ import { useParams } from 'react-router-dom';
 
 const CustomersTable = () => {
 
-    const { handleIdClick, isLoading, customers, navigate, setCustomers, setNewCustomerForQuote, setErrors, setAsDisabled } = useContext(AgentContext);
+    const { handleIdClick, account, isLoading, customers, navigate, setCustomers, setNewCustomerForQuote, setErrors, setAsDisabled } = useContext(AgentContext);
     const { id } = useParams()
 
-    useEffect(() => {
-        fetch('/api/customers')
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(data => { throw data; });
-                }
-                return response.json();
-            })
-            .then(data => {
-                setCustomers(data);
-                setAsDisabled(true);
-                // setErrors(null);
-            })
-            .catch(error => {
-                console.error('Errors:', error);
-                setErrors([error.errors] || ['Unknown Error']);
-                setCustomers(null);
-            });
-    }, [id]);
+    // useEffect(() => {
+    //     fetch('/api/customers')
+    //         .then(response => {
+    //             if (!response.ok) {
+    //                 return response.json().then(data => { throw data; });
+    //             }
+    //             return response.json();
+    //         })
+    //         .then(data => {
+    //             setCustomers(data);
+    //             setAsDisabled(true);
+    //             // setErrors(null);
+    //         })
+    //         .catch(error => {
+    //             console.error('Errors:', error);
+    //             setErrors([error.errors] || ['Unknown Error']);
+    //             setCustomers(null);
+    //         });
+    // }, [id]);
 
-    const customersByAccount = customers.filter(customer => {
-        return customer.account_id.toString() === id;
+    const customersByAccount = account.customers.filter(customer => {
+        return account.id.toString() === id;
     })
 
     return (
@@ -63,7 +63,7 @@ const CustomersTable = () => {
                     </thead>
                     <tbody>
                         {customersByAccount.map((customer) => (
-                            <tr key={customer.id} className="">
+                            <tr key={customer.email} className="">
                                 <td>{customer.id}</td>
                                 <td>{customer.first_name}</td>
                                 <td>{customer.last_name}</td>

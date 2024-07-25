@@ -35,6 +35,7 @@ def check_if_logged_in():
 # class Home(Resource):
 #   def get(self):
 #     return {'message' : 'Welcome to QP Development Database'}, 200
+# api.add_resource(Home, '/')
   
 
 class Accounts(Resource):
@@ -830,7 +831,7 @@ class ConfigurationById(Resource):
     # except Exception as e:
     #   return {'errors' : str(e)}
 
-# api.add_resource(Home, '/')
+
 api.add_resource(Accounts, '/accounts')
 api.add_resource(AccountById, '/accounts/<int:id>')
 api.add_resource(Users, '/users')

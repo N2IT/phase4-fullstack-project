@@ -1,4 +1,5 @@
 import { useContext } from 'react'
+import { useParams } from 'react-router-dom';
 import { AgentContext } from '../../AgentProvider';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -7,11 +8,12 @@ import Table from 'react-bootstrap/Table';
 
 const UsersTableByAccount = () => {
 
-    const { users, account, handleIdClick, agent, navigate } = useContext(AgentContext);
+    const { account, handleIdClick, agent, navigate } = useContext(AgentContext);
+    const { id } = useParams()
 
-    const accountUsers = users.filter(user => {
+    const accountUsers = account.users.filter(user => {
         // console.log(typeof user.account_id, typeof account.id);
-        return parseInt(user.account_id, 10) === account.id;
+        return account.id.toString() === id;
     });
 
     return (

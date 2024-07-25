@@ -1,5 +1,6 @@
 import { useContext } from 'react'
 import { AgentContext } from '../../AgentProvider';
+import { useParams } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -8,9 +9,10 @@ import Col from 'react-bootstrap/Col';
 const ConfigurationsTableByQuote = () => {
 
     const { configurations, quote, handleIdClick, navigate, setNewQuotePageStatus } = useContext(AgentContext);
+    const {id} = useParams()
 
-    const quoteConfigurations = configurations.filter(configuration => {
-        return parseInt(configuration.quote_id, 10) === quote.id;
+    const quoteConfigurations = quote.configurations.filter(configuration => {
+        return quote.id.toString() === id;
     });
 
     return (
@@ -29,9 +31,9 @@ const ConfigurationsTableByQuote = () => {
                 <thead>
                     <tr>
                         <th>Id</th>
-                        <th>Dealer</th>
+                        <th>Prod. Title</th>
                         <th>Sku</th>
-                        <th>Description</th>
+                        <th>Prod. Description</th>
                         <th>Cost</th>
                         <th>Actions</th>
                     </tr>
@@ -40,7 +42,7 @@ const ConfigurationsTableByQuote = () => {
                     {quoteConfigurations.map((configuration) => (
                         <tr key={configuration.id} className="">
                             <td>{configuration.id}</td>
-                            <td>{configuration.quote.account.company_name}</td>
+                            <td>{configuration.product_title}</td>
                             <td>{configuration.sku}</td>
                             <td>{configuration.product_description}</td>
                             <td>${parseFloat(configuration.cost).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
