@@ -57,7 +57,6 @@ const CreateNewUserFormAdminManager = () => {
         return <div> Loading ... </div>
     }
 
-
     return (
         <>
             <div className='account-details'>

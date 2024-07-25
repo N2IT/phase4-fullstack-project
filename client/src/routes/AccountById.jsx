@@ -14,7 +14,6 @@ const AccountById = () => {
         if (!agent) {
             return;
         }
-
         fetch(`/api/accounts/${id}`)
             .then(response => {
                 if (!response.ok) {
