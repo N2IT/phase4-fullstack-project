@@ -16,9 +16,13 @@ from seed import calculate_quote_info, update_quote_discount
 # create a custom decorator to conduct session check and apply to each of the resources
 
 # COMMENT THIS BACK FOR PRODUCTION
-@app.route("/", defaults={"path": ""})
-@app.route("/<path:path>")
-def index(path):
+# @app.route("/", defaults={"path": ""})
+# @app.route("/<path:path>")
+# def index(path):
+#     return render_template("index.html")
+
+@app.errorhandler(404)
+def not_found(e):
     return render_template("index.html")
 api = Api(app, prefix="/api")
 
