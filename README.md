@@ -160,8 +160,8 @@ Start with Quote Pro now and explore how our tailored roles can enhance your bus
 Start by cloning the repository to your local machine:
 
 ```bash
-git clone [p4-fullstack-project]
-cd p4-fullstack-project
+git clone [platform-starter]
+cd platform-starter
 ```
 ## Setting up the backend
 
