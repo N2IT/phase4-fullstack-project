@@ -36,7 +36,7 @@ const AccountById = () => {
                 setErrors([error.errors] || ['Unknown Error']);
                 setAccount(null);
             });
-    }, []);
+    }, [id]);
 
     if (!account) {
         return <div>Loading ...</div>;
