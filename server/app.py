@@ -16,19 +16,19 @@ from seed import calculate_quote_info, update_quote_discount
 # create a custom decorator to conduct session check and apply to each of the resources
 
 # # # # # # # FOR PRODUCTION ONLY # # # # # # #
-# @app.route("/", defaults={"path": ""})
-# @app.route("/<path:path>")
-# def catch_all(path):
-#     if path != "" and os.path.exists(app.static_folder + '/' + path):
-#         return send_from_directory(app.static_folder, path)
-#     else:
-#         return send_from_directory(app.static_folder, 'index.html')
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def catch_all(path):
+    if path != "" and os.path.exists(app.static_folder + '/' + path):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
 
-# @app.errorhandler(404)
-# def not_found(e):
-#     return send_from_directory(app.static_folder, 'index.html'), 404
+@app.errorhandler(404)
+def not_found(e):
+    return send_from_directory(app.static_folder, 'index.html'), 404
 
-# api = Api(app, prefix="/api")
+api = Api(app, prefix="/api")
 # # # # # # # END FOR PRODUCTION ONLY # # # # # # #
 
 @app.before_request
@@ -42,10 +42,10 @@ def check_if_logged_in():
 
 
 # # # # # # # FOR DEV ONLY - TO RUN LOCALLY # # # # # # #
-class Home(Resource):
-  def get(self):
-    return {'message' : 'Welcome to QP Development Database'}, 200
-api.add_resource(Home, '/')
+# class Home(Resource):
+#   def get(self):
+#     return {'message' : 'Welcome to QP Development Database'}, 200
+# api.add_resource(Home, '/')
 # # # # # # # END FOR DEV ONLY - TO RUN LOCALLY # # # # # # #
   
 
