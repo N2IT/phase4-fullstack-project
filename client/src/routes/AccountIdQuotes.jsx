@@ -1,4 +1,4 @@
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { useParams } from "react-router-dom";
 import { AgentContext } from '../AgentProvider';
 import QuotesTableByAccount from "../components/tables/QuotesTableByAccount";
@@ -7,10 +7,30 @@ import Unauthorized from "../components/Unauthorized";
 
 const ViewQuotesByAccount = () => {
 
-    const { agent, isLoading } = useContext(AgentContext);
+    const { agent, account, setAccount, setAsDisabled, setErrors } = useContext(AgentContext);
     const { id } = useParams()
 
-    if (isLoading) {
+    useEffect(() => {
+        fetch(`/api/accounts/${id}`)
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(data => { throw data; });
+                }
+                return response.json();
+            })
+            .then(data => {
+                setAccount(data);
+                setAsDisabled(true);
+                setErrors(null);
+            })
+            .catch(error => {
+                console.error('Errors:', error);
+                setErrors([error.errors] || ['Unknown Error']);
+                setAccount(null);
+            });
+    }, [id]);
+
+    if (!account) {
         return <div>Loading ...</div>;
     }
 
@@ -31,7 +51,7 @@ const ViewQuotesByAccount = () => {
     if (agent.role_id !== 1 && agent.account_id.toString() === id) {
         return (
             <div>
-                <QuotesTableByAccount />
+                <QuotesTableByAccount account={account}/>
             </div>
         );
 

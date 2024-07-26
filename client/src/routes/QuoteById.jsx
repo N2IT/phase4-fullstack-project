@@ -12,7 +12,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 const QuoteById = () => {
-    const { agent, customer, quote, handleClose, handleShow, show, setShow, setCustomer, setConfigurations, setQuote, setAsDisabled, errors = [], setErrors, isLoading, deleteQuoteObject } = useContext(AgentContext)
+    const { agent, customer, quote, handleClose, handleShow, show, setShow, setQuote, setAsDisabled, errors = [], setErrors, deleteQuoteObject } = useContext(AgentContext)
     const { id } = useParams();
 
     const handleDeleteClick = () => {
@@ -37,45 +37,8 @@ const QuoteById = () => {
                 setErrors(null);
             });
         }, []);
-
-    //             fetch(`/api/customers/${data.customer_id}`)
-    //             .then(response => {
-    //                 if (!response.ok) {
-    //                     return response.json().then(data => { throw data; });
-    //                 }
-    //                 return response.json();
-    //             })
-    //             .then(data => {
-    //                 setCustomer(data);
-    //                 setAsDisabled(true);
-    //                 setErrors(null);
-    //             })
-    //         })
-    //         .catch(error => {
-    //             console.error('Errors:', error);
-    //             setErrors([error.errors] || 'Unknown Error');
-    //             setQuote(null);
-    //         });
-
-    //     fetch('/api/configurations')
-    //         .then(response => {
-    //             if (!response.ok) {
-    //                 return response.json().then(data => { throw data; });
-    //             }
-    //             return response.json();
-    //         })
-    //         .then(data => {
-    //             setConfigurations(data);
-    //             setAsDisabled(true);
-    //             // setErrors(null);
-    //         })
-    //         .catch(error => {
-    //             console.error('Errors:', error);
-    //             setErrors([error.errors] || ['Unknown Error']);
-    //             setConfigurations(null);
             
-
-    if (isLoading) {
+    if (!quote) {
         return <div> Loading ... </div>
     }
 

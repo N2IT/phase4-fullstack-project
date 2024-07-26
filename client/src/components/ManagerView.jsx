@@ -7,7 +7,7 @@ import { AgentContext } from '../AgentProvider';
 import { useParams } from 'react-router-dom';
 
 
-const ManagerView = ({account}) => {
+const ManagerView = () => {
 
     const { agent, user } = useContext(AgentContext);
     const { id } = useParams()
