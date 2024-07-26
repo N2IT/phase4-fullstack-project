@@ -38,7 +38,7 @@ const AccountById = () => {
             });
     }, [id]);
 
-    if (!account) {
+    if (agent && !account) {
         return <div>Loading ...</div>;
     }
 
