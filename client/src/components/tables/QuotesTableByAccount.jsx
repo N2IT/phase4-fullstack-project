@@ -7,11 +7,18 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 const QuotesTableByAccount = () => {
+    console.log('loggingQuoteTableByAccount')
 
-    const { quotes, account, handleIdClick, navigate, setErrors, setAsDisabled, setQuotes } = useContext(AgentContext);
+    const { quotes, account, handleIdClick, navigate, isLoading, setErrors, setAsDisabled, setQuotes } = useContext(AgentContext);
     const { id } = useParams();
 
     const quotesByAccount = account.quotes
+
+    
+
+    if (isLoading) {
+        return <div>Loading ...</div>;
+    }
     
     return (
         <>
