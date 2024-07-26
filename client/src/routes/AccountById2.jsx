@@ -10,10 +10,13 @@ const AccountById = () => {
     const { agent, account, isLoading, setAccount, setAsDisabled, setErrors } = useContext(AgentContext);
     const { id } = useParams();
 
+    debugger
+    console.log(account)
+
     useEffect(() => {
-        if (!agent) {
-            return;
-        }
+        // if (!agent) {
+        //     return;
+        // }
         fetch(`/api/accounts/${id}`)
             .then(response => {
                 if (!response.ok) {
@@ -33,7 +36,7 @@ const AccountById = () => {
                 setErrors([error.errors] || ['Unknown Error']);
                 setAccount(null);
             });
-    }, []);
+    }, [agent, id]);
 
     if (isLoading) {
         return <div>Loading ...</div>;
