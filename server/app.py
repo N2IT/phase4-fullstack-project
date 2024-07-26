@@ -36,7 +36,7 @@ def not_found(e):
 # @app.errorhandler(404)
 # def not_found(e):
 #     return render_template("index.html")
-# api = Api(app, prefix="/api")
+api = Api(app, prefix="/api")
 
 @app.before_request
 def check_if_logged_in():
