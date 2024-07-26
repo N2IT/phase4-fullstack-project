@@ -9,19 +9,6 @@ const NewQuote = () => {
   const { agent, isLoading, account, setAccount, setIsLoading } = useContext(AgentContext)
   const { id } = useParams();
 
-  if (!account) {
-    setIsLoading(true)
-    useEffect(() => {
-      fetch(`accounts/${id}`)
-      .then((r) => r.json())
-      .then(data => {
-        setAccount(data)
-      })
-      .then(() => setIsLoading(false))
-      .catch(error => console.error("Error:", error));
-    }, [agent])
-  }
-
   if (isLoading) {
     return <div> Loading ... </div>
   }
