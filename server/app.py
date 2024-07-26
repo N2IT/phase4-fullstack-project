@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from flask import request, session, make_response, jsonify, render_template
+from flask import request, session, make_response, jsonify, render_template, send_from_directory
 from flask_restful import Api, Resource
 import random
 from config import app, db, api
@@ -15,16 +15,28 @@ from seed import calculate_quote_info, update_quote_discount
 #             return {"error": "Unauthorized"}, 403
 # create a custom decorator to conduct session check and apply to each of the resources
 
+@app.route("/", defaults={"path": ""})
+@app.route("/<path:path>")
+def catch_all(path):
+    if path != "" and os.path.exists(app.static_folder + '/' + path):
+        return send_from_directory(app.static_folder, path)
+    else:
+        return send_from_directory(app.static_folder, 'index.html')
+
+@app.errorhandler(404)
+def not_found(e):
+    return send_from_directory(app.static_folder, 'index.html'), 404
+
 # COMMENT THIS BACK FOR PRODUCTION
 # @app.route("/", defaults={"path": ""})
 # @app.route("/<path:path>")
 # def index(path):
 #     return render_template("index.html")
 
-@app.errorhandler(404)
-def not_found(e):
-    return render_template("index.html")
-api = Api(app, prefix="/api")
+# @app.errorhandler(404)
+# def not_found(e):
+#     return render_template("index.html")
+# api = Api(app, prefix="/api")
 
 @app.before_request
 def check_if_logged_in():
