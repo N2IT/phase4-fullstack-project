@@ -8,7 +8,7 @@ import Quotes from './routes/Quotes';
 import AccountIdQuotes from './routes/AccountIdQuotes';
 import NewQuote from './routes/NewQuote';
 import Support from './routes/Support';
-import AccountById2 from './routes/AccountById';
+import AccountById2 from './routes/AccountById2';
 import UserById from './routes/UserById';
 import QuoteById from './routes/QuoteById';
 import Configurations from './routes/Configurations';

@@ -7,9 +7,11 @@ import Table from 'react-bootstrap/Table';
 import { useParams } from 'react-router-dom';
 
 const CustomersTable = () => {
-
+    console.log('CustomersTableByAccount')
     const { handleIdClick, account, isLoading, customers, navigate, setCustomers, setNewCustomerForQuote, setErrors, setAsDisabled } = useContext(AgentContext);
     const { id } = useParams()
+
+    
 
     // useEffect(() => {
     //     fetch('/api/customers')
@@ -34,6 +36,10 @@ const CustomersTable = () => {
     const customersByAccount = account.customers.filter(customer => {
         return account.id.toString() === id;
     })
+
+    if (isLoading) {
+        return <div>Loading ...</div>;
+    }
 
     return (
         <>

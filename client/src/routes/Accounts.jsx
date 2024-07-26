@@ -9,7 +9,7 @@ import Col from 'react-bootstrap/Col';
 
 const Accounts = () => {
 
-  const { agent, isLoading, navigate, setAccounts, setIsLoading } = useContext(AgentContext);
+  const { agent, accounts, navigate, setAccounts, setIsLoading } = useContext(AgentContext);
 
   useEffect(() => {
     fetch('/api/accounts')
@@ -20,7 +20,7 @@ const Accounts = () => {
 
   }, [agent])
 
-  if (isLoading) {
+  if (!accounts) {
     return <div> Loading ... </div>
   }
 

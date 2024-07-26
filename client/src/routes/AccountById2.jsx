@@ -10,8 +10,7 @@ const AccountById = () => {
     const { agent, account, isLoading, setAccount, setAsDisabled, setErrors } = useContext(AgentContext);
     const { id } = useParams();
 
-    debugger
-    console.log(account)
+    // debugger
 
     useEffect(() => {
         // if (!agent) {
@@ -26,6 +25,7 @@ const AccountById = () => {
             })
             .then(data => {
                 setAccount(data);
+                console.log("AccountById2")
                 setAsDisabled(true);
                 setErrors(null);
                 localStorage.setItem('account.id', JSON.stringify(data.id))
@@ -36,9 +36,9 @@ const AccountById = () => {
                 setErrors([error.errors] || ['Unknown Error']);
                 setAccount(null);
             });
-    }, [agent, id]);
+    }, []);
 
-    if (isLoading) {
+    if (!account) {
         return <div>Loading ...</div>;
     }
 
@@ -56,7 +56,7 @@ const AccountById = () => {
 
     if (agent.role_id !== 1 && agent.account_id.toString() === id) {
         return (
-            <ManagerView />
+            <ManagerView account={account}/>
         )
     }
 
