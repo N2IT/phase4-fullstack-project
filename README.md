@@ -199,8 +199,8 @@ The backend uses Flask along with several extensions, which are automatically in
 
 Open a new terminal window and navigate to the frontend directory:
 ```bash
-npm install
 cd client
+npm install
 ```
 Start the frontend development server
 ```bash
@@ -224,7 +224,7 @@ These dependencies are critical for the development and functioning of the front
 
 ## Accessing the Application
 
-Once both servers are running, you can access the application by navigating to 'http://localhost:5173/' for the frontend and 'http://127.0.0.1:5555/' for the backend in your web browser.
+Once both servers are running, you can access the application by navigating to 'http://localhost:5173/' for the frontend and 'http://127.0.0.1:5000/' for the backend in your web browser.
 
 
 # Usage
