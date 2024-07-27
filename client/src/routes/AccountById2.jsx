@@ -10,8 +10,6 @@ const AccountById = () => {
     const { agent, account, isLoading, setAccount, setAsDisabled, setErrors } = useContext(AgentContext);
     const { id } = useParams();
 
-    // debugger
-
     useEffect(() => {
         // if (!agent) {
         //     return;
@@ -25,7 +23,6 @@ const AccountById = () => {
             })
             .then(data => {
                 setAccount(data);
-                console.log("AccountById2")
                 setAsDisabled(true);
                 setErrors(null);
                 localStorage.setItem('account.id', JSON.stringify(data.id))

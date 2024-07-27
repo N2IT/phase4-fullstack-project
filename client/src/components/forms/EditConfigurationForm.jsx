@@ -30,7 +30,7 @@ const EditConfigurationForm = ({ id }) => {
                 product_title: `${configuration.product_title}`,
                 product_description: `${configuration.product_description}`,
                 cost: `${configuration.cost}`,
-                quote_id: `${configuration.quote_id}`,
+                quote_id: `${configuration.quote.id}`,
                 created_at: `${configuration.created_at}`,
                 created_by: `${configuration.created_by}`,
                 updated_at: `${configuration.updated_at}`,

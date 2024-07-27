@@ -15,14 +15,6 @@ const QuoteById = () => {
     const { agent, customer, quote, handleClose, handleShow, show, setShow, setQuote, setAsDisabled, errors = [], setErrors, deleteQuoteObject } = useContext(AgentContext)
     const { id } = useParams();
 
-    const handleDeleteClick = () => {
-        fetch(`/api/quotes/${id}`, {
-            method: 'DELETE',
-        });
-        deleteQuoteObject(id, quote)
-        setShow(false)
-    }
-
     useEffect(() => {
         fetch(`/api/quotes/${id}`)
             .then(response => {
@@ -36,8 +28,16 @@ const QuoteById = () => {
                 setAsDisabled(true);
                 setErrors(null);
             });
-        }, []);
-            
+    }, [agent, id]);
+
+    const handleDeleteClick = () => {
+        fetch(`/api/quotes/${id}`, {
+            method: 'DELETE',
+        });
+        deleteQuoteObject(id, quote)
+        setShow(false)
+    }
+
     if (!quote) {
         return <div> Loading ... </div>
     }
@@ -62,10 +62,10 @@ const QuoteById = () => {
                                     </Col>
                                 </Row>
                                 {customer ?
-                                <Row>
-                                     <h3>For Customer: {quote.customer.first_name}&nbsp;{quote.customer.last_name} </h3>
-                                </Row>
-                                : null}
+                                    <Row>
+                                        <h3>For Customer: {quote.customer.first_name}&nbsp;{quote.customer.last_name} </h3>
+                                    </Row>
+                                    : null}
                                 <Row>
                                     <Col>
                                         <EditQuoteForm id={id} />

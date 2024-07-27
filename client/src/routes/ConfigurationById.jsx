@@ -11,8 +11,11 @@ import Col from 'react-bootstrap/Col';
 import InvalidCredentials from '../components/InvalidCredentials';
 
 const ConfigurationById = () => {
-    const { agent, isLoading, configuration, setShow, deleteConfigurationObject, setConfiguration, setAsDisabled, setErrors, show, handleClose, handleShow } = useContext(AgentContext);
+
+    const { agent, quote, configuration, setShow, deleteConfigurationObject, setConfiguration, setAsDisabled, setErrors, show, handleClose, handleShow } = useContext(AgentContext);
     const { id } = useParams();
+
+    console.log(configuration)
 
     const handleDeleteClick = () => {
         fetch(`/api/configurations/${id}`, {
@@ -22,33 +25,27 @@ const ConfigurationById = () => {
         setShow(false)
     }
 
-    // useEffect(() => {
-    //     if (!agent) {
-    //         return;
-    //     }
-    //     fetch(`/api/configurations/${id}`)
-    //         .then(response => {
-    //             if (!response.ok) {
-    //                 return response.json().then(data => { throw data; });
-    //             }
-    //             return response.json();
-    //         })
-    //         .then(data => {
-    //             setConfiguration(data);
-    //             setAsDisabled(true);
-    //             setErrors(null);
-    //         })
-    //         .catch(error => {
-    //             console.error('Errors:', error);
-    //             setErrors([error.errors] || ['Unknown Error']);
-    //             setConfiguration(null);
-    //         });
+    useEffect(() => {
+        fetch(`/api/configurations/${id}`)
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(data => { throw data; });
+                }
+                return response.json();
+            })
+            .then(data => {
+                setConfiguration(data);
+                setAsDisabled(true);
+                setErrors(null);
+            })
+            .catch(error => {
+                console.error('Errors:', error);
+                setErrors([error.errors] || ['Unknown Error']);
+                setConfiguration(null);
+            });
 
-    // }, [id, agent]);
-
-    if (isLoading) {
-        return <div>Loading ...</div>;
-    }
+    }, []);
+    
 
     if (!agent) {
         return (
@@ -56,10 +53,9 @@ const ConfigurationById = () => {
         )
     }
 
-    if (agent && !configuration) {
-        return (
-            <InvalidCredentials />
-        )
+
+    if (!configuration) {
+        return <div>Loading ...</div>;
     }
 
     if (agent.role_id === null && configuration) {
@@ -70,7 +66,7 @@ const ConfigurationById = () => {
         );
     }
 
-    if (agent.role_id === 1) {
+    if (agent.role_id === 1 && configuration) {
         return (
             <>
                 <div className='account-details'>
@@ -110,7 +106,7 @@ const ConfigurationById = () => {
         );
     }
 
-    if (agent.role_id !== 1 && agent.account_id === configuration.quote.account.id) {
+    if (configuration && agent.role_id !== 1 && agent.account_id === configuration.quote.account_id) {
         return (
             <>
                 <div className='account-details'>

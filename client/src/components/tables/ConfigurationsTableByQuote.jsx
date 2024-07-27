@@ -8,10 +8,14 @@ import Col from 'react-bootstrap/Col';
 
 const ConfigurationsTableByQuote = () => {
 
-    const { configurations, quote, handleIdClick, navigate, setNewQuotePageStatus } = useContext(AgentContext);
+    const { handleIdClick, navigate, quote, setNewQuotePageStatus } = useContext(AgentContext);
     const {id} = useParams()
 
     const quoteConfigurations = quote.configurations
+
+    if (!quote) {
+        return <div> Loading ... </div>
+    }
 
     return (
         <>
