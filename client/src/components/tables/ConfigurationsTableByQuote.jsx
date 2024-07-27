@@ -1,6 +1,5 @@
 import { useContext } from 'react'
 import { AgentContext } from '../../AgentProvider';
-import { useParams } from 'react-router-dom';
 import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -9,17 +8,14 @@ import Col from 'react-bootstrap/Col';
 const ConfigurationsTableByQuote = () => {
 
     const { handleIdClick, navigate, quote, setNewQuotePageStatus } = useContext(AgentContext);
-    const {id} = useParams()
 
     const quoteConfigurations = quote.configurations
 
-    if (!quote) {
-        return <div> Loading ... </div>
-    }
+    debugger
 
     return (
         <>
-        <Container>
+            <Container>
                 <Row>
                     <Col md={6} sm={12}>
                         <h3>Quote Configurations</h3>
@@ -29,30 +25,35 @@ const ConfigurationsTableByQuote = () => {
                     </Col>
                 </Row>
             </Container>
-            <Table responsive="sm" striped="columns">
-                <thead>
-                    <tr>
-                        <th>Id</th>
-                        <th>Prod. Title</th>
-                        <th>Sku</th>
-                        <th>Prod. Description</th>
-                        <th>Cost</th>
-                        <th>Actions</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {quoteConfigurations.map((configuration) => (
-                        <tr key={configuration.id} className="">
-                            <td>{configuration.id}</td>
-                            <td>{configuration.product_title}</td>
-                            <td>{configuration.sku}</td>
-                            <td>{configuration.product_description}</td>
-                            <td>${parseFloat(configuration.cost).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                            <td><p className="view-btn" title="View Configuration" onClick={() => handleIdClick(configuration)}> View </p></td>
+            {!quoteConfigurations ? <h1>Loading....</h1>
+                :
+                <Table responsive="sm" striped="columns">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Prod. Title</th>
+                            <th>Sku</th>
+                            <th>Prod. Description</th>
+                            <th>Cost</th>
+                            <th>Actions</th>
                         </tr>
-                    ))}
-                </tbody>
-            </Table>
+                    </thead>
+                    <tbody>
+
+                        {quoteConfigurations.map((configuration) => (
+                            <tr key={configuration.id} className="">
+                                <td>{configuration.id}</td>
+                                <td>{configuration.product_title}</td>
+                                <td>{configuration.sku}</td>
+                                <td>{configuration.product_description}</td>
+                                <td>${parseFloat(configuration.cost).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                                <td><p className="view-btn" title="View Configuration" onClick={() => handleIdClick(configuration)}> View </p></td>
+                            </tr>
+                        ))
+                        }
+                    </tbody>
+                </Table>
+            }
         </>
     )
 }

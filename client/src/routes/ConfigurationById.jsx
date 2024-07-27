@@ -12,10 +12,8 @@ import InvalidCredentials from '../components/InvalidCredentials';
 
 const ConfigurationById = () => {
 
-    const { agent, quote, configuration, setShow, deleteConfigurationObject, setConfiguration, setAsDisabled, setErrors, show, handleClose, handleShow } = useContext(AgentContext);
+    const { agent, isLoading, configuration, setShow, deleteConfigurationObject, setConfiguration, setAsDisabled, setErrors, show, handleClose, handleShow } = useContext(AgentContext);
     const { id } = useParams();
-
-    console.log(configuration)
 
     const handleDeleteClick = () => {
         fetch(`/api/configurations/${id}`, {
@@ -46,24 +44,14 @@ const ConfigurationById = () => {
 
     }, []);
     
+    if (isLoading) {
+        return <div>Loading ...</div>;
+    }
 
     if (!agent) {
         return (
             <Unauthorized />
         )
-    }
-
-
-    if (!configuration) {
-        return <div>Loading ...</div>;
-    }
-
-    if (agent.role_id === null && configuration) {
-        return (
-            <div className='account-details'>
-                <h2>Please contact your administrator to assign your role within the account.</h2>
-            </div>
-        );
     }
 
     if (agent.role_id === 1 && configuration) {
@@ -76,7 +64,7 @@ const ConfigurationById = () => {
                                 <h2>Configuration Details</h2>
                             </Col>
                             <Col md={4} sm={12}>
-                                <button type="button" onClick={() => history.go(-1)}>Return to Prev. page</button>
+                                <button type="button" onClick={() => history.go(-2)}>Return to Prev. page</button>
                             </Col>
                             <Col md={4} sm={12}>
                                 {agent.role_id !== 3 ? <button type="button" onClick={() => handleShow()}>Delete Configuration</button> : null}
