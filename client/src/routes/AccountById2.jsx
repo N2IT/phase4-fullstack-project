@@ -11,9 +11,6 @@ const AccountById = () => {
     const { id } = useParams();
 
     useEffect(() => {
-        // if (!agent) {
-        //     return;
-        // }
         fetch(`/api/accounts/${id}`)
             .then(response => {
                 if (!response.ok) {

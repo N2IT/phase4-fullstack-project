@@ -27,9 +27,9 @@ def check_if_logged_in():
   if session.get('user_id') is None:
     session.clear()
     # return {'errors': 'Unauthorized Access'}, 401
-  else:
-      print('User is logged in')
-      print(session['user_id'])
+  # else:
+  #     print('User is logged in')
+  #     print(session['user_id'])
 
 #COMMENT OUT THIS AS WELL AS THE ROUTE DOWN BELOW FOR DEV
 class Home(Resource):

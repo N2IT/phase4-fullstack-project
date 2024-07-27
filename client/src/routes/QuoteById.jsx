@@ -14,7 +14,7 @@ import Col from 'react-bootstrap/Col';
 const QuoteById = () => {
     const { agent, isLoading, customer, quote, handleClose, handleShow, show, setShow, setQuote, setAsDisabled, setErrors, deleteQuoteObject, setConfigurations } = useContext(AgentContext)
     const { id } = useParams();
-    const {location} = useLocation()
+    const { location } = useLocation()
 
     useEffect(() => {
         fetch(`/api/quotes/${id}`)
@@ -66,11 +66,11 @@ const QuoteById = () => {
                             {agent.role_id !== 3 ? <button type="button" onClick={() => handleShow()}>Delete Quote</button> : null}
                         </Col>
                     </Row>
-                    {customer ?
+                    {!quote.customer ? <div>Loading...</div> :
                         <Row>
                             <h3>For Customer: {quote.customer.first_name}&nbsp;{quote.customer.last_name} </h3>
                         </Row>
-                        : null}
+                    }
                     <Row>
                         <Col>
                             <EditQuoteForm id={id} />

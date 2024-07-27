@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 import { useParams } from 'react-router-dom';
 import { AgentContext } from '../../AgentProvider';
 import Table from 'react-bootstrap/Table';
@@ -7,9 +7,8 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 
 const QuotesTableByAccount = () => {
-    console.log('loggingQuoteTableByAccount')
 
-    const { quotes, account, handleIdClick, navigate, isLoading, setErrors, setAsDisabled, setQuotes } = useContext(AgentContext);
+    const { account, handleIdClick, navigate, isLoading } = useContext(AgentContext);
     const { id } = useParams();
 
     const quotesByAccount = account.quotes

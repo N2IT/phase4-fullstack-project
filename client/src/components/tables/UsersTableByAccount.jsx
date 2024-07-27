@@ -1,5 +1,4 @@
 import { useContext } from 'react'
-import { useParams } from 'react-router-dom';
 import { AgentContext } from '../../AgentProvider';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
@@ -7,21 +6,9 @@ import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
 
 const UsersTableByAccount = () => {
-    console.log('UsersTableByAccount')
 
     const { account, handleIdClick, agent, navigate, isLoading } = useContext(AgentContext);
-    // const { id } = useParams()
-    // debugger
-    // console.log(account)
-
-    // const accountUsers = account.users.filter(user => {
-    //     // console.log(typeof user.account_id, typeof account.id);
-    //     return account.id.toString() === id;
-    // });
     const accountUsers = account.users
-
-    // NEED TO LOOK INTO WHY MANAGER LOGIN IS FAILING WHEN HEADING TO MY ACCOUNT PAGE
-    // LOGIN TO LIVE WITH INCOGNITO BROWSER TO TEST
 
     if (isLoading) {
         return <div>Loading ...</div>;

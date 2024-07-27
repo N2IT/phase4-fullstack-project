@@ -1,4 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
+import { useParams } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from "yup";
 import Container from 'react-bootstrap/Container';
@@ -6,9 +7,10 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { AgentContext } from '../../AgentProvider';
 
-const EditQuoteForm = ({ id }) => {
+const EditQuoteForm = () => {
 
     const { agent, quote, errors, setErrors, disabled, handleEditClick, handleUpdateQuote } = useContext(AgentContext);
+    const { id } = useParams()
     
     const [originalValues, setOriginalValues] = useState({
         quote_number: '',
@@ -22,7 +24,6 @@ const EditQuoteForm = ({ id }) => {
         margin_dollars: '',
         notes: '',
         status: '',
-        converted: '',
         created_at:'',
         created_by:'',
         updated_at:'',

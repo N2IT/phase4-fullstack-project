@@ -1,14 +1,16 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { useFormik } from 'formik';
+import { useParams } from 'react-router-dom';
 import * as yup from "yup";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { AgentContext } from '../../AgentProvider';
 
-const EditConfigurationForm = ({ id }) => {
+const EditConfigurationForm = () => {
 
     const { agent, configuration, errors, setErrors, disabled, handleEditClick, handleUpdateConfiguration } = useContext(AgentContext);
+    const { id } = useParams()
 
     const [originalValues, setOriginalValues] = useState({
         sku: '',
@@ -16,7 +18,6 @@ const EditConfigurationForm = ({ id }) => {
         product_description: '',
         cost: '',
         quote_id: '',
-        created_at: '',
         created_by: '',
         updated_at: '',
         updated_by: '',

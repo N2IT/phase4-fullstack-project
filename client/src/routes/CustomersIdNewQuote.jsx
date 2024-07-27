@@ -8,60 +8,71 @@ import { useParams } from "react-router-dom";
 
 const CustomersIdNewQuote = () => {
 
+    debugger
+
     const { agent, setCustomer, setAsDisabled, setErrors, customer, newQuotePageStatus, isLoading } = useContext(AgentContext);
     const { id } = useParams()
 
     useEffect(() => {
         fetch(`/api/customers/${id}`)
-        .then(response => {
-            if (!response.ok) {
-                return response.json().then(data => { throw data; });
-            }
-            return response.json();
-        })
-        .then(data => {
-            setCustomer(data);
-            setAsDisabled(true);
-            setErrors(null);
-        })
-        .catch(error => {
-            console.error('Errors:', error);
-            setErrors([error.errors] || ['Unknown Error']);
-            setCustomer(null);
-        });
-    },[])
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(data => { throw data; });
+                }
+                return response.json();
+            })
+            .then(data => {
+                setCustomer(data);
+                setAsDisabled(true);
+                setErrors(null);
+            })
+            .catch(error => {
+                console.error('Errors:', error);
+                setErrors([error.errors] || ['Unknown Error']);
+                setCustomer(null);
+            });
+    }, [])
 
-    if (isLoading) {
-        return <div>Loading ...</div>;
-    }
-
-    if (!agent) {
+    if (!customer) {
         return (
-            <Unauthorized />
+            <div>Loading...</div>
         )
     }
 
-    if (agent.role_id === 1) {
+    else {
+
+        if (isLoading) {
+            return <div>Loading ...</div>;
+        }
+
+        if (!agent) {
+            return (
+                <Unauthorized />
+            )
+        }
+
+        if (agent.role_id === 1) {
+            return (
+                <div>
+                    {newQuotePageStatus ? <CreateNewQuoteForm /> : <CreateNewConfiguration />}
+                </div>
+            );
+        }
+
+        if (agent.role_id !== 1 && agent.account_id === customer.account_id) {
+            return (
+                <div>
+                    {newQuotePageStatus ? <CreateNewQuoteForm /> : <CreateNewConfiguration />}
+                </div>
+            );
+        }
+
         return (
             <div>
-                {newQuotePageStatus ? <CreateNewQuoteForm /> : <CreateNewConfiguration />}
+                <InvalidCredentials />
             </div>
         );
     }
-
-    if (agent.role_id !== 1 && agent.account_id === customer.account_id) {
-        return (
-            <div>
-                {newQuotePageStatus ? <CreateNewQuoteForm /> : <CreateNewConfiguration />}
-            </div>
-        );
-    }
-
-    return (
-        <div>
-            <InvalidCredentials />
-        </div>
-    );
 }
 
 export default CustomersIdNewQuote
