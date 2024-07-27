@@ -5,13 +5,13 @@ import { AgentContext } from '../../AgentProvider';
 // import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
 
-const NewQuoteCustomersTableByAccount = () => {
+const NewQuoteCustomersTableByAccount = ({account}) => {
 
-    const { newConfigurationHandleIdClick, isLoading, customers, account, navigate, setNewCustomerForQuote } = useContext(AgentContext);
+    const { newConfigurationHandleIdClick, navigate, setNewCustomerForQuote } = useContext(AgentContext);
 
     const customersByAccount = account.customers
 
-    if (isLoading) {
+    if (!account) {
         return <div> Loading ... </div>
     }
 

@@ -11,6 +11,7 @@ import Col from 'react-bootstrap/Col';
 import InvalidCredentials from '../components/InvalidCredentials';
 
 const ConfigurationById = () => {
+
     const { agent, isLoading, configuration, setShow, deleteConfigurationObject, setConfiguration, setAsDisabled, setErrors, show, handleClose, handleShow } = useContext(AgentContext);
     const { id } = useParams();
 
@@ -22,30 +23,27 @@ const ConfigurationById = () => {
         setShow(false)
     }
 
-    // useEffect(() => {
-    //     if (!agent) {
-    //         return;
-    //     }
-    //     fetch(`/api/configurations/${id}`)
-    //         .then(response => {
-    //             if (!response.ok) {
-    //                 return response.json().then(data => { throw data; });
-    //             }
-    //             return response.json();
-    //         })
-    //         .then(data => {
-    //             setConfiguration(data);
-    //             setAsDisabled(true);
-    //             setErrors(null);
-    //         })
-    //         .catch(error => {
-    //             console.error('Errors:', error);
-    //             setErrors([error.errors] || ['Unknown Error']);
-    //             setConfiguration(null);
-    //         });
+    useEffect(() => {
+        fetch(`/api/configurations/${id}`)
+            .then(response => {
+                if (!response.ok) {
+                    return response.json().then(data => { throw data; });
+                }
+                return response.json();
+            })
+            .then(data => {
+                setConfiguration(data);
+                setAsDisabled(true);
+                setErrors(null);
+            })
+            .catch(error => {
+                console.error('Errors:', error);
+                setErrors([error.errors] || ['Unknown Error']);
+                setConfiguration(null);
+            });
 
-    // }, [id, agent]);
-
+    }, []);
+    
     if (isLoading) {
         return <div>Loading ...</div>;
     }
@@ -56,21 +54,7 @@ const ConfigurationById = () => {
         )
     }
 
-    if (agent && !configuration) {
-        return (
-            <InvalidCredentials />
-        )
-    }
-
-    if (agent.role_id === null && configuration) {
-        return (
-            <div className='account-details'>
-                <h2>Please contact your administrator to assign your role within the account.</h2>
-            </div>
-        );
-    }
-
-    if (agent.role_id === 1) {
+    if (agent.role_id === 1 && configuration) {
         return (
             <>
                 <div className='account-details'>
@@ -80,7 +64,7 @@ const ConfigurationById = () => {
                                 <h2>Configuration Details</h2>
                             </Col>
                             <Col md={4} sm={12}>
-                                <button type="button" onClick={() => history.go(-1)}>Return to Prev. page</button>
+                                <button type="button" onClick={() => history.go(-2)}>Return to Prev. page</button>
                             </Col>
                             <Col md={4} sm={12}>
                                 {agent.role_id !== 3 ? <button type="button" onClick={() => handleShow()}>Delete Configuration</button> : null}
@@ -110,7 +94,7 @@ const ConfigurationById = () => {
         );
     }
 
-    if (agent.role_id !== 1 && agent.account_id === configuration.quote.account.id) {
+    if (configuration && agent.role_id !== 1 && agent.account_id === configuration.quote.account_id) {
         return (
             <>
                 <div className='account-details'>
