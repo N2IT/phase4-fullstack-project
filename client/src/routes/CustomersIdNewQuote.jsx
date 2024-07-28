@@ -8,8 +8,6 @@ import { useParams } from "react-router-dom";
 
 const CustomersIdNewQuote = () => {
 
-    debugger
-
     const { agent, setCustomer, setAsDisabled, setErrors, customer, newQuotePageStatus, isLoading } = useContext(AgentContext);
     const { id } = useParams()
 

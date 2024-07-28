@@ -11,8 +11,6 @@ const ConfigurationsTableByQuote = () => {
 
     const quoteConfigurations = quote.configurations
 
-    debugger
-
     return (
         <>
             <Container>

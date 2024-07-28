@@ -50,7 +50,6 @@ const AgentProvider = ({ children }) => {
             navigate(`/users/${value.id}`)
         }
         else if (value.quote_number) {
-            debugger
             // setQuote(value)
             navigate(`/quotes/${value.id}`)
         }
