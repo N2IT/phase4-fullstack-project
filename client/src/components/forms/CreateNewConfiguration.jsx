@@ -33,27 +33,17 @@ const CreateNewConfiguration = () => {
                 },
                 body: JSON.stringify(values),
             })
-                .then((response) => {
-                    if (!response.ok) {
-                        response.json().then((data) => {
-                            setErrors(data.errors);
-                            if (data.errors) {
-                                alert(data.errors)
-                            }
-                        });
-                    }
-                    return response.json();
-                })
+                .then((r) => r.json())
                 .then((data) => {
-                    setConfiguration(data);
-                    onSubmitNewQuoteForm()
-                    alert(`Configuration ${data.id} has been successfully created.`)
-                    navigate(`/quotes/${quote.id}`)
+                    {
+                        data.errors ? setErrors(data.errors) :
+                            setConfiguration(data),
+                            onSubmitNewQuoteForm(),
+                            navigate(`/quotes/${quote.id}`),
+                            alert(`Configuration ${data.id} has been successfully created.`)
+                    }
+
                 })
-                // .then((res) => res.json())
-                // .then((data) => {
-                //     { data.errors ? setErrors(data.errors) : setConfiguration(data), onSubmitNewQuoteForm(), navigate(`/quotes/${quote.id}`) }
-                // })
         }
     })
 
