@@ -336,7 +336,7 @@ class CheckSession(Resource):
     if user_id:
       user = User.query.filter(User.id == user_id).first()
       if user:
-        return user.to_dict(),200
+        return user.to_dict(rules=('-_password_hash', '-account', '-email', '-first_name', '-updated_at', '-last_name', '-created_at', '-updated_by', '-created_by')),200
       else:
         # User ID in session but user not found in database
         return {'error': 'User not found'}, 404
@@ -361,7 +361,7 @@ class Login(Resource):
         return {'errors' : 'This users account is no longer active.'}, 401
 
     session['user_id'] = user.id
-    return user.to_dict(), 200
+    return user.to_dict(rules=('-_password_hash', '-account', '-email', '-first_name', '-updated_at', '-last_name', '-created_at', '-updated_by', '-created_by')), 200
 
 class Logout(Resource):
   def delete(self):
