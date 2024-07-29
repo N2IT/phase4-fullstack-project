@@ -164,13 +164,13 @@ const AgentProvider = ({ children }) => {
                 }
             })
             .then(agent => {
-                setUser(agent);
+                setAgent(agent);
                 setIsLoading(false);
             })
             .catch(error => {
                 console.error('Error fetching agent data:', error);
                 setIsLoading(false);
-                setUser(null);
+                setAgent(null);
             });
     }, []);
 
