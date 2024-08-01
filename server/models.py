@@ -325,3 +325,11 @@ class Quote(db.Model, SerializerMixin):
 
     def __repr__(self):
         return f'Quote {self.id}, {self.quote_number}, {self.title}, {self.discount}, {self.savings}, {self.markup_variable}, {self.sale_price}, {self.margin_percentage}, {self.margin_dollars}, {self.notes}, {self.status}, {self.converted}, {self.created_at}, {self.created_by}, {self.updated_at}, {self.updated_by}'
+
+
+class ScreenConfiguration(db.Model, SerializerMixin):
+    __tablename__='screenconfigurations'
+    id = db.Column(db.Integer, primary_key = True)
+    project_name = db.Column(db.String)
+    unit_name = db.Column(db.String)
+    
