@@ -267,7 +267,7 @@ class Customer(db.Model, SerializerMixin):
 class Configuration(db.Model, SerializerMixin):
     __tablename__ = 'configurations'
     id = db.Column(db.Integer, primary_key = True)
-    sku = db.Column(db.Integer)
+    sku = db.Column(db.String)
     product_title = db.Column(db.String)
     product_description = db.Column(db.String)
     cost = db.Column(db.Integer)
