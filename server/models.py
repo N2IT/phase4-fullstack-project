@@ -363,9 +363,19 @@ class ScreenConfiguration(db.Model, SerializerMixin):
     color_collection = db.Column(db.String)
     frame_color = db.Column(db.String)
     list_price = db.Column(db.Integer)
+    quote_id = db.Column(db.Integer, db.ForeignKey('quotes.id'))
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    created_by = db.Column(db.Integer)
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+    updated_by = db.Column(db.Integer)
 
-    
+    ##relationships
+    quote = db.relationship('Quote', back_populates = 'screenconfigurations')
 
+    ##serialize
+    serialize_rules = ('-quote.screenconfigurations',)
 
+    def __repr__(self):
+        return f'Configuration {self.id}, {self.project_name}, {self.unit_name}, {self.complete_unit}, {self.housing}, {self.side_track}, {self.hem_bar}, {self.fabric}, {self.motor_tube}, {self.unit_width}, {self.unit_height}, {self.housing_tube_size}, {self.housing_type}, {self. housing_type}, {self.motor_type}, {self. motor_side}, {self. power_chord}, {self.retention_type}, {self.retention_cap_color}, {self.left_retention}, {self.tracks_exact_length}, {self.hem_bar_type}, {self.hem_cap_color}, {self.pile_brush_style}, {self.fabric_type}, {self.fabric_selection}, {self.seam_location}, {self.seam_location_num}, {self.zipper_color}, {self.usable_fabric_width}, {self.rotate_fabric}, {self.color_collection}, {self.frame_color}, {self.list_price}, {self.quote_id}, {self.created_at}, {self.created_by}, {self.updated_at}, {self.updated_by}'
 
     
