@@ -4,7 +4,7 @@ from flask import request, session, make_response, jsonify, render_template
 from flask_restful import Api, Resource
 import random
 from config import app, db, api
-from models import Account, User, Role, Permission, RolePermission, Quote, Customer, Configuration
+from models import Account, User, Role, Permission, RolePermission, Quote, Customer, ScreenConfiguration
 from seed import calculate_quote_info, update_quote_discount
 
 # just imported Account, User above

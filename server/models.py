@@ -264,27 +264,27 @@ class Customer(db.Model, SerializerMixin):
         return f'Customer {self.id}, {self.first_name}, {self.last_name}, {self.email}, {self.phone}, {self.created_at}, {self.created_by}, {self.updated_at}, {self.updated_by}, {self.notes}, {self.account_id} '
 
 
-class Configuration(db.Model, SerializerMixin):
-    __tablename__ = 'configurations'
-    id = db.Column(db.Integer, primary_key = True)
-    sku = db.Column(db.String)
-    product_title = db.Column(db.String)
-    product_description = db.Column(db.String)
-    cost = db.Column(db.Integer)
-    quote_id = db.Column(db.Integer, db.ForeignKey('quotes.id'))
-    created_at = db.Column(db.DateTime, server_default=db.func.now())
-    created_by = db.Column(db.Integer)
-    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
-    updated_by = db.Column(db.Integer)
+# class Configuration(db.Model, SerializerMixin):
+#     __tablename__ = 'configurations'
+#     id = db.Column(db.Integer, primary_key = True)
+#     sku = db.Column(db.String)
+#     product_title = db.Column(db.String)
+#     product_description = db.Column(db.String)
+#     cost = db.Column(db.Integer)
+#     quote_id = db.Column(db.Integer, db.ForeignKey('quotes.id'))
+#     created_at = db.Column(db.DateTime, server_default=db.func.now())
+#     created_by = db.Column(db.Integer)
+#     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+#     updated_by = db.Column(db.Integer)
 
-    ##relationships
-    quote = db.relationship('Quote', back_populates = 'configurations')
+#     ##relationships
+#     quote = db.relationship('Quote', back_populates = 'configurations')
 
-    ##serialize
-    serialize_rules = ('-quote.configurations',)
+#     ##serialize
+#     serialize_rules = ('-quote.configurations',)
 
-    def __repr__(self):
-        return f'Configuration {self.id}, {self.sku}, {self.product_title}, {self.product_description}, {self.cost}'
+#     def __repr__(self):
+#         return f'Configuration {self.id}, {self.sku}, {self.product_title}, {self.product_description}, {self.cost}'
     
 
 class Quote(db.Model, SerializerMixin):
@@ -317,7 +317,7 @@ class Quote(db.Model, SerializerMixin):
 
     # relationships
     customer = db.relationship('Customer', back_populates = 'quotes')
-    configurations = db.relationship('Configuration', back_populates = 'quote', cascade='all, delete')
+    screenconfigurations = db.relationship('ScreenConfiguration', back_populates = 'quote', cascade='all, delete')
     account = db.relationship('Account', back_populates = 'quotes')
 
     ##serialize
@@ -358,7 +358,7 @@ class ScreenConfiguration(db.Model, SerializerMixin):
     seam_location = db.Column(db.String)
     seam_location_num = db.Column(db.Integer)
     zipper_color = db.Column(db.String)
-    usable_fab_width = db.Column(db.Integer)
+    usable_fabric_width = db.Column(db.Integer)
     rotate_fabric = db.Column(db.String)
     color_collection = db.Column(db.String)
     frame_color = db.Column(db.String)
