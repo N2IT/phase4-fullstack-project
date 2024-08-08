@@ -8,6 +8,36 @@ from models import *
 fake = Faker()
 status_list = ['active', 'inactive']
 roles = [1, 2, 3, 4]
+tube_size = ['Standard(4.5")', 'Jumbo(5.75")', 'Micro(3.5")']
+housing_type_options = ['Complete', 'Housing Base(no cover)', 'Open Mount Brackets']
+motor_type = ['Alpha pro+OD', 'Somfy RTS', 'Somfy Hardwired', 'Somfy AutoSun']
+motor_side = ['Left', 'Right']
+powerChord_options = ['6ft with pigtail(Alpha)', '32ft with pigtail(Alpha)', '30ft BLACK with molded plug (Alpha)']
+retention_options = ['Surface Mount', 'Recessed', 'Cable Guide', 'Track Guide', 'None']
+cap_color = ['Jet Black','Signal White','Urban Gray', 'Anthracite']
+hem_bar_options = ['Tall', 'Standard', 'Lanai']
+pile_brush_options = ['1/2 in Black', '1/2 in White', '1/2 in Gray', '3/4 in Black', '2 in Black', '2 in Black (Double)', 'None']
+fabric_type_options = ['Ferrari Soltis Opaque B92', 'Ferrari Soltis Proof 502', 'Ferrari Soltis Horizon 86', 'Ferrari Soltis Perform 92', 'Twitchell Dimout', 'Mermet Natte 10%', 'Mermet Natte 3%', 'Mermet Natte 5%', 'Mermet Satine 1%', 'Mermet Satine 5%', 'Ferrari Soltis Veozip', 'Twitchell Nano 50', 'Twitchell Nano 55', 'Twitchell Nano 60', 'Twitchell Nano 70', 'Twitchell Nano 95', 'Twitchell Nano 97', 'Twitchell Nano 99', 'Twitchell OmegaTex', 'Twitchell Textilene 80', 'Twitchell Textilene 90', 'Twitchell Textilene 95']
+ferrari_opaque_b92 = ['Alu', 'Beaten Metal', 'Boulder', 'Bronze', 'Deep Black', 'Sandy Beige', 'White', 'B702 Black/ White']
+ferrari_horizon_86 = ['Alu/White', 'Beaten Metal', 'Champagne', 'Alu/Oat', 'Concrete', 'Sandy Beige', 'Alu/Alu', 'Anthacite', 'Boulder', 'Alu/Anthracite', 'Pepper', 'Bronze', 'Buttercup', 'Red', 'Orange', 'Moss Green', 'Aniseed', 'Snow White', 'Brick', 'Deep Red', 'Deep Blue', 'Deep Black']
+ferrari_perform_92 = ['White', 'Boulder', 'Alu/Anthracite', 'Sandy Beige', 'Alu/White', 'Beaten Metal', 'Cloud', 'Alu/Oat', 'Concrete', 'Tenis Green', 'Alu/Alu', 'Alu/Medium Grey', 'Anthracite', 'Quartz', 'Champagne', 'Hemp', 'Pepper', 'Gold', 'Havana-Brown', 'Bronze', 'Beetle', 'Snow White', 'Shea', 'Moss Green', 'Taupe', 'Dark Grey', 'Aniseed', 'Celestial Grey', 'Green-Grey', 'Buttercup', 'Orange', 'Copper', 'Brick', 'Deep Red', 'Deep Blue', 'Deep Black', 'Red', 'Lagoon']
+ferrari_proof_502 = ['White', 'Boulder', 'Concrete', 'Black', 'Champagne', 'Vanilla', 'Hemp', 'Sandy Beige', 'Pepper', 'Camel', 'Cocoa', 'Teak', 'Walnut Stain', 'Lemon', 'Buttercup', 'Dijon', 'Orange', 'Carrot', 'Raspberry', 'Poppy', 'Terracotta', 'Burgundy', 'Aniseed', 'Olive', 'Moss Green', 'Porcelain Green', 'Tennis Green', 'Spruce', 'Celadon', 'Steel Blue', 'Lagoon', 'Dark Blue', 'Thistle Blue', 'Celestial Blue', 'Victoria Blue', 'Midnight Blue', 'Marine', 'Velvet Red', 'Autumn', 'Aluminium']
+ferrari_veozip = ['Graphite Black', 'Grey Pepper', 'Sandalwood', 'Volcano', 'Shadow', 'Sea Urchin', 'Sea Lion', 'Lunar Surface', 'Tundra', 'Mistral', 'Macadamia', 'Natural', 'Cumulus', 'Edelweiss', 'Frost White']
+mermette_natte = ['Sable-Wood', 'Sable-White', 'Sable-Sable-Fog', 'Grey-Sable', 'Grey-Grey', 'Grey-Charcoal', 'Charcoal-Garnet', 'Charcoal-Forest', 'Charcoal-Cocoa-Fawn', 'Charcoal-Charcoal-Navy', 'Charcoal-Charcoal', 'Charcoal-Cocoa']
+mermette_satine = ['Satine Sable-Wood', 'Satine Sable-Garnet-Auburn', 'Satine Sable-Forest', 'Satine Grey-Navy', 'Satine Grey-Fog-Charcoal', 'Satine Charcoal-Garnet', 'Satine Charcoal-Cocoa-Fawn', 'Satine Charcoal-Cocoa', 'Satine Charcoal-Charcoal-Navy', 'Satine Charcoal-Charcoal-Grey', 'Satine Charcoal-Charcoal-Auburn', 'Satine Charcoal-Charcoal']
+twitchell_dimout = ['Flat Black', 'Charcoal', 'Grey', 'Light Grey', 'Putty', 'Tan', 'Tobacco', 'White']
+twitchell50_70 = ['Black', 'White']
+twitchell95_97 = ['White', 'Bone', 'Sable', 'Stone Texture', 'Shadow Texture', 'Espresso Texture', 'Granite', 'Tobacco', 'Charcoal', 'Flat Black', 'Desert Sand', 'Almond', 'Cafe', 'Tumbleweed']
+twitchell_99 = ['Espresso Texture', 'Granite', 'Tobacco', 'Charcoal', 'Flat Black']
+twitchell_omega = ['Black Tan', 'Black', 'White and Tan', 'White']
+twitchell80_90 = ['Black', 'Black/Brown', 'Desert Sand', 'White', 'Brown', 'Dusk Grey', 'Sandstone']
+twitchell_95 =['Pure White', 'Pewter', 'Mushroom', 'Quartz', 'Putty', 'Almond Brown', 'Tumbleweed Texture', 'Tobacco Leaf', 'Graphite', 'Carbon Texture', 'Galaxy Black']
+seam_location_options = ['As high as possible', 'As low as possible']
+zipper_color_options = ['Black', 'White']
+width_126 = ['Ferrari Soltis Veozip', 'Twitchell Nano 50', 'Twitchell Nano 55', 'Twitchell Nano 60', 'Twitchell Nano 70', 'Twitchell Nano 95', 'Twitchell Nano 97', 'Twitchell Nano 99', 'Twitchell OmegaTex', 'Twitchell Textilene 80', 'Twitchell Textilene 90', 'Twitchell Textilene 95']
+width_122 = ['Mermet Natte 10%', 'Mermet Natte 3%', 'Mermet Natte 5%', 'Mermet Satine 1%', 'Mermet Satine 5%']
+width_105 = ['Ferrari Soltis Horizon 86', 'Ferrari Soltis Perform 92']
+
 
 def create_accounts():
   accounts = []
@@ -93,7 +123,7 @@ def create_quotes():
     account_data = customer_account_data[selected_customer_id]
 
     q = Quote(
-        quote_number=rc(range(0, 1000)),
+        quote_number=fake.unique.random_number(digits=3),
         title=fake.name(),
         customer_id=selected_customer_id,
         account_id=account_data['account_id'],
@@ -110,27 +140,140 @@ def create_quotes():
   
   return quotes
 
-def create_configurations():
-  configurations = []
+def create_screenConfigurations():
+  screenConfigurations = []
+  fabric_selections = {
+    'Ferrari Soltis Opaque B92' : ferrari_opaque_b92,
+    'Ferrari Soltis Proof 502' : ferrari_proof_502,
+    'Ferrari Soltis Horizon 86' : ferrari_horizon_86,
+    'Ferrari Soltis Perform 92' : ferrari_perform_92,
+    'Twitchell Dimout' : twitchell_dimout,
+    'Mermet Natte 10%' : mermette_natte,
+    'Mermet Natte 3%' : mermette_natte,
+    'Mermet Natte 5%' : mermette_natte,
+    'Mermet Satine 1%' : mermette_satine,
+    'Mermet Satine 5%' : mermette_satine,
+    'Ferrari Soltis Veozip' : ferrari_veozip,
+    'Twitchell Nano 50' : twitchell50_70,
+    'Twitchell Nano 55' : twitchell50_70,
+    'Twitchell Nano 60' : twitchell50_70,
+    'Twitchell Nano 70' : twitchell50_70,
+    'Twitchell Nano 95' : twitchell95_97,
+    'Twitchell Nano 97' : twitchell95_97,
+    'Twitchell Nano 99' : twitchell_99,
+    'Twitchell OmegaTex' : twitchell_omega,
+    'Twitchell Textilene 80' : twitchell80_90,
+    'Twitchell Textilene 90' : twitchell80_90,
+    'Twitchell Textilene 95' : twitchell_95
+      }
+
+  def get_fabric_selection(fabric_type):
+    if fabric_type in fabric_selections:
+      return rc(fabric_selections[fabric_type])
+  
+  def calc_seam_num(seam_location):
+    if seam_location == 'As high as possible':
+      seam_location_num = unit_width * .6345975
+    return seam_location_num
+    if seam_location == 'As low as possible':
+      seam_location_num = unit_width * .4258475
+    return seam_location_num
+
+  def get_usable_fab_width():
+    if fabric_type in width_126:
+      return 124
+    if fabric_type in width_122:
+      return 120
+    if fabric_type == 'Twitchell Dimout':
+      return 118
+    if fabric_type in width_105:
+      return 103
+    if fabric_type == 'Ferrari Soltis Proof 502':
+      return 68.8
+    if fabric_type == 'Ferrari Soltis Opaque B92':
+      return 64.9
 
   for _ in range(35):
-    cost = randint(3500, 1000000) / 100.0
-    configs = Configuration(
-      sku = fake.ean(length=8),
-      product_title = fake.company_suffix(),
-      product_description = fake.sentence(),
-      cost = cost,      
-      quote_id = rc([quote.id for quote in quotes]),
-      created_by = 1,
-    )
+    fabric_type = choices(fabric_type_options, weights=[1] * len(fabric_type_options), k=1)[0]
+    unit_width = rc(range(36, 300))
+    unit_height = rc(range(36, 400))
+    seam_location = choices(seam_location_options, weights=[1] * len(seam_location_options), k=1)[0]
+    seam_location_num = unit_width * .6345975
 
-    configurations.append(configs)
+
+    s = ScreenConfiguration (
+      project_name = fake.word(),
+      unit_name = fake.name(),
+      complete_unit = 'true',
+      housing = 'true',
+      side_track = 'true',
+      hem_bar = 'true',
+      fabric = 'true',
+      motor_tube = 'true',
+      unit_width = unit_width,
+      unit_height = unit_height,
+      housing_tube_size = choices(tube_size, weights=[10,5,1], k=1)[0],
+      housing_type = choices(housing_type_options, weights=[10,5,1], k=1)[0],
+      motor_type =  choices(motor_type, weights=[10,10,5,1], k=1)[0],
+      motor_side = choices(motor_side, weights=[50,50], k=1)[0],
+      power_chord = choices(powerChord_options, weights=[10,5,5], k=1)[0],
+      # motor_charge = 1000,
+      # tube_charge = 1000,
+      # housing_charge = 1000,
+      retention_type = choices(retention_options, weights=[10, 5, 5, 5, 1], k=1)[0],
+      retention_cap_color = choices(cap_color, weights=[1] * len(cap_color), k=1)[0],
+      tracks_exact_length = 'false',
+      # tracks_charge = 2000,
+      hem_bar_type = choices(hem_bar_options, weights=[10, 5, 1], k=1)[0],
+      hem_cap_color = choices(cap_color, weights=[1] * len(cap_color), k=1)[0],
+      pile_brush_style = choices(pile_brush_options, weights=[5,5,5,5,5,5,5], k=1)[0],
+      # hem_bar_charge = 2000,
+      fabric_type = fabric_type,
+      fabric_selection = get_fabric_selection(fabric_type),
+      seam_location = seam_location,
+      seam_location_num = seam_location_num,
+      zipper_color = choices(zipper_color_options, weights = [10, 1], k=1)[0],
+      usable_fabric_width = get_usable_fab_width(),
+      rotate_fabric = 'No',
+      # fabric_charge = 3000,
+      color_collection = 'Templar Selection',
+      frame_color = 'Black',
+      # powder_charge = 4000,
+      # charges = [motor_charge, tube_charge, housing_charge, tracks_charge, hem_bar_charge, fabric_charge, powder_charge]
+      # list_price = sum(charges)
+
+      created_by = 1,
+      )
+    
+    
+    screenConfigurations.append(s)
+
+  return screenConfigurations
+
+
+
+
+# def create_configurations():
+#   configurations = []
+
+#   for _ in range(35):
+#     cost = randint(3500, 1000000) / 100.0
+#     configs = Configuration(
+#       sku = fake.ean(length=8),
+#       product_title = fake.company_suffix(),
+#       product_description = fake.sentence(),
+#       cost = cost,      
+#       quote_id = rc([quote.id for quote in quotes]),
+#       created_by = 1,
+#     )
+
+#     configurations.append(configs)
   
-  return configurations
+#   return configurations
 
 def calculate_quote_info(quote_id=None):
   quote = Quote.query.filter(Quote.id == quote_id).first()
-  if quote_id and not quote.configurations:
+  if quote_id and not quote.screenconfigurations:
     quote.total_cost = None
     quote.savings = None
     quote.sale_price = None
@@ -141,9 +284,9 @@ def calculate_quote_info(quote_id=None):
     
   else:
     total_costs = db.session.query(
-        Configuration.quote_id,
-        func.sum(Configuration.cost).label('total_cost')
-    ).group_by(Configuration.quote_id).all()
+        ScreenConfiguration.quote_id,
+        func.sum(ScreenConfiguration.list_price).label('total_cost')
+    ).group_by(ScreenConfiguration.quote_id).all()
 
     
 
@@ -155,6 +298,8 @@ def calculate_quote_info(quote_id=None):
         quote = db.session.get(Quote, quote_id)
         # Assign misc variables associated to calculations
         cost_w_savings = total_cost - (total_cost * quote.discount)
+
+        # SOMETHING GOING ON IN THIS SECTION WHEN ATTEMPTING TO SEED
 
         # Calculate the financial metrics
         quote.total_cost = total_cost
@@ -184,7 +329,7 @@ if __name__ == "__main__":
     Role.query.delete()
     Permission.query.delete()
     Customer.query.delete()
-    Configuration.query.delete()
+    ScreenConfiguration.query.delete()
     Quote.query.delete()
 
     print("Seeding accounts...")
@@ -279,9 +424,9 @@ if __name__ == "__main__":
     db.session.add_all(quotes)
     db.session.commit()
 
-    print('seeding configurations...')
-    configurations = create_configurations()
-    db.session.add_all(configurations)
+    print('seeding screen configurations...')
+    screenconfigurations = create_screenConfigurations()
+    db.session.add_all(screenconfigurations)
     db.session.commit()
 
     print('updating quote calculated fields...')
