@@ -1,0 +1,25 @@
+{
+    "includedAssemblies": {
+        "housing": true,
+        "sideTrack": true,
+        "hemBar": true,
+        "fabric": true,
+        "motorTube": true,
+        "buildout": false
+    },
+    "widthIn": {
+        "min": 32,
+        "max": 216,
+        "defaultValue": 60
+    },
+    "heightIn": {
+        "min": 12,
+        "max": 144,
+        "defaultValue": 36
+    },
+    "motorExtendedCord": {
+        "defaultValue": false,
+        "embed": "3",
+        "price": 85.000
+    }
+}

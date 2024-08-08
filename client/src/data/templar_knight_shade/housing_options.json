@@ -1,0 +1,26 @@
+{
+    "options": {
+        "complete": {
+            "id": 0,
+            "displayName": "Complete Housing",
+            "embed": "C",
+            "enabled": true,
+            "visible": true
+        },
+        "base": {
+            "id": 1,
+            "displayName": "Housing Base (No Cover)",
+            "embed": "N",
+            "enabled": true,
+            "visible": true
+        },
+        "open": {
+            "id": 2,
+            "displayName": "Open Mount Brackets",
+            "embed": "O",
+            "enabled": true,
+            "visible": true
+        }
+    },
+    "defaultValue": "complete"
+}

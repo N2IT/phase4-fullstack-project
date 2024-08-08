@@ -8,7 +8,8 @@
                 "m": 9.644,
                 "b": 66.391
             },
-            "enabled": true
+            "enabled": true,
+            "visible": true
         },
         "tall": {
             "id": 1,
@@ -18,7 +19,8 @@
                 "m": 15.310,
                 "b": 72.875
             },
-            "enabled": true
+            "enabled": true,
+            "visible": true
         },
         "lanai": {
             "id": 2,
@@ -28,7 +30,8 @@
                 "m": 15.310,
                 "b": 272.875
             },
-            "enabled": true
+            "enabled": true,
+            "visible": true
         }
     },
     "defaultValue": "standard"
