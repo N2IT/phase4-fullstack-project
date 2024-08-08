@@ -1,0 +1,70 @@
+{
+    "options": {
+        "surface": {
+            "id": 0,
+            "displayName": "Surface",
+            "embed": {
+                "left": "A",
+                "right": "F"
+            },
+            "price": {
+                "m": 23.690,
+                "b": 60.192
+            },
+            "enabled": true
+        },
+        "recessed": {
+            "id": 1,
+            "displayName": "Recessed",
+            "embed": {
+                "left": "B",
+                "right": "G"
+            },
+            "price": {
+                "m": 30.410,
+                "b": 75.166
+            },
+            "enabled": true
+        },
+        "cable": {
+            "id": 2,
+            "displayName": "Cable",
+            "embed": {
+                "left": "C",
+                "right": "H"
+            },
+            "price": {
+                "m": 0.000,
+                "b": 100.000
+            },
+            "enabled": true
+        },
+        "track": {
+            "id": 3,
+            "displayName": "Track",
+            "embed": {
+                "left": "D",
+                "right": "I"
+            },
+            "price": {
+                "m": -1,
+                "b": -1
+            },
+            "enabled": false
+        },
+        "none": {
+            "id": 3,
+            "displayName": "None",
+            "embed": {
+                "left": "E",
+                "right": "J"
+            },
+            "price": {
+                "m": 0.000,
+                "b": 0.000
+            },
+            "enabled": true
+        }
+    },
+    "defaultValue": "surface"
+}

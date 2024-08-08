@@ -1,0 +1,35 @@
+{
+    "options": {
+        "standard": {
+            "id": 0,
+            "displayName": "Standard",
+            "embed": "P",
+            "price": {
+                "m": 9.644,
+                "b": 66.391
+            },
+            "enabled": true
+        },
+        "tall": {
+            "id": 1,
+            "displayName": "Tall",
+            "embed": "Q",
+            "price": {
+                "m": 15.310,
+                "b": 72.875
+            },
+            "enabled": true
+        },
+        "lanai": {
+            "id": 2,
+            "displayName": "Lanai",
+            "embed": "7",
+            "price": {
+                "m": 15.310,
+                "b": 272.875
+            },
+            "enabled": true
+        }
+    },
+    "defaultValue": "standard"
+}
