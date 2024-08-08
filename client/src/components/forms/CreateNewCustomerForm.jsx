@@ -25,6 +25,7 @@ const CreateNewCustomerForm = () => {
             last_name: "",
             email: "",
             phone: "",
+            notes: "",
             // address_1: "",
             // address_2: "",
             // city: "",
