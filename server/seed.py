@@ -10,7 +10,7 @@ status_list = ['active', 'inactive']
 roles = [1, 2, 3, 4]
 tube_size = ['Standard(4.5")', 'Jumbo(5.75")', 'Micro(3.5")']
 housing_type_options = ['Complete', 'Housing Base(no cover)', 'Open Mount Brackets']
-motor_type = ['Alpha pro+OD', 'Somfy RTS', 'Somfy Hardwired', 'Somfy AutoSun']
+motor_type_options = ['Alpha pro+OD', 'Somfy RTS', 'Somfy Hardwired', 'Somfy AutoSun']
 motor_side = ['Left', 'Right']
 powerChord_options = ['6ft with pigtail(Alpha)', '32ft with pigtail(Alpha)', '30ft BLACK with molded plug (Alpha)']
 retention_options = ['Surface Mount', 'Recessed', 'Cable Guide', 'Track Guide', 'None']
@@ -128,7 +128,7 @@ def create_quotes():
         customer_id=selected_customer_id,
         account_id=account_data['account_id'],
         discount=account_data['discount'],
-        markup_variable= 2,
+        markup_variable= rc(range(100, 200)) / 100,
         notes=fake.sentence(),
         status = choices(status_list, weights = [10, 1], k=1)[0],
         converted='No',
@@ -199,7 +199,12 @@ def create_screenConfigurations():
     unit_height = rc(range(36, 400))
     seam_location = choices(seam_location_options, weights=[1] * len(seam_location_options), k=1)[0]
     seam_location_num = unit_width * .6345975
-
+    motor_type =  choices(motor_type_options, weights=[10,10,5,1], k=1)[0]
+    power_chord = choices(powerChord_options, weights=[10,5,5], k=1)[0]
+    housing_tube_size = choices(tube_size, weights=[10,5,1], k=1)[0]
+    housing_type = choices(housing_type_options, weights=[10,5,1], k=1)[0]
+    retention_type = choices(retention_options, weights=[10, 5, 5, 5, 1], k=1)[0]
+    hem_bar_type = choices(hem_bar_options, weights=[10, 5, 1], k=1)[0]
 
     s = ScreenConfiguration (
       project_name = fake.word(),
@@ -212,19 +217,19 @@ def create_screenConfigurations():
       motor_tube = 'true',
       unit_width = unit_width,
       unit_height = unit_height,
-      housing_tube_size = choices(tube_size, weights=[10,5,1], k=1)[0],
-      housing_type = choices(housing_type_options, weights=[10,5,1], k=1)[0],
-      motor_type =  choices(motor_type, weights=[10,10,5,1], k=1)[0],
+      housing_tube_size = housing_tube_size,
+      housing_type = housing_type,
+      motor_type = motor_type,
       motor_side = choices(motor_side, weights=[50,50], k=1)[0],
-      power_chord = choices(powerChord_options, weights=[10,5,5], k=1)[0],
+      power_chord = power_chord,
       # motor_charge = 1000,
       # tube_charge = 1000,
       # housing_charge = 1000,
-      retention_type = choices(retention_options, weights=[10, 5, 5, 5, 1], k=1)[0],
+      retention_type = retention_type,
       retention_cap_color = choices(cap_color, weights=[1] * len(cap_color), k=1)[0],
       tracks_exact_length = 'false',
       # tracks_charge = 2000,
-      hem_bar_type = choices(hem_bar_options, weights=[10, 5, 1], k=1)[0],
+      hem_bar_type = hem_bar_type,
       hem_cap_color = choices(cap_color, weights=[1] * len(cap_color), k=1)[0],
       pile_brush_style = choices(pile_brush_options, weights=[5,5,5,5,5,5,5], k=1)[0],
       # hem_bar_charge = 2000,
@@ -241,17 +246,127 @@ def create_screenConfigurations():
       # powder_charge = 4000,
       # charges = [motor_charge, tube_charge, housing_charge, tracks_charge, hem_bar_charge, fabric_charge, powder_charge]
       # list_price = sum(charges)
-
+      quote_id = rc([quote.id for quote in quotes]),
       created_by = 1,
       )
+    s.motor_type_price = 0
+    s.power_chord_price = 0
+    def get_motor_charge(motor_type):
+      if motor_type == 'Alpha pro+OD':
+        s.motor_type_price = 0
+      if motor_type == 'Somfy RTS' or motor_type == 'Somfy Hardwired':
+        s.motor_type_price = 300
+      if motor_type == 'Somfy Autosun':
+        s.motor_type_price = 600
+      return s.motor_type_price
     
+    def get_power_chord_price(power_chord):
+      if power_chord == '6ft with pigtail(Alpha)':
+        s.power_chord_price = 0
+      if power_chord == '32ft with pigtail(Alpha)':
+        s.power_chord_price = 85
+      if power_chord == '30ft BLACK with molded plug (Alpha)':
+        s.power_chord_price = 95
+      return s.power_chord_price
+
+    def get_tube_price(housing_tube_size):
+      if housing_tube_size == 'Standard(4.5")':
+        s.housing_tube_price = 549.26
+      if housing_tube_size == 'Jumbo(5.75")':
+        s.housing_tube_price = 670
+      if housing_tube_size == 'Micro(3.5")':
+        s.housing_tube_price = 447.01
+      return s.housing_tube_price
+
+    def get_housing_price(housing_type):
+      if housing_type == 'Complete' or housing_type == 'Housing Base(no cover)':
+        s.housing_type_price = 156.37
+      else:
+        s.housing_type_price = 0
+      return s.housing_type_price
+    
+    def get_tracks_priciing(retention_type):
+      if retention_type == 'Surface Mount':
+        s.retention_type_pricing = 60.19
+      if retention_type == 'Recessed':
+        s.retention_type_pricing = 75.17
+      if retention_type == 'Cable Guide':
+        s.retention_type_pricing = 200
+      else:
+        s.retention_type_pricing = 0
+      return s.retention_type_pricing
+
+    def get_hemBar_pricing(hem_bar_type):
+      if hem_bar_type == 'Tall':
+        s.hem_bar_price = 72.88
+      if hem_bar_type == 'Standard':
+        s.hem_bar_price = 66.39
+      if hem_bar_type == 'Lanai':
+        s.hem_bar_price = 272.88
+      return s.hem_bar_price
+    
+    def get_fabric_pricing(fabric_type):
+      fabric_price = 0
+
+      if fabric_type == 'Twitchell Nano 50':
+        fabric_price = 151.26
+      if fabric_type == 'Twitchell Nano 55':
+        fabric_price = 151.77
+      if fabric_type == 'Twitchell Nano 60':
+        fabric_price = 161.84
+      if fabric_type == 'Twitchell Nano 70':
+        fabric_price = 193.61
+      if fabric_type == 'Twitchell Nano 95':
+        fabric_price = 261.67
+      if fabric_type == 'Twitchell Nano 99':
+        fabric_price = 151.26
+      if fabric_type == 'Twitchell Dimout':
+        fabric_price = 352.43
+      if fabric_type == 'Twitchell Textilene 80' or fabric_type == 'Twitchell Textilene 95':
+        fabric_price = 202.68
+      if fabric_type == 'Twitchell Textilent 90':
+        fabric_price = 232.93
+      if fabric_type == 'Ferrari Soltis Perform':
+        fabric_price = 484.02
+      if fabric_type == 'Ferrari Soltis Opaque B92':
+        fabric_price = 1246.34
+      if fabric_type == 'Ferrari Soltis Proof':
+        fabric_price = 653.42
+      if fabric_type == 'Ferrari Soltis Veozip':
+        fabric_price = 261.67
+      if fabric_type == 'Ferrari Soltis Horizon':
+        fabric_price = 591.41
+      if fabric_type == 'Ferrari Harmony':
+        fabric_price = 529.39
+      if fabric_type == 'Mermett Natte 3%':
+        fabric_price = 423.52
+      if fabric_type == 'Mermett Natte 5%':
+        fabric_price = 391.80
+      if fabric_type == 'Mermett Natte 10%':
+        fabric_price = 370.58
+      if fabric_type == 'Mermet Satine 1%':
+        fabric_price = 432.59
+      if fabric_type == 'Mermet Satine 5%':
+        fabric_price = 400.83
+      if fabric_type == 'Twitchell OmegaTex':
+        fabric_price = 642.84
+      if fabric_type == 'Sunbrella 60 (Solid)':
+        fabric_price = 529.39
+      return fabric_price
+
+    s.motor_charge = get_motor_charge(motor_type) + get_power_chord_price(power_chord)
+    s.tube_charge = ((unit_width / 12) * 18.29) + get_tube_price(housing_tube_size)
+    s.housing_charge = get_housing_price(housing_type)
+    s.tracks_charge = ((unit_height / 12) * 23.69) + get_tracks_priciing(retention_type)
+    s.hem_bar_charge = ((unit_width / 12) * 9.65) + get_hemBar_pricing(hem_bar_type)
+    s.fabric_charge = ((unit_width / 12) * 3.14) + ((unit_height / 12) * 2.83) + get_fabric_pricing(fabric_type)
+    s.powder_charge = 0
+    charges = [s.motor_charge, s.tube_charge, s.housing_charge, s.tracks_charge, s.hem_bar_charge, s.fabric_charge, s.powder_charge]
+    s.list_price = sum(charges)
     
     screenConfigurations.append(s)
 
   return screenConfigurations
-
-
-
 
 # def create_configurations():
 #   configurations = []
@@ -272,6 +387,7 @@ def create_screenConfigurations():
 #   return configurations
 
 def calculate_quote_info(quote_id=None):
+  # breakpoint()
   quote = Quote.query.filter(Quote.id == quote_id).first()
   if quote_id and not quote.screenconfigurations:
     quote.total_cost = None
@@ -288,14 +404,13 @@ def calculate_quote_info(quote_id=None):
         func.sum(ScreenConfiguration.list_price).label('total_cost')
     ).group_by(ScreenConfiguration.quote_id).all()
 
-    
-
     for total_cost_data in total_costs:
         quote_id = total_cost_data.quote_id
         total_cost = total_cost_data.total_cost
 
         # Fetch the corresponding quote
         quote = db.session.get(Quote, quote_id)
+        
         # Assign misc variables associated to calculations
         cost_w_savings = total_cost - (total_cost * quote.discount)
 
