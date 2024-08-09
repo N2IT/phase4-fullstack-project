@@ -205,6 +205,7 @@ def create_screenConfigurations():
     housing_type = choices(housing_type_options, weights=[10,5,1], k=1)[0]
     retention_type = choices(retention_options, weights=[10, 5, 5, 5, 1], k=1)[0]
     hem_bar_type = choices(hem_bar_options, weights=[10, 5, 1], k=1)[0]
+    fabric_sqft = ((unit_width * unit_height) / 144)
 
     s = ScreenConfiguration (
       project_name = fake.word(),
@@ -278,22 +279,26 @@ def create_screenConfigurations():
         s.housing_tube_price = 447.01
       return s.housing_tube_price
 
-    def get_housing_price(housing_type):
-      if housing_type == 'Complete' or housing_type == 'Housing Base(no cover)':
+    def get_housing_price(housing_type, housing_tube_size):
+      s.housing_type_price = 0
+      if housing_type == 'Complete' and housing_tube_size == 'Standard(4.5")':
+        s.housing_type_price = 174.04
+      if housing_type == 'Housing Base(no cover)' and housing_tube_size == 'Standard(4.5")':
+        s.housing_type_price = 174.04
+      if housing_type == 'Complete' and housing_tube_size == 'Jumbo(5.75")' or housing_type == 'Housing Base(no cover)' and housing_tube_size == 'Jumbo(5.75")':
+        s.housing_type_price = 212.46
+      if housing_type == 'Complete' and housing_tube_size == 'Micro(3.5")' or housing_type == 'Housing Base(no cover)' and housing_tube_size == 'Micro(3.5")':
         s.housing_type_price = 156.37
-      else:
-        s.housing_type_price = 0
       return s.housing_type_price
     
-    def get_tracks_priciing(retention_type):
+    def get_tracks_pricing(retention_type):
+      s.retention_type_pricing = 0
       if retention_type == 'Surface Mount':
         s.retention_type_pricing = 60.19
       if retention_type == 'Recessed':
         s.retention_type_pricing = 75.17
       if retention_type == 'Cable Guide':
         s.retention_type_pricing = 200
-      else:
-        s.retention_type_pricing = 0
       return s.retention_type_pricing
 
     def get_hemBar_pricing(hem_bar_type):
@@ -355,11 +360,12 @@ def create_screenConfigurations():
       return fabric_price
 
     s.motor_charge = get_motor_charge(motor_type) + get_power_chord_price(power_chord)
-    s.tube_charge = ((unit_width / 12) * 18.29) + get_tube_price(housing_tube_size)
-    s.housing_charge = get_housing_price(housing_type)
-    s.tracks_charge = ((unit_height / 12) * 23.69) + get_tracks_priciing(retention_type)
-    s.hem_bar_charge = ((unit_width / 12) * 9.65) + get_hemBar_pricing(hem_bar_type)
-    s.fabric_charge = ((unit_width / 12) * 3.14) + ((unit_height / 12) * 2.83) + get_fabric_pricing(fabric_type)
+    s.tube_charge = ((unit_width / 12) * 20.66) + get_tube_price(housing_tube_size)
+    s.housing_charge = ((unit_width / 12) * 30.21) + get_housing_price(housing_type, housing_tube_size)
+    s.tracks_charge = ((unit_height / 12) * 24.60) + get_tracks_pricing(retention_type)
+    s.hem_bar_charge = ((unit_width / 12) * 10.038) + get_hemBar_pricing(hem_bar_type)
+    # breakpoint()
+    s.fabric_charge = ((fabric_sqft * 2.30) + get_fabric_pricing(fabric_type))
     s.powder_charge = 0
     charges = [s.motor_charge, s.tube_charge, s.housing_charge, s.tracks_charge, s.hem_bar_charge, s.fabric_charge, s.powder_charge]
     s.list_price = sum(charges)
@@ -387,7 +393,7 @@ def create_screenConfigurations():
 #   return configurations
 
 def calculate_quote_info(quote_id=None):
-  # breakpoint()
+  
   quote = Quote.query.filter(Quote.id == quote_id).first()
   if quote_id and not quote.screenconfigurations:
     quote.total_cost = None

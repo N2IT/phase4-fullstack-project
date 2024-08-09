@@ -883,6 +883,156 @@ class ConfigurationById(Resource):
     except ValueError as e:
       return {'errors' : str(e)}, 404
 
+class ScreenConfigurations(Resource):
+  def get(self):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
+    try:
+      screenconfigurations = [screenconfiguration.to_dict() for screenconfiguration in ScreenConfiguration.query.all()]
+
+      if not screenconfigurations:
+        return {'errors' : '204: No content available'}, 204
+
+      return make_response(
+        screenconfigurations,
+        200
+      )
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
+    except Exception as e:
+      return {'errors' : str(e)}, 500
+  
+  def post(self):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
+    try:
+      ## retrieve form data
+      form_data = request.get_json()
+
+      project_name = form_data.get('project_name')
+      unit_name = form_data.get('unit_name')
+      complete_unit = form_data.get('complete_unit')
+      housing = form_data.get('housing')
+      side_track = form_data.get('side_track')
+      hem_bar = form_data.get('hem_bar')
+      fabric = form_data.get('fabric')
+      motor_tube = form_data.get('motor_tube')
+      unit_width = form_data.get('unit_width')
+      unit_height = form_data.get('unit_height')
+      housing_tube_size = form_data.get('housing_tube_size')
+      housing_type = form_data.get('housing_type')
+      motor_type = form_data.get('motor_type')
+      motor_side = form_data.get('motor_side')
+      power_chord = form_data.get('power_chord')
+      motor_charge = int(form_data.get('motor_charge'))
+      tube_charge = int(form_data.get('tube_charge'))
+      housing_charge = int(form_data.get('housing_charge'))
+      motor_type = form_data.get('motor_type')
+      motor_side = form_data.get('motor_side')
+      power_chord = form_data.get('power_chord')
+      motor_charge = int(form_data.get('motor_charge'))
+      tube_charge = int(form_data.get('tube_charge'))
+      housing_charge = int(form_data.get('housing_charge'))
+      retention_type = form_data.get('retention_type')
+      retention_cap_color = form_data.get('retention_cap_color')
+      left_retention = form_data.get('left_retention')
+      right_retention = form_data.get('right_retention')
+      tracks_exact_length = form_data.get('tracks_exact_length')
+      tracks_charge = int(form_data.get('tracks_charge'))
+      hem_bar_type = form_data.get('hem_bar_type')
+      hem_cap_color = form_data.get('hem_cap_color')
+      pile_brush_style = form_data.get('pile_brush_style')
+      hem_bar_charge = int(form_data.get('hem_bar_charge'))
+      fabric_type = form_data.get('fabric_type')
+      fabric_selection = form_data.get('fabric_selection')
+      seam_location = form_data.get('seam_location')
+      seam_location_num = form_data.get('seam_location_num')
+      zipper_color = form_data.get('zipper_color')
+      usable_fabric_width = int(form_data.get('usable_fabric_width'))
+      rotate_fabric = form_data.get('rotate_fabric')
+      fabric_charge = int(form_data.get('fabric_charge'))
+      color_collection = form_data.get('color_collection')
+      frame_color = form_data.get('frame_color')
+      powder_charge = int(form_data.get('powder_charget'))
+      list_price = int(form_data.get('list_price'))
+      quote_id = int(form_data.get('quote_id'))
+      created_by = form_data.get('created_by') 
+
+      # errors = []
+
+      # if form_data:
+      #   if not unit_width:
+      #     errors.append('A unit width must be entered')
+      #   if not unit_height:
+      #     errors.append('A unit height must be entered')
+      #   if not housing_tube_size:
+      #     errors.append('A product description must be entered')
+      #   if not cost:
+      #     errors.append('An account id must be associated with the configuration')
+      #   if not created_by:
+      #     errors.append('Created by must be populated')
+        
+      #   if errors:
+      #     return { 'errors' : errors }, 422
+        
+      new_screenconfiguration = ScreenConfiguration(
+        project_name = project_name,
+        unit_name = unit_name,
+        complete_unit = complete_unit,
+        housing = housing,
+        side_track = side_track,
+        hem_bar = hem_bar,
+        fabric = fabric,
+        motor_tube = motor_tube,
+        unit_width = unit_width,
+        unit_height = unit_height,
+        housing_tube_size = housing_tube_size,
+        housing_type = housing_type,
+        motor_type = motor_type,
+        motor_side = motor_side,
+        power_chord = power_chord,
+        motor_charge = motor_charge,
+        tube_charge = tube_charge,
+        housing_charge = housing_charge,
+        retention_type = retention_type,
+        retention_cap_color = retention_cap_color,
+        left_retention = left_retention,
+        right_retention = right_retention,
+        tracks_exact_length = tracks_exact_length,
+        tracks_charge = tracks_charge,
+        hem_bar_type = hem_bar_type,
+        hem_cap_color = hem_cap_color,
+        pile_brush_style = pile_brush_style,
+        hem_bar_charge = hem_bar_charge,
+        fabric_type = fabric_type,
+        fabric_selection = fabric_selection,
+        seam_location = seam_location,
+        seam_location_num = seam_location_num,
+        zipper_color = zipper_color,
+        usable_fabric_width = usable_fabric_width,
+        rotate_fabric = rotate_fabric,
+        fabric_charge = fabric_charge,
+        color_collection = color_collection,
+        frame_color = frame_color,
+        powder_charge = powder_charge,
+        list_price = list_price,
+        created_by = created_by,
+      )
+
+      db.session.add(new_screenconfiguration)
+      db.session.commit()
+
+      if quote_id:
+        calculate_quote_info()
+
+      return new_screenconfiguration.to_dict(), 201
+    except ValueError as e:
+      return {'errors' : str(e)}
+    except Exception as e:
+      return {'errors' : str(e)}
+
 # class AccountsDiscountGreaterTen(Resource):
 #   def get(self):
 #     try:
@@ -911,8 +1061,9 @@ api.add_resource(QuoteById, '/quotes/<int:id>')
 api.add_resource(Customers, '/customers')
 api.add_resource(CustomerById, '/customers/<int:id>')
 api.add_resource(Configurations, '/configurations')
-api.add_resource(ConfigurationById, '/configurations/<int:id>')
+# api.add_resource(ConfigurationById, '/configurations/<int:id>')
 # api.add_resource(AccountsDiscountGreaterTen, '/accounts-greater')
+api.add_resource(ScreenConfigurations, '/screen-configurations')
 
 if __name__ == "__main__":
   app.run(port=5000, debug=True)
