@@ -107,11 +107,14 @@
             "other": {
                 "id": 4,
                 "displayName": "Other (Call Us)",
-                "embed": "O",
+                "embed": null,
                 "enabled": false,
                 "visible": true
             }
         },
         "defaultValue": "black"
+    },
+    "cutToLength": {
+        "defaultValue": false
     }
 }

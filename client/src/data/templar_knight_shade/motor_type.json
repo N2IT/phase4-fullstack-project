@@ -126,5 +126,11 @@
             }
         }
     },
-    "defaultValue": "alpha"
+    "defaultValue": "alpha",
+    "extendedCord": {
+        "embed": "3",
+        "price": 85.000,
+        "defaultValue": false,
+        "visible": false
+    }
 }

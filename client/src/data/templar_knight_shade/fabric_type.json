@@ -1,0 +1,1341 @@
+{
+    "Twitchell Textilene 80": {
+        "Black": {
+            "width": "126",
+            "pattern": true,
+            "embed": "01"
+        },
+        "Black/Brown": {
+            "width": "126",
+            "pattern": true,
+            "embed": "02"
+        },
+        "Desert Sand": {
+            "width": "126",
+            "pattern": true,
+            "embed": "03"
+        },
+        "White": {
+            "width": "126",
+            "pattern": true,
+            "embed": "04"
+        },
+        "Brown": {
+            "width": "126",
+            "pattern": true,
+            "embed": "05"
+        },
+        "Dusk Grey": {
+            "width": "126",
+            "pattern": true,
+            "embed": "06"
+        },
+        "Sandstone": {
+            "width": "126",
+            "pattern": true,
+            "embed": "07"
+        }
+    },
+    "Twitchell Nano 95": {
+        "White": {
+            "width": "126",
+            "pattern": true,
+            "embed": "08"
+        },
+        "Bone": {
+            "width": "126",
+            "pattern": true,
+            "embed": "09"
+        },
+        "Sable": {
+            "width": "126",
+            "pattern": true,
+            "embed": "0A"
+        },
+        "Stone Texture": {
+            "width": "126",
+            "pattern": true,
+            "embed": "0B"
+        },
+        "Shadow Texture": {
+            "width": "126",
+            "pattern": true,
+            "embed": "0C"
+        },
+        "Espresso Texture": {
+            "width": "126",
+            "pattern": true,
+            "embed": "0D"
+        },
+        "Granite": {
+            "width": "126",
+            "pattern": true,
+            "embed": "0E"
+        },
+        "Tobacco": {
+            "width": "126",
+            "pattern": true,
+            "embed": "0F"
+        },
+        "Charcoal": {
+            "width": "126",
+            "pattern": true,
+            "embed": "0G"
+        },
+        "Flat Black": {
+            "width": "126",
+            "pattern": true,
+            "embed": "0H"
+        },
+        "Desert Sand": {
+            "width": "126",
+            "pattern": true,
+            "embed": "6X"
+        },
+        "Almond": {
+            "width": "126",
+            "pattern": true,
+            "embed": "6Y"
+        },
+        "Cafe": {
+            "width": "126",
+            "pattern": true,
+            "embed": "6Z"
+        },
+        "Tumbleweed": {
+            "width": "126",
+            "pattern": true,
+            "embed": "70"
+        }
+    },
+    "Twitchell Textilene 90": {
+        "White": {
+            "width": "126",
+            "pattern": true,
+            "embed": "0I"
+        },
+        "Black": {
+            "width": "126",
+            "pattern": true,
+            "embed": "0J"
+        },
+        "Black/Brown": {
+            "width": "126",
+            "pattern": true,
+            "embed": "0K"
+        },
+        "Desert Sand": {
+            "width": "126",
+            "pattern": true,
+            "embed": "0L"
+        },
+        "Brown": {
+            "width": "126",
+            "pattern": true,
+            "embed": "0M"
+        },
+        "Dusk Grey": {
+            "width": "126",
+            "pattern": true,
+            "embed": "0N"
+        },
+        "Sandstone": {
+            "width": "126",
+            "pattern": true,
+            "embed": "0O"
+        }
+    },
+    "Twitchell Nano 97": {
+        "Flat Black": {
+            "width": "126",
+            "pattern": true,
+            "embed": "0P"
+        },
+        "Granite": {
+            "width": "126",
+            "pattern": true,
+            "embed": "0Q"
+        },
+        "Espresso texture": {
+            "width": "126",
+            "pattern": true,
+            "embed": "0R"
+        },
+        "Tobacco": {
+            "width": "126",
+            "pattern": true,
+            "embed": "0S"
+        },
+        "Charcoal": {
+            "width": "126",
+            "pattern": true,
+            "embed": "0T"
+        },
+        "White": {
+            "width": "126",
+            "pattern": true,
+            "embed": "71"
+        },
+        "Bone": {
+            "width": "126",
+            "pattern": true,
+            "embed": "72"
+        },
+        "Sable": {
+            "width": "126",
+            "pattern": true,
+            "embed": "73"
+        },
+        "Desert Sand": {
+            "width": "126",
+            "pattern": true,
+            "embed": "74"
+        },
+        "Almond": {
+            "width": "127",
+            "pattern": true,
+            "embed": "75"
+        },
+        "Cafe": {
+            "width": "128",
+            "pattern": true,
+            "embed": "76"
+        },
+        "Stone Texture": {
+            "width": "129",
+            "pattern": true,
+            "embed": "77"
+        },
+        "Shadow Texture": {
+            "width": "130",
+            "pattern": true,
+            "embed": "78"
+        },
+        "Tumbleweed Texture": {
+            "width": "131",
+            "pattern": true,
+            "embed": "79"
+        }
+    },
+    "Twitchell Textilene 95": {
+        "Pure White": {
+            "width": "126",
+            "pattern": true,
+            "embed": "0U"
+        },
+        "Pewter": {
+            "width": "126",
+            "pattern": true,
+            "embed": "0V"
+        },
+        "Mushroom": {
+            "width": "126",
+            "pattern": true,
+            "embed": "0W"
+        },
+        "Quartz": {
+            "width": "126",
+            "pattern": true,
+            "embed": "0X"
+        },
+        "Putty": {
+            "width": "126",
+            "pattern": true,
+            "embed": "0Y"
+        },
+        "Almond Brown": {
+            "width": "126",
+            "pattern": true,
+            "embed": "0Z"
+        },
+        "Tumbleweed Texture": {
+            "width": "126",
+            "pattern": true,
+            "embed": "10"
+        },
+        "Tobacco Leaf": {
+            "width": "126",
+            "pattern": true,
+            "embed": "11"
+        },
+        "Graphite": {
+            "width": "126",
+            "pattern": true,
+            "embed": "12"
+        },
+        "Carbon Texture": {
+            "width": "126",
+            "pattern": true,
+            "embed": "13"
+        },
+        "Galaxy Black": {
+            "width": "126",
+            "pattern": true,
+            "embed": "14"
+        }
+    },
+    "Twitchell Nano 99": {
+        "Flat Black": {
+            "width": "126",
+            "pattern": true,
+            "embed": "15"
+        },
+        "Granite": {
+            "width": "126",
+            "pattern": true,
+            "embed": "16"
+        },
+        "Espresso texture": {
+            "width": "126",
+            "pattern": true,
+            "embed": "17"
+        },
+        "Tobacco": {
+            "width": "126",
+            "pattern": true,
+            "embed": "18"
+        },
+        "Charcoal": {
+            "width": "126",
+            "pattern": true,
+            "embed": "19"
+        }
+    },
+    "Twitchell Nano 50": {
+        "White": {
+            "width": "126",
+            "pattern": true,
+            "embed": "1A"
+        },
+        "Black": {
+            "width": "126",
+            "pattern": true,
+            "embed": "1B"
+        }
+    },
+    "Twitchell Nano 55": {
+        "White": {
+            "width": "126",
+            "pattern": false,
+            "embed": "1C"
+        },
+        "Black": {
+            "width": "126",
+            "pattern": false,
+            "embed": "1D"
+        }
+    },
+    "Twitchell Nano 60": {
+        "Black": {
+            "width": "126",
+            "pattern": true,
+            "embed": "1E"
+        }
+    },
+    "Twitchell Nano 70": {
+        "Black": {
+            "width": "126",
+            "pattern": true,
+            "embed": "1F"
+        }
+    },
+    "Twitchell OmegaTex": {
+        "Black Tan": {
+            "width": "126",
+            "pattern": true,
+            "embed": "1G"
+        },
+        "Black": {
+            "width": "126",
+            "pattern": true,
+            "embed": "1H"
+        },
+        "White and Tan": {
+            "width": "126",
+            "pattern": true,
+            "embed": "1I"
+        },
+        "White": {
+            "width": "126",
+            "pattern": true,
+            "embed": "1J"
+        }
+    },
+    "Ferrari Soltis Veozip": {
+        "Graphite Black": {
+            "width": "126",
+            "pattern": true,
+            "embed": "1K"
+        },
+        "Grey Pepper": {
+            "width": "126",
+            "pattern": true,
+            "embed": "1L"
+        },
+        "Sandalwood": {
+            "width": "126",
+            "pattern": true,
+            "embed": "1M"
+        },
+        "Volcano": {
+            "width": "126",
+            "pattern": true,
+            "embed": "1N"
+        },
+        "Shadow": {
+            "width": "126",
+            "pattern": true,
+            "embed": "1O"
+        },
+        "Sea Urchin": {
+            "width": "126",
+            "pattern": true,
+            "embed": "1P"
+        },
+        "Sea Lion": {
+            "width": "126",
+            "pattern": true,
+            "embed": "1Q"
+        },
+        "Lunar Surface": {
+            "width": "126",
+            "pattern": true,
+            "embed": "1R"
+        },
+        "Tundra": {
+            "width": "126",
+            "pattern": true,
+            "embed": "1S"
+        },
+        "Mistral": {
+            "width": "126",
+            "pattern": true,
+            "embed": "1T"
+        },
+        "Macadamia": {
+            "width": "126",
+            "pattern": true,
+            "embed": "1U"
+        },
+        "Natural": {
+            "width": "126",
+            "pattern": true,
+            "embed": "1V"
+        },
+        "Cumulus": {
+            "width": "126",
+            "pattern": true,
+            "embed": "1W"
+        },
+        "Edelweiss": {
+            "width": "126",
+            "pattern": true,
+            "embed": "1X"
+        },
+        "Frost White": {
+            "width": "126",
+            "pattern": true,
+            "embed": "1Y"
+        }
+    },
+    "Ferrari Soltis Perform 92": {
+        "White": {
+            "width": "105",
+            "pattern": true,
+            "embed": "31"
+        },
+        "Boulder": {
+            "width": "105",
+            "pattern": true,
+            "embed": "20"
+        },
+        "Alu/Anthracite": {
+            "width": "105",
+            "pattern": true,
+            "embed": "21"
+        },
+        "Sandy Beige": {
+            "width": "105",
+            "pattern": true,
+            "embed": "22"
+        },
+        "Alu/White": {
+            "width": "105",
+            "pattern": true,
+            "embed": "23"
+        },
+        "Beaten Metal": {
+            "width": "105",
+            "pattern": true,
+            "embed": "24"
+        },
+        "Cloud": {
+            "width": "105",
+            "pattern": true,
+            "embed": "25"
+        },
+        "Alu/Oat": {
+            "width": "105",
+            "pattern": true,
+            "embed": "26"
+        },
+        "Concrete": {
+            "width": "105",
+            "pattern": true,
+            "embed": "27"
+        },
+        "Tenis Green": {
+            "width": "105",
+            "pattern": true,
+            "embed": "28"
+        },
+        "Alu/Alu": {
+            "width": "105",
+            "pattern": true,
+            "embed": "29"
+        },
+        "Alu/Medium Grey": {
+            "width": "105",
+            "pattern": true,
+            "embed": "2A"
+        },
+        "Anthracite": {
+            "width": "105",
+            "pattern": true,
+            "embed": "2B"
+        },
+        "Quartz": {
+            "width": "105",
+            "pattern": true,
+            "embed": "2C"
+        },
+        "Champagne": {
+            "width": "105",
+            "pattern": true,
+            "embed": "2D"
+        },
+        "Hemp": {
+            "width": "105",
+            "pattern": true,
+            "embed": "2E"
+        },
+        "Pepper": {
+            "width": "105",
+            "pattern": true,
+            "embed": "2F"
+        },
+        "Gold": {
+            "width": "105",
+            "pattern": true,
+            "embed": "2G"
+        },
+        "Havana-Brown": {
+            "width": "105",
+            "pattern": true,
+            "embed": "2H"
+        },
+        "Bronze": {
+            "width": "105",
+            "pattern": true,
+            "embed": "2I"
+        },
+        "Beetle": {
+            "width": "105",
+            "pattern": true,
+            "embed": "2J"
+        },
+        "Snow White": {
+            "width": "105",
+            "pattern": true,
+            "embed": "2K"
+        },
+        "Shea": {
+            "width": "105",
+            "pattern": true,
+            "embed": "2L"
+        },
+        "Moss Green": {
+            "width": "105",
+            "pattern": true,
+            "embed": "2M"
+        },
+        "Taupe": {
+            "width": "105",
+            "pattern": true,
+            "embed": "2N"
+        },
+        "Dark Grey": {
+            "width": "105",
+            "pattern": true,
+            "embed": "2O"
+        },
+        "Aniseed": {
+            "width": "105",
+            "pattern": true,
+            "embed": "2P"
+        },
+        "Celestial Grey": {
+            "width": "105",
+            "pattern": true,
+            "embed": "2Q"
+        },
+        "Green-Grey": {
+            "width": "105",
+            "pattern": true,
+            "embed": "2R"
+        },
+        "Buttercup": {
+            "width": "105",
+            "pattern": true,
+            "embed": "2S"
+        },
+        "Orange": {
+            "width": "105",
+            "pattern": true,
+            "embed": "2T"
+        },
+        "Copper": {
+            "width": "105",
+            "pattern": true,
+            "embed": "2U"
+        },
+        "Brick": {
+            "width": "105",
+            "pattern": true,
+            "embed": "2V"
+        },
+        "Deep Red": {
+            "width": "105",
+            "pattern": true,
+            "embed": "2W"
+        },
+        "Deep Blue": {
+            "width": "105",
+            "pattern": true,
+            "embed": "2X"
+        },
+        "Deep Black": {
+            "width": "105",
+            "pattern": true,
+            "embed": "2Y"
+        },
+        "Red": {
+            "width": "105",
+            "pattern": true,
+            "embed": "2Z"
+        },
+        "Lagoon": {
+            "width": "105",
+            "pattern": true,
+            "embed": "30"
+        }
+    },
+    "Ferrari Soltis Horizon 86": {
+        "Alu/White": {
+            "width": "105",
+            "pattern": true,
+            "embed": "32"
+        },
+        "Beaten Metal": {
+            "width": "105",
+            "pattern": true,
+            "embed": "33"
+        },
+        "Champagne": {
+            "width": "105",
+            "pattern": true,
+            "embed": "34"
+        },
+        "Alu/Oat": {
+            "width": "105",
+            "pattern": true,
+            "embed": "35"
+        },
+        "Concrete": {
+            "width": "105",
+            "pattern": true,
+            "embed": "36"
+        },
+        "Sandy Beige": {
+            "width": "105",
+            "pattern": true,
+            "embed": "37"
+        },
+        "Alu/Alu": {
+            "width": "105",
+            "pattern": true,
+            "embed": "38"
+        },
+        "Anthacite": {
+            "width": "105",
+            "pattern": true,
+            "embed": "39"
+        },
+        "Boulder": {
+            "width": "105",
+            "pattern": true,
+            "embed": "3A"
+        },
+        "Alu/Anthracite": {
+            "width": "105",
+            "pattern": true,
+            "embed": "3B"
+        },
+        "Pepper": {
+            "width": "105",
+            "pattern": true,
+            "embed": "3C"
+        },
+        "Bronze": {
+            "width": "105",
+            "pattern": true,
+            "embed": "3D"
+        },
+        "Buttercup": {
+            "width": "105",
+            "pattern": true,
+            "embed": "3E"
+        },
+        "Red": {
+            "width": "105",
+            "pattern": true,
+            "embed": "3F"
+        },
+        "Orange": {
+            "width": "105",
+            "pattern": true,
+            "embed": "3G"
+        },
+        "Moss Green": {
+            "width": "105",
+            "pattern": true,
+            "embed": "3H"
+        },
+        "Aniseed": {
+            "width": "105",
+            "pattern": true,
+            "embed": "3I"
+        },
+        "Snow White": {
+            "width": "105",
+            "pattern": true,
+            "embed": "3J"
+        },
+        "Brick": {
+            "width": "105",
+            "pattern": true,
+            "embed": "3K"
+        },
+        "Deep Red": {
+            "width": "105",
+            "pattern": true,
+            "embed": "3L"
+        },
+        "Deep Blue": {
+            "width": "105",
+            "pattern": true,
+            "embed": "3M"
+        },
+        "Deep Black": {
+            "width": "105",
+            "pattern": true,
+            "embed": "3N"
+        }
+    },
+    "Ferrari Soltis Opaque B92": {
+        "White": {
+            "width": "66.9",
+            "pattern": true,
+            "embed": "3O"
+        },
+        "Boulder": {
+            "width": "66.9",
+            "pattern": true,
+            "embed": "3P"
+        },
+        "Sandy Beige": {
+            "width": "66.9",
+            "pattern": true,
+            "embed": "3Q"
+        },
+        "Alu": {
+            "width": "66.9",
+            "pattern": true,
+            "embed": "3R"
+        },
+        "Beaten Metal": {
+            "width": "66.9",
+            "pattern": true,
+            "embed": "3S"
+        },
+        "Bronze": {
+            "width": "66.9",
+            "pattern": true,
+            "embed": "3T"
+        },
+        "Deep Black": {
+            "width": "66.9",
+            "pattern": true,
+            "embed": "3U"
+        },
+        "B702 Black/ White": {
+            "width": "69.6",
+            "pattern": true,
+            "embed": "3V"
+        }
+    },
+    "Ferrari Soltis Proof 502": {
+        "White": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "3W"
+        },
+        "Boulder": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "3X"
+        },
+        "Concrete": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "3Y"
+        },
+        "Black": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "3Z"
+        },
+        "Champagne": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "40"
+        },
+        "Vanilla": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "41"
+        },
+        "Hemp": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "42"
+        },
+        "Sandy Beige": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "43"
+        },
+        "Pepper": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "44"
+        },
+        "Camel": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "45"
+        },
+        "Cocoa": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "46"
+        },
+        "Teak": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "47"
+        },
+        "Walnut Stain": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "48"
+        },
+        "Lemon": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "49"
+        },
+        "Buttercup": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "4A"
+        },
+        "Dijon": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "4B"
+        },
+        "Orange": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "4C"
+        },
+        "Carrot": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "4D"
+        },
+        "Raspberry": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "4E"
+        },
+        "Poppy": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "4F"
+        },
+        "Terracotta": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "4G"
+        },
+        "Burgundy": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "4H"
+        },
+        "Aniseed": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "4I"
+        },
+        "Olive": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "4J"
+        },
+        "Moss Green": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "4K"
+        },
+        "Porcelain Green": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "4L"
+        },
+        "Tennis Green": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "4M"
+        },
+        "Spruce": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "4N"
+        },
+        "Celadon": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "4O"
+        },
+        "Steel Blue": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "4P"
+        },
+        "Lagoon": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "4Q"
+        },
+        "Dark Blue": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "4R"
+        },
+        "Thistle Blue": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "4S"
+        },
+        "Celestial Blue": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "4T"
+        },
+        "Victoria Blue": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "4U"
+        },
+        "Midnight Blue": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "4V"
+        },
+        "Marine": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "4W"
+        },
+        "Velvet Red": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "4X"
+        },
+        "Autumn": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "4Y"
+        },
+        "Aluminium": {
+            "width": "70.8",
+            "pattern": false,
+            "embed": "4Z"
+        }
+    },
+    "Twitchell Dimout": {
+        "Flat Black": {
+            "width": "120",
+            "pattern": true,
+            "embed": "50"
+        },
+        "Charcoal": {
+            "width": "120",
+            "pattern": true,
+            "embed": "51"
+        },
+        "Grey": {
+            "width": "120",
+            "pattern": true,
+            "embed": "52"
+        },
+        "Light Grey": {
+            "width": "120",
+            "pattern": true,
+            "embed": "53"
+        },
+        "Putty": {
+            "width": "120",
+            "pattern": true,
+            "embed": "54"
+        },
+        "Tan": {
+            "width": "120",
+            "pattern": true,
+            "embed": "55"
+        },
+        "Tobacco": {
+            "width": "120",
+            "pattern": true,
+            "embed": "56"
+        },
+        "White": {
+            "width": "120",
+            "pattern": true,
+            "embed": "57"
+        }
+    },
+    "Mermet Natte 10%": {
+        "Sable-Wood": {
+            "width": "122",
+            "pattern": true,
+            "embed": "58"
+        },
+        "Sable-White": {
+            "width": "122",
+            "pattern": true,
+            "embed": "59"
+        },
+        "Sable-Sable-Fog": {
+            "width": "122",
+            "pattern": true,
+            "embed": "5A"
+        },
+        "Grey-Sable": {
+            "width": "122",
+            "pattern": true,
+            "embed": "5B"
+        },
+        "Grey-Grey": {
+            "width": "122",
+            "pattern": true,
+            "embed": "5C"
+        },
+        "Grey-Charcoal": {
+            "width": "122",
+            "pattern": true,
+            "embed": "5D"
+        },
+        "CHarcoal-Garnet": {
+            "width": "122",
+            "pattern": true,
+            "embed": "5E"
+        },
+        "Charcoal-Forest": {
+            "width": "122",
+            "pattern": true,
+            "embed": "5F"
+        },
+        "Charcoal-Cocoa-Fawn": {
+            "width": "122",
+            "pattern": true,
+            "embed": "5G"
+        },
+        "Charcoal-Cocoa": {
+            "width": "122",
+            "pattern": true,
+            "embed": "5H"
+        },
+        "Charcoal-Charcoal-Navy": {
+            "width": "122",
+            "pattern": true,
+            "embed": "5I"
+        },
+        "Charcoal-Charcoal": {
+            "width": "122",
+            "pattern": true,
+            "embed": "5J"
+        }
+    },
+    "Mermet Natte 3%": {
+        "Sable-Wood": {
+            "width": "122",
+            "pattern": true,
+            "embed": "5K"
+        },
+        "Sable-White": {
+            "width": "122",
+            "pattern": true,
+            "embed": "5L"
+        },
+        "Sable-Sable-Fog": {
+            "width": "122",
+            "pattern": true,
+            "embed": "5M"
+        },
+        "Grey-Sable": {
+            "width": "122",
+            "pattern": true,
+            "embed": "5N"
+        },
+        "Grey-Grey": {
+            "width": "122",
+            "pattern": true,
+            "embed": "5O"
+        },
+        "Grey-Charcoal": {
+            "width": "122",
+            "pattern": true,
+            "embed": "5P"
+        },
+        "Charcoal-Garnet": {
+            "width": "122",
+            "pattern": true,
+            "embed": "5Q"
+        },
+        "Charcoal-Forest": {
+            "width": "122",
+            "pattern": true,
+            "embed": "5R"
+        },
+        "Charcoal-Cocoa-Fawn": {
+            "width": "122",
+            "pattern": true,
+            "embed": "5S"
+        },
+        "Charcoal-Cocoa": {
+            "width": "122",
+            "pattern": true,
+            "embed": "5T"
+        },
+        "Charcoal-Charcoal-Navy": {
+            "width": "122",
+            "pattern": true,
+            "embed": "5U"
+        },
+        "Charcoal-Charcoal": {
+            "width": "122",
+            "pattern": true,
+            "embed": "5V"
+        }
+    },
+    "Mermet Natte 5%": {
+        "Sable-Wood": {
+            "width": "122",
+            "pattern": true,
+            "embed": "5W"
+        },
+        "Sable-White": {
+            "width": "122",
+            "pattern": true,
+            "embed": "5X"
+        },
+        "Sable-Sable-Fog": {
+            "width": "122",
+            "pattern": true,
+            "embed": "5Y"
+        },
+        "Grey-Sable": {
+            "width": "122",
+            "pattern": true,
+            "embed": "5Z"
+        },
+        "Grey-Grey": {
+            "width": "122",
+            "pattern": true,
+            "embed": "60"
+        },
+        "Grey-Charcoal": {
+            "width": "122",
+            "pattern": true,
+            "embed": "61"
+        },
+        "Charcoal-Garnet": {
+            "width": "122",
+            "pattern": true,
+            "embed": "62"
+        },
+        "Charcoal-Forest": {
+            "width": "122",
+            "pattern": true,
+            "embed": "63"
+        },
+        "Charcoal-Cocoa-Fawn": {
+            "width": "122",
+            "pattern": true,
+            "embed": "64"
+        },
+        "Charcoal-Charcoal-Navy": {
+            "width": "122",
+            "pattern": true,
+            "embed": "65"
+        },
+        "Charcoal-Charcoal": {
+            "width": "122",
+            "pattern": true,
+            "embed": "66"
+        },
+        "Charcaol-Cocoa": {
+            "width": "122",
+            "pattern": true,
+            "embed": "67"
+        }
+    },
+    "Mermet Satine 1%": {
+        "Satine Sable-Wood": {
+            "width": "122",
+            "pattern": true,
+            "embed": "68"
+        },
+        "Satine Sable-Garnet-Auburn": {
+            "width": "122",
+            "pattern": true,
+            "embed": "69"
+        },
+        "Satine Sable-Forest": {
+            "width": "122",
+            "pattern": true,
+            "embed": "6A"
+        },
+        "Satine Grey-Navy": {
+            "width": "122",
+            "pattern": true,
+            "embed": "6B"
+        },
+        "Satine Grey-Fog-Charcoal": {
+            "width": "122",
+            "pattern": true,
+            "embed": "6C"
+        },
+        "Satine Charcoal-Garnet": {
+            "width": "122",
+            "pattern": true,
+            "embed": "6D"
+        },
+        "Satine Charcoal-Cocoa-Fawn": {
+            "width": "122",
+            "pattern": true,
+            "embed": "6E"
+        },
+        "Satine Charcoal-Cocoa": {
+            "width": "122",
+            "pattern": true,
+            "embed": "6F"
+        },
+        "Satine Charcoal-Charcoal-Navy": {
+            "width": "122",
+            "pattern": true,
+            "embed": "6G"
+        },
+        "Satine Charcoal-Charcoal-Grey": {
+            "width": "122",
+            "pattern": true,
+            "embed": "6H"
+        },
+        "Satine Charcoal-Charcoal-Auburn": {
+            "width": "122",
+            "pattern": true,
+            "embed": "6I"
+        },
+        "Satine Charcoal-Charcoal": {
+            "width": "122",
+            "pattern": true,
+            "embed": "6J"
+        }
+    },
+    "Mermet Satine 5%": {
+        "Satine Sable-Wood": {
+            "width": "122",
+            "pattern": true,
+            "embed": "6K"
+        },
+        "Satine Sable-Garnet-Auburn": {
+            "width": "122",
+            "pattern": true,
+            "embed": "6L"
+        },
+        "Satine Sable-Forest": {
+            "width": "122",
+            "pattern": true,
+            "embed": "6M"
+        },
+        "Satine Grey-Navy": {
+            "width": "122",
+            "pattern": true,
+            "embed": "6N"
+        },
+        "Satine Grey-Fog-Charcoal": {
+            "width": "122",
+            "pattern": true,
+            "embed": "6O"
+        },
+        "Satine Charcoal-Garnet": {
+            "width": "122",
+            "pattern": true,
+            "embed": "6P"
+        },
+        "Satine Charcoal-Cocoa-Fawn": {
+            "width": "122",
+            "pattern": true,
+            "embed": "6Q"
+        },
+        "Satine Charcoal-Cocoa": {
+            "width": "122",
+            "pattern": true,
+            "embed": "6R"
+        },
+        "Satine Charcoal-Charcoal-Navy": {
+            "width": "122",
+            "pattern": true,
+            "embed": "6S"
+        },
+        "Satine Charcoal-Charcoal-Grey": {
+            "width": "122",
+            "pattern": true,
+            "embed": "6T"
+        },
+        "Satine Charcoal-Charcoal-Auburn": {
+            "width": "122",
+            "pattern": true,
+            "embed": "6U"
+        },
+        "Satine Charcoal-Charcoal": {
+            "width": "122",
+            "pattern": true,
+            "embed": "6V"
+        }
+    }
+}

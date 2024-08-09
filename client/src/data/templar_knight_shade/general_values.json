@@ -16,10 +16,5 @@
         "min": 12,
         "max": 144,
         "defaultValue": 36
-    },
-    "motorExtendedCord": {
-        "defaultValue": false,
-        "embed": "3",
-        "price": 85.000
     }
 }
