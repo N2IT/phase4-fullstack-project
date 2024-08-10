@@ -53,7 +53,7 @@ const AgentProvider = ({ children }) => {
             // setQuote(value)
             navigate(`/quotes/${value.id}`)
         }
-        else if (value.sku) {
+        else if (value.project_name) {
             setConfiguration(value)
             navigate(`/configurations/${value.id}`)
         }

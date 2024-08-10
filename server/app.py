@@ -729,161 +729,161 @@ class CustomerById(Resource):
     except ValueError as e:
       return {'errors' : str(e)}, 404
 
-class Configurations(Resource):
-  def get(self):
-    user_id = session.get("user_id")
-    if not user_id:
-      return {"error": "Unauthorized"}, 403
-    try:
-      configurations = [configuration.to_dict() for configuration in Configuration.query.all()]
+# class Configurations(Resource):
+  # def get(self):
+  #   user_id = session.get("user_id")
+  #   if not user_id:
+  #     return {"error": "Unauthorized"}, 403
+  #   try:
+  #     configurations = [configuration.to_dict() for configuration in Configuration.query.all()]
 
-      if not configurations:
-        return {'errors' : '204: No content available'}, 204
+  #     if not configurations:
+  #       return {'errors' : '204: No content available'}, 204
 
-      return make_response(
-        configurations,
-        200
-      )
-    except ValueError as e:
-      return {'errors' : str(e)}, 404
-    except Exception as e:
-      return {'errors' : str(e)}, 500
+  #     return make_response(
+  #       configurations,
+  #       200
+  #     )
+  #   except ValueError as e:
+  #     return {'errors' : str(e)}, 404
+  #   except Exception as e:
+  #     return {'errors' : str(e)}, 500
   
-  def post(self):
-    user_id = session.get("user_id")
-    if not user_id:
-      return {"error": "Unauthorized"}, 403
-    try:
-      ## retrieve form data
-      form_data = request.get_json()
+  # def post(self):
+  #   user_id = session.get("user_id")
+  #   if not user_id:
+  #     return {"error": "Unauthorized"}, 403
+  #   try:
+  #     ## retrieve form data
+  #     form_data = request.get_json()
 
-      sku = form_data.get('sku')
-      product_title = form_data.get('product_title')
-      product_description = form_data.get('product_description')
-      cost = form_data.get('cost')
-      quote_id = form_data.get('quote_id')
-      created_by = form_data.get('created_by')
+  #     sku = form_data.get('sku')
+  #     product_title = form_data.get('product_title')
+  #     product_description = form_data.get('product_description')
+  #     cost = form_data.get('cost')
+  #     quote_id = form_data.get('quote_id')
+  #     created_by = form_data.get('created_by')
 
-      errors = []
+  #     errors = []
 
-      if form_data:
-        if not sku:
-          errors.append('A sku must be entered')
-        if not product_title:
-          errors.append('A product title must be entered')
-        if not product_description:
-          errors.append('A product description must be entered')
-        if not cost:
-          errors.append('An account id must be associated with the configuration')
-        if not created_by:
-          errors.append('Created by must be populated')
+  #     if form_data:
+  #       if not sku:
+  #         errors.append('A sku must be entered')
+  #       if not product_title:
+  #         errors.append('A product title must be entered')
+  #       if not product_description:
+  #         errors.append('A product description must be entered')
+  #       if not cost:
+  #         errors.append('An account id must be associated with the configuration')
+  #       if not created_by:
+  #         errors.append('Created by must be populated')
         
-        if errors:
-          return { 'errors' : errors }, 422
+  #       if errors:
+  #         return { 'errors' : errors }, 422
         
-        new_configuration = Configuration(
-          sku = sku,
-          product_title = product_title,
-          product_description = product_description,
-          cost = cost,
-          quote_id = quote_id,
-          created_by = created_by
-        )
+  #       new_configuration = Configuration(
+  #         sku = sku,
+  #         product_title = product_title,
+  #         product_description = product_description,
+  #         cost = cost,
+  #         quote_id = quote_id,
+  #         created_by = created_by
+  #       )
 
-        db.session.add(new_configuration)
-        db.session.commit()
+  #       db.session.add(new_configuration)
+  #       db.session.commit()
 
-        if quote_id:
-          calculate_quote_info()
+  #       if quote_id:
+  #         calculate_quote_info()
 
-        return new_configuration.to_dict(), 201
-    except ValueError as e:
-      return {'errors' : str(e)}
-    except Exception as e:
-      return {'errors' : str(e)}
+  #       return new_configuration.to_dict(), 201
+  #   except ValueError as e:
+  #     return {'errors' : str(e)}
+  #   except Exception as e:
+  #     return {'errors' : str(e)}
 
-class ConfigurationById(Resource):
-  def get(self, id):
-    user_id = session.get("user_id")
-    if not user_id:
-      return {"error": "Unauthorized"}, 403
-    try:
-      configuration = Configuration.query.filter(Configuration.id == id).first()
+# class ConfigurationById(Resource):
+  # def get(self, id):
+  #   user_id = session.get("user_id")
+  #   if not user_id:
+  #     return {"error": "Unauthorized"}, 403
+  #   try:
+  #     configuration = Configuration.query.filter(Configuration.id == id).first()
 
-      if configuration:
-        return make_response(
-          configuration.to_dict(),
-          200
-        )
-      else:
-        return {"errors" : "404: That configuration does not exist."}, 404
-    except Exception as e:
-      return {"errors": str(e)}, 500
+  #     if configuration:
+  #       return make_response(
+  #         configuration.to_dict(),
+  #         200
+  #       )
+  #     else:
+  #       return {"errors" : "404: That configuration does not exist."}, 404
+  #   except Exception as e:
+  #     return {"errors": str(e)}, 500
   
-  def patch(self, id):
-    user_id = session.get("user_id")
-    if not user_id:
-      return {"error": "Unauthorized"}, 403
-    try:
-      configuration = Configuration.query.filter(Configuration.id == id).first()
+  # def patch(self, id):
+  #   user_id = session.get("user_id")
+  #   if not user_id:
+  #     return {"error": "Unauthorized"}, 403
+  #   try:
+  #     configuration = Configuration.query.filter(Configuration.id == id).first()
 
-      if configuration:
-        data = request.get_json()
+  #     if configuration:
+  #       data = request.get_json()
 
-        for attr in data:
-          setattr(configuration, attr, data[attr])
+  #       for attr in data:
+  #         setattr(configuration, attr, data[attr])
         
-        db.session.add(configuration)
-        db.session.commit()
+  #       db.session.add(configuration)
+  #       db.session.commit()
 
-        cost = data.get('cost')
-        if cost:
-          calculate_quote_info()
-          ## this is temporary - don't know if a server side calc is good or not 
-          ## may want to do so from frontend
+  #       cost = data.get('cost')
+  #       if cost:
+  #         calculate_quote_info()
+  #         ## this is temporary - don't know if a server side calc is good or not 
+  #         ## may want to do so from frontend
 
-        return make_response(
-          configuration.to_dict(), 200
-        )
-      else:
-        return {'errors' : '404: That configuation does not exist'}, 404
-    except Exception as e:
-      return {'errors' : str(e)}, 500
-    except ValueError as e:
-      return {'errors' : str(e)}, 404
+  #       return make_response(
+  #         configuration.to_dict(), 200
+  #       )
+  #     else:
+  #       return {'errors' : '404: That configuation does not exist'}, 404
+  #   except Exception as e:
+  #     return {'errors' : str(e)}, 500
+  #   except ValueError as e:
+  #     return {'errors' : str(e)}, 404
 
-  def delete(self, id):
-    user_id = session.get("user_id")
-    if not user_id:
-      return {"error": "Unauthorized"}, 403
-    try:
-      configuration = Configuration.query.filter(Configuration.id == id).first()
-      quote_id = configuration.quote_id
+  # def delete(self, id):
+  #   user_id = session.get("user_id")
+  #   if not user_id:
+  #     return {"error": "Unauthorized"}, 403
+  #   try:
+  #     configuration = Configuration.query.filter(Configuration.id == id).first()
+  #     quote_id = configuration.quote_id
 
-      if configuration:
+  #     if configuration:
         
-        db.session.delete(configuration)
-        db.session.commit()
+  #       db.session.delete(configuration)
+  #       db.session.commit()
 
-        response_body = {
-          'delete_successful' : True,
-          'message' : f'Configuration {id} has been deleted.'
-        }
+  #       response_body = {
+  #         'delete_successful' : True,
+  #         'message' : f'Configuration {id} has been deleted.'
+  #       }
 
-        calculate_quote_info(quote_id)
+  #       calculate_quote_info(quote_id)
  
-        return make_response(
-          response_body,
-          200
-        )
-      else:
-        {'errors' : '404:That configuration does not exist'}, 404
-    except Exception as e:
-      return {'errors' : str(e)}, 500
-    except ValueError as e:
-      return {'errors' : str(e)}, 404
+  #       return make_response(
+  #         response_body,
+  #         200
+  #       )
+  #     else:
+  #       {'errors' : '404:That configuration does not exist'}, 404
+  #   except Exception as e:
+  #     return {'errors' : str(e)}, 500
+  #   except ValueError as e:
+  #     return {'errors' : str(e)}, 404
 
-class ScreenConfigurations(Resource):
+class Configurations(Resource):
   def get(self):
     user_id = session.get("user_id")
     if not user_id:
@@ -1043,7 +1043,7 @@ class ScreenConfigurations(Resource):
     except Exception as e:
       return {'errors' : str(e)}
 
-class ScreenConfigurationById(Resource):
+class ConfigurationById(Resource):
   def get(self, id):
     user_id = session.get("user_id")
     if not user_id:
@@ -1150,10 +1150,10 @@ api.add_resource(QuoteById, '/quotes/<int:id>')
 api.add_resource(Customers, '/customers')
 api.add_resource(CustomerById, '/customers/<int:id>')
 api.add_resource(Configurations, '/configurations')
-# api.add_resource(ConfigurationById, '/configurations/<int:id>')
+api.add_resource(ConfigurationById, '/configurations/<int:id>')
 # api.add_resource(AccountsDiscountGreaterTen, '/accounts-greater')
-api.add_resource(ScreenConfigurations, '/screen-configurations')
-api.add_resource(ScreenConfigurationById, '/screen-configurations/<int:id>')
+# api.add_resource(ScreenConfigurations, '/screen-configurations')
+# api.add_resource(ScreenConfigurationById, '/screen-configurations/<int:id>')
 
 if __name__ == "__main__":
   app.run(port=5000, debug=True)

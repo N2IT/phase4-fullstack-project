@@ -128,7 +128,7 @@ def create_quotes():
         customer_id=selected_customer_id,
         account_id=account_data['account_id'],
         discount=account_data['discount'],
-        markup_variable= rc(range(100, 200)) / 100,
+        markup_variable= rc(range(150, 200)) / 100,
         notes=fake.sentence(),
         status = choices(status_list, weights = [10, 1], k=1)[0],
         converted='No',
