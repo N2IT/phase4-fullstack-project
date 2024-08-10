@@ -208,7 +208,7 @@ class Customer(db.Model, SerializerMixin):
     created_by = db.Column(db.Integer)
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     updated_by = db.Column(db.Integer)
-    notes = db.Column(db.String(500))
+    notes = db.Column(db.String)
     account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'), nullable = False)
     status = db.Column(db.String)
 
@@ -236,11 +236,11 @@ class Customer(db.Model, SerializerMixin):
             return {'errors' : '402: First and / or last name fields must be populated.'}
         return name
 
-    @validates('notes')
-    def validate_notes(self, key, notes):
-        if len(notes) > 500:
-            raise ValueError("You have exceeded the 500 character limit")
-        return notes
+    # @validates('notes')
+    # def validate_notes(self, key, notes):
+    #     if len(notes) > 500:
+    #         raise ValueError("You have exceeded the 500 character limit")
+    #     return notes
     
     @validates('account_id')
     def validate_account_id(self, key, account_id):

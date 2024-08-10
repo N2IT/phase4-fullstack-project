@@ -960,22 +960,32 @@ class ScreenConfigurations(Resource):
       quote_id = int(form_data.get('quote_id'))
       created_by = form_data.get('created_by') 
 
-      # errors = []
+      errors = []
 
-      # if form_data:
-      #   if not unit_width:
-      #     errors.append('A unit width must be entered')
-      #   if not unit_height:
-      #     errors.append('A unit height must be entered')
-      #   if not housing_tube_size:
-      #     errors.append('A product description must be entered')
-      #   if not cost:
-      #     errors.append('An account id must be associated with the configuration')
-      #   if not created_by:
-      #     errors.append('Created by must be populated')
+      if form_data:
+        if not unit_width:
+          errors.append('A unit width must be entered')
+        if not unit_height:
+          errors.append('A unit height must be entered')
+        if not housing_tube_size:
+          errors.append('Housing and Tube size must be selected')
+        if not side_track:
+          errors.append('Housing type must be selected')
+        if not motor_type:
+          errors.append('A motor type must be selected')
+        if not motor_side:
+          errors.append('Please select a motor side')
+        if not side_track:
+          errors.append('Housing type must be selected')
+        if not motor_type:
+          errors.append('A motor type must be selected')
+        if not motor_type:
+          errors.append('A motor type must be selected')
         
-      #   if errors:
-      #     return { 'errors' : errors }, 422
+
+
+        if errors:
+          return { 'errors' : errors }, 422
         
       new_screenconfiguration = ScreenConfiguration(
         project_name = project_name,
@@ -1033,6 +1043,85 @@ class ScreenConfigurations(Resource):
     except Exception as e:
       return {'errors' : str(e)}
 
+class ScreenConfigurationById(Resource):
+  def get(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
+    try:
+      screenconfiguration = ScreenConfiguration.query.filter(ScreenConfiguration.id == id).first()
+
+      if screenconfiguration:
+        return make_response(
+          screenconfiguration.to_dict(),
+          200
+        )
+      else:
+        return {"errors" : "404: That configuration does not exist."}, 404
+    except Exception as e:
+      return {"errors": str(e)}, 500
+  
+  def patch(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
+    try:
+      screenconfiguration = ScreenConfiguration.query.filter(ScreenConfiguration.id == id).first()
+
+      if screenconfiguration:
+        data = request.get_json()
+
+        for attr in data:
+          setattr(screenconfiguration, attr, data[attr])
+        
+        db.session.add(screenconfiguration)
+        db.session.commit()
+
+        cost = data.get('list_price')
+        if cost:
+          calculate_quote_info()
+
+        return make_response(
+          screenconfiguration.to_dict(), 200
+        )
+      else:
+        return {'errors' : '404: That configuation does not exist'}, 404
+    except Exception as e:
+      return {'errors' : str(e)}, 500
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
+
+  def delete(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
+    try:
+      screnconfiguration = ScreenConfiguration.query.filter(ScreenConfiguration.id == id).first()
+      quote_id = screenconfiguration.quote_id
+
+      if screenconfiguration:
+        
+        db.session.delete(screenconfiguration)
+        db.session.commit()
+
+        response_body = {
+          'delete_successful' : True,
+          'message' : f'ScreenConfiguration {id} has been deleted.'
+        }
+
+        calculate_quote_info(quote_id)
+ 
+        return make_response(
+          response_body,
+          200
+        )
+      else:
+        {'errors' : '404:That configuration does not exist'}, 404
+    except Exception as e:
+      return {'errors' : str(e)}, 500
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
+
 # class AccountsDiscountGreaterTen(Resource):
 #   def get(self):
 #     try:
@@ -1064,6 +1153,7 @@ api.add_resource(Configurations, '/configurations')
 # api.add_resource(ConfigurationById, '/configurations/<int:id>')
 # api.add_resource(AccountsDiscountGreaterTen, '/accounts-greater')
 api.add_resource(ScreenConfigurations, '/screen-configurations')
+api.add_resource(ScreenConfigurationById, '/screen-configurations/<int:id>')
 
 if __name__ == "__main__":
   app.run(port=5000, debug=True)
