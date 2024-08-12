@@ -175,6 +175,15 @@ const CreateNewConfiguration = () => {
                         disabled
                     />
                     <p style={{ color: 'red' }}> {formik.errors.status} </p>
+                    <label htmlFor="list_price">Total Price </label>
+                    <input
+                        id="list_price"
+                        name="list_price"
+                        onChange={formik.handleChange}
+                        value={formik.values.list_price}
+                        disabled
+                    />
+                    <p style={{ color: 'red' }}> {formik.errors.list_price} </p>
                     <button type="submit">Submit</button>
                 </form>
                 <p style={{ color: 'red' }}>{errors ? errors : null}</p>

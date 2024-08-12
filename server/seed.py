@@ -364,7 +364,6 @@ def create_screenConfigurations():
     s.housing_charge = ((unit_width / 12) * 30.21) + get_housing_price(housing_type, housing_tube_size)
     s.tracks_charge = ((unit_height / 12) * 24.60) + get_tracks_pricing(retention_type)
     s.hem_bar_charge = ((unit_width / 12) * 10.038) + get_hemBar_pricing(hem_bar_type)
-    # breakpoint()
     s.fabric_charge = ((fabric_sqft * 2.30) + get_fabric_pricing(fabric_type))
     s.powder_charge = 0
     charges = [s.motor_charge, s.tube_charge, s.housing_charge, s.tracks_charge, s.hem_bar_charge, s.fabric_charge, s.powder_charge]

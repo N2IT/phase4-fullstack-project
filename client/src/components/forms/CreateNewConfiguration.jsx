@@ -130,13 +130,13 @@ const CreateNewConfiguration = () => {
 
     const { agent, setConfiguration, errors, setErrors, quote, navigate, onSubmitNewQuoteForm } = useContext(AgentContext);
 
-    const [ completeUnit, setAsCompleteUnit ] = useState(true)
+    const [completeUnit, setAsCompleteUnit] = useState(true)
     // const [ checked, setAsChecked ] = useState(true)
-    const [ housing, setHousing ] = useState(true)
-    const [ sideTrack, setSideTrack ] = useState(true)
-    const [ hemBar, setHemBar ] = useState(true)
-    const [ fabric, setFabric ] = useState(true)
-    const [ motorTube, setMotorTube ] =useState(true)
+    const [housing, setHousing] = useState(true)
+    const [sideTrack, setSideTrack] = useState(true)
+    const [hemBar, setHemBar] = useState(true)
+    const [fabric, setFabric] = useState(true)
+    const [motorTube, setMotorTube] = useState(true)
 
     const handleToggle = (id) => {
         if (id === 'complete_unit') {
@@ -152,7 +152,7 @@ const CreateNewConfiguration = () => {
         else if (id === 'hem_bar') {
             setHemBar(!hemBar)
         }
-        else if (id === 'fabric'){
+        else if (id === 'fabric') {
             setFabric(!fabric)
         }
         else if (id === 'motor_tube') {
@@ -242,6 +242,7 @@ const CreateNewConfiguration = () => {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
+            
             fetch("/api/configurations", {
                 method: "POST",
                 headers: {
@@ -251,13 +252,18 @@ const CreateNewConfiguration = () => {
             })
                 .then((r) => r.json())
                 .then((data) => {
-                    {
-                        data.errors ? setErrors(data.errors) :
-                            setConfiguration(data),
-                            onSubmitNewQuoteForm(),
-                            navigate(`/quotes/${quote.id}`),
-                            alert(`Configuration ${data.id} has been successfully created.`)
-                    }
+                    debugger
+                    setConfiguration(data),
+                    onSubmitNewQuoteForm(),
+                    navigate(`/quotes/${quote.id}`),
+                    alert(`Your new configuration has been successfully created.`)
+                    // {
+                    //     data.errors ? setErrors(data.errors) :
+                    //         setConfiguration(data),
+                    //         onSubmitNewQuoteForm(),
+                    //         navigate(`/quotes/${quote.id}`),
+                    //         alert(`Configuration ${data.id} has been successfully created.`)
+                    // }
                 })
         }
     })
@@ -370,6 +376,14 @@ const CreateNewConfiguration = () => {
                         disabled
                     />
                     <p style={{ color: 'red' }}> {formik.errors.status} </p>
+                    <label htmlFor="list_price">Total Price </label>
+                    <input
+                        id="list_price"
+                        name="list_price"
+                        onChange={formik.handleChange}
+                        value={formik.values.list_price}
+                    />
+                    <p style={{ color: 'red' }}> {formik.errors.list_price} </p>
                     <button type="submit">Submit</button>
                 </form>
                 <p style={{ color: 'red' }}>{errors ? errors : null}</p>

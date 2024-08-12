@@ -32,21 +32,20 @@ const ConfigurationsTableByQuote = () => {
                             <th>Project Name</th>
                             <th>Unit Name</th>
                             <th>List Price</th>
-                            <th>Sale Price</th>
+                            <th>Complete Unit</th>
                             {/* <th>Account Number</th> */}
                             {/* <th>Company Name</th> */}
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
-
                         {quoteConfigurations.map((configuration) => (
                             <tr key={configuration.id} className="">
                                 <td>{configuration.quote.quote_number}</td>
                                 <td>{configuration.project_name}</td>
                                 <td>{configuration.unit_name}</td>
                                 <td>${parseFloat(configuration.list_price).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                                <td>${parseFloat(configuration.quote.sale_price).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                                <td>{configuration.complete_unit}</td>
                                 {/* <td>{configuration.quote.account.account_number}</td> */}
                                 {/* <td>{configuration.quote.account.company_name}</td> */}
                                 <td><p className="view-btn" title="View Configuration" onClick={() => handleIdClick(configuration)}> View </p></td>
