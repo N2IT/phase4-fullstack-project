@@ -8,18 +8,81 @@ const CreateNewConfiguration = () => {
     const { agent, setConfiguration, errors, setErrors, quote, navigate, onSubmitNewQuoteForm } = useContext(AgentContext);
 
     const formSchema = yup.object().shape({
-        sku: yup.string().required("Please enter the sku for the product to quote"),
-        product_title: yup.string().required("Please provide product title"),
-        product_description: yup.string().required('Please enter a product description'),
-        cost: yup.string().required('Please enter the product cost'),
+        project_name: yup.string(),
+        unit_name: yup.string(),
+        complete_unit: yup.string(),
+        housing: yup.string(),
+        side_track: yup.string(),
+        hem_bar: yup.string(),
+        fabric: yup.string(),
+        motor_tube: yup.string(),
+        motor_side: yup.string(),
+        power_chord: yup.string(),
+        motor_charge: yup.string(),
+        tube_charge: yup.string(),
+        housing_charge: yup.string(),
+        retention_type: yup.string(),
+        retention_cap_color: yup.string(),
+        left_retention: yup.string(),
+        right_retention: yup.string(),
+        tracks_exact_length: yup.string(),
+        tracks_charge: yup.string(),
+        hem_bar_type: yup.string(),
+        hem_cap_color: yup.string(),
+        pile_brush_style: yup.string(),
+        hem_bar_charge: yup.string(),
+        fabric_type: yup.string(),
+        fabric_selection: yup.string(),
+        seam_location: yup.string(),
+        seam_location_num: yup.string(),
+        zipper_color: yup.string(),
+        usable_fabric_width: yup.string(),
+        rotate_fabric: yup.string(),
+        fabric_charge: yup.string(),
+        color_collection: yup.string(),
+        frame_color: yup.string(),
+        powder_charge: yup.string(),
+        list_price: yup.string(),
+        quote_id: yup.string(),
     })
 
     const formik = useFormik({
         initialValues: {
-            sku: "",
-            product_title: "",
-            product_description: "",
-            cost: "",
+            project_name: "",
+            unit_name: "",
+            complete_unit: "true",
+            housing: "true",
+            side_track: "true",
+            hem_bar: "true",
+            fabric: "true",
+            motor_tube: "",
+            motor_side: "",
+            power_chord: "",
+            motor_charge: "",
+            tube_charge: "",
+            housing_charge: "",
+            retention_type: "",
+            retention_cap_color: "",
+            left_retention: "",
+            right_retention: "",
+            tracks_exact_length: "",
+            tracks_charge: "",
+            hem_bar_type: "",
+            hem_cap_color: "",
+            pile_brush_style: "",
+            hem_bar_charge: "",
+            fabric_type: "",
+            fabric_selection: "",
+            seam_location: "",
+            seam_location_num: "",
+            zipper_color: "",
+            usable_fabric_width: "",
+            rotate_fabric: "",
+            fabric_charge: "",
+            color_collection: "",
+            frame_color: "",
+            powder_charge: "",
+            list_price: "",
             quote_id: `${quote.id}`,
             created_by: `${agent.id}`,
             status: true,
@@ -42,7 +105,6 @@ const CreateNewConfiguration = () => {
                             navigate(`/quotes/${quote.id}`),
                             alert(`Configuration ${data.id} has been successfully created.`)
                     }
-
                 })
         }
     })
@@ -52,38 +114,40 @@ const CreateNewConfiguration = () => {
             <div className="account-details">
                 <h2>Configure your product:</h2>
                 <form onSubmit={formik.handleSubmit}>
-                    <label htmlFor="sku">SKU </label>
+                    <label htmlFor="project_name">Project Name </label>
                     <input
-                        id="sku"
-                        name="sku"
+                        id="project_name"
+                        name="project_name"
                         onChange={formik.handleChange}
-                        value={formik.values.sku}
+                        value={formik.values.project_name}
                     />
                     <p style={{ color: 'red' }}> {formik.errors.sku}</p>
-                    <label htmlFor="product_title">Product Title </label>
+                    <label htmlFor="unit_name">Unit Name </label>
                     <input
-                        id="product_title"
-                        name="product_title"
+                        id="unit_name"
+                        name="unit_name"
                         onChange={formik.handleChange}
-                        value={formik.values.product_title}
+                        value={formik.values.unit_name}
                     />
-                    <p style={{ color: 'red' }}> {formik.errors.product_title}</p>
-                    <label htmlFor="product_description">Product Description </label>
+                    <p style={{ color: 'red' }}> {formik.errors.unit_name}</p>
+                    <label htmlFor="complete_unit">Complete Unit </label>
                     <input
-                        id="product_description"
-                        name="product_description"
+                        type="radio"
+                        id="complete_unit"
+                        name="complete_unit"
                         onChange={formik.handleChange}
-                        value={formik.values.product_description}
+                        value={formik.values.complete_unit}
                     />
-                    <p style={{ color: 'red' }}> {formik.errors.product_description} </p>
-                    <label htmlFor="cost">Cost </label>
+                    <p style={{ color: 'red' }}> {formik.errors.complete_unit} </p>
+                    <label htmlFor="housing">Housing </label>
                     <input
-                        id="cost"
-                        name="cost"
+                        type="radio"
+                        id="housing"
+                        name="housing"
                         onChange={formik.handleChange}
-                        value={formik.values.cost}
+                        value={formik.values.housing}
                     />
-                    <p style={{ color: 'red' }}> {formik.errors.cost} </p>
+                    <p style={{ color: 'red' }}> {formik.errors.housing} </p>
                     <label htmlFor="quote_id">Quote Id </label>
                     <input
                         id="quote_id"
