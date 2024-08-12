@@ -926,66 +926,58 @@ class Configurations(Resource):
       motor_type = form_data.get('motor_type')
       motor_side = form_data.get('motor_side')
       power_chord = form_data.get('power_chord')
-      motor_charge = int(form_data.get('motor_charge'))
-      tube_charge = int(form_data.get('tube_charge'))
-      housing_charge = int(form_data.get('housing_charge'))
-      motor_type = form_data.get('motor_type')
-      motor_side = form_data.get('motor_side')
-      power_chord = form_data.get('power_chord')
-      motor_charge = int(form_data.get('motor_charge'))
-      tube_charge = int(form_data.get('tube_charge'))
-      housing_charge = int(form_data.get('housing_charge'))
+      motor_charge = form_data.get('motor_charge')
+      tube_charge = form_data.get('tube_charge')
+      housing_charge = form_data.get('housing_charge')
       retention_type = form_data.get('retention_type')
       retention_cap_color = form_data.get('retention_cap_color')
       left_retention = form_data.get('left_retention')
       right_retention = form_data.get('right_retention')
       tracks_exact_length = form_data.get('tracks_exact_length')
-      tracks_charge = int(form_data.get('tracks_charge'))
+      tracks_charge = form_data.get('tracks_charge')
       hem_bar_type = form_data.get('hem_bar_type')
       hem_cap_color = form_data.get('hem_cap_color')
       pile_brush_style = form_data.get('pile_brush_style')
-      hem_bar_charge = int(form_data.get('hem_bar_charge'))
+      hem_bar_charge = form_data.get('hem_bar_charge')
       fabric_type = form_data.get('fabric_type')
       fabric_selection = form_data.get('fabric_selection')
       seam_location = form_data.get('seam_location')
       seam_location_num = form_data.get('seam_location_num')
       zipper_color = form_data.get('zipper_color')
-      usable_fabric_width = int(form_data.get('usable_fabric_width'))
+      usable_fabric_width = form_data.get('usable_fabric_width')
       rotate_fabric = form_data.get('rotate_fabric')
-      fabric_charge = int(form_data.get('fabric_charge'))
+      fabric_charge = form_data.get('fabric_charge')
       color_collection = form_data.get('color_collection')
       frame_color = form_data.get('frame_color')
-      powder_charge = int(form_data.get('powder_charget'))
-      list_price = int(form_data.get('list_price'))
-      quote_id = int(form_data.get('quote_id'))
+      powder_charge = form_data.get('powder_charge')
+      list_price = form_data.get('list_price')
+      quote_id = form_data.get('quote_id')
       created_by = form_data.get('created_by') 
 
-      errors = []
+      # errors = []
 
-      if form_data:
-        if not unit_width:
-          errors.append('A unit width must be entered')
-        if not unit_height:
-          errors.append('A unit height must be entered')
-        if not housing_tube_size:
-          errors.append('Housing and Tube size must be selected')
-        if not side_track:
-          errors.append('Housing type must be selected')
-        if not motor_type:
-          errors.append('A motor type must be selected')
-        if not motor_side:
-          errors.append('Please select a motor side')
-        if not side_track:
-          errors.append('Housing type must be selected')
-        if not motor_type:
-          errors.append('A motor type must be selected')
-        if not motor_type:
-          errors.append('A motor type must be selected')
-        
+      # if form_data:
+      #   if not unit_width:
+      #     errors.append('A unit width must be entered')
+      #   if not unit_height:
+      #     errors.append('A unit height must be entered')
+      #   if not housing_tube_size:
+      #     errors.append('Housing and Tube size must be selected')
+      #   if not side_track:
+      #     errors.append('Housing type must be selected')
+      #   if not motor_type:
+      #     errors.append('A motor type must be selected')
+      #   if not motor_side:
+      #     errors.append('Please select a motor side')
+      #   if not side_track:
+      #     errors.append('Housing type must be selected')
+      #   if not motor_type:
+      #     errors.append('A motor type must be selected')
+      #   if not motor_type:
+      #     errors.append('A motor type must be selected')
 
-
-        if errors:
-          return { 'errors' : errors }, 422
+      #   if errors:
+      #     return { 'errors' : errors }, 422
         
       new_screenconfiguration = ScreenConfiguration(
         project_name = project_name,
@@ -1028,6 +1020,7 @@ class Configurations(Resource):
         frame_color = frame_color,
         powder_charge = powder_charge,
         list_price = list_price,
+        quote_id = quote_id,
         created_by = created_by,
       )
 
