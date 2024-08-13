@@ -1,128 +1,5 @@
-// import React, { useContext } from 'react';
-// import { useFormik } from 'formik';
-// import * as yup from "yup";
-// import { AgentContext } from '../../AgentProvider';
-
-// const CreateNewConfiguration = () => {
-
-//     const { agent, setConfiguration, errors, setErrors, quote, navigate, onSubmitNewQuoteForm } = useContext(AgentContext);
-
-//     const formSchema = yup.object().shape({
-//         sku: yup.string().required("Please enter the sku for the product to quote"),
-//         product_title: yup.string().required("Please provide product title"),
-//         product_description: yup.string().required('Please enter a product description'),
-//         cost: yup.string().required('Please enter the product cost'),
-//     })
-
-//     const formik = useFormik({
-//         initialValues: {
-//             sku: "",
-//             product_title: "",
-//             product_description: "",
-//             cost: "",
-//             quote_id: `${quote.id}`,
-//             created_by: `${agent.id}`,
-//             status: true,
-//         },
-//         validationSchema: formSchema,
-//         onSubmit: (values) => {
-//             fetch("/api/configurations", {
-//                 method: "POST",
-//                 headers: {
-//                     "Content-Type": "application/json",
-//                 },
-//                 body: JSON.stringify(values),
-//             })
-//                 .then((r) => r.json())
-//                 .then((data) => {
-//                     {
-//                         data.errors ? setErrors(data.errors) :
-//                             setConfiguration(data),
-//                             onSubmitNewQuoteForm(),
-//                             navigate(`/quotes/${quote.id}`),
-//                             alert(`Configuration ${data.id} has been successfully created.`)
-//                     }
-
-//                 })
-//         }
-//     })
-
-//     return (
-//         <>
-//             <div className="account-details">
-//                 <h2>Configure your product:</h2>
-//                 <form onSubmit={formik.handleSubmit}>
-//                     <label htmlFor="sku">SKU </label>
-//                     <input
-//                         id="sku"
-//                         name="sku"
-//                         onChange={formik.handleChange}
-//                         value={formik.values.sku}
-//                     />
-//                     <p style={{ color: 'red' }}> {formik.errors.sku}</p>
-//                     <label htmlFor="product_title">Product Title </label>
-//                     <input
-//                         id="product_title"
-//                         name="product_title"
-//                         onChange={formik.handleChange}
-//                         value={formik.values.product_title}
-//                     />
-//                     <p style={{ color: 'red' }}> {formik.errors.product_title}</p>
-//                     <label htmlFor="product_description">Product Description </label>
-//                     <input
-//                         id="product_description"
-//                         name="product_description"
-//                         onChange={formik.handleChange}
-//                         value={formik.values.product_description}
-//                     />
-//                     <p style={{ color: 'red' }}> {formik.errors.product_description} </p>
-//                     <label htmlFor="cost">Cost </label>
-//                     <input
-//                         id="cost"
-//                         name="cost"
-//                         onChange={formik.handleChange}
-//                         value={formik.values.cost}
-//                     />
-//                     <p style={{ color: 'red' }}> {formik.errors.cost} </p>
-//                     <label htmlFor="quote_id">Quote Id </label>
-//                     <input
-//                         id="quote_id"
-//                         name="quote_id"
-//                         onChange={formik.handleChange}
-//                         value={formik.values.quote_id}
-//                         disabled
-//                     />
-//                     <p style={{ color: 'red' }}> {formik.errors.quote_id} </p>
-//                     <label htmlFor="created_by">Created By </label>
-//                     <input
-//                         id="created_by"
-//                         name="created_by"
-//                         onChange={formik.handleChange}
-//                         value={formik.values.created_by}
-//                         disabled
-//                     />
-//                     <p style={{ color: 'red' }}> {formik.errors.created_by} </p>
-//                     <label htmlFor="status">Status </label>
-//                     <input
-//                         id="status"
-//                         name="status"
-//                         onChange={formik.handleChange}
-//                         value={formik.values.status}
-//                         disabled
-//                     />
-//                     <p style={{ color: 'red' }}> {formik.errors.status} </p>
-//                     <button type="submit">Submit</button>
-//                 </form>
-//                 <p style={{ color: 'red' }}>{errors ? errors : null}</p>
-//             </div>
-//         </>
-//     )
-// }
-
-// export default CreateNewConfiguration
-
 import React, { useState, useContext } from 'react';
-import { useFormik } from 'formik';
+import { useFormik, Field } from 'formik';
 import * as yup from "yup";
 import { AgentContext } from '../../AgentProvider';
 
@@ -137,11 +14,40 @@ const CreateNewConfiguration = () => {
     const [hemBar, setHemBar] = useState(true)
     const [fabric, setFabric] = useState(true)
     const [motorTube, setMotorTube] = useState(true)
+    const [disabled, setAsDisabled] = useState(true)
+    const [motorType, setMotorType] = useState("")
+
+
+    const get_motor_charge = (motor_type) => {
+
+        let motor_type_price = 0
+
+        if (motor_type === 'Alpha pro+OD')
+            motor_type_price = 0
+        if (motor_type === 'Somfy RTS' || motor_type == 'Somfy Hardwired')
+            motor_type_price = 300
+        if (motor_type === 'Somfy Autosun')
+            motor_type_price = 600
+        return motor_type_price
+    }
+
+    const get_power_chord_price = (power_chord) =>{
+        
+        if (power_chord === '6ft with pigtail(Alpha)'){
+            s.power_chord_price = 0
+        }
+        if (power_chord === '32ft with pigtail(Alpha)'){
+            s.power_chord_price = 85
+        }
+        if (power_chord === '30ft BLACK with molded plug (Alpha)'){
+            s.power_chord_price = 95
+        }
+        return s.power_chord_price
+    }
 
     const handleToggle = (id) => {
         if (id === 'complete_unit') {
             setAsCompleteUnit(!completeUnit)
-            // setAsChecked(!checked)
         }
         else if (id === 'housing') {
             setHousing(!housing)
@@ -209,6 +115,8 @@ const CreateNewConfiguration = () => {
             hem_bar: `${hemBar}`,
             fabric: `${fabric}`,
             motor_tube: `${motorTube}`,
+            housing_tube_size: "",
+            motor_type: `${motorType}`,
             motor_side: "",
             power_chord: "",
             motor_charge: "",
@@ -242,7 +150,6 @@ const CreateNewConfiguration = () => {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-            
             fetch("/api/configurations", {
                 method: "POST",
                 headers: {
@@ -252,18 +159,13 @@ const CreateNewConfiguration = () => {
             })
                 .then((r) => r.json())
                 .then((data) => {
-                    debugger
-                    setConfiguration(data),
-                    onSubmitNewQuoteForm(),
-                    navigate(`/quotes/${quote.id}`),
-                    alert(`Your new configuration has been successfully created.`)
-                    // {
-                    //     data.errors ? setErrors(data.errors) :
-                    //         setConfiguration(data),
-                    //         onSubmitNewQuoteForm(),
-                    //         navigate(`/quotes/${quote.id}`),
-                    //         alert(`Configuration ${data.id} has been successfully created.`)
-                    // }
+                    {
+                        data.errors ? setErrors(data.errors) :
+                            setConfiguration(data),
+                            onSubmitNewQuoteForm(),
+                            navigate(`/quotes/${quote.id}`),
+                            alert(`Configuration ${data.id} has been successfully created.`)
+                    }
                 })
         }
     })
@@ -349,6 +251,114 @@ const CreateNewConfiguration = () => {
                         checked={motorTube}
                     />
                     <p style={{ color: 'red' }}> {formik.errors.motor_tube} </p>
+                    <label htmlFor="unit_width">Unit Width </label>
+                    <input
+                        id="unit_width"
+                        name="unit_width"
+                        onChange={formik.handleChange}
+                        value={formik.values.unit_width}
+                        required
+                    />
+                    <p style={{ color: 'red' }}> {formik.errors.unit_width} </p>
+                    <label htmlFor="unit_height">Unit Height </label>
+                    <input
+                        id="unit_height"
+                        name="unit_height"
+                        onChange={formik.handleChange}
+                        value={formik.values.unit_height}
+                        required
+                    />
+                    <p style={{ color: 'red' }}> {formik.errors.unit_height} </p>
+
+                    <label htmlFor="housing_tube_size">Housing & Tube Size </label>
+                    <select
+                        id="housing_tube_size"
+                        name="housing_tube_size"
+                        onChange={formik.handleChange}
+                        value={formik.values.housing_tube_size}
+                        required
+                    >
+                        <option value=''>Select a Housing & Tube Size </option>
+                        <option value='Standard(4.5")' label='Standard(4.5")'>Standard(4.5") </option>
+                        <option value='Jumbo(5.75")' label='Jumbo(5.75")'>Jumbo(5.75") </option>
+                        <option value='Micro(3.5")' label='Micro(3.5")' >Micro(3.5") </option>
+                    </select>
+                    <p style={{ color: 'red' }}> {formik.errors.housing_tube_size} </p>
+
+                    <label htmlFor="housing_type">Housing Type </label>
+                    <select
+                        id="housing_type"
+                        name="housing_type"
+                        onChange={formik.handleChange}
+                        value={formik.values.housing_type}
+                        required
+                    >
+                        <option value=''>Select a Housing Type </option>
+                        <option value='Complete' label='Complete'>Complete </option>
+                        <option value='Housing Base(no cover)' label='Housing Base(no cover)'>Housing Base(no cover) </option>
+                        <option value='Open Mount Brackets' label='Open Mount Brackets'>Open Mount Brackets </option>
+                    </select>
+                    <p style={{ color: 'red' }}> {formik.errors.housing_type} </p>
+
+                    <label htmlFor="motor_type">Motor Type </label>
+                    <select
+                        id="motor_type"
+                        name="motor_type"
+                        required
+                        onChange={e => {
+                            const { value } = e.target;
+                            formik.setFieldValue("motor_type", value);
+                            console.log(value)
+                            formik.setFieldValue("motor_charge", get_motor_charge(value));
+                        }}>
+                        <option value=''>Select a Motor Type </option>
+                        <option value='Alpha pro+OD' label='Alpha pro+OD'>Alpha pro+OD </option>
+                        <option value='Somfy RTS' label='Somfy RTS'>Somfy RTS </option>
+                        <option value='Somfy Hardwired' label='Somfy Hardwired'>Somfy Hardwired </option>
+                        <option value='Somfy Autosun' label='Somfy Autosun' disabled={disabled}>Somfy Autosun</option>
+                    </select>
+                    <p style={{ color: 'red' }}> {formik.errors.motor_type} </p>
+
+                    <label htmlFor="motor_side">Motor Side </label>
+                    <select
+                        id="motor_side"
+                        name="motor_side"
+                        onChange={formik.handleChange}
+                        value={formik.values.motor_side}
+                    >
+                        <option value=''>Select a Motor Side</option>
+                        <option value='Left' label='Left'>Left </option>
+                        <option value='Right' label='Right'>Right </option>
+
+                    </select>
+                    <p style={{ color: 'red' }}> {formik.errors.motor_side} </p>
+
+                    <label htmlFor="power_chord">Power Chord </label>
+                    <select
+                        id="power_chord"
+                        name="power_chord"
+                        onChange={formik.handleChange}
+                        value={formik.values.power_chord}
+                    >
+                        <option value=''>Select a Power Chord</option>
+                        <option value='6ft with pigtail(Alpha)' label='6ft with pigtail(Alpha)'>6ft with pigtail(Alpha) </option>
+                        <option value='32ft with pigtail(Alpha)' label='32ft with pigtail(Alpha)'>32ft with pigtail(Alpha) </option>
+                        <option value='30ft BLACK with molded plug (Alpha)' label='30ft BLACK with molded plug (Alpha)'>30ft BLACK with molded plug (Alpha)</option>
+
+                    </select>
+                    <p style={{ color: 'red' }}> {formik.errors.power_chord} </p>
+
+                    <label htmlFor="motor_charge">Motor Charge $</label>
+                    <input
+                        id="motor_charge"
+                        name="motor_charge"
+                        // onChange={formik.handleChange}
+                        value={formik.values.motor_charge}
+                        disabled
+                    />
+                    <p style={{ color: 'red' }}> {formik.errors.motor_charge} </p>
+
+
                     <label htmlFor="quote_id">Quote Id </label>
                     <input
                         id="quote_id"
@@ -375,7 +385,7 @@ const CreateNewConfiguration = () => {
                         value={formik.values.status}
                         disabled
                     />
-                    <p style={{ color: 'red' }}> {formik.errors.status} </p>
+                    <p style={{ color: 'red' }}> {formik.errors.status}</p>
                     <label htmlFor="list_price">Total Price </label>
                     <input
                         id="list_price"
@@ -383,7 +393,8 @@ const CreateNewConfiguration = () => {
                         onChange={formik.handleChange}
                         value={formik.values.list_price}
                     />
-                    <p style={{ color: 'red' }}> {formik.errors.list_price} </p>
+                    <p style={{ color: 'red' }}> {formik.errors.list_price}</p>
+
                     <button type="submit">Submit</button>
                 </form>
                 <p style={{ color: 'red' }}>{errors ? errors : null}</p>
