@@ -1,0 +1,702 @@
+{
+    "collections": {
+        "templarStandard": "Templar Standard",
+        "templarTextured": "Templar Textured",
+        "templarSummer2022": "Templar Summer 2022",
+        "templarSpring2022": "Templar Spring 2022",
+        "colorMatchRainier": "Color Match - Rainier",
+        "colorMatchUniversal": "Color Match - Universal",
+        "colorMatchProgressive": "Color Match - Progressive",
+        "colorMatchPhantom": "Color Match - Phantom",
+        "colorMatchKE": "Color Match - KE",
+        "colorMatchFourSeasons": "Color Match - Four Seasons",
+        "customRAL": "Custom (RAL)",
+        "colorMatchMirage": "Color Match - Mirage"
+    },
+    "options": {
+        "starkWhiteTemplarStandard": {
+            "id": "1",
+            "name": "Stark White",
+            "embed": "01",
+            "collections": ["templarStandard"],
+            "enabled": true,
+            "visible": true,
+            "hex": "FFFFFF"
+        },
+        "whiteTextureTemplarTextured": {
+            "id": "11",
+            "name": "Stark White Texture",
+            "embed": "0B",
+            "collections": ["templarTextured", "templarStandard"],
+            "enabled": true,
+            "visible": true,
+            "hex": "F9F7EA"
+        },
+        "midKnightBlackTemplarStandard": {
+            "id": "2",
+            "name": "Mid-Knight Black",
+            "embed": "02",
+            "collections": ["templarStandard"],
+            "enabled": true,
+            "visible": true,
+            "hex": "140B0E"
+        },
+        "midKnightBlackTextureTemplarTextured": {
+            "id": "14",
+            "name": "Mid-Knight Black Texture",
+            "embed": "0E",
+            "collections": ["templarTextured", "templarStandard"],
+            "enabled": true,
+            "visible": true,
+            "hex": "140B0E"
+        },
+        "statuaryBronzeSummer2022": {
+            "id": "10",
+            "name": "Statuary Bronze",
+            "embed": "0A",
+            "collections": ["templarSummer2022", "templarStandard"],
+            "enabled": true,
+            "visible": true,
+            "hex": "392B20"
+        },
+        "oilRubbedBronzeTemplarTextured": {
+            "id": "13",
+            "name": "Oiled Rubbed Bronze Texture",
+            "embed": "0D",
+            "collections": ["templarTextured", "templarStandard"],
+            "enabled": true,
+            "visible": true,
+            "hex": "423933"
+        },
+        "brownTemplarStandard": {
+            "id": "4",
+            "name": "Cocoa Brown",
+            "embed": "04",
+            "collections": ["templarStandard"],
+            "enabled": true,
+            "visible": true,
+            "hex": "432918"
+        },
+        "ashGrayTemplarStandard": {
+            "id": "5",
+            "name": "Ash Gray",
+            "embed": "05",
+            "collections": ["templarStandard"],
+            "enabled": true,
+            "visible": true,
+            "hex": "717775"
+        },
+        "ashGrayTextureTemplarTextured": {
+            "id": "15",
+            "name": "Ash Gray Texture",
+            "embed": "0F",
+            "collections": ["templarTextured", "templarStandard"],
+            "enabled": true,
+            "visible": true,
+            "hex": "83888B"
+        },
+        "silverTemplarStandard": {
+            "id": "6",
+            "name": "Silver Flash",
+            "embed": "06",
+            "collections": ["templarStandard"],
+            "enabled": true,
+            "visible": true,
+            "hex": "D5D9DA"
+        },
+        "desertSandTemplarStandard": {
+            "id": "7",
+            "name": "Desert Sand",
+            "embed": "07",
+            "collections": ["templarStandard"],
+            "enabled": true,
+            "visible": true,
+            "hex": "E7E0CE"
+        },
+        "beigeTemplarStandard": {
+            "id": "8",
+            "name": "Velvet Beige",
+            "embed": "08",
+            "collections": ["templarStandard"],
+            "enabled": false,
+            "visible": false,
+            "hex": ""
+        },
+        "offWhiteTemplarStandard": {
+            "id": "9",
+            "name": "Off White",
+            "embed": "09",
+            "collections": ["templarStandard"],
+            "enabled": false,
+            "visible": false,
+            "hex": ""
+        },
+        "classicLinenTemplarTextured": {
+            "id": "12",
+            "name": "Classic Linen Texture",
+            "embed": "0C",
+            "collections": ["templarTextured", "templarStandard"],
+            "enabled": true,
+            "visible": true,
+            "hex": "A99B6E"
+        },
+        "offWhiteTextureTemplarTextured": {
+            "id": "16",
+            "name": "Off White Texture",
+            "embed": "0G",
+            "collections": ["templarTextured", "templarStandard"],
+            "enabled": false,
+            "visible": false,
+            "hex": ""
+        },
+        "verdigrisTemplarTextured": {
+            "id": "17",
+            "name": "Verdigris",
+            "embed": "0H",
+            "collections": ["templarTextured", "templarStandard"],
+            "enabled": false,
+            "visible": false,
+            "hex": ""
+        },
+        "oliveGreenTemplarStandard": {
+            "id": "66",
+            "name": "Olive Green",
+            "embed": "1U",
+            "collections": ["templarStandard"],
+            "enabled": true,
+            "visible": true,
+            "hex": ""
+        },
+        "oilRubbedBronzeTemplarStandard": {
+            "id": "3",
+            "name": "Oil Rubbed Bronze",
+            "embed": "03",
+            "collections": ["templarStandard"],
+            "enabled": true,
+            "visible": true,
+            "hex": "272217"
+        },
+        "mediumBronzeSpring2022": {
+            "id": "19",
+            "name": "Medium Bronze",
+            "embed": "0J",
+            "collections": ["templarSpring2022"],
+            "enabled": true,
+            "visible": true,
+            "hex": "4F452F"
+        },
+        "rustSpring2022": {
+            "id": "20",
+            "name": "Rust",
+            "embed": "0K",
+            "collections": ["templarSpring2022"],
+            "enabled": true,
+            "visible": true,
+            "hex": "493535"
+        },
+        "lightGreySpring2022": {
+            "id": "21",
+            "name": "Light Grey",
+            "embed": "0L",
+            "collections": ["templarSpring2022"],
+            "enabled": false,
+            "visible": true,
+            "hex": "8D9A9F"
+        },
+        "tigerBronzeTexturedSpring2022": {
+            "id": "22",
+            "name": "Tiger Bronze Textured",
+            "embed": "0M",
+            "collections": ["templarSpring2022"],
+            "enabled": true,
+            "visible": true,
+            "hex": "403630"
+        },
+        "anodicNaturaSpring2022": {
+            "id": "23",
+            "name": "Anodic Natura",
+            "embed": "0N",
+            "collections": ["templarSpring2022"],
+            "enabled": true,
+            "visible": true,
+            "hex": "BEBAB9"
+        },
+        "brightWhiteRainier": {
+            "id": "24",
+            "name": "Bright White",
+            "embed": "0O",
+            "collections": ["colorMatchRainier"],
+            "enabled": true,
+            "visible": true,
+            "hex": "FFFFFF"
+        },
+        "offWhiteRainier": {
+            "id": "25",
+            "name": "Off White",
+            "embed": "0P",
+            "collections": ["colorMatchRainier"],
+            "enabled": true,
+            "visible": true,
+            "hex": "FFFFFF"
+        },
+        "desertSandRainier": {
+            "id": "26",
+            "name": "Desert Sand",
+            "embed": "0Q",
+            "collections": ["colorMatchRainier"],
+            "enabled": true,
+            "visible": true,
+            "hex": "F8F2DA"
+        },
+        "tanRainier": {
+            "id": "27",
+            "name": "Tan",
+            "embed": "0R",
+            "collections": ["colorMatchRainier"],
+            "enabled": true,
+            "visible": true,
+            "hex": "B1A58B"
+        },
+        "bronzeRainier": {
+            "id": "28",
+            "name": "Bronze",
+            "embed": "0S",
+            "collections": ["colorMatchRainier"],
+            "enabled": true,
+            "visible": true,
+            "hex": "39372B"
+        },
+        "blackRainier": {
+            "id": "29",
+            "name": "Black",
+            "embed": "0T",
+            "collections": ["colorMatchRainier"],
+            "enabled": true,
+            "visible": true,
+            "hex": "010101"
+        },
+        "brownRainier": {
+            "id": "30",
+            "name": "Brown",
+            "embed": "0U",
+            "collections": ["colorMatchRainier"],
+            "enabled": true,
+            "visible": true,
+            "hex": "2C2218"
+        },
+        "grayRainier": {
+            "id": "31",
+            "name": "Gray",
+            "embed": "0V",
+            "collections": ["colorMatchRainier"],
+            "enabled": true,
+            "visible": true,
+            "hex": "525A5D"
+        },
+        "greenRainier": {
+            "id": "32",
+            "name": "Green",
+            "embed": "0W",
+            "collections": ["colorMatchRainier"],
+            "enabled": true,
+            "visible": true,
+            "hex": "052B16"
+        },
+        "navajoRainier": {
+            "id": "33",
+            "name": "Navajo",
+            "embed": "0X",
+            "collections": ["colorMatchRainier"],
+            "enabled": true,
+            "visible": true,
+            "hex": "F6D4AF"
+        },
+        "silverRainier": {
+            "id": "34",
+            "name": "Silver",
+            "embed": "0Y",
+            "collections": ["colorMatchRainier"],
+            "enabled": true,
+            "visible": true,
+            "hex": "A4A9A4"
+        },
+        "texturedTanRainier": {
+            "id": "35",
+            "name": "Textured Tan",
+            "embed": "0Z",
+            "collections": ["colorMatchRainier"],
+            "enabled": true,
+            "visible": true,
+            "hex": "CACABA"
+        },
+        "copperBronzeRainier": {
+            "id": "36",
+            "name": "Copper Bronze",
+            "embed": "10",
+            "collections": ["colorMatchRainier"],
+            "enabled": true,
+            "visible": true,
+            "hex": "2F281D"
+        },
+        "darkGrayTextureRainier": {
+            "id": "37",
+            "name": "Dark Gray Texture",
+            "embed": "11",
+            "collections": ["colorMatchRainier"],
+            "enabled": true,
+            "visible": true,
+            "hex": "30333B"
+        },
+        "rustTextureRainier": {
+            "id": "38",
+            "name": "Rust Texture",
+            "embed": "12",
+            "collections": ["colorMatchRainier"],
+            "enabled": true,
+            "visible": true,
+            "hex": "493535"
+        },
+        "whiteUniversal": {
+            "id": "39",
+            "name": "White",
+            "embed": "13",
+            "collections": ["colorMatchUniversal"],
+            "enabled": true,
+            "visible": true,
+            "hex": "D0DAE4"
+        },
+        "offWhiteUniversal": {
+            "id": "40",
+            "name": "Off White",
+            "embed": "14",
+            "collections": ["colorMatchUniversal"],
+            "enabled": true,
+            "visible": true,
+            "hex": "DEE5EA"
+        },
+        "champagneUniversal": {
+            "id": "41",
+            "name": "Champagne",
+            "embed": "15",
+            "collections": ["colorMatchUniversal"],
+            "enabled": true,
+            "visible": true,
+            "hex": "847E6E"
+        },
+        "tanUniversal": {
+            "id": "42",
+            "name": "Tan  ",
+            "embed": "16",
+            "collections": ["colorMatchUniversal"],
+            "enabled": true,
+            "visible": true,
+            "hex": "BCBDB8"
+        },
+        "bronzeUniversal": {
+            "id": "43",
+            "name": "Bronze",
+            "embed": "17",
+            "collections": ["colorMatchUniversal"],
+            "enabled": true,
+            "visible": true,
+            "hex": "0E0E0E"
+        },
+        "blackUniversal": {
+            "id": "44",
+            "name": "Black",
+            "embed": "18",
+            "collections": ["colorMatchUniversal"],
+            "enabled": true,
+            "visible": true,
+            "hex": "182333"
+        },
+        "brownUniversal": {
+            "id": "45",
+            "name": "Brown ",
+            "embed": "19",
+            "collections": ["colorMatchUniversal"],
+            "enabled": true,
+            "visible": true,
+            "hex": "2C2218"
+        },
+        "whiteProgressive": {
+            "id": "46",
+            "name": "White",
+            "embed": "1A",
+            "collections": ["colorMatchProgressive"],
+            "enabled": true,
+            "visible": true,
+            "hex": "FFFFFF"
+        },
+        "ivoryProgressive": {
+            "id": "47",
+            "name": "Ivory",
+            "embed": "1B",
+            "collections": ["colorMatchProgressive"],
+            "enabled": true,
+            "visible": true,
+            "hex": "FBF7E7"
+        },
+        "beigeProgressive": {
+            "id": "48",
+            "name": "Beige",
+            "embed": "1C",
+            "collections": ["colorMatchProgressive"],
+            "enabled": true,
+            "visible": true,
+            "hex": "DAC7AA"
+        },
+        "bronzeProgressive": {
+            "id": "49",
+            "name": "Bronze",
+            "embed": "1D",
+            "collections": ["colorMatchProgressive"],
+            "enabled": true,
+            "visible": true,
+            "hex": "383423"
+        },
+        "blackProgressive": {
+            "id": "50",
+            "name": "Black",
+            "embed": "1E",
+            "collections": ["colorMatchProgressive"],
+            "enabled": true,
+            "visible": true,
+            "hex": "171717"
+        },
+        "adobeProgressive": {
+            "id": "51",
+            "name": "Adobe",
+            "embed": "1F",
+            "collections": ["colorMatchProgressive"],
+            "enabled": true,
+            "visible": true,
+            "hex": "C9B08C"
+        },
+        "whitePhantom": {
+            "id": "52",
+            "name": "White",
+            "embed": "1G",
+            "collections": ["colorMatchPhantom"],
+            "enabled": true,
+            "visible": true,
+            "hex": "FFFFFF"
+        },
+        "calicoLinenPhantom": {
+            "id": "53",
+            "name": "Calico Linen",
+            "embed": "1H",
+            "collections": ["colorMatchPhantom"],
+            "enabled": true,
+            "visible": true,
+            "hex": "FEFEF6"
+        },
+        "silveredAlmondPhantom": {
+            "id": "54",
+            "name": "Silvered Almond",
+            "embed": "1I",
+            "collections": ["colorMatchPhantom"],
+            "enabled": true,
+            "visible": true,
+            "hex": "EBE4DA"
+        },
+        "driftwoodBeigePhantom": {
+            "id": "55",
+            "name": "Driftwood Beige",
+            "embed": "1J",
+            "collections": ["colorMatchPhantom"],
+            "enabled": true,
+            "visible": true,
+            "hex": "8B7D63"
+        },
+        "mineralBronzePhantom": {
+            "id": "56",
+            "name": "Mineral Bronze",
+            "embed": "1K",
+            "collections": ["colorMatchPhantom"],
+            "enabled": true,
+            "visible": true,
+            "hex": "524233"
+        },
+        "phantomBlackPhantom": {
+            "id": "57",
+            "name": "Phantom Black",
+            "embed": "1L",
+            "collections": ["colorMatchPhantom"],
+            "enabled": true,
+            "visible": true,
+            "hex": "000000"
+        },
+        "rideauBrownPhantom": {
+            "id": "58",
+            "name": "Rideau Brown",
+            "embed": "1M",
+            "collections": ["colorMatchPhantom"],
+            "enabled": true,
+            "visible": true,
+            "hex": "413122"
+        },
+        "coastalGreyPhantom": {
+            "id": "59",
+            "name": "Coastal Grey",
+            "embed": "1N",
+            "collections": ["colorMatchPhantom"],
+            "enabled": true,
+            "visible": true,
+            "hex": "686868"
+        },
+        "hartfordGreenPhantom": {
+            "id": "60",
+            "name": "Hartford Green",
+            "embed": "1O",
+            "collections": ["colorMatchPhantom"],
+            "enabled": true,
+            "visible": true,
+            "hex": "12331E"
+        },
+        "sandalWoodPhantom": {
+            "id": "61",
+            "name": "Sandal Wood",
+            "embed": "1P",
+            "collections": ["colorMatchPhantom"],
+            "enabled": true,
+            "visible": true,
+            "hex": "D1B79E"
+        },
+        "whiteKE": {
+            "id": "62",
+            "name": "White",
+            "embed": "1Q",
+            "collections": ["colorMatchKE"],
+            "enabled": true,
+            "visible": true,
+            "hex": "FFFFFF"
+        },
+        "charcoalKE": {
+            "id": "63",
+            "name": "Charcoal",
+            "embed": "1R",
+            "collections": ["colorMatchKE"],
+            "enabled": true,
+            "visible": true,
+            "hex": "444345"
+        },
+        "brownKE": {
+            "id": "64",
+            "name": "Brown",
+            "embed": "1S",
+            "collections": ["colorMatchKE"],
+            "enabled": true,
+            "visible": true,
+            "hex": "553A26"
+        },
+        "sandKE": {
+            "id": "65",
+            "name": "Sand",
+            "embed": "1T",
+            "collections": ["colorMatchKE"],
+            "enabled": true,
+            "visible": true,
+            "hex": "A09678"
+        },
+        "brownFourSeasons": {
+            "id": "67",
+            "name": "Brown",
+            "embed": "1V",
+            "collections": ["colorMatchFourSeasons"],
+            "enabled": true,
+            "visible": true,
+            "hex": ""
+        },
+        "adobeFourSeasons": {
+            "id": "68",
+            "name": "Adobe",
+            "embed": "1W",
+            "collections": ["colorMatchFourSeasons"],
+            "enabled": true,
+            "visible": true,
+            "hex": ""
+        },
+        "ralCustom": {
+            "id": "69",
+            "name": "RAL",
+            "embed": "99",
+            "collections": ["customRAL"],
+            "enabled": true,
+            "visible": true,
+            "hex": ""
+        },
+        "polarWhiteMirage": {
+            "id": "70",
+            "name": "Polar White",
+            "embed": "",
+            "collections": ["colorMatchMirage"],
+            "enabled": false,
+            "visible": true,
+            "hex": ""
+        },
+        "exPebbleGreyMirage": {
+            "id": "71",
+            "name": "Ex Pebble Grey",
+            "embed": "",
+            "collections": ["colorMatchMirage"],
+            "enabled": false,
+            "visible": true,
+            "hex": ""
+        },
+        "linenCreamMirage": {
+            "id": "72",
+            "name": "Linen Cream",
+            "embed": "",
+            "collections": ["colorMatchMirage"],
+            "enabled": false,
+            "visible": true,
+            "hex": ""
+        },
+        "tudorBrownMirage": {
+            "id": "73",
+            "name": "Tudor Brown",
+            "embed": "",
+            "collections": ["colorMatchMirage"],
+            "enabled": false,
+            "visible": true,
+            "hex": ""
+        },
+        "sandalwoodMirage": {
+            "id": "74",
+            "name": "Sandalwood",
+            "embed": "",
+            "collections": ["colorMatchMirage"],
+            "enabled": false,
+            "visible": true,
+            "hex": ""
+        },
+        "rideauBrownMirage": {
+            "id": "75",
+            "name": "Rideau Brown",
+            "embed": "",
+            "collections": ["colorMatchMirage"],
+            "enabled": false,
+            "visible": true,
+            "hex": ""
+        },
+        "slateGreyMirage": {
+            "id": "76",
+            "name": "Slate Grey",
+            "embed": "",
+            "collections": ["colorMatchMirage"],
+            "enabled": false,
+            "visible": true,
+            "hex": ""
+        },
+        "midnightBlackMirage": {
+            "id": "77",
+            "name": "Midnight Black",
+            "embed": "",
+            "collections": ["colorMatchMirage"],
+            "enabled": false,
+            "visible": true,
+            "hex": ""
+        }
+    }
+}
