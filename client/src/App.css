@@ -84,3 +84,7 @@ table {
 th, td {
   padding: 3px 10px;
 }
+
+input, select {
+  width: 100%;
+}

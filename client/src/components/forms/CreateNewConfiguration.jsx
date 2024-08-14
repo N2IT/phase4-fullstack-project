@@ -23,6 +23,8 @@ const CreateNewConfiguration = () => {
     const [unitHeight, setUnitHeight] = useState()
     const [housingTubeSize, setHousingTubeSize] = useState("")
     const [housingType, setHousingType] = useState("")
+    const [retentionType, setRetentionType] = useState("")
+    const [tracksExactLength, setTracksExactLength] = useState(true)
 
 
     const get_motor_charge = (motor_type) => {
@@ -67,23 +69,38 @@ const CreateNewConfiguration = () => {
         return housing_tube_price
     }
 
-    const get_housing_price = (housing_type, housingTubeSize) =>{
+    const get_housing_price = (housing_type, housingTubeSize) => {
         let housing_type_price = 0
 
         if (housing_type === 'Complete' && housingTubeSize === 'Standard(4.5")') {
-          housing_type_price = 174.04
+            housing_type_price = 174.04
         }
-        if (housing_type === 'Housing Base(no cover)' && housingTubeSize === 'Standard(4.5")'){
+        if (housing_type === 'Housing Base(no cover)' && housingTubeSize === 'Standard(4.5")') {
             housing_type_price = 174.04
         }
         if ((housing_type === 'Complete' && housingTubeSize === 'Jumbo(5.75")') || (housing_type === 'Housing Base(no cover)' && housingTubeSize === 'Jumbo(5.75")')) {
             housing_type_price = 212.46
         }
-        if ((housing_type === 'Complete' && housing_tube_size ==='Micro(3.5")') || (housing_type == 'Housing Base(no cover)' && housing_tube_size == 'Micro(3.5")')){
+        if ((housing_type === 'Complete' && housing_tube_size === 'Micro(3.5")') || (housing_type == 'Housing Base(no cover)' && housing_tube_size == 'Micro(3.5")')) {
             housing_type_price = 156.37
         }
         return housing_type_price
     }
+
+    const getRetentionPricing = (retentionType) => {
+        let retention_type_pricing = 0
+        if (retentionType === 'Surface Mount') {
+            retention_type_pricing = 60.19
+        }
+        if (retentionType === 'Recessed') {
+            retention_type_pricing = 75.17
+        }
+        if (retentionType === 'Cable Guide') {
+            retention_type_pricing = 200
+        }
+        return retention_type_pricing
+    }
+
 
     const handleToggle = (id) => {
         if (id === 'complete_unit') {
@@ -103,6 +120,9 @@ const CreateNewConfiguration = () => {
         }
         else if (id === 'motor_tube') {
             setMotorTube(!motorTube)
+        }
+        else if (id === 'tracks_exact_length') {
+            setTracksExactLength(!tracksExactLength)
         }
     }
 
@@ -211,12 +231,9 @@ const CreateNewConfiguration = () => {
     })
 
     useEffect(() => {
-        const total = formik.values.motor_charge + formik.values.tube_charge + formik.values.housing_charge
+        const total = formik.values.motor_charge + formik.values.tube_charge + formik.values.housing_charge + formik.values.tracks_charge
         formik.setFieldValue('list_price', total);
-    }, [formik.values.motor_charge, formik.values.unit_width, formik.values.housing_tube_size, formik.values.housing_type]);
-
-    // WORKING THROUGH HOW PRICING UPDATES WHEN CHANGES ARE MADE TO HOUSING & TUBE OR HOUSING TYPE
-    // NEED TO REFER TO HOW IT IS HANDELED WITHIN MOTOR TYPE AND POWERCHORD FOR REFERENCE
+    }, [formik.values.motor_charge, formik.values.unit_width, formik.values.unit_height, formik.values.housing_tube_size, formik.values.housing_type, formik.values.retention_type]);
 
     return (
         <>
@@ -226,6 +243,7 @@ const CreateNewConfiguration = () => {
                     <form onSubmit={formik.handleSubmit}>
                         <Row>
                             <Col md={6} xs={12}>
+                                <h3>Unit Information</h3>
                                 <Row>
                                     <Col md={6} xs={12}>
                                         <label htmlFor="project_name">Project Name </label><br />
@@ -250,6 +268,7 @@ const CreateNewConfiguration = () => {
                                 </Row>
                             </Col>
                             <Col md={6} xs={12}>
+                                <h3>Unit Contents</h3>
                                 <Row>
                                     <Col md={3} xs={12}>
                                         <label htmlFor="complete_unit">Complete Unit </label>
@@ -336,10 +355,12 @@ const CreateNewConfiguration = () => {
                                         <p style={{ color: 'red' }}> {formik.errors.motor_tube} </p>
                                     </Col>
                                 </Row>
+                                <hr />
                             </Col>
                         </Row>
                         <Row>
                             <Col md={6} xs={12}>
+                                <h3>Unit Size</h3>
                                 <label htmlFor="unit_width">Unit Width </label>
                                 <input
                                     id="unit_width"
@@ -357,13 +378,18 @@ const CreateNewConfiguration = () => {
                                 <input
                                     id="unit_height"
                                     name="unit_height"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.unit_height}
                                     required
-                                />
+                                    onChange={e => {
+                                        const { value } = e.target;
+                                        formik.setFieldValue("unit_height", value);
+                                        setUnitHeight(value)
+                                        formik.setFieldValue("tracks_charge", ((value / 12) * 23.69) + getRetentionPricing(retentionType))
+                                        formik.setFieldValue("housing_charge", ((value / 12) * 30.21) + get_housing_price(housingType, housingTubeSize));
+                                    }} />
                                 <p style={{ color: 'red' }}> {formik.errors.unit_height} </p>
                             </Col>
                             <Col md={6} xs={12}>
+                                <h3>Housing & Motor Options</h3>
                                 <Row>
                                     <Col md={6} xs={12}>
                                         <label htmlFor="housing_tube_size">Housing & Tube Size </label>
@@ -377,7 +403,7 @@ const CreateNewConfiguration = () => {
                                                 const basePrice = get_tube_price(value);
                                                 const additionalPrice = ((unitWidth / 12) * 20.66);
                                                 formik.setFieldValue("tube_charge", basePrice + additionalPrice);
-                                                formik.setFieldValue("housing_charge",((unitWidth / 12) * 30.21) + get_housing_price(housingType, value ))
+                                                formik.setFieldValue("housing_charge", ((unitWidth / 12) * 30.21) + get_housing_price(housingType, value))
                                             }}
                                             required
                                         >
@@ -471,7 +497,7 @@ const CreateNewConfiguration = () => {
                                     </Col>
                                 </Row>
                                 <Row>
-                                    <Col md={3} xs={12}>
+                                    <Col md={4} xs={12}>
                                         <label htmlFor="motor_charge">Motor Charge $</label>
                                         <input
                                             id="motor_charge"
@@ -481,7 +507,7 @@ const CreateNewConfiguration = () => {
                                         />
                                         <p style={{ color: 'red' }}> {formik.errors.motor_charge} </p>
                                     </Col>
-                                    <Col md={3} xs={12}>
+                                    <Col md={4} xs={12}>
                                         <label htmlFor="tube_charge">Tube Charge $</label>
                                         <input
                                             id="tube_charge"
@@ -491,7 +517,7 @@ const CreateNewConfiguration = () => {
                                         />
                                         <p style={{ color: 'red' }}> {formik.errors.tube_charge} </p>
                                     </Col>
-                                    <Col md={3} xs={12}>
+                                    <Col md={4} xs={12}>
                                         <label htmlFor="housing_charge">Housing Charge $</label>
                                         <input
                                             id="housing_charge"
@@ -500,6 +526,74 @@ const CreateNewConfiguration = () => {
                                             disabled
                                         />
                                         <p style={{ color: 'red' }}> {formik.errors.housing_charge} </p>
+                                    </Col>
+                                </Row>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md={6} xs={12}>
+                                <h3>Retention Options</h3>
+                                <Row>
+                                    <Col md={6} xs={12}>
+                                        <label htmlFor="retention_type">Retention Type </label>
+                                        <select
+                                            id="retention_type"
+                                            name="retention_type"
+                                            onChange={e => {
+                                                const { value } = e.target;
+                                                formik.setFieldValue("retention_type", value);
+                                                setRetentionType(value)
+                                                const basePrice = getRetentionPricing(value);
+                                                const additionalPrice = ((unitHeight / 12) * 23.69);
+                                                formik.setFieldValue("tracks_charge", basePrice + additionalPrice);
+                                            }}>
+                                            <option value=''>Select a Rentention Option</option>
+                                            <option value='Surface Mount' label='Surface Mount'>Surface Mount </option>
+                                            <option value='Recessed' label='Recessed'>Recessed </option>
+                                            <option value='Cable Guide' label='Cable Guide'>Cable Guide</option>
+                                        </select>
+                                        <p style={{ color: 'red' }}> {formik.errors.retention_type} </p>
+                                    </Col>
+                                    <Col md={6} xs={12}>
+                                        <label htmlFor="retention_cap_color">Retention Cap Color </label><br />
+                                        <select
+                                            id="retention_cap_color"
+                                            name="retention_cap_color"
+                                            onChange={formik.handleChange}
+                                            value={formik.values.retention_cap_color}
+                                        >
+                                            <option value=''>Select a Cap Color</option>
+                                            <option value='Jet Black' label='Jet Black'>Jet Black </option>
+                                            <option value='Signal White' label='Signal White'>Signal White </option>
+                                            <option value='Urban Gray' label='Urban Gray'>Urban Gray </option>
+                                            <option value='Anthracite' label='Anthracite'>Anthracite </option>
+                                        </select>
+                                        <p style={{ color: 'red' }}> {formik.errors.motor_side} </p>
+                                    </Col>
+                                    <Col>
+                                        <label htmlFor="tracks_exact_length">Cut Tracks to Exact Length </label>
+                                        <input
+                                            type="checkbox"
+                                            id="tracks_exact_length"
+                                            name="tracks_exact_length"
+                                            onChange={() => handleToggle('tracks_exact_length')}
+                                            value={tracksExactLength}
+                                            checked={tracksExactLength}
+                                        />
+                                        <p style={{ color: 'red' }}> {formik.errors.complete_unit} </p>
+                                        <p>(By default, the side tracks are made long, so that you can trim them in the field to exact lengths. Check this box to get tracks pre-cut to length)</p>
+                                    </Col>
+                                </Row>
+                                <Row>
+                                    <Col>
+                                        <label htmlFor="tracks_charge">Tracks Charge $</label>
+                                        <input
+                                            id="tracks_charge"
+                                            name="tracks_charge"
+                                            value={formik.values.tracks_charge}
+                                            disabled
+                                        />
+                                        <p style={{ color: 'red' }}> {formik.errors.tracks_charge} </p>
                                     </Col>
                                 </Row>
                             </Col>
@@ -548,12 +642,7 @@ const CreateNewConfiguration = () => {
                                 />
                                 <p style={{ color: 'red' }}> {formik.errors.list_price}</p>
                             </Col>
-
-
-
                         </Row>
-
-
                         <button type="submit">Submit</button>
                     </form>
                     <p style={{ color: 'red' }}>{errors ? errors : null}</p>
