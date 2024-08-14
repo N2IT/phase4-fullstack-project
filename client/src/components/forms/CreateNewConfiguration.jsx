@@ -22,7 +22,7 @@ const CreateNewConfiguration = () => {
     const [unitWidth, setUnitWidth] = useState()
     const [unitHeight, setUnitHeight] = useState()
     const [housingTubeSize, setHousingTubeSize] = useState("")
-    const [housingType, setHousingType] = useState()
+    const [housingType, setHousingType] = useState("")
 
 
     const get_motor_charge = (motor_type) => {
@@ -377,7 +377,7 @@ const CreateNewConfiguration = () => {
                                                 const basePrice = get_tube_price(value);
                                                 const additionalPrice = ((unitWidth / 12) * 20.66);
                                                 formik.setFieldValue("tube_charge", basePrice + additionalPrice);
-                                                formik.setFieldValue("housing_charge",((value / 12) * 30.21) + get_housing_price(housingType, value ))
+                                                formik.setFieldValue("housing_charge",((unitWidth / 12) * 30.21) + get_housing_price(housingType, value ))
                                             }}
                                             required
                                         >
