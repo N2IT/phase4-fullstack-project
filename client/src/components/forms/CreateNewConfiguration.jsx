@@ -25,6 +25,7 @@ const CreateNewConfiguration = () => {
     const [housingType, setHousingType] = useState("")
     const [retentionType, setRetentionType] = useState("")
     const [tracksExactLength, setTracksExactLength] = useState(true)
+    const [hemBarType, setHemBarType] = useState("")
 
 
     const get_motor_charge = (motor_type) => {
@@ -101,6 +102,19 @@ const CreateNewConfiguration = () => {
         return retention_type_pricing
     }
 
+    const getHemBarPricing = (hemBarType) => {
+        let hem_bar_pricing = 0
+        if (hemBarType === 'Tall') {
+            hem_bar_pricing = 72.88
+        }
+        if (hemBarType === 'Standard') {
+            hem_bar_pricing = 66.39
+        }
+        if (hemBarType === 'Lanai') {
+            hem_bar_pricing = 272.88
+        }
+        return hem_bar_pricing
+    }
 
     const handleToggle = (id) => {
         if (id === 'complete_unit') {
@@ -252,6 +266,7 @@ const CreateNewConfiguration = () => {
                                             name="project_name"
                                             onChange={formik.handleChange}
                                             value={formik.values.project_name}
+                                            required
                                         />
                                         <p style={{ color: 'red' }}> {formik.errors.sku}</p>
                                     </Col>
@@ -262,6 +277,7 @@ const CreateNewConfiguration = () => {
                                             name="unit_name"
                                             onChange={formik.handleChange}
                                             value={formik.values.unit_name}
+                                            required
                                         />
                                         <p style={{ color: 'red' }}> {formik.errors.unit_name}</p>
                                     </Col>
@@ -372,6 +388,7 @@ const CreateNewConfiguration = () => {
                                         setUnitWidth(value)
                                         formik.setFieldValue("tube_charge", ((value / 12) * 20.66) + get_tube_price(housingTubeSize))
                                         formik.setFieldValue("housing_charge", ((value / 12) * 30.21) + get_housing_price(housingType, housingTubeSize));
+                                        formik.setFieldValue("hem_bar_charge", ((value / 12) * 12) + getHemBarPricing(hemBarType))
                                     }} />
                                 <p style={{ color: 'red' }}> {formik.errors.unit_width} </p>
                                 <label htmlFor="unit_height">Unit Height </label>
@@ -595,6 +612,77 @@ const CreateNewConfiguration = () => {
                                         />
                                         <p style={{ color: 'red' }}> {formik.errors.tracks_charge} </p>
                                     </Col>
+                                </Row>
+                            </Col>
+                            <Col md={6} xs={12}>
+                                <h3>Hem Bar Options</h3>
+                                <Row>
+                                    <Col md={6} xs={12}>
+                                        <label htmlFor="hem_bar_type">Hem Bar Type </label><br />
+                                        <select
+                                            id="hem_bar_type"
+                                            name="hem_bar_type"
+                                            onChange={e => {
+                                                const { value } = e.target;
+                                                formik.setFieldValue("hem_bar_type", value);
+                                                setHemBarType(value)
+                                                const basePrice = getHemBarPricing(value);
+                                                const additionalPrice = ((unitWidth / 12) * 9.65);
+                                                formik.setFieldValue("hem_bar_charge", basePrice + additionalPrice);
+                                            }}>
+                                            <option value=''>Select a Hem Bar Type</option>
+                                            <option value='Tall' label='Tall'>Tall </option>
+                                            <option value='Standard' label='Standard'>Standard </option>
+                                            <option value='Lanai' label='Lanai'>Lanai </option>
+                                        </select>
+                                        <p style={{ color: 'red' }}> {formik.errors.hem_bar_type} </p>
+                                    </Col>
+                                    <Col md={6} xs={12}>
+                                        <label htmlFor="hem_cap_color">Hem Bar Cap Color </label><br />
+                                        <select
+                                            id="hem_cap_color"
+                                            name="hem_cap_color"
+                                            onChange={formik.handleChange}
+                                            value={formik.values.hem_cap_color}
+                                        >
+                                            <option value=''>Select a Cap Color</option>
+                                            <option value='Jet Black' label='Jet Black'>Jet Black </option>
+                                            <option value='Signal White' label='Signal White'>Signal White </option>
+                                            <option value='Urban Gray' label='Urban Gray'>Urban Gray </option>
+                                            <option value='Anthracite' label='Anthracite'>Anthracite </option>
+                                        </select>
+                                        <p style={{ color: 'red' }}> {formik.errors.hem_cap_color} </p>
+                                    </Col>
+                                    <Col>
+                                        <label htmlFor="pile_brush_style">Pile Brush Style </label><br />
+                                        <select
+                                            id="pile_brush_style"
+                                            name="pile_brush_style"
+                                            onChange={formik.handleChange}
+                                            value={formik.values.pile_brush_style}
+                                        >
+                                            <option value=''>Select a Pile Brush</option>
+                                            <option value='1/2 Black' label='1/2 Black'>1/2 Black </option>
+                                            <option value='1/2 in White' label='1/2 in White'>1/2 in White </option>
+                                            <option value='1/2 in Grey' label='1/2 in Grey'>1/2 in Grey </option>
+                                            <option value='3/4 in Black' label='3/4 in Black'>3/4 in Black </option>
+                                            <option value='2 in Black' label='2 in Black'>2 in Black </option>
+                                            <option value='2 in Black (Double)' label='2 in Black (Double)'>2 in Black (Double) </option>
+                                            <option value='None' label='None'>None </option>
+                                        </select>
+                                        <p style={{ color: 'red' }}> {formik.errors.pile_brush_style} </p>
+                                    </Col>
+                                    <Col>
+                                        <label htmlFor="hem_bar_charge">Hem Bar Charge $</label>
+                                        <input
+                                            id="hem_bar_charge"
+                                            name="hem_bar_charge"
+                                            value={formik.values.hem_bar_charge}
+                                            disabled
+                                        />
+                                        <p style={{ color: 'red' }}> {formik.errors.hem_bar_charge} </p>
+                                    </Col>
+
                                 </Row>
                             </Col>
                         </Row>
