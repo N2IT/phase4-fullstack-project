@@ -189,12 +189,18 @@ const CreateNewConfiguration = () => {
         return fabric_price
     }
 
+    useEffect(() => {
+        if (!housing || !sideTrack || !hemBar || !fabric || !motorTube){
+            setAsCompleteUnit(false)
+        }
+        if (housing && sideTrack && hemBar && fabric && motorTube){
+            setAsCompleteUnit(true)
+        }
+    },[housing, sideTrack, hemBar, fabric, motorTube])
+        
 
     const handleToggle = (id) => {
-        if (id === 'complete_unit') {
-            setAsCompleteUnit(!completeUnit)
-        }
-        else if (id === 'housing') {
+        if (id === 'housing') {
             setHousing(!housing)
         }
         else if (id === 'side_track') {
@@ -507,67 +513,81 @@ const CreateNewConfiguration = () => {
                                         </select>
                                         <p style={{ color: 'red' }}> {formik.errors.housing_tube_size} </p>
                                     </Col>
-                                    <Col md={6} xs={12}>
-                                        <label htmlFor="housing_type">Housing Type </label><br />
-                                        <select
-                                            id="housing_type"
-                                            name="housing_type"
-                                            onChange={e => {
-                                                const { value } = e.target;
-                                                formik.setFieldValue("housing_type", value);
-                                                setHousingType(value)
-                                                const basePrice = get_housing_price(value, housingTubeSize);
-                                                const additionalPrice = ((unitWidth / 12) * 30.21);
-                                                formik.setFieldValue("housing_charge", basePrice + additionalPrice);
-                                            }}
-                                            required
-                                        >
-                                            <option value=''>Select a Housing Type </option>
-                                            <option value='Complete' label='Complete'>Complete </option>
-                                            <option value='Housing Base(no cover)' label='Housing Base(no cover)'>Housing Base(no cover) </option>
-                                            <option value='Open Mount Brackets' label='Open Mount Brackets'>Open Mount Brackets </option>
-                                        </select>
-                                        <p style={{ color: 'red' }}> {formik.errors.housing_type} </p>
-                                    </Col>
-                                </Row>
-                                <Row>
-                                    <Col md={6} xs={12}>
-                                        <label htmlFor="motor_type">Motor Type </label><br />
-                                        <select
-                                            id="motor_type"
-                                            name="motor_type"
-                                            required
-                                            onChange={e => {
-                                                const { value } = e.target;
-                                                formik.setFieldValue("motor_type", value);
-                                                setMotorType(value)
-                                                const basePrice = get_motor_charge(value);
-                                                const additionalPrice = get_power_chord_price(formik.values.power_chord);
-                                                formik.setFieldValue("motor_charge", basePrice + additionalPrice);
-                                            }}>
-                                            <option value=''>Select a Motor Type </option>
-                                            <option value='Alpha pro+OD' label='Alpha pro+OD'>Alpha pro+OD </option>
-                                            <option value='Somfy RTS' label='Somfy RTS'>Somfy RTS </option>
-                                            <option value='Somfy Hardwired' label='Somfy Hardwired'>Somfy Hardwired </option>
-                                            <option value='Somfy Autosun' label='Somfy Autosun' disabled={disabled}>Somfy Autosun</option>
-                                        </select>
-                                        <p style={{ color: 'red' }}> {formik.errors.motor_type} </p>
-                                    </Col>
-                                    <Col md={6} xs={12}>
-                                        <label htmlFor="motor_side">Motor Side </label><br />
-                                        <select
-                                            id="motor_side"
-                                            name="motor_side"
-                                            onChange={formik.handleChange}
-                                            value={formik.values.motor_side}
-                                        >
-                                            <option value=''>Select a Motor Side</option>
-                                            <option value='Left' label='Left'>Left </option>
-                                            <option value='Right' label='Right'>Right </option>
+                                    {housing ?
+                                        <Col md={6} xs={12}>
+                                            <>
+                                                <label htmlFor="housing_type">Housing Type </label><br />
+                                                <select
+                                                    id="housing_type"
+                                                    name="housing_type"
+                                                    onChange={e => {
+                                                        const { value } = e.target;
+                                                        formik.setFieldValue("housing_type", value);
+                                                        setHousingType(value)
+                                                        const basePrice = get_housing_price(value, housingTubeSize);
+                                                        const additionalPrice = ((unitWidth / 12) * 30.21);
+                                                        formik.setFieldValue("housing_charge", basePrice + additionalPrice);
+                                                    }}
+                                                    required
+                                                >
+                                                    <option value=''>Select a Housing Type </option>
+                                                    <option value='Complete' label='Complete'>Complete </option>
+                                                    <option value='Housing Base(no cover)' label='Housing Base(no cover)'>Housing Base(no cover) </option>
+                                                    <option value='Open Mount Brackets' label='Open Mount Brackets'>Open Mount Brackets </option>
+                                                </select>
+                                                <p style={{ color: 'red' }}> {formik.errors.housing_type} </p>
+                                            </>
+                                        </Col>
+                                        :
+                                        ""
+                                    }
+                                    {motorTube ?
+                                        <Col md={6} xs={12}>
+                                            <label htmlFor="motor_type">Motor Type </label><br />
+                                            <select
+                                                id="motor_type"
+                                                name="motor_type"
+                                                required
+                                                onChange={e => {
+                                                    const { value } = e.target;
+                                                    formik.setFieldValue("motor_type", value);
+                                                    setMotorType(value)
+                                                    const basePrice = get_motor_charge(value);
+                                                    const additionalPrice = get_power_chord_price(formik.values.power_chord);
+                                                    formik.setFieldValue("motor_charge", basePrice + additionalPrice);
+                                                }}>
+                                                <option value=''>Select a Motor Type </option>
+                                                <option value='Alpha pro+OD' label='Alpha pro+OD'>Alpha pro+OD </option>
+                                                <option value='Somfy RTS' label='Somfy RTS'>Somfy RTS </option>
+                                                <option value='Somfy Hardwired' label='Somfy Hardwired'>Somfy Hardwired </option>
+                                                <option value='Somfy Autosun' label='Somfy Autosun' disabled={disabled}>Somfy Autosun</option>
+                                            </select>
+                                            <p style={{ color: 'red' }}> {formik.errors.motor_type} </p>
+                                        </Col>
+                                        :
+                                        ""
+                                    }
+                                    {housing ?
+                                        <Col md={6} xs={12}>
+                                            <>
+                                                <label htmlFor="motor_side">Motor Side </label><br />
+                                                <select
+                                                    id="motor_side"
+                                                    name="motor_side"
+                                                    onChange={formik.handleChange}
+                                                    value={formik.values.motor_side}
+                                                >
+                                                    <option value=''>Select a Motor Side</option>
+                                                    <option value='Left' label='Left'>Left </option>
+                                                    <option value='Right' label='Right'>Right </option>
 
-                                        </select>
-                                        <p style={{ color: 'red' }}> {formik.errors.motor_side} </p>
-                                    </Col>
+                                                </select>
+                                                <p style={{ color: 'red' }}> {formik.errors.motor_side} </p>
+                                            </>
+                                        </Col>
+                                        :
+                                        ""
+                                    }
                                 </Row>
                                 <Row>
                                     <Col>
@@ -601,26 +621,36 @@ const CreateNewConfiguration = () => {
                                         />
                                         <p style={{ color: 'red' }}> {formik.errors.motor_charge} </p>
                                     </Col>
-                                    <Col md={4} xs={12}>
-                                        <label htmlFor="tube_charge">Tube Charge $</label>
-                                        <input
-                                            id="tube_charge"
-                                            name="tube_charge"
-                                            value={(formik.values.tube_charge.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","))}
-                                            disabled
-                                        />
-                                        <p style={{ color: 'red' }}> {formik.errors.tube_charge} </p>
-                                    </Col>
-                                    <Col md={4} xs={12}>
-                                        <label htmlFor="housing_charge">Housing Charge $</label>
-                                        <input
-                                            id="housing_charge"
-                                            name="housing_charge"
-                                            value={(formik.values.housing_charge.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","))}
-                                            disabled
-                                        />
-                                        <p style={{ color: 'red' }}> {formik.errors.housing_charge} </p>
-                                    </Col>
+                                    {motorTube ?
+                                        <Col md={4} xs={12}>
+                                            <label htmlFor="tube_charge">Tube Charge $</label>
+                                            <input
+                                                id="tube_charge"
+                                                name="tube_charge"
+                                                value={(formik.values.tube_charge.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","))}
+                                                disabled
+                                            />
+                                            <p style={{ color: 'red' }}> {formik.errors.tube_charge} </p>
+                                        </Col>
+                                        :
+                                        ""
+                                    }
+                                    {housing ?
+                                        <Col md={4} xs={12}>
+                                            <>
+                                                <label htmlFor="housing_charge">Housing Charge $</label>
+                                                <input
+                                                    id="housing_charge"
+                                                    name="housing_charge"
+                                                    value={(formik.values.housing_charge.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","))}
+                                                    disabled
+                                                />
+                                                <p style={{ color: 'red' }}> {formik.errors.housing_charge} </p>
+                                            </>
+                                        </Col>
+                                        :
+                                        ""
+                                    }
                                 </Row>
                             </Col>
                         </Row>
@@ -649,20 +679,26 @@ const CreateNewConfiguration = () => {
                                         <p style={{ color: 'red' }}> {formik.errors.retention_type} </p>
                                     </Col>
                                     <Col md={6} xs={12}>
-                                        <label htmlFor="retention_cap_color">Retention Cap Color </label><br />
-                                        <select
-                                            id="retention_cap_color"
-                                            name="retention_cap_color"
-                                            onChange={formik.handleChange}
-                                            value={formik.values.retention_cap_color}
-                                        >
-                                            <option value=''>Select a Cap Color</option>
-                                            <option value='Jet Black' label='Jet Black'>Jet Black </option>
-                                            <option value='Signal White' label='Signal White'>Signal White </option>
-                                            <option value='Urban Gray' label='Urban Gray'>Urban Gray </option>
-                                            <option value='Anthracite' label='Anthracite'>Anthracite </option>
-                                        </select>
-                                        <p style={{ color: 'red' }}> {formik.errors.motor_side} </p>
+                                        {sideTrack ?
+                                            <>
+                                                <label htmlFor="retention_cap_color">Retention Cap Color </label><br />
+                                                <select
+                                                    id="retention_cap_color"
+                                                    name="retention_cap_color"
+                                                    onChange={formik.handleChange}
+                                                    value={formik.values.retention_cap_color}
+                                                >
+                                                    <option value=''>Select a Cap Color</option>
+                                                    <option value='Jet Black' label='Jet Black'>Jet Black </option>
+                                                    <option value='Signal White' label='Signal White'>Signal White </option>
+                                                    <option value='Urban Gray' label='Urban Gray'>Urban Gray </option>
+                                                    <option value='Anthracite' label='Anthracite'>Anthracite </option>
+                                                </select>
+                                                <p style={{ color: 'red' }}> {formik.errors.motor_side} </p>
+                                            </>
+                                            :
+                                            ""
+                                        }
                                     </Col>
                                     <Col md={6} xs={12}>
                                         <div className="form-check d-flex align-items-center">
@@ -685,178 +721,189 @@ const CreateNewConfiguration = () => {
                                     </Col>
                                 </Row>
                                 <Row>
-                                    <Col>
-                                        <label htmlFor="tracks_charge">Tracks Charge $</label>
-                                        <input
-                                            id="tracks_charge"
-                                            name="tracks_charge"
-                                            value={(formik.values.tracks_charge.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","))}
-                                            disabled
-                                        />
-                                        <p style={{ color: 'red' }}> {formik.errors.tracks_charge} </p>
-                                    </Col>
+                                    {sideTrack ?
+                                        <Col>
+                                            <>
+                                                <label htmlFor="tracks_charge">Tracks Charge $</label>
+                                                <input
+                                                    id="tracks_charge"
+                                                    name="tracks_charge"
+                                                    value={(formik.values.tracks_charge.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","))}
+                                                    disabled
+                                                />
+                                                <p style={{ color: 'red' }}> {formik.errors.tracks_charge} </p>
+                                            </>
+                                        </Col>
+                                        :
+                                        ""
+                                    }
                                 </Row>
                             </Col>
-                            <Col md={6} xs={12}>
-                                <h3>Hem Bar Options</h3>
-                                <Row>
-                                    <Col md={6} xs={12}>
-                                        <label htmlFor="hem_bar_type">Hem Bar Type </label><br />
-                                        <select
-                                            id="hem_bar_type"
-                                            name="hem_bar_type"
-                                            onChange={e => {
-                                                const { value } = e.target;
-                                                formik.setFieldValue("hem_bar_type", value);
-                                                setHemBarType(value)
-                                                const basePrice = getHemBarPricing(value);
-                                                const additionalPrice = ((unitWidth / 12) * 9.65);
-                                                formik.setFieldValue("hem_bar_charge", basePrice + additionalPrice);
-                                            }}>
-                                            <option value=''>Select a Hem Bar Type</option>
-                                            <option value='Tall' label='Tall'>Tall </option>
-                                            <option value='Standard' label='Standard'>Standard </option>
-                                            <option value='Lanai' label='Lanai'>Lanai </option>
-                                        </select>
-                                        <p style={{ color: 'red' }}> {formik.errors.hem_bar_type} </p>
-                                    </Col>
-                                    <Col md={6} xs={12}>
-                                        <label htmlFor="hem_cap_color">Hem Bar Cap Color </label><br />
-                                        <select
-                                            id="hem_cap_color"
-                                            name="hem_cap_color"
-                                            onChange={formik.handleChange}
-                                            value={formik.values.hem_cap_color}
-                                        >
-                                            <option value=''>Select a Cap Color</option>
-                                            <option value='Jet Black' label='Jet Black'>Jet Black </option>
-                                            <option value='Signal White' label='Signal White'>Signal White </option>
-                                            <option value='Urban Gray' label='Urban Gray'>Urban Gray </option>
-                                            <option value='Anthracite' label='Anthracite'>Anthracite </option>
-                                        </select>
-                                        <p style={{ color: 'red' }}> {formik.errors.hem_cap_color} </p>
-                                    </Col>
-                                    <Col>
-                                        <label htmlFor="pile_brush_style">Pile Brush Style </label><br />
-                                        <select
-                                            id="pile_brush_style"
-                                            name="pile_brush_style"
-                                            onChange={formik.handleChange}
-                                            value={formik.values.pile_brush_style}
-                                        >
-                                            <option value=''>Select a Pile Brush</option>
-                                            <option value='1/2 Black' label='1/2 Black'>1/2 Black </option>
-                                            <option value='1/2 in White' label='1/2 in White'>1/2 in White </option>
-                                            <option value='1/2 in Grey' label='1/2 in Grey'>1/2 in Grey </option>
-                                            <option value='3/4 in Black' label='3/4 in Black'>3/4 in Black </option>
-                                            <option value='2 in Black' label='2 in Black'>2 in Black </option>
-                                            <option value='2 in Black (Double)' label='2 in Black (Double)'>2 in Black (Double) </option>
-                                            <option value='None' label='None'>None </option>
-                                        </select>
-                                        <p style={{ color: 'red' }}> {formik.errors.pile_brush_style} </p>
-                                    </Col>
-                                    <Col>
-                                        <label htmlFor="hem_bar_charge">Hem Bar Charge $</label>
-                                        <input
-                                            id="hem_bar_charge"
-                                            name="hem_bar_charge"
-                                            value={(formik.values.hem_bar_charge.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","))}
-                                            disabled
-                                        />
-                                        <p style={{ color: 'red' }}> {formik.errors.hem_bar_charge} </p>
-                                    </Col>
+                            {hemBar ?
+                                <Col md={6} xs={12}>
+                                    <h3>Hem Bar Options</h3>
+                                    <Row>
+                                        <Col md={6} xs={12}>
+                                            <label htmlFor="hem_bar_type">Hem Bar Type </label><br />
+                                            <select
+                                                id="hem_bar_type"
+                                                name="hem_bar_type"
+                                                onChange={e => {
+                                                    const { value } = e.target;
+                                                    formik.setFieldValue("hem_bar_type", value);
+                                                    setHemBarType(value)
+                                                    const basePrice = getHemBarPricing(value);
+                                                    const additionalPrice = ((unitWidth / 12) * 9.65);
+                                                    formik.setFieldValue("hem_bar_charge", basePrice + additionalPrice);
+                                                }}>
+                                                <option value=''>Select a Hem Bar Type</option>
+                                                <option value='Tall' label='Tall'>Tall </option>
+                                                <option value='Standard' label='Standard'>Standard </option>
+                                                <option value='Lanai' label='Lanai'>Lanai </option>
+                                            </select>
+                                            <p style={{ color: 'red' }}> {formik.errors.hem_bar_type} </p>
+                                        </Col>
+                                        <Col md={6} xs={12}>
+                                            <label htmlFor="hem_cap_color">Hem Bar Cap Color </label><br />
+                                            <select
+                                                id="hem_cap_color"
+                                                name="hem_cap_color"
+                                                onChange={formik.handleChange}
+                                                value={formik.values.hem_cap_color}
+                                            >
+                                                <option value=''>Select a Cap Color</option>
+                                                <option value='Jet Black' label='Jet Black'>Jet Black </option>
+                                                <option value='Signal White' label='Signal White'>Signal White </option>
+                                                <option value='Urban Gray' label='Urban Gray'>Urban Gray </option>
+                                                <option value='Anthracite' label='Anthracite'>Anthracite </option>
+                                            </select>
+                                            <p style={{ color: 'red' }}> {formik.errors.hem_cap_color} </p>
+                                        </Col>
+                                        <Col>
+                                            <label htmlFor="pile_brush_style">Pile Brush Style </label><br />
+                                            <select
+                                                id="pile_brush_style"
+                                                name="pile_brush_style"
+                                                onChange={formik.handleChange}
+                                                value={formik.values.pile_brush_style}
+                                            >
+                                                <option value=''>Select a Pile Brush</option>
+                                                <option value='1/2 Black' label='1/2 Black'>1/2 Black </option>
+                                                <option value='1/2 in White' label='1/2 in White'>1/2 in White </option>
+                                                <option value='1/2 in Grey' label='1/2 in Grey'>1/2 in Grey </option>
+                                                <option value='3/4 in Black' label='3/4 in Black'>3/4 in Black </option>
+                                                <option value='2 in Black' label='2 in Black'>2 in Black </option>
+                                                <option value='2 in Black (Double)' label='2 in Black (Double)'>2 in Black (Double) </option>
+                                                <option value='None' label='None'>None </option>
+                                            </select>
+                                            <p style={{ color: 'red' }}> {formik.errors.pile_brush_style} </p>
+                                        </Col>
+                                        <Col>
+                                            <label htmlFor="hem_bar_charge">Hem Bar Charge $</label>
+                                            <input
+                                                id="hem_bar_charge"
+                                                name="hem_bar_charge"
+                                                value={(formik.values.hem_bar_charge.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","))}
+                                                disabled
+                                            />
+                                            <p style={{ color: 'red' }}> {formik.errors.hem_bar_charge} </p>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                                :
+                                ""
+                            }
+                            {fabric ?
+                                <Col md={6} xs={12}>
+                                    <h3>Fabric Options</h3>
+                                    <Row>
+                                        <Col md={6} xs={12}>
+                                            <label htmlFor="fabric_type">Fabric Type </label><br />
+                                            <select
+                                                id="fabric_type"
+                                                name="fabric_type"
+                                                onChange={e => {
+                                                    const { value } = e.target;
+                                                    formik.setFieldValue("fabric_type", value);
+                                                    setFabricType(value)
+                                                    const basePrice = getFabricPricing(value);
+                                                    const fabric_sqft = ((unitHeight * unitWidth) / 144)
+                                                    const additionalPrice = (fabric_sqft * 2.30);
+                                                    formik.setFieldValue("fabric_charge", basePrice + additionalPrice);
+                                                }}>
+                                                <option value=''>Select a Fabric Type</option>
+                                                <option value='Twitchell Nano 50' label='Twitchell Nano 50'>Twitchell Nano 50</option>
+                                                <option value='Twitchell Nano 55' label='Twitchell Nano 55'>Twitchell Nano 55</option>
+                                                <option value='Twitchell Nano 60' label='Twitchell Nano 60'>Twitchell Nano 60</option>
+                                                <option value='Twitchell Nano 70' label='Twitchell Nano 70'>Twitchell Nano 70</option>
+                                                <option value='Twitchell Nano 95' label='Twitchell Nano 95'>Twitchell Nano 95</option>
+                                                <option value='Twitchell Nano 97' label='Twitchell Nano 97'>Twitchell Nano 97</option>
+                                                <option value='Twitchell Nano 99' label='Twitchell Nano 99'>Twitchell Nano 99</option>
+                                                <option value='Twitchell Dimout' label='Twitchell Dimout'>Twitchell Dimout</option>
+                                                <option value='Twitchell Textilene 80' label='Twitchell Textilene 80'>Twitchell Textilene 80</option>
+                                                <option value='Twitchell Textilene 90' label='Twitchell Textilene 90'>Twitchell Textilene 90</option>
+                                                <option value='Twitchell Textilene 95' label='Twitchell Textilene 95'>Twitchell Textilene 95</option>
+                                                <option value='Ferrari Soltis Perform 92' label='Ferrari Soltis Perform 92'>Ferrari Soltis Perform 92</option>
+                                                <option value='Ferrari Soltis Opaque B92' label='Ferrari Soltis Opaque B92'>Ferrari Soltis Opaque B92</option>
+                                                <option value='Ferrari Soltis Proof' label='Ferrari Soltis Proof'>Ferrari Soltis Proof</option>
+                                                <option value='Ferrari Soltis Veozip' label='Ferrari Soltis Veozip'>Ferrari Soltis Veozip</option>
+                                                <option value='Ferrari Soltis Horizon' label='Ferrari Soltis Horizon'>Ferrari Soltis Horizon</option>
+                                                <option value='Ferrari Harmony' label='Ferrari Harmony'>Ferrari Harmony</option>
+                                                <option value='Mermet Natte 3%' label='Mermet Natte 3%'>Mermet Natte 3%</option>
+                                                <option value='Mermet Natte 5%' label='Mermet Natte 5%'>Mermet Natte 5%</option>
+                                                <option value='Mermet Natte 10%' label='Mermet Natte 10%'>Mermet Natte 10%</option>
+                                                <option value='Mermet Satine 1%' label='Mermet Satine 1%'>Mermet Satine 1%</option>
+                                                <option value='Mermet Satine 5%' label='Mermet Satine 5%'>Mermet Satine 5%</option>
+                                                <option value='Twitchell OmegaTex' label='Twitchell OmegaTex'>Twitchell OmegaTex</option>
+                                                <option value='Sunbrella 60 (Solid)' label='Sunbrella 60 (Solid)'>Sunbrella 60 (Solid)</option>
 
-                                </Row>
-                            </Col>
-                        </Row>
-                        <Row>
-                            <Col md={6} xs={12}>
-                                <h3>Fabric Options</h3>
-                                <Row>
-                                    <Col md={6} xs={12}>
-                                        <label htmlFor="fabric_type">Fabric Type </label><br />
-                                        <select
-                                            id="fabric_type"
-                                            name="fabric_type"
-                                            onChange={e => {
-                                                const { value } = e.target;
-                                                formik.setFieldValue("fabric_type", value);
-                                                setFabricType(value)
-                                                const basePrice = getFabricPricing(value);
-                                                const fabric_sqft = ((unitHeight * unitWidth) / 144)
-                                                const additionalPrice = (fabric_sqft * 2.30);
-                                                formik.setFieldValue("fabric_charge", basePrice + additionalPrice);
-                                            }}>
-                                            <option value=''>Select a Fabric Type</option>
-                                            <option value='Twitchell Nano 50' label='Twitchell Nano 50'>Twitchell Nano 50</option>
-                                            <option value='Twitchell Nano 55' label='Twitchell Nano 55'>Twitchell Nano 55</option>
-                                            <option value='Twitchell Nano 60' label='Twitchell Nano 60'>Twitchell Nano 60</option>
-                                            <option value='Twitchell Nano 70' label='Twitchell Nano 70'>Twitchell Nano 70</option>
-                                            <option value='Twitchell Nano 95' label='Twitchell Nano 95'>Twitchell Nano 95</option>
-                                            <option value='Twitchell Nano 97' label='Twitchell Nano 97'>Twitchell Nano 97</option>
-                                            <option value='Twitchell Nano 99' label='Twitchell Nano 99'>Twitchell Nano 99</option>
-                                            <option value='Twitchell Dimout' label='Twitchell Dimout'>Twitchell Dimout</option>
-                                            <option value='Twitchell Textilene 80' label='Twitchell Textilene 80'>Twitchell Textilene 80</option>
-                                            <option value='Twitchell Textilene 90' label='Twitchell Textilene 90'>Twitchell Textilene 90</option>
-                                            <option value='Twitchell Textilene 95' label='Twitchell Textilene 95'>Twitchell Textilene 95</option>
-                                            <option value='Ferrari Soltis Perform 92' label='Ferrari Soltis Perform 92'>Ferrari Soltis Perform 92</option>
-                                            <option value='Ferrari Soltis Opaque B92' label='Ferrari Soltis Opaque B92'>Ferrari Soltis Opaque B92</option>
-                                            <option value='Ferrari Soltis Proof' label='Ferrari Soltis Proof'>Ferrari Soltis Proof</option>
-                                            <option value='Ferrari Soltis Veozip' label='Ferrari Soltis Veozip'>Ferrari Soltis Veozip</option>
-                                            <option value='Ferrari Soltis Horizon' label='Ferrari Soltis Horizon'>Ferrari Soltis Horizon</option>
-                                            <option value='Ferrari Harmony' label='Ferrari Harmony'>Ferrari Harmony</option>
-                                            <option value='Mermet Natte 3%' label='Mermet Natte 3%'>Mermet Natte 3%</option>
-                                            <option value='Mermet Natte 5%' label='Mermet Natte 5%'>Mermet Natte 5%</option>
-                                            <option value='Mermet Natte 10%' label='Mermet Natte 10%'>Mermet Natte 10%</option>
-                                            <option value='Mermet Satine 1%' label='Mermet Satine 1%'>Mermet Satine 1%</option>
-                                            <option value='Mermet Satine 5%' label='Mermet Satine 5%'>Mermet Satine 5%</option>
-                                            <option value='Twitchell OmegaTex' label='Twitchell OmegaTex'>Twitchell OmegaTex</option>
-                                            <option value='Sunbrella 60 (Solid)' label='Sunbrella 60 (Solid)'>Sunbrella 60 (Solid)</option>
-
-                                        </select>
-                                        <p style={{ color: 'red' }}> {formik.errors.hem_bar_type} </p>
-                                    </Col>
-                                    <Col md={6} xs={12}>
-                                        <label htmlFor="fabric_selection">Fabric Selection </label><br />
-                                        <select
-                                            id="fabric_selection"
-                                            name="fabric_selection"
-                                            onChange={formik.handleChange}
-                                            value={formik.values.fabric_selection}
-                                        >
-                                            <option value=''>Make your fabric selection</option>
-                                            <option value='Black' label='Black'>Black </option>
-                                            <option value='White' label='White'>White </option>
-                                            <option value='Grey' label='Grey'>Grey </option>
-                                        </select>
-                                        <p style={{ color: 'red' }}> {formik.errors.fabric_selection} </p>
-                                    </Col>
-                                    <Col md={6} xs={12}>
-                                        <label htmlFor="zipper_color">Zipper Color </label><br />
-                                        <select
-                                            id="zipper_color"
-                                            name="zipper_color"
-                                            onChange={formik.handleChange}
-                                            value={formik.values.zipper_color}
-                                        >
-                                            <option value=''>Select a Zipper Color</option>
-                                            <option value='Black' label='Black'>Black </option>
-                                            <option value='White' label='White'>White </option>
-                                        </select>
-                                        <p style={{ color: 'red' }}> {formik.errors.zipper_color} </p>
-                                    </Col>
-                                    <Col md={6} xs={12}>
-                                        <label htmlFor="fabric_charge">Fabric Charge $</label>
-                                        <input
-                                            id="fabric_charge"
-                                            name="fabric_charge"
-                                            value={(formik.values.fabric_charge.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","))}
-                                            disabled
-                                        />
-                                        <p style={{ color: 'red' }}> {formik.errors.fabric_charge}</p>
-                                    </Col>
-                                </Row>
-                            </Col>
+                                            </select>
+                                            <p style={{ color: 'red' }}> {formik.errors.hem_bar_type} </p>
+                                        </Col>
+                                        <Col md={6} xs={12}>
+                                            <label htmlFor="fabric_selection">Fabric Selection </label><br />
+                                            <select
+                                                id="fabric_selection"
+                                                name="fabric_selection"
+                                                onChange={formik.handleChange}
+                                                value={formik.values.fabric_selection}
+                                            >
+                                                <option value=''>Make your fabric selection</option>
+                                                <option value='Black' label='Black'>Black </option>
+                                                <option value='White' label='White'>White </option>
+                                                <option value='Grey' label='Grey'>Grey </option>
+                                            </select>
+                                            <p style={{ color: 'red' }}> {formik.errors.fabric_selection} </p>
+                                        </Col>
+                                        <Col md={6} xs={12}>
+                                            <label htmlFor="zipper_color">Zipper Color </label><br />
+                                            <select
+                                                id="zipper_color"
+                                                name="zipper_color"
+                                                onChange={formik.handleChange}
+                                                value={formik.values.zipper_color}
+                                            >
+                                                <option value=''>Select a Zipper Color</option>
+                                                <option value='Black' label='Black'>Black </option>
+                                                <option value='White' label='White'>White </option>
+                                            </select>
+                                            <p style={{ color: 'red' }}> {formik.errors.zipper_color} </p>
+                                        </Col>
+                                        <Col md={6} xs={12}>
+                                            <label htmlFor="fabric_charge">Fabric Charge $</label>
+                                            <input
+                                                id="fabric_charge"
+                                                name="fabric_charge"
+                                                value={(formik.values.fabric_charge.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","))}
+                                                disabled
+                                            />
+                                            <p style={{ color: 'red' }}> {formik.errors.fabric_charge}</p>
+                                        </Col>
+                                    </Row>
+                                </Col>
+                                :
+                                ""
+                            }
                             <Col md={6} xs={12}>
                                 <h3>Frame Color</h3>
                                 <Row>
