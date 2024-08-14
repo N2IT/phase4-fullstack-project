@@ -903,7 +903,6 @@ class Configurations(Resource):
       return {'errors' : str(e)}, 500
   
   def post(self):
-    breakpoint()
     user_id = session.get("user_id")
     if not user_id:
       return {"error": "Unauthorized"}, 403

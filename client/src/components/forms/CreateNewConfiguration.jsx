@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { useFormik, Field } from 'formik';
+import { useFormik, Field, FormikContext } from 'formik';
 import * as yup from "yup";
 import { AgentContext } from '../../AgentProvider';
 import Container from 'react-bootstrap/Container';
@@ -19,13 +19,14 @@ const CreateNewConfiguration = () => {
     const [motorTube, setMotorTube] = useState(true)
     const [disabled, setAsDisabled] = useState(true)
     const [motorType, setMotorType] = useState("")
-    const [unitWidth, setUnitWidth] = useState()
-    const [unitHeight, setUnitHeight] = useState()
+    const [unitWidth, setUnitWidth] = useState(0)
+    const [unitHeight, setUnitHeight] = useState(0)
     const [housingTubeSize, setHousingTubeSize] = useState("")
     const [housingType, setHousingType] = useState("")
     const [retentionType, setRetentionType] = useState("")
     const [tracksExactLength, setTracksExactLength] = useState(true)
     const [hemBarType, setHemBarType] = useState("")
+    const [fabricType, setFabricType] = useState("")
 
 
     const get_motor_charge = (motor_type) => {
@@ -115,6 +116,79 @@ const CreateNewConfiguration = () => {
         }
         return hem_bar_pricing
     }
+
+    const getFabricPricing = (fabricType) => {
+        let fabric_price = 0
+
+        if (fabricType == 'Twitchell Nano 50') {
+            fabric_price = 151.26
+        }
+        if (fabricType == 'Twitchell Nano 55') {
+            fabric_price = 151.77
+        }
+        if (fabricType == 'Twitchell Nano 60') {
+            fabric_price = 161.84
+        }
+        if (fabricType == 'Twitchell Nano 70') {
+            fabric_price = 193.61
+        }
+        if (fabricType == 'Twitchell Nano 95') {
+            fabric_price = 261.67
+        }
+        if (fabricType == 'Twitchell Nano 99') {
+            fabric_price = 151.26
+        }
+        if (fabricType == 'Twitchell Dimout') {
+            fabric_price = 352.43
+        }
+        if ((fabricType == 'Twitchell Textilene 80') || (fabricType == 'Twitchell Textilene 95')) {
+            fabric_price = 202.68
+        }
+        if (fabricType == 'Twitchell Textilent 90') {
+            fabric_price = 232.93
+        }
+        if (fabricType == 'Ferrari Soltis Perform') {
+            fabric_price = 484.02
+        }
+        if (fabricType == 'Ferrari Soltis Opaque B92') {
+            fabric_price = 1246.34
+        }
+        if (fabricType == 'Ferrari Soltis Proof') {
+            fabric_price = 653.42
+        }
+        if (fabricType == 'Ferrari Soltis Veozip') {
+            fabric_price = 261.67
+        }
+        if (fabricType == 'Ferrari Soltis Horizon') {
+            fabric_price = 591.41
+        }
+        if (fabricType == 'Ferrari Harmony') {
+            fabric_price = 529.39
+        }
+        if (fabricType == 'Mermett Natte 3%') {
+            fabric_price = 423.52
+        }
+        if (fabricType == 'Mermett Natte 5%') {
+            fabric_price = 391.80
+        }
+        if (fabricType == 'Mermett Natte 10%') {
+            fabric_price = 370.58
+        }
+        if (fabricType == 'Mermet Satine 1%') {
+            fabric_price = 432.59
+        }
+        if (fabricType == 'Mermet Satine 5%') {
+            fabric_price = 400.83
+        }
+        if (fabricType == 'Twitchell OmegaTex') {
+            fabric_price = 642.84
+        }
+        if (fabricType == 'Sunbrella 60 (Solid)') {
+            fabric_price = 529.39
+        }
+        return fabric_price
+    }
+
 
     const handleToggle = (id) => {
         if (id === 'complete_unit') {
@@ -245,9 +319,9 @@ const CreateNewConfiguration = () => {
     })
 
     useEffect(() => {
-        const total = formik.values.motor_charge + formik.values.tube_charge + formik.values.housing_charge + formik.values.tracks_charge
+        const total = formik.values.motor_charge + formik.values.tube_charge + formik.values.housing_charge + formik.values.tracks_charge + formik.values.hem_bar_charge + formik.values.fabric_charge
         formik.setFieldValue('list_price', total);
-    }, [formik.values.motor_charge, formik.values.unit_width, formik.values.unit_height, formik.values.housing_tube_size, formik.values.housing_type, formik.values.retention_type]);
+    }, [formik.values.motor_charge, formik.values.unit_width, formik.values.unit_height, formik.values.housing_tube_size, formik.values.housing_type, formik.values.retention_type, formik.values.hem_bar_type, formik.values.fabric_type]);
 
     return (
         <>
@@ -286,89 +360,89 @@ const CreateNewConfiguration = () => {
                             <Col md={6} xs={12}>
                                 <h3>Unit Contents</h3>
                                 <Row>
-                                    <Col md={3} xs={12}>
-                                        <label htmlFor="complete_unit">Complete Unit </label>
-                                        <input
-                                            type="checkbox"
-                                            id="complete_unit"
-                                            name="complete_unit"
-                                            onChange={() => handleToggle('complete_unit')}
-                                            value={completeUnit}
-                                            checked={completeUnit}
-                                        />
-                                        <p style={{ color: 'red' }}> {formik.errors.complete_unit} </p>
+                                    <Col md={3} xs={4}>
+                                        <div className="form-check d-flex align-items-center">
+                                            <input
+                                                type="checkbox"
+                                                id="complete_unit"
+                                                name="complete_unit"
+                                                onChange={() => handleToggle('complete_unit')}
+                                                value={completeUnit}
+                                                checked={completeUnit}
+                                            />
+                                            <label htmlFor="complete_unit" style={{ whiteSpace: 'nowrap' }}>Complete Unit </label>
+                                            <p style={{ color: 'red' }}> {formik.errors.complete_unit} </p>
+                                        </div>
                                     </Col>
-                                    <Col md={3} xs={12}>
-                                        <label htmlFor="housing">Housing </label>
-                                        <input
-                                            type="checkbox"
-                                            id="housing"
-                                            name="housing"
-                                            onChange={() => handleToggle('housing')}
-                                            value={housing}
-                                            checked={housing}
-                                        />
-                                        <p style={{ color: 'red' }}> {formik.errors.housing} </p>
+                                    <Col md={3} xs={4}>
+                                        <div className="form-check d-flex align-items-center">
+                                            <input
+                                                type="checkbox"
+                                                id="housing"
+                                                name="housing"
+                                                onChange={() => handleToggle('housing')}
+                                                value={housing}
+                                                checked={housing}
+                                            />
+                                            <label htmlFor="housing" style={{ whiteSpace: 'nowrap' }}>Housing </label>
+                                            <p style={{ color: 'red' }}> {formik.errors.housing} </p>
+                                        </div>
                                     </Col>
-                                    <Col md={3} xs={12}>
-                                        <label htmlFor="side_track">Side Track </label>
-                                        <input
-                                            type="checkbox"
-                                            id="side_track"
-                                            name="side_track"
-                                            onChange={() => handleToggle('side_track')}
-                                            value={sideTrack}
-                                            checked={sideTrack}
-                                        />
-                                        <p style={{ color: 'red' }}> {formik.errors.side_track} </p>
+                                    <Col md={3} xs={4}>
+                                        <div className="form-check d-flex align-items-center">
+                                            <input
+                                                type="checkbox"
+                                                id="side_track"
+                                                name="side_track"
+                                                onChange={() => handleToggle('side_track')}
+                                                value={sideTrack}
+                                                checked={sideTrack}
+                                            />
+                                            <p style={{ color: 'red' }}> {formik.errors.side_track} </p>
+                                            <label htmlFor="side_track" style={{ whiteSpace: 'nowrap' }}>Side Track </label>
+                                        </div>
                                     </Col>
-                                    <Col md={3} xs={12}>
-                                        <label htmlFor="hem_bar">Hem Bar </label>
-                                        <input
-                                            type="checkbox"
-                                            id="hem_bar"
-                                            name="hem_bar"
-                                            onChange={() => handleToggle('hem_bar')}
-                                            value={hemBar}
-                                            checked={hemBar}
-                                        />
-                                        <p style={{ color: 'red' }}> {formik.errors.hem_bar} </p>
+                                    <Col md={3} xs={4}>
+                                        <div className="form-check d-flex align-items-center">
+                                            <input
+                                                type="checkbox"
+                                                id="hem_bar"
+                                                name="hem_bar"
+                                                onChange={() => handleToggle('hem_bar')}
+                                                value={hemBar}
+                                                checked={hemBar}
+                                            />
+                                            <label htmlFor="hem_bar" style={{ whiteSpace: 'nowrap' }}>Hem Bar </label>
+                                            <p style={{ color: 'red' }}> {formik.errors.hem_bar} </p>
+                                        </div>
                                     </Col>
-                                    <Col md={3} xs={12}>
-                                        <label htmlFor="hem_bar">Hem Bar </label>
-                                        <input
-                                            type="checkbox"
-                                            id="hem_bar"
-                                            name="hem_bar"
-                                            onChange={() => handleToggle('hem_bar')}
-                                            value={hemBar}
-                                            checked={hemBar}
-                                        />
-                                        <p style={{ color: 'red' }}> {formik.errors.hem_bar} </p>
+                                    <Col md={3} xs={4}>
+                                        <div className="form-check d-flex align-items-center">
+                                            <input
+                                                type="checkbox"
+                                                id="fabric"
+                                                name="fabric"
+                                                onChange={() => handleToggle('fabric')}
+                                                value={fabric}
+                                                checked={fabric}
+                                            />
+                                            <label htmlFor="fabric" style={{ whiteSpace: 'nowrap' }}>Fabric </label>
+                                            <p style={{ color: 'red' }}> {formik.errors.fabric} </p>
+                                        </div>
                                     </Col>
-                                    <Col md={3} xs={12}>
-                                        <label htmlFor="fabric">Fabric </label>
-                                        <input
-                                            type="checkbox"
-                                            id="fabric"
-                                            name="fabric"
-                                            onChange={() => handleToggle('fabric')}
-                                            value={fabric}
-                                            checked={fabric}
-                                        />
-                                        <p style={{ color: 'red' }}> {formik.errors.fabric} </p>
-                                    </Col>
-                                    <Col md={3} xs={12}>
-                                        <label htmlFor="motor_tube">Motor Tube </label>
-                                        <input
-                                            type="checkbox"
-                                            id="motor_tube"
-                                            name="motor_tube"
-                                            onChange={() => handleToggle('motor_tube')}
-                                            value={motorTube}
-                                            checked={motorTube}
-                                        />
-                                        <p style={{ color: 'red' }}> {formik.errors.motor_tube} </p>
+                                    <Col md={3} xs={4}>
+                                        <div className="form-check d-flex align-items-center">
+                                            <input
+                                                type="checkbox"
+                                                id="motor_tube"
+                                                name="motor_tube"
+                                                onChange={() => handleToggle('motor_tube')}
+                                                value={motorTube}
+                                                checked={motorTube}
+                                            />
+                                            <label htmlFor="motor_tube" style={{ whiteSpace: 'nowrap' }}>Motor Tube </label>
+                                            <p style={{ color: 'red' }}> {formik.errors.motor_tube} </p>
+                                        </div>
                                     </Col>
                                 </Row>
                                 <hr />
@@ -389,6 +463,7 @@ const CreateNewConfiguration = () => {
                                         formik.setFieldValue("tube_charge", ((value / 12) * 20.66) + get_tube_price(housingTubeSize))
                                         formik.setFieldValue("housing_charge", ((value / 12) * 30.21) + get_housing_price(housingType, housingTubeSize));
                                         formik.setFieldValue("hem_bar_charge", ((value / 12) * 12) + getHemBarPricing(hemBarType))
+                                        formik.setFieldValue("fabric_charge", (((value * unitHeight) / 144) * 2.83) + getFabricPricing(fabricType))
                                     }} />
                                 <p style={{ color: 'red' }}> {formik.errors.unit_width} </p>
                                 <label htmlFor="unit_height">Unit Height </label>
@@ -402,6 +477,7 @@ const CreateNewConfiguration = () => {
                                         setUnitHeight(value)
                                         formik.setFieldValue("tracks_charge", ((value / 12) * 23.69) + getRetentionPricing(retentionType))
                                         formik.setFieldValue("housing_charge", ((value / 12) * 30.21) + get_housing_price(housingType, housingTubeSize));
+                                        formik.setFieldValue("fabric_charge", (((value * unitWidth) / 144) * 2.83) + getFabricPricing(fabricType))
                                     }} />
                                 <p style={{ color: 'red' }}> {formik.errors.unit_height} </p>
                             </Col>
@@ -464,6 +540,7 @@ const CreateNewConfiguration = () => {
                                             onChange={e => {
                                                 const { value } = e.target;
                                                 formik.setFieldValue("motor_type", value);
+                                                setMotorType(value)
                                                 const basePrice = get_motor_charge(value);
                                                 const additionalPrice = get_power_chord_price(formik.values.power_chord);
                                                 formik.setFieldValue("motor_charge", basePrice + additionalPrice);
@@ -529,7 +606,7 @@ const CreateNewConfiguration = () => {
                                         <input
                                             id="tube_charge"
                                             name="tube_charge"
-                                            value={formik.values.tube_charge}
+                                            value={(formik.values.tube_charge.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","))}
                                             disabled
                                         />
                                         <p style={{ color: 'red' }}> {formik.errors.tube_charge} </p>
@@ -539,7 +616,7 @@ const CreateNewConfiguration = () => {
                                         <input
                                             id="housing_charge"
                                             name="housing_charge"
-                                            value={formik.values.housing_charge}
+                                            value={(formik.values.housing_charge.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","))}
                                             disabled
                                         />
                                         <p style={{ color: 'red' }}> {formik.errors.housing_charge} </p>
@@ -587,16 +664,22 @@ const CreateNewConfiguration = () => {
                                         </select>
                                         <p style={{ color: 'red' }}> {formik.errors.motor_side} </p>
                                     </Col>
+                                    <Col md={6} xs={12}>
+                                        <div className="form-check d-flex align-items-center">
+                                            <input
+                                                type="checkbox"
+                                                id="tracks_exact_length"
+                                                name="tracks_exact_length"
+                                                onChange={() => handleToggle('tracks_exact_length')}
+                                                value={tracksExactLength}
+                                                checked={tracksExactLength}
+                                            />
+                                            <label htmlFor="tracks_exact_length" style={{ whiteSpace: 'nowrap' }}>Cut Tracks to Exact Length </label>
+                                        </div>
+                                    </Col>
+                                </Row>
+                                <Row>
                                     <Col>
-                                        <label htmlFor="tracks_exact_length">Cut Tracks to Exact Length </label>
-                                        <input
-                                            type="checkbox"
-                                            id="tracks_exact_length"
-                                            name="tracks_exact_length"
-                                            onChange={() => handleToggle('tracks_exact_length')}
-                                            value={tracksExactLength}
-                                            checked={tracksExactLength}
-                                        />
                                         <p style={{ color: 'red' }}> {formik.errors.complete_unit} </p>
                                         <p>(By default, the side tracks are made long, so that you can trim them in the field to exact lengths. Check this box to get tracks pre-cut to length)</p>
                                     </Col>
@@ -607,7 +690,7 @@ const CreateNewConfiguration = () => {
                                         <input
                                             id="tracks_charge"
                                             name="tracks_charge"
-                                            value={formik.values.tracks_charge}
+                                            value={(formik.values.tracks_charge.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","))}
                                             disabled
                                         />
                                         <p style={{ color: 'red' }}> {formik.errors.tracks_charge} </p>
@@ -677,12 +760,140 @@ const CreateNewConfiguration = () => {
                                         <input
                                             id="hem_bar_charge"
                                             name="hem_bar_charge"
-                                            value={formik.values.hem_bar_charge}
+                                            value={(formik.values.hem_bar_charge.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","))}
                                             disabled
                                         />
                                         <p style={{ color: 'red' }}> {formik.errors.hem_bar_charge} </p>
                                     </Col>
 
+                                </Row>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md={6} xs={12}>
+                                <h3>Fabric Options</h3>
+                                <Row>
+                                    <Col md={6} xs={12}>
+                                        <label htmlFor="fabric_type">Fabric Type </label><br />
+                                        <select
+                                            id="fabric_type"
+                                            name="fabric_type"
+                                            onChange={e => {
+                                                const { value } = e.target;
+                                                formik.setFieldValue("fabric_type", value);
+                                                setFabricType(value)
+                                                const basePrice = getFabricPricing(value);
+                                                const fabric_sqft = ((unitHeight * unitWidth) / 144)
+                                                const additionalPrice = (fabric_sqft * 2.30);
+                                                formik.setFieldValue("fabric_charge", basePrice + additionalPrice);
+                                            }}>
+                                            <option value=''>Select a Fabric Type</option>
+                                            <option value='Twitchell Nano 50' label='Twitchell Nano 50'>Twitchell Nano 50</option>
+                                            <option value='Twitchell Nano 55' label='Twitchell Nano 55'>Twitchell Nano 55</option>
+                                            <option value='Twitchell Nano 60' label='Twitchell Nano 60'>Twitchell Nano 60</option>
+                                            <option value='Twitchell Nano 70' label='Twitchell Nano 70'>Twitchell Nano 70</option>
+                                            <option value='Twitchell Nano 95' label='Twitchell Nano 95'>Twitchell Nano 95</option>
+                                            <option value='Twitchell Nano 97' label='Twitchell Nano 97'>Twitchell Nano 97</option>
+                                            <option value='Twitchell Nano 99' label='Twitchell Nano 99'>Twitchell Nano 99</option>
+                                            <option value='Twitchell Dimout' label='Twitchell Dimout'>Twitchell Dimout</option>
+                                            <option value='Twitchell Textilene 80' label='Twitchell Textilene 80'>Twitchell Textilene 80</option>
+                                            <option value='Twitchell Textilene 90' label='Twitchell Textilene 90'>Twitchell Textilene 90</option>
+                                            <option value='Twitchell Textilene 95' label='Twitchell Textilene 95'>Twitchell Textilene 95</option>
+                                            <option value='Ferrari Soltis Perform 92' label='Ferrari Soltis Perform 92'>Ferrari Soltis Perform 92</option>
+                                            <option value='Ferrari Soltis Opaque B92' label='Ferrari Soltis Opaque B92'>Ferrari Soltis Opaque B92</option>
+                                            <option value='Ferrari Soltis Proof' label='Ferrari Soltis Proof'>Ferrari Soltis Proof</option>
+                                            <option value='Ferrari Soltis Veozip' label='Ferrari Soltis Veozip'>Ferrari Soltis Veozip</option>
+                                            <option value='Ferrari Soltis Horizon' label='Ferrari Soltis Horizon'>Ferrari Soltis Horizon</option>
+                                            <option value='Ferrari Harmony' label='Ferrari Harmony'>Ferrari Harmony</option>
+                                            <option value='Mermet Natte 3%' label='Mermet Natte 3%'>Mermet Natte 3%</option>
+                                            <option value='Mermet Natte 5%' label='Mermet Natte 5%'>Mermet Natte 5%</option>
+                                            <option value='Mermet Natte 10%' label='Mermet Natte 10%'>Mermet Natte 10%</option>
+                                            <option value='Mermet Satine 1%' label='Mermet Satine 1%'>Mermet Satine 1%</option>
+                                            <option value='Mermet Satine 5%' label='Mermet Satine 5%'>Mermet Satine 5%</option>
+                                            <option value='Twitchell OmegaTex' label='Twitchell OmegaTex'>Twitchell OmegaTex</option>
+                                            <option value='Sunbrella 60 (Solid)' label='Sunbrella 60 (Solid)'>Sunbrella 60 (Solid)</option>
+
+                                        </select>
+                                        <p style={{ color: 'red' }}> {formik.errors.hem_bar_type} </p>
+                                    </Col>
+                                    <Col md={6} xs={12}>
+                                        <label htmlFor="fabric_selection">Fabric Selection </label><br />
+                                        <select
+                                            id="fabric_selection"
+                                            name="fabric_selection"
+                                            onChange={formik.handleChange}
+                                            value={formik.values.fabric_selection}
+                                        >
+                                            <option value=''>Make your fabric selection</option>
+                                            <option value='Black' label='Black'>Black </option>
+                                            <option value='White' label='White'>White </option>
+                                            <option value='Grey' label='Grey'>Grey </option>
+                                        </select>
+                                        <p style={{ color: 'red' }}> {formik.errors.fabric_selection} </p>
+                                    </Col>
+                                    <Col md={6} xs={12}>
+                                        <label htmlFor="zipper_color">Zipper Color </label><br />
+                                        <select
+                                            id="zipper_color"
+                                            name="zipper_color"
+                                            onChange={formik.handleChange}
+                                            value={formik.values.zipper_color}
+                                        >
+                                            <option value=''>Select a Zipper Color</option>
+                                            <option value='Black' label='Black'>Black </option>
+                                            <option value='White' label='White'>White </option>
+                                        </select>
+                                        <p style={{ color: 'red' }}> {formik.errors.zipper_color} </p>
+                                    </Col>
+                                    <Col md={6} xs={12}>
+                                        <label htmlFor="fabric_charge">Fabric Charge $</label>
+                                        <input
+                                            id="fabric_charge"
+                                            name="fabric_charge"
+                                            value={(formik.values.fabric_charge.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","))}
+                                            disabled
+                                        />
+                                        <p style={{ color: 'red' }}> {formik.errors.fabric_charge}</p>
+                                    </Col>
+                                </Row>
+                            </Col>
+                            <Col md={6} xs={12}>
+                                <h3>Frame Color</h3>
+                                <Row>
+                                    <Col md={6} xs={12}>
+                                        <label htmlFor="color_collection">Color Collection </label><br />
+                                        <select
+                                            id="color_collection"
+                                            name="color_collection"
+                                            onChange={formik.handleChange}
+                                            value={formik.values.color_collection}
+                                        >
+                                            <option value=''>Select a Color</option>
+                                            <option value='Standard' label='Standard'>Standard </option>
+                                            <option value='Textured' label='Textured'>Textured </option>
+                                            <option value='Spring' label='Spring'>Spring </option>
+                                            <option value='Summer' label='Summer'>Summer </option>
+                                        </select>
+                                        <p style={{ color: 'red' }}> {formik.errors.pile_brush_style} </p>
+
+                                    </Col>
+                                    <Col md={6} xs={12}>
+                                        <label htmlFor="frame_color">Frame Color </label><br />
+                                        <select
+                                            id="frame_color"
+                                            name="frame_color"
+                                            onChange={formik.handleChange}
+                                            value={formik.values.frame_color}
+                                        >
+                                            <option value=''>Select a Frame Color</option>
+                                            <option value='White' label='White'>White </option>
+                                            <option value='Black' label='Black'>Black </option>
+                                            <option value='Bronze' label='Bronze'>Bronze </option>
+                                            <option value='Brown' label='Brown'>Brown </option>
+                                            <option value='Ash Gray' label='Ash Gray'>Ash Gray </option>
+                                        </select>
+                                        <p style={{ color: 'red' }}> {formik.errors.pile_brush_style} </p>
+                                    </Col>
                                 </Row>
                             </Col>
                         </Row>
@@ -721,12 +932,12 @@ const CreateNewConfiguration = () => {
                                 <p style={{ color: 'red' }}> {formik.errors.status}</p>
                             </Col>
                             <Col md={3} xs={12}>
-                                <label htmlFor="list_price">Total Price $</label><br />
+                                <label htmlFor="list_price" style={{ whiteSpace: 'nowrap' }}>Total Price $ (Without Discount)</label><br />
                                 <input
                                     id="list_price"
                                     name="list_price"
                                     onChange={formik.handleChange}
-                                    value={formik.values.list_price}
+                                    value={(formik.values.list_price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","))}
                                 />
                                 <p style={{ color: 'red' }}> {formik.errors.list_price}</p>
                             </Col>
