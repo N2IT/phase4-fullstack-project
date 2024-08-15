@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { useFormik } from 'formik';
+import { FormikContext, useFormik } from 'formik';
 import * as yup from "yup";
 import { AgentContext } from '../../AgentProvider';
 import Container from 'react-bootstrap/Container';
@@ -200,10 +200,9 @@ const CreateNewConfiguration = () => {
     },[housing, sideTrack, hemBar, fabric, motorTube])
 
     const handleCheckboxChange = (event) => {
-        console.log(event)
         if (event.target.id === 'housing') {
             setHousing(event.target.checked);
-            formik.setFieldValue('housing', event.target.checked);
+            formik.setFieldValue('housing', event.target.checked); 
         }
         if (event.target.id === 'side_track'){
             setSideTrack(event.target.checked);
@@ -220,6 +219,10 @@ const CreateNewConfiguration = () => {
         if (event.target.id === 'motor_tube'){
             setMotorTube(event.target.checked);
             formik.setFieldValue('motor_tube', event.target.checked);
+        }
+        if (event.target.id === 'tracks_exact_length'){
+            setTracksExactLength(event.target.checked);
+            formik.setFieldValue('tracks_exact_length', event.target.checked);
         }
     };
 
@@ -307,32 +310,30 @@ const CreateNewConfiguration = () => {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-            console.log(values)
-            debugger
-            // fetch("/api/configurations", {
-            //     method: "POST",
-            //     headers: {
-            //         "Content-Type": "application/json",
-            //     },
-            //     body: JSON.stringify(values),
-            // })
-            //     .then((r) => r.json())
-            //     .then((data) => {
-            //         {
-            //             data.errors ? setErrors(data.errors) :
-            //                 setConfiguration(data),
-            //                 onSubmitNewQuoteForm(),
-            //                 navigate(`/quotes/${quote.id}`),
-            //                 alert(`Configuration ${data.id} has been successfully created.`)
-            //         }
-            //     })
+            fetch("/api/configurations", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify(values),
+            })
+                .then((r) => r.json())
+                .then((data) => {
+                    {
+                        data.errors ? setErrors(data.errors) :
+                            setConfiguration(data),
+                            onSubmitNewQuoteForm(),
+                            navigate(`/quotes/${quote.id}`),
+                            alert(`Configuration ${data.id} has been successfully created.`)
+                    }
+                })
         }
     })
 
     useEffect(() => {
-        const total = formik.values.motor_charge + formik.values.tube_charge + formik.values.housing_charge + formik.values.tracks_charge + formik.values.hem_bar_charge + formik.values.fabric_charge
+        const total = (housing ? formik.values.housing_charge : 0) + (motorTube ? formik.values.tube_charge : 0) + (sideTrack ? formik.values.tracks_charge : 0) + (hemBar ? formik.values.hem_bar_charge : 0) + (fabric ? formik.values.fabric_charge : 0) + formik.values.motor_charge
         formik.setFieldValue('list_price', total);
-    }, [formik.values.motor_charge, formik.values.unit_width, formik.values.unit_height, formik.values.housing_tube_size, formik.values.housing_type, formik.values.retention_type, formik.values.hem_bar_type, formik.values.fabric_type]);
+    }, [formik.values.motor_charge, formik.values.unit_width, formik.values.unit_height, formik.values.housing_tube_size, formik.values.housing_type, formik.values.retention_type, formik.values.hem_bar_type, formik.values.fabric_type, formik.values.complete_unit, formik.values.housing_charge, formik.values.tracks_charge, formik.hem_bar_charge, formik.values.fabric_charge, formik.values.tube_charge,]);
 
     return (
         <>
@@ -501,6 +502,7 @@ const CreateNewConfiguration = () => {
                                         <select
                                             id="housing_tube_size"
                                             name="housing_tube_size"
+                                            value={formik.values.housing_tube_size}
                                             onChange={e => {
                                                 const { value } = e.target;
                                                 formik.setFieldValue("housing_tube_size", value);
@@ -526,6 +528,7 @@ const CreateNewConfiguration = () => {
                                                 <select
                                                     id="housing_type"
                                                     name="housing_type"
+                                                    value={formik.values.housing_type}
                                                     onChange={e => {
                                                         const { value } = e.target;
                                                         formik.setFieldValue("housing_type", value);
@@ -553,6 +556,7 @@ const CreateNewConfiguration = () => {
                                             <select
                                                 id="motor_type"
                                                 name="motor_type"
+                                                value={formik.values.motor_type}
                                                 required
                                                 onChange={e => {
                                                     const { value } = e.target;
@@ -601,6 +605,7 @@ const CreateNewConfiguration = () => {
                                         <select
                                             id="power_chord"
                                             name="power_chord"
+                                            value={formik.values.power_chord}
                                             onChange={e => {
                                                 const { value } = e.target;
                                                 formik.setFieldValue("power_chord", value);
@@ -712,9 +717,9 @@ const CreateNewConfiguration = () => {
                                                 type="checkbox"
                                                 id="tracks_exact_length"
                                                 name="tracks_exact_length"
-                                                onChange={() => handleToggle('tracks_exact_length')}
-                                                value={tracksExactLength}
+                                                value={formik.values.tracks_exact_length}
                                                 checked={tracksExactLength}
+                                                onChange={(e) => handleCheckboxChange(e)}
                                             />
                                             <label htmlFor="tracks_exact_length" style={{ whiteSpace: 'nowrap' }}>Cut Tracks to Exact Length </label>
                                         </div>
@@ -989,6 +994,7 @@ const CreateNewConfiguration = () => {
                                 <input
                                     id="list_price"
                                     name="list_price"
+                                    disabled
                                     onChange={formik.handleChange}
                                     value={(formik.values.list_price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ","))}
                                 />
