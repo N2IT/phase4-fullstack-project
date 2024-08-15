@@ -1,5 +1,5 @@
 import React, { useState, useContext, useEffect } from 'react';
-import { useFormik, Field, FormikContext } from 'formik';
+import { useFormik } from 'formik';
 import * as yup from "yup";
 import { AgentContext } from '../../AgentProvider';
 import Container from 'react-bootstrap/Container';
@@ -11,7 +11,6 @@ const CreateNewConfiguration = () => {
     const { agent, setConfiguration, errors, setErrors, quote, navigate, onSubmitNewQuoteForm } = useContext(AgentContext);
 
     const [completeUnit, setAsCompleteUnit] = useState(true)
-    // const [ checked, setAsChecked ] = useState(true)
     const [housing, setHousing] = useState(true)
     const [sideTrack, setSideTrack] = useState(true)
     const [hemBar, setHemBar] = useState(true)
@@ -24,7 +23,7 @@ const CreateNewConfiguration = () => {
     const [housingTubeSize, setHousingTubeSize] = useState("")
     const [housingType, setHousingType] = useState("")
     const [retentionType, setRetentionType] = useState("")
-    const [tracksExactLength, setTracksExactLength] = useState(true)
+    const [tracksExactLength, setTracksExactLength] = useState(false)
     const [hemBarType, setHemBarType] = useState("")
     const [fabricType, setFabricType] = useState("")
 
@@ -189,46 +188,50 @@ const CreateNewConfiguration = () => {
         return fabric_price
     }
 
-    useEffect(() => {
-        if (!housing || !sideTrack || !hemBar || !fabric || !motorTube){
+   useEffect(() => {
+        if (!housing || !sideTrack || !hemBar || !fabric || !motorTube) {
             setAsCompleteUnit(false)
+            formik.setFieldValue('complete_unit', false)
         }
-        if (housing && sideTrack && hemBar && fabric && motorTube){
+        if (housing && sideTrack && hemBar && fabric && motorTube) {
             setAsCompleteUnit(true)
+            formik.setFieldValue('complete_unit', true)
         }
-    },[housing, sideTrack, hemBar, fabric, motorTube])
-        
+    },[housing, sideTrack])
 
-    const handleToggle = (id) => {
-        if (id === 'housing') {
-            setHousing(!housing)
+    const handleCheckboxChange = (event) => {
+        // console.log(event)
+        if (event.target.id === 'housing') {
+            setHousing(event.target.checked);
+            formik.setFieldValue('housing', event.target.checked);
         }
-        else if (id === 'side_track') {
-            setSideTrack(!sideTrack)
+        if (event.target.id === 'side_track'){
+            setSideTrack(event.target.checked);
+            formik.setFieldValue('side_track', event.target.checked)
         }
-        else if (id === 'hem_bar') {
-            setHemBar(!hemBar)
+        if (event.target.id === 'hem_bar'){
+            setHemBar(event.target.checked);
+            formik.setFieldValue('hem_bar', event.target.checked)
         }
-        else if (id === 'fabric') {
-            setFabric(!fabric)
+        if (event.target.id === 'fabric') {
+            setFabric(event.target.checked);
+            formik.setFieldValue('fabric', event.target.checked);
         }
-        else if (id === 'motor_tube') {
-            setMotorTube(!motorTube)
+        if (event.target.id === 'motor_tube'){
+            setMotorTube(event.target.checked);
+            formik.setFieldValue('motor_tube', event.target.checked);
         }
-        else if (id === 'tracks_exact_length') {
-            setTracksExactLength(!tracksExactLength)
-        }
-    }
+    };
 
     const formSchema = yup.object().shape({
         project_name: yup.string(),
         unit_name: yup.string(),
-        complete_unit: yup.string(),
-        housing: yup.string(),
-        side_track: yup.string(),
-        hem_bar: yup.string(),
-        fabric: yup.string(),
-        motor_tube: yup.string(),
+        complete_unit: yup.boolean(),
+        housing: yup.boolean(),
+        side_track: yup.boolean(),
+        hem_bar: yup.boolean(),
+        fabric: yup.boolean(),
+        motor_tube: yup.boolean(),
         motor_side: yup.string(),
         power_chord: yup.string(),
         motor_charge: yup.string(),
@@ -263,14 +266,14 @@ const CreateNewConfiguration = () => {
         initialValues: {
             project_name: "",
             unit_name: "",
-            complete_unit: `${completeUnit}`,
-            housing: `${housing}`,
-            side_track: `${sideTrack}`,
-            hem_bar: `${hemBar}`,
-            fabric: `${fabric}`,
-            motor_tube: `${motorTube}`,
+            complete_unit: true,
+            housing: true,
+            side_track: true,
+            hem_bar: true,
+            fabric: true,
+            motor_tube: true,
             housing_tube_size: "",
-            motor_type: `${motorType}`,
+            motor_type: "",
             motor_side: "",
             power_chord: "",
             motor_charge: 0,
@@ -280,7 +283,7 @@ const CreateNewConfiguration = () => {
             retention_cap_color: "",
             left_retention: "",
             right_retention: "",
-            tracks_exact_length: "",
+            tracks_exact_length: false,
             tracks_charge: 0,
             hem_bar_type: "",
             hem_cap_color: "",
@@ -304,23 +307,25 @@ const CreateNewConfiguration = () => {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
-            fetch("/api/configurations", {
-                method: "POST",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(values),
-            })
-                .then((r) => r.json())
-                .then((data) => {
-                    {
-                        data.errors ? setErrors(data.errors) :
-                            setConfiguration(data),
-                            onSubmitNewQuoteForm(),
-                            navigate(`/quotes/${quote.id}`),
-                            alert(`Configuration ${data.id} has been successfully created.`)
-                    }
-                })
+            console.log(values)
+            debugger
+            // fetch("/api/configurations", {
+            //     method: "POST",
+            //     headers: {
+            //         "Content-Type": "application/json",
+            //     },
+            //     body: JSON.stringify(values),
+            // })
+            //     .then((r) => r.json())
+            //     .then((data) => {
+            //         {
+            //             data.errors ? setErrors(data.errors) :
+            //                 setConfiguration(data),
+            //                 onSubmitNewQuoteForm(),
+            //                 navigate(`/quotes/${quote.id}`),
+            //                 alert(`Configuration ${data.id} has been successfully created.`)
+            //         }
+            //     })
         }
     })
 
@@ -372,8 +377,8 @@ const CreateNewConfiguration = () => {
                                                 type="checkbox"
                                                 id="complete_unit"
                                                 name="complete_unit"
-                                                onChange={() => handleToggle('complete_unit')}
-                                                value={completeUnit}
+                                                onChange={formik.handleChange}
+                                                value={formik.values.complete_unit}
                                                 checked={completeUnit}
                                             />
                                             <label htmlFor="complete_unit" style={{ whiteSpace: 'nowrap' }}>Complete Unit </label>
@@ -386,10 +391,11 @@ const CreateNewConfiguration = () => {
                                                 type="checkbox"
                                                 id="housing"
                                                 name="housing"
-                                                onChange={() => handleToggle('housing')}
-                                                value={housing}
+                                                value={formik.values.housing}
                                                 checked={housing}
+                                                onChange={(e) => handleCheckboxChange(e)}
                                             />
+
                                             <label htmlFor="housing" style={{ whiteSpace: 'nowrap' }}>Housing </label>
                                             <p style={{ color: 'red' }}> {formik.errors.housing} </p>
                                         </div>
@@ -400,9 +406,9 @@ const CreateNewConfiguration = () => {
                                                 type="checkbox"
                                                 id="side_track"
                                                 name="side_track"
-                                                onChange={() => handleToggle('side_track')}
+                                                checked={formik.values.side_track}
+                                                onChange={(e) => handleCheckboxChange(e)}
                                                 value={sideTrack}
-                                                checked={sideTrack}
                                             />
                                             <p style={{ color: 'red' }}> {formik.errors.side_track} </p>
                                             <label htmlFor="side_track" style={{ whiteSpace: 'nowrap' }}>Side Track </label>
@@ -414,9 +420,9 @@ const CreateNewConfiguration = () => {
                                                 type="checkbox"
                                                 id="hem_bar"
                                                 name="hem_bar"
-                                                onChange={() => handleToggle('hem_bar')}
+                                                checked={formik.values.hem_bar}
+                                                onChange={(e) => handleCheckboxChange(e)}
                                                 value={hemBar}
-                                                checked={hemBar}
                                             />
                                             <label htmlFor="hem_bar" style={{ whiteSpace: 'nowrap' }}>Hem Bar </label>
                                             <p style={{ color: 'red' }}> {formik.errors.hem_bar} </p>
@@ -428,9 +434,9 @@ const CreateNewConfiguration = () => {
                                                 type="checkbox"
                                                 id="fabric"
                                                 name="fabric"
-                                                onChange={() => handleToggle('fabric')}
+                                                checked={formik.values.fabric}
+                                                onChange={(e) => handleCheckboxChange(e)}
                                                 value={fabric}
-                                                checked={fabric}
                                             />
                                             <label htmlFor="fabric" style={{ whiteSpace: 'nowrap' }}>Fabric </label>
                                             <p style={{ color: 'red' }}> {formik.errors.fabric} </p>
@@ -442,9 +448,9 @@ const CreateNewConfiguration = () => {
                                                 type="checkbox"
                                                 id="motor_tube"
                                                 name="motor_tube"
-                                                onChange={() => handleToggle('motor_tube')}
+                                                checked={formik.values.motor_tube}
+                                                onChange={(e) => handleCheckboxChange(e)}
                                                 value={motorTube}
-                                                checked={motorTube}
                                             />
                                             <label htmlFor="motor_tube" style={{ whiteSpace: 'nowrap' }}>Motor Tube </label>
                                             <p style={{ color: 'red' }}> {formik.errors.motor_tube} </p>
