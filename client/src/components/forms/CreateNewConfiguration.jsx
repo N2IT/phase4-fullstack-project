@@ -460,7 +460,7 @@ const CreateNewConfiguration = () => {
                                 <hr />
                             </Col>
                         </Row>
-                        {/* <Row>
+                        <Row>
                             <Col md={6} xs={12}>
                                 <h3>Unit Size</h3>
                                 <label htmlFor="unit_width">Unit Width </label>
@@ -949,7 +949,7 @@ const CreateNewConfiguration = () => {
                                     </Col>
                                 </Row>
                             </Col>
-                        </Row> */}
+                        </Row>
                         <Row> 
                             <Col md={3} xs={12}>
                                 <label htmlFor="quote_id">Quote Id </label><br />
