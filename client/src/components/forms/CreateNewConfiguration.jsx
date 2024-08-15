@@ -197,10 +197,10 @@ const CreateNewConfiguration = () => {
             setAsCompleteUnit(true)
             formik.setFieldValue('complete_unit', true)
         }
-    },[housing, sideTrack])
+    },[housing, sideTrack, hemBar, fabric, motorTube])
 
     const handleCheckboxChange = (event) => {
-        // console.log(event)
+        console.log(event)
         if (event.target.id === 'housing') {
             setHousing(event.target.checked);
             formik.setFieldValue('housing', event.target.checked);
@@ -410,8 +410,8 @@ const CreateNewConfiguration = () => {
                                                 onChange={(e) => handleCheckboxChange(e)}
                                                 value={sideTrack}
                                             />
-                                            <p style={{ color: 'red' }}> {formik.errors.side_track} </p>
                                             <label htmlFor="side_track" style={{ whiteSpace: 'nowrap' }}>Side Track </label>
+                                            <p style={{ color: 'red' }}> {formik.errors.side_track} </p>
                                         </div>
                                     </Col>
                                     <Col md={3} xs={4}>
@@ -460,7 +460,7 @@ const CreateNewConfiguration = () => {
                                 <hr />
                             </Col>
                         </Row>
-                        <Row>
+                        {/* <Row>
                             <Col md={6} xs={12}>
                                 <h3>Unit Size</h3>
                                 <label htmlFor="unit_width">Unit Width </label>
@@ -949,8 +949,8 @@ const CreateNewConfiguration = () => {
                                     </Col>
                                 </Row>
                             </Col>
-                        </Row>
-                        <Row>
+                        </Row> */}
+                        <Row> 
                             <Col md={3} xs={12}>
                                 <label htmlFor="quote_id">Quote Id </label><br />
                                 <input
