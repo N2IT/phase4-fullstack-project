@@ -11,8 +11,9 @@ import Col from 'react-bootstrap/Col';
 
 const ConfigurationById = () => {
 
-    const { agent, isLoading, configuration, configurations, setConfigurations, setShow, setConfiguration, setAsDisabled, setErrors, show, handleClose, handleShow } = useContext(AgentContext);
+    const { agent, isLoading, configuration, setShow, setConfiguration, setAsDisabled, setErrors, show, handleClose, handleShow } = useContext(AgentContext);
     const { id } = useParams();
+    const [configurations, setConfigurations] = useState([]);
 
     const deleteConfigurationObject = (id, configuration) => {
         const updatedConfigurations = configurations.filter(configuration => configuration.id !== id);

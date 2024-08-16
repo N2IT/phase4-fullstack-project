@@ -1084,11 +1084,12 @@ class ConfigurationById(Resource):
       return {'errors' : str(e)}, 404
 
   def delete(self, id):
+    # breakpoint()
     user_id = session.get("user_id")
     if not user_id:
       return {"error": "Unauthorized"}, 403
     try:
-      screnconfiguration = ScreenConfiguration.query.filter(ScreenConfiguration.id == id).first()
+      screenconfiguration = ScreenConfiguration.query.filter(ScreenConfiguration.id == id).first()
       quote_id = screenconfiguration.quote_id
 
       if screenconfiguration:
