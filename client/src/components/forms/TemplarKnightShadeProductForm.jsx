@@ -7,12 +7,14 @@ import Col from 'react-bootstrap/Col';
 import { AgentContext } from '../../AgentProvider';
 import { useParams } from 'react-router-dom';
 
-import GENERAL from '../data/general_values.json';
-import HOUSING from '../data/housing_type.json';
-import HOUSING_OPTIONS from '../data/housing_options.json';
-import MOTOR from '../data/motor_type.json';
-import RETENTION from '../data/retention_type.json';
-import HEM_BAR from '../data/hem_bar_type.json';
+import GENERAL from '../../data/templar_knight_shade/general_values.json';
+import HOUSING from '../../data/templar_knight_shade/housing_type.json';
+import HOUSING_OPTIONS from '../../data/templar_knight_shade/housing_options.json';
+import MOTOR from '../../data/templar_knight_shade/motor_type.json';
+import RETENTION from '../../data/templar_knight_shade/retention_type.json';
+import HEM_BAR from '../../data/templar_knight_shade/hem_bar_type.json';
+import FABRIC from '../../data/templar_knight_shade/fabric_type.json';
+import FRAME from '../../data/templar_knight_shade/frame_type.json';
 
 const CreateNewCustomerForm = () => {
 
@@ -68,11 +70,11 @@ const CreateNewCustomerForm = () => {
             pileBrush: HEM_BAR.pileBrush.defaultValue,
 
             // fabric
-            fabric_collection: "",
-            fabric_color: "",
-            seam_location: "",
-            zipper_color: "",
-            rotate_fabric: "",
+            fabric_collection: FABRIC.options[FABRIC.defaultValue].name,
+            fabric_color: FABRIC.options[FABRIC.defaultValue].options[FABRIC.options[FABRIC.defaultValue].defaultValue].name,
+            seam_location: "N/A",
+            zipper_color: FABRIC.zipper.colors[FABRIC.zipper.defaultValue],
+            rotate_fabric: "N/A",
 
             // frame color
             frame_collection: "",
