@@ -268,7 +268,7 @@ const EditConfigurationform = () => {
         list_price: "",
         quote_id: "",
         created_by: "",
-        status: true,
+        // status: true,
     });
 
     useEffect(() => {
@@ -582,9 +582,9 @@ const EditConfigurationform = () => {
                                                 formik.setFieldValue("housing_tube_size", value);
                                                 setHousingTubeSize(value)
                                                 const basePrice = get_tube_price(value);
-                                                const additionalPrice = ((unitWidth / 12) * 20.66);
+                                                const additionalPrice = ((formik.values.unit_width / 12) * 20.66);
                                                 formik.setFieldValue("tube_charge", basePrice + additionalPrice);
-                                                formik.setFieldValue("housing_charge", ((unitWidth / 12) * 30.21) + get_housing_price(housingType, value))
+                                                formik.setFieldValue("housing_charge", ((formik.values.unit_width / 12) * 30.21) + get_housing_price(housingType, value))
                                             }}
                                             required
                                         >
@@ -608,7 +608,7 @@ const EditConfigurationform = () => {
                                                         formik.setFieldValue("housing_type", value);
                                                         setHousingType(value)
                                                         const basePrice = get_housing_price(value, housingTubeSize);
-                                                        const additionalPrice = ((unitWidth / 12) * 30.21);
+                                                        const additionalPrice = ((formik.values.unit_width / 12) * 30.21);
                                                         formik.setFieldValue("housing_charge", basePrice + additionalPrice);
                                                     }}
                                                     required
@@ -754,7 +754,7 @@ const EditConfigurationform = () => {
                                                 formik.setFieldValue("retention_type", value);
                                                 setRetentionType(value)
                                                 const basePrice = getRetentionPricing(value);
-                                                const additionalPrice = ((unitHeight / 12) * 23.69);
+                                                const additionalPrice = ((formik.values.unit_height / 12) * 23.69);
                                                 formik.setFieldValue("tracks_charge", basePrice + additionalPrice);
                                             }}>
                                             <option value=''>Select a Rentention Option</option>
@@ -840,7 +840,7 @@ const EditConfigurationform = () => {
                                                     formik.setFieldValue("hem_bar_type", value);
                                                     setHemBarType(value)
                                                     const basePrice = getHemBarPricing(value);
-                                                    const additionalPrice = ((unitWidth / 12) * 9.65);
+                                                    const additionalPrice = ((formik.values.unit_width / 12) * 9.65);
                                                     formik.setFieldValue("hem_bar_charge", basePrice + additionalPrice);
                                                 }}>
                                                 <option value=''>Select a Hem Bar Type</option>
@@ -915,7 +915,7 @@ const EditConfigurationform = () => {
                                                     formik.setFieldValue("fabric_type", value);
                                                     setFabricType(value)
                                                     const basePrice = getFabricPricing(value);
-                                                    const fabric_sqft = ((unitHeight * unitWidth) / 144)
+                                                    const fabric_sqft = ((formik.values.unit_height * formik.values.unit_width) / 144)
                                                     const additionalPrice = (fabric_sqft * 2.30);
                                                     formik.setFieldValue("fabric_charge", basePrice + additionalPrice);
                                                 }}>

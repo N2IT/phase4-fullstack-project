@@ -11,8 +11,6 @@ const EditQuoteForm = () => {
 
     const { agent, quote, errors, setErrors, disabled, handleEditClick, handleUpdateQuote } = useContext(AgentContext);
     const { id } = useParams()
-
-    debugger
     
     const [originalValues, setOriginalValues] = useState({
         quote_number: '',
