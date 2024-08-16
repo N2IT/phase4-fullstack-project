@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { AgentContext } from '../AgentProvider';
 import Unauthorized from '../components/Unauthorized';
@@ -11,8 +11,17 @@ import Col from 'react-bootstrap/Col';
 
 const ConfigurationById = () => {
 
-    const { agent, isLoading, configuration, setShow, deleteConfigurationObject, setConfiguration, setAsDisabled, setErrors, show, handleClose, handleShow } = useContext(AgentContext);
+    const { agent, isLoading, configuration, configurations, setConfigurations, setShow, setConfiguration, setAsDisabled, setErrors, show, handleClose, handleShow } = useContext(AgentContext);
     const { id } = useParams();
+
+    const deleteConfigurationObject = (id, configuration) => {
+        const updatedConfigurations = configurations.filter(configuration => configuration.id !== id);
+        setConfigurations(updatedConfigurations)
+        alert(`Configuration ${configuration.id} has been successfully deleted`)
+        history.go(-1)
+    }
+
+    // SUPER FUCKING STUCK HERE ON WHY THIS FETCH CALL POINTS TO 3000 AND NOT 5000
 
     const handleDeleteClick = () => {
         fetch(`/api/configurations/${id}`, {

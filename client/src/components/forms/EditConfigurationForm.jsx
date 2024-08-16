@@ -9,7 +9,7 @@ import Col from 'react-bootstrap/Col';
 
 const EditConfigurationform = () => {
 
-    const { agent, configuration, errors, setErrors, handleUpdateConfiguration } = useContext(AgentContext);
+    const { agent, configuration, errors, setErrors } = useContext(AgentContext);
     const { id } = useParams()
 
     const [completeUnit, setAsCompleteUnit] = useState(configuration.completeUnit)
@@ -27,7 +27,22 @@ const EditConfigurationform = () => {
     const [tracksExactLength, setTracksExactLength] = useState(configuration.tracks_exact_length)
     const [hemBarType, setHemBarType] = useState(configuration.hem_bar_type)
     const [fabricType, setFabricType] = useState(configuration.fabric_type)
+    const [configurations, setConfigurations] = useState([]);
 
+    const handleUpdateConfiguration = (updatedConfiguration) => {
+        if (configurations) {
+            const updatedConfigurationsArray = configurations.map(configuration => {
+                if (configuration.id === updatedConfiguration.id) {
+                    return updatedConfiguration;
+                }
+                return configuration;
+            });
+            setConfigurations(updatedConfigurationsArray);
+            alert(`Configuration ${updatedConfiguration.id} has been updated`);
+        } else {
+            console.error('Configurations is undefined.');
+        }
+    }
 
     const get_motor_charge = (motor_type) => {
         let motor_type_price = 0
