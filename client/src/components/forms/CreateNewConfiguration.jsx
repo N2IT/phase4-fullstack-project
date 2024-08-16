@@ -609,7 +609,7 @@ const CreateNewConfiguration = () => {
                                             onChange={e => {
                                                 const { value } = e.target;
                                                 formik.setFieldValue("power_chord", value);
-                                                const motorTypePrice = get_motor_charge(formik.values.motor_type);
+                                                const motorTypePrice = get_motor_charge(motorType);
                                                 const powerChordPrice = get_power_chord_price(value);
                                                 formik.setFieldValue("motor_charge", motorTypePrice + powerChordPrice);
                                             }}>

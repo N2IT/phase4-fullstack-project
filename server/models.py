@@ -352,7 +352,7 @@ class ScreenConfiguration(db.Model, SerializerMixin):
     retention_cap_color = db.Column(db.String)
     left_retention = db.Column(db.String)
     right_retention = db.Column(db.String)
-    tracks_exact_length = db.Column(db.String)
+    tracks_exact_length = db.Column(db.Boolean)
     tracks_charge = db.Column(db.Integer)
     hem_bar_type = db.Column(db.String)
     hem_cap_color = db.Column(db.String)

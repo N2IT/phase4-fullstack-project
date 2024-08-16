@@ -94,12 +94,14 @@ const AgentProvider = ({ children }) => {
     }
 
     const handleUpdateConfiguration = (updatedConfiguration) => {
+        debugger
         const updatedConfigurationsArray = configurations.map(configuration => {
             if (configuration.id === updatedConfiguration.id)
                 return updatedConfiguration
             else return configuration;
         });
         setConfigurations(updatedConfigurationsArray);
+        alert(`Configuration ${updatedConfiguration.id} has been updated`)
         handleEditClick()
     }
 
