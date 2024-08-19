@@ -1,8 +1,8 @@
 """initial migration
 
-Revision ID: ecdfcc6a2444
+Revision ID: 25a4377d29aa
 Revises: 
-Create Date: 2024-06-13 11:13:52.697782
+Create Date: 2024-08-19 14:18:33.332967
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = 'ecdfcc6a2444'
+revision = '25a4377d29aa'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -29,12 +29,12 @@ def upgrade():
     sa.Column('zip_code', sa.Integer(), nullable=True),
     sa.Column('phone', sa.Integer(), nullable=True),
     sa.Column('discount', sa.Integer(), nullable=True),
-    sa.Column('markup_variable', sa.Integer(), nullable=True),
-    sa.Column('status', sa.String(), nullable=False),
+    sa.Column('status', sa.String(), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
+    sa.Column('created_by', sa.Integer(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
+    sa.Column('updated_by', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('id', name=op.f('pk_accounts')),
-    sa.UniqueConstraint('account_number', name=op.f('uq_accounts_account_number')),
     sa.UniqueConstraint('company_name', name=op.f('uq_accounts_company_name'))
     )
     op.create_table('permissions',
@@ -54,33 +54,45 @@ def upgrade():
     sa.Column('last_name', sa.String(), nullable=False),
     sa.Column('email', sa.String(), nullable=False),
     sa.Column('phone', sa.Integer(), nullable=False),
+    sa.Column('address_1', sa.String(), nullable=True),
+    sa.Column('address_2', sa.String(), nullable=True),
+    sa.Column('city', sa.String(), nullable=True),
+    sa.Column('state', sa.String(), nullable=True),
+    sa.Column('zip_code', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('created_by', sa.Integer(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('updated_by', sa.Integer(), nullable=True),
-    sa.Column('notes', sa.String(length=500), nullable=True),
+    sa.Column('notes', sa.String(), nullable=True),
     sa.Column('account_id', sa.Integer(), nullable=False),
+    sa.Column('status', sa.String(), nullable=True),
     sa.ForeignKeyConstraint(['account_id'], ['accounts.id'], name=op.f('fk_customers_account_id_accounts')),
     sa.PrimaryKeyConstraint('id', name=op.f('pk_customers')),
     sa.UniqueConstraint('email', name=op.f('uq_customers_email')),
     sa.UniqueConstraint('phone', name=op.f('uq_customers_phone'))
     )
-    op.create_table('role_permissions',
-    sa.Column('role_id', sa.Integer(), nullable=False),
-    sa.Column('permission_id', sa.Integer(), nullable=False),
-    sa.ForeignKeyConstraint(['permission_id'], ['permissions.id'], name=op.f('fk_role_permissions_permission_id_permissions')),
-    sa.ForeignKeyConstraint(['role_id'], ['roles.id'], name=op.f('fk_role_permissions_role_id_roles')),
-    sa.PrimaryKeyConstraint('role_id', 'permission_id', name=op.f('pk_role_permissions'))
+    op.create_table('roles_permissions',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('role_id', sa.Integer(), nullable=True),
+    sa.Column('permission_id', sa.Integer(), nullable=True),
+    sa.Column('granted_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
+    sa.Column('expires_at', sa.DateTime(), nullable=True),
+    sa.Column('status', sa.String(), nullable=True),
+    sa.ForeignKeyConstraint(['permission_id'], ['permissions.id'], name=op.f('fk_roles_permissions_permission_id_permissions')),
+    sa.ForeignKeyConstraint(['role_id'], ['roles.id'], name=op.f('fk_roles_permissions_role_id_roles')),
+    sa.PrimaryKeyConstraint('id', name=op.f('pk_roles_permissions'))
     )
     op.create_table('users',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('email', sa.String(), nullable=False),
-    sa.Column('username', sa.String(length=3), nullable=False),
+    sa.Column('username', sa.String(), nullable=False),
     sa.Column('first_name', sa.String(), nullable=False),
     sa.Column('last_name', sa.String(), nullable=False),
+    sa.Column('created_by', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
-    sa.Column('status', sa.String(), nullable=False),
+    sa.Column('updated_by', sa.Integer(), nullable=True),
+    sa.Column('status', sa.String(), nullable=True),
     sa.Column('account_id', sa.Integer(), nullable=False),
     sa.Column('role_id', sa.Integer(), nullable=True),
     sa.Column('_password_hash', sa.String(length=12), nullable=True),
@@ -94,15 +106,16 @@ def upgrade():
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('quote_number', sa.Integer(), nullable=True),
     sa.Column('title', sa.String(), nullable=True),
-    sa.Column('discount', sa.Integer(), nullable=True),
+    sa.Column('total_cost', sa.Float(), nullable=True),
+    sa.Column('discount', sa.Float(), nullable=True),
     sa.Column('savings', sa.Integer(), nullable=True),
-    sa.Column('markup_variable', sa.Integer(), nullable=True),
+    sa.Column('markup_variable', sa.Float(), nullable=True),
     sa.Column('sale_price', sa.Integer(), nullable=True),
     sa.Column('margin_percentage', sa.Integer(), nullable=True),
     sa.Column('margin_dollars', sa.Integer(), nullable=True),
     sa.Column('notes', sa.String(length=500), nullable=True),
-    sa.Column('status', sa.Boolean(), nullable=True),
-    sa.Column('converted', sa.Boolean(), nullable=True),
+    sa.Column('status', sa.String(), nullable=True),
+    sa.Column('converted', sa.String(), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('created_by', sa.Integer(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
@@ -111,27 +124,68 @@ def upgrade():
     sa.Column('account_id', sa.Integer(), nullable=True),
     sa.ForeignKeyConstraint(['account_id'], ['accounts.id'], name=op.f('fk_quotes_account_id_accounts')),
     sa.ForeignKeyConstraint(['customer_id'], ['customers.id'], name=op.f('fk_quotes_customer_id_customers')),
-    sa.PrimaryKeyConstraint('id', name=op.f('pk_quotes'))
+    sa.PrimaryKeyConstraint('id', name=op.f('pk_quotes')),
+    sa.UniqueConstraint('quote_number', name=op.f('uq_quotes_quote_number'))
     )
-    op.create_table('configurations',
+    op.create_table('screenconfigurations',
     sa.Column('id', sa.Integer(), nullable=False),
-    sa.Column('sku', sa.Integer(), nullable=True),
-    sa.Column('product_title', sa.String(), nullable=True),
-    sa.Column('product_description', sa.String(), nullable=True),
-    sa.Column('cost', sa.Integer(), nullable=True),
+    sa.Column('project_name', sa.String(), nullable=True),
+    sa.Column('unit_name', sa.String(), nullable=True),
+    sa.Column('complete_unit', sa.Boolean(), nullable=True),
+    sa.Column('housing', sa.Boolean(), nullable=True),
+    sa.Column('side_track', sa.Boolean(), nullable=True),
+    sa.Column('hem_bar', sa.Boolean(), nullable=True),
+    sa.Column('fabric', sa.Boolean(), nullable=True),
+    sa.Column('motor_tube', sa.Boolean(), nullable=True),
+    sa.Column('unit_width', sa.String(), nullable=True),
+    sa.Column('unit_height', sa.String(), nullable=True),
+    sa.Column('housing_tube_size', sa.String(), nullable=True),
+    sa.Column('housing_type', sa.String(), nullable=True),
+    sa.Column('motor_type', sa.String(), nullable=True),
+    sa.Column('motor_side', sa.String(), nullable=True),
+    sa.Column('power_chord', sa.String(), nullable=True),
+    sa.Column('motor_charge', sa.Integer(), nullable=True),
+    sa.Column('tube_charge', sa.Integer(), nullable=True),
+    sa.Column('housing_charge', sa.Integer(), nullable=True),
+    sa.Column('retention_type', sa.String(), nullable=True),
+    sa.Column('retention_cap_color', sa.String(), nullable=True),
+    sa.Column('left_retention', sa.String(), nullable=True),
+    sa.Column('right_retention', sa.String(), nullable=True),
+    sa.Column('tracks_exact_length', sa.Boolean(), nullable=True),
+    sa.Column('tracks_charge', sa.Integer(), nullable=True),
+    sa.Column('hem_bar_type', sa.String(), nullable=True),
+    sa.Column('hem_cap_color', sa.String(), nullable=True),
+    sa.Column('pile_brush_style', sa.String(), nullable=True),
+    sa.Column('hem_bar_charge', sa.Integer(), nullable=True),
+    sa.Column('fabric_type', sa.String(), nullable=True),
+    sa.Column('fabric_selection', sa.String(), nullable=True),
+    sa.Column('seam_location', sa.String(), nullable=True),
+    sa.Column('seam_location_num', sa.Integer(), nullable=True),
+    sa.Column('zipper_color', sa.String(), nullable=True),
+    sa.Column('usable_fabric_width', sa.Integer(), nullable=True),
+    sa.Column('rotate_fabric', sa.String(), nullable=True),
+    sa.Column('fabric_charge', sa.Integer(), nullable=True),
+    sa.Column('color_collection', sa.String(), nullable=True),
+    sa.Column('frame_color', sa.String(), nullable=True),
+    sa.Column('powder_charge', sa.Integer(), nullable=True),
+    sa.Column('list_price', sa.Integer(), nullable=True),
     sa.Column('quote_id', sa.Integer(), nullable=True),
-    sa.ForeignKeyConstraint(['quote_id'], ['quotes.id'], name=op.f('fk_configurations_quote_id_quotes')),
-    sa.PrimaryKeyConstraint('id', name=op.f('pk_configurations'))
+    sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
+    sa.Column('created_by', sa.Integer(), nullable=True),
+    sa.Column('updated_at', sa.DateTime(), nullable=True),
+    sa.Column('updated_by', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['quote_id'], ['quotes.id'], name=op.f('fk_screenconfigurations_quote_id_quotes')),
+    sa.PrimaryKeyConstraint('id', name=op.f('pk_screenconfigurations'))
     )
     # ### end Alembic commands ###
 
 
 def downgrade():
     # ### commands auto generated by Alembic - please adjust! ###
-    op.drop_table('configurations')
+    op.drop_table('screenconfigurations')
     op.drop_table('quotes')
     op.drop_table('users')
-    op.drop_table('role_permissions')
+    op.drop_table('roles_permissions')
     op.drop_table('customers')
     op.drop_table('roles')
     op.drop_table('permissions')

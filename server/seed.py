@@ -228,7 +228,7 @@ def create_screenConfigurations():
       # housing_charge = 1000,
       retention_type = retention_type,
       retention_cap_color = choices(cap_color, weights=[1] * len(cap_color), k=1)[0],
-      tracks_exact_length = 'false',
+      tracks_exact_length = False,
       # tracks_charge = 2000,
       hem_bar_type = hem_bar_type,
       hem_cap_color = choices(cap_color, weights=[1] * len(cap_color), k=1)[0],
@@ -450,6 +450,7 @@ if __name__ == "__main__":
     Permission.query.delete()
     Customer.query.delete()
     ScreenConfiguration.query.delete()
+    # Configuration.query.delete()
     Quote.query.delete()
 
     print("Seeding accounts...")
