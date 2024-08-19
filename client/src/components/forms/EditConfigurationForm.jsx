@@ -393,22 +393,27 @@ const EditConfigurationform = () => {
                     changes[key] = values[key];
                 }
             });
-            fetch(`/api/configurations/${id}`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json",
-                },
-                body: JSON.stringify(changes),
-            })
-                .then((res) => res.json())
-                .then((data) => {
-                    if (data.errors) {
-                        setErrors(data.errors);
-                    } else {
-                        // location.reload()
-                        handleUpdateConfiguration(data);
-                    }
-                });
+            if (Object.keys(changes).length > 1) {
+                fetch(`/api/configurations/${id}`, {
+                    method: "PATCH",
+                    headers: {
+                        "Content-Type": "application/json",
+                    },
+                    body: JSON.stringify(changes),
+                })
+                    .then((res) => res.json())
+                    .then((data) => {
+                        if (data.errors) {
+                            setErrors(data.errors);
+                        } else {
+                            handleUpdateConfiguration(data);
+                            location.reload()
+                        }
+                    });
+            }
+            else {
+                alert('No changes were made to the configuation.')
+            }
         }
     })
 
