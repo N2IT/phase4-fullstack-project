@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { AgentContext } from '../AgentProvider';
 import Unauthorized from '../components/Unauthorized';
@@ -8,12 +8,19 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import InvalidCredentials from '../components/InvalidCredentials';
 
 const ConfigurationById = () => {
 
-    const { agent, isLoading, configuration, setShow, deleteConfigurationObject, setConfiguration, setAsDisabled, setErrors, show, handleClose, handleShow } = useContext(AgentContext);
+    const { agent, isLoading, configuration, setShow, setConfiguration, setAsDisabled, setErrors, show, handleClose, handleShow } = useContext(AgentContext);
     const { id } = useParams();
+    const [configurations, setConfigurations] = useState([]);
+
+    const deleteConfigurationObject = (id, configuration) => {
+        const updatedConfigurations = configurations.filter(configuration => configuration.id !== id);
+        setConfigurations(updatedConfigurations)
+        alert(`Configuration ${configuration.id} has been successfully deleted`)
+        history.go(-1)
+    }
 
     const handleDeleteClick = () => {
         fetch(`/api/configurations/${id}`, {

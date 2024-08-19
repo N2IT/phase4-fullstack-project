@@ -8,7 +8,7 @@ const LoginForm = () => {
     const { setAgent, errors, setErrors, navigate } = useContext(AgentContext);
     const formSchema = yup.object().shape({
         username: yup.string().required(),
-        password: yup.string().required()
+        password: yup.string()
     })
 
     const formik = useFormik({
@@ -68,6 +68,7 @@ const LoginForm = () => {
                         onBlur={formik.handleBlur}
                         onChange={formik.handleChange}
                         value={formik.values.password}
+                        required
                     />
                     <p style={{ color: 'red' }}> {formik.errors.password}</p>
                     <button type="submit">Login</button>
