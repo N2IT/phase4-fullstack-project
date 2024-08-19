@@ -22,8 +22,6 @@ const ConfigurationById = () => {
         history.go(-1)
     }
 
-    // SUPER FUCKING STUCK HERE ON WHY THIS FETCH CALL POINTS TO 3000 AND NOT 5000
-
     const handleDeleteClick = () => {
         fetch(`/api/configurations/${id}`, {
             method: 'DELETE',
