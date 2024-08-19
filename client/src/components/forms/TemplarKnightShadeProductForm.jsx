@@ -16,7 +16,7 @@ import HEM_BAR from '../../data/templar_knight_shade/hem_bar_type.json';
 import FABRIC from '../../data/templar_knight_shade/fabric_type.json';
 import FRAME from '../../data/templar_knight_shade/frame_type.json';
 
-const CreateNewCustomerForm = () => {
+const CreateNewConfiguration = () => {
 
     // TODO: add route to fetch:
     // account data, customer data, etc.
@@ -129,6 +129,29 @@ const CreateNewCustomerForm = () => {
                                 />
                                 <p style={{ color: 'red' }}> {formik.errors.unit_name} </p>
                             </Col>
+                            <Col>
+                                <label htmlFor="housing_tube_size">Housing & Tube Size </label>
+                                <select
+                                    id="housing_tube_size"
+                                    name="housing_tube_size"
+                                    value={formik.values.housing}
+                                    onChange={e => {
+                                        const { value } = e.target;
+                                        formik.setFieldValue("housing", value);
+                                        setHousingTubeSize(value)
+                                        const basePrice = get_tube_price(value);
+                                        const additionalPrice = ((unitWidth / 12) * 20.66);
+                                        formik.setFieldValue("tube_charge", basePrice + additionalPrice);
+                                        formik.setFieldValue("housing_charge", ((unitWidth / 12) * 30.21) + get_housing_price(housingType, value))
+                                    }}
+                                    required
+                                >
+                                    <option value=''>Select a Housing & Tube Size </option><br />
+                                    <option value='standard' label='Standard(4.5")'>Standard(4.5") </option>
+                                    <option value='jumbo' label='Jumbo(5.75")'>Jumbo(5.75") </option>
+                                    <option value='micro' label='Micro(3.5")' >Micro(3.5") </option>
+                                </select>
+                                <p style={{ color: 'red' }}> {formik.errors.housing_tube_size} </p></Col>
                         </Row>
                     </form>
                     <p style={{ color: 'red' }}>{errors ? errors : null}</p>
@@ -139,4 +162,4 @@ const CreateNewCustomerForm = () => {
 
 };
 
-export default CreateNewCustomerForm;
+export default CreateNewConfiguration;
