@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import { useFormik } from 'formik';
 import * as yup from "yup";
 import Container from 'react-bootstrap/Container';
@@ -16,13 +16,25 @@ import HEM_BAR from '../../data/templar_knight_shade/hem_bar_type.json';
 import FABRIC from '../../data/templar_knight_shade/fabric_type.json';
 import FRAME from '../../data/templar_knight_shade/frame_type.json';
 
-const CreateNewConfiguration = () => {
+const CreateNewCustomerForm = () => {
 
     // TODO: add route to fetch:
     // account data, customer data, etc.
 
     const { agent, errors, setErrors, navigate } = useContext(AgentContext);
-    const { id } = useParams()
+    // const { id } = useParams();
+
+    const [includedParts, setIncludedParts] = useState({
+        housing: GENERAL.includedAssemblies.housing.defaultValue,
+        side_track: GENERAL.includedAssemblies.side_track.defaultValue,
+        hem_bar: GENERAL.includedAssemblies.hem_bar.defaultValue,
+        fabric: GENERAL.includedAssemblies.fabric.defaultValue,
+        buildout: GENERAL.includedAssemblies.buildout.defaultValue,
+    });
+
+    // check if all parts are included, besides the buildout
+    // we dont need a useState for this.
+    const allPartsIncluded = Object.keys(includedParts).every(key => includedParts[key] === true || key === "buildout");
 
     const formSchema = yup.object().shape({ /* TODO */ });
 
@@ -31,6 +43,7 @@ const CreateNewConfiguration = () => {
         // all these values are imported from the data files and
         // are used to populate the default form fields and pricing
 
+
         initialValues: {
 
             // general information
@@ -38,15 +51,15 @@ const CreateNewConfiguration = () => {
             unit_name: "",
 
             // unit contents
-            included_housing: GENERAL.includedAssemblies.housing,
-            included_side_track: GENERAL.includedAssemblies.sideTrack,
-            included_hem_bar: GENERAL.includedAssemblies.hemBar,
-            included_fabric: GENERAL.includedAssemblies.fabric,
-            included_buildout: GENERAL.includedAssemblies.buildout,
+            included_housing: includedParts.housing,
+            included_side_track: includedParts.side_track,
+            included_hem_bar: includedParts.hem_bar,
+            included_fabric: includedParts.fabric,
+            included_buildout: includedParts.buildout,
 
             // unit information
-            unit_width_in: GENERAL.widthIn.defaultValue,    // can we make
-            unit_height_in: GENERAL.heightIn.defaultValue,  // these blank?
+            unit_width_in: GENERAL.width_in.defaultValue,    // can we make
+            unit_height_in: GENERAL.height_in.defaultValue,  // these blank?
 
             // housing & motor options
             housing: HOUSING.defaultValue,
@@ -102,56 +115,82 @@ const CreateNewConfiguration = () => {
 
     return (
         <>
-            <Container fluid>
+            <Container>
                 <div className="account-details">
-                    <h2>Fill in new customer details below:</h2>
+                    <h2>Configure your unit:</h2>
                     <form onSubmit={formik.handleSubmit}>
                         <Row>
-                            <Col>
-                                <label htmlFor="project_name">Project Name &nbsp; </label>
-                                <br />
-                                <input
-                                    id="project_name"
-                                    name="project_name"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.project_name}
-                                />
-                                <p style={{ color: 'red' }}> {formik.errors.project_name}</p>
+                            <Col md={6} xs={12}>
+                                <h3>Unit Information</h3>
+                                <Row>
+                                    <Col md={6} xs={12}>
+                                        <label htmlFor="project_name">Project Name</label>
+                                        <br />
+                                        <input
+                                            id="project_name"
+                                            name="project_name"
+                                            onChange={formik.handleChange}
+                                            value={formik.values.project_name}
+                                        />
+                                        <p style={{ color: 'red' }}> {formik.errors.project_name}</p>
+                                    </Col>
+                                    <Col md={6} xs={12}>
+                                        <label htmlFor="last_name">Unit Name</label>
+                                        <br />
+                                        <input
+                                            id="unit_name"
+                                            name="unit_name"
+                                            onChange={formik.handleChange}
+                                            value={formik.values.unit_name}
+                                        />
+                                        <p style={{ color: 'red' }}> {formik.errors.unit_name} </p>
+                                    </Col>
+                                </Row>
                             </Col>
-                            <Col>
-                                <label htmlFor="last_name">Unit Name &nbsp; </label>
-                                <br />
-                                <input
-                                    id="unit_name"
-                                    name="unit_name"
-                                    onChange={formik.handleChange}
-                                    value={formik.values.unit_name}
-                                />
-                                <p style={{ color: 'red' }}> {formik.errors.unit_name} </p>
+                            <Col md={6} xs={12}>
+                                <h3>Unit Contents</h3>
+                                <Row>
+                                    <Col md={3} xs={4}>
+
+                                        <div className="form-check d-flex align-items-center">
+                                            <input
+                                                type="checkbox"
+                                                id="complete_unit"
+                                                name="complete_unit"
+                                                value={allPartsIncluded}
+                                                checked={allPartsIncluded}
+                                                onChange={(e) => {
+                                                    formik.setFieldValue("complete_unit", !formik.values.complete_unit);
+                                                }}
+                                            />
+
+                                            <label htmlFor="complete_unit" style={{ whiteSpace: 'nowrap' }}>Complete Unit</label>
+                                            <p style={{ color: 'red' }}> {formik.errors.completeUnit} </p>
+                                        </div>
+
+                                        {Object.keys(includedParts).map((key, index) =>
+
+                                            <div key={index} className="form-check d-flex align-items-center">
+                                                <input
+                                                    type="checkbox"
+                                                    id={key}
+                                                    name={key}
+                                                    value={includedParts[key]}
+                                                    checked={includedParts[key]}
+                                                    onChange={(e) => {
+                                                        formik.setFieldValue(`included_${key}`, !formik.values[key]);
+                                                        setIncludedParts({ ...includedParts, [key]: !includedParts[key] });
+                                                    }}
+                                                />
+
+                                                <label htmlFor={key} style={{ whiteSpace: 'nowrap' }}>{GENERAL.includedAssemblies[key].name}</label>
+                                                <p style={{ color: 'red' }}> {formik.errors[key]} </p>
+                                            </div>
+
+                                        )}
+                                    </Col>
+                                </Row>
                             </Col>
-                            <Col>
-                                <label htmlFor="housing_tube_size">Housing & Tube Size </label>
-                                <select
-                                    id="housing_tube_size"
-                                    name="housing_tube_size"
-                                    value={formik.values.housing}
-                                    onChange={e => {
-                                        const { value } = e.target;
-                                        formik.setFieldValue("housing", value);
-                                        setHousingTubeSize(value)
-                                        const basePrice = get_tube_price(value);
-                                        const additionalPrice = ((unitWidth / 12) * 20.66);
-                                        formik.setFieldValue("tube_charge", basePrice + additionalPrice);
-                                        formik.setFieldValue("housing_charge", ((unitWidth / 12) * 30.21) + get_housing_price(housingType, value))
-                                    }}
-                                    required
-                                >
-                                    <option value=''>Select a Housing & Tube Size </option><br />
-                                    <option value='standard' label='Standard(4.5")'>Standard(4.5") </option>
-                                    <option value='jumbo' label='Jumbo(5.75")'>Jumbo(5.75") </option>
-                                    <option value='micro' label='Micro(3.5")' >Micro(3.5") </option>
-                                </select>
-                                <p style={{ color: 'red' }}> {formik.errors.housing_tube_size} </p></Col>
                         </Row>
                     </form>
                     <p style={{ color: 'red' }}>{errors ? errors : null}</p>
@@ -162,4 +201,4 @@ const CreateNewConfiguration = () => {
 
 };
 
-export default CreateNewConfiguration;
+export default CreateNewCustomerForm;
