@@ -2,6 +2,7 @@ import LoginForm from '../components/forms/LoginForm'
 import { Link } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
 import { AgentContext } from '../AgentProvider';
+import { Button } from '@shadcn/ui';
 // import { useEffect } from 'react';
 
 const Home = () => {
@@ -16,7 +17,12 @@ const Home = () => {
     <>
       <div className="account-details">
         {agent ? (
-          <h2 className="text-3xl font-bold underline">Welcome {agent.username}!</h2>
+          <>
+            <h2 className="text-3xl font-bold underline">Welcome {agent.username}!</h2>
+            <Button variant="primary">
+              Click Me
+            </Button>
+          </>
         ) :
           <div>
             <h2>Quote Pro</h2>
