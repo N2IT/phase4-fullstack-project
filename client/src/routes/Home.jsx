@@ -2,7 +2,7 @@ import LoginForm from '../components/forms/LoginForm'
 import { Link } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
 import { AgentContext } from '../AgentProvider';
-import { Button } from '@shadcn/ui';
+import { Button } from '../components/ui/button'
 // import { useEffect } from 'react';
 
 const Home = () => {
