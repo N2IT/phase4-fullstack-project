@@ -16,7 +16,7 @@ const Home = () => {
     <>
       <div className="account-details">
         {agent ? (
-          <h2>Welcome {agent.username}!</h2>
+          <h2 className="text-3xl font-bold underline">Welcome {agent.username}!</h2>
         ) :
           <div>
             <h2>Quote Pro</h2>
