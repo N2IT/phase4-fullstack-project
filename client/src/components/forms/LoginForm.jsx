@@ -2,6 +2,7 @@ import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as yup from "yup";
 import { AgentContext } from '../../AgentProvider';
+import { Input } from '../../components/ui/input'
 
 const LoginForm = () => {
 
@@ -46,7 +47,7 @@ const LoginForm = () => {
                 <h2>Enter your credentials below:</h2>
                 <form onSubmit={formik.handleSubmit}>
                     <label htmlFor="username">Username </label>
-                    <input
+                    <Input
                         type="text"
                         id="username"
                         name="username"
@@ -56,7 +57,7 @@ const LoginForm = () => {
                     />
                     <p style={{ color: 'red' }}> {formik.errors.username} </p>
                     <label htmlFor="password">Password </label>
-                    <input
+                    <Input
                         type="password"
                         id="password"
                         name="password"
