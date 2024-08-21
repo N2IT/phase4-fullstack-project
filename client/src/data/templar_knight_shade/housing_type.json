@@ -3,6 +3,7 @@
         "standard": {
             "id": 0,
             "displayName": "Standard",
+            "size": "4.5\"",
             "embed": "S",
             "price": {
                 "housing": {
@@ -20,6 +21,7 @@
         "micro": {
             "id": 1,
             "displayName": "Micro",
+            "size": "3.5\"",
             "embed": "M",
             "price": {
                 "housing": {
@@ -37,6 +39,7 @@
         "jumbo": {
             "id": 2,
             "displayName": "Jumbo",
+            "size": "5.75\"",
             "embed": "J",
             "price": {
                 "housing": {
@@ -52,5 +55,5 @@
             "visible": true
         }
     },
-    "defaultValue": "jumbo"
+    "defaultValue": "standard"
 }
