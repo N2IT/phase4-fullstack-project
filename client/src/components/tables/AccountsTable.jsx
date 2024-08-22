@@ -1,37 +1,50 @@
 import { useContext } from 'react';
 import { AgentContext } from '../../AgentProvider';
-import Table from 'react-bootstrap/Table';
+import {
+    Table,
+    TableBody,
+    TableCaption,
+    TableCell,
+    TableHead,
+    TableHeader,
+    TableRow,
+} from "@/components/ui/table"
 
 const AccountsTable = () => {
 
     const { accounts, handleIdClick, isLoading } = useContext(AgentContext);
 
+    if (isLoading) {
+        return <div> Loading ... </div>
+      }
+
     return (
         <>
             {isLoading ? <h2>Loading...</h2> :
-                <Table responsive="sm" striped="columns">
-                    <thead>
-                        <tr>
-                            <th>ACCT NUMBER</th>
-                            <th>COMPANY NAME</th>
-                            <th>STATE</th>
-                            <th>PHONE</th>
-                            <th>DISCOUNT</th>
-                            <th>ACTIONS</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <Table>
+                    <TableCaption>A list of all Accounts on file.</TableCaption>
+                    <TableHeader>
+                        <TableRow>
+                            <TableHead className="w-[100px]">Acct Number</TableHead>
+                            <TableHead>Company Name</TableHead>
+                            <TableHead>State</TableHead>
+                            <TableHead>Phone</TableHead>
+                            <TableHead>Discount</TableHead>
+                            <TableHead>Actions</TableHead>
+                        </TableRow>
+                    </TableHeader>
+                    <TableBody>
                         {accounts.map((account) => (
-                            <tr key={account.account_number} className="">
-                                <td>{account.account_number}</td>
-                                <td>{account.company_name}</td>
-                                <td>{account.state}</td>
-                                <td>{account.phone}</td>
-                                <td>{account.discount}</td>
-                                <td><p className="view-btn" title="View Account" onClick={() => handleIdClick(account)}> View </p></td>
-                            </tr>
+                            <TableRow key={account.account_number} className="">
+                                <TableCell>{account.account_number}</TableCell>
+                                <TableCell>{account.company_name}</TableCell>
+                                <TableCell>{account.state}</TableCell>
+                                <TableCell>{account.phone}</TableCell>
+                                <TableCell>{account.discount}</TableCell>
+                                <TableCell><p className="view-btn" title="View Account" onClick={() => handleIdClick(account)}> View </p></TableCell>
+                            </TableRow>
                         ))}
-                    </tbody>
+                    </TableBody>
                 </Table>
             }
         </>
