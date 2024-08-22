@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
 import { AgentContext } from '../AgentProvider';
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
-import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from "../components/ui/chart"
+import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from "@/components/ui/chart"
 
 // import { useEffect } from 'react';
 

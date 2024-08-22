@@ -1,7 +1,3 @@
-import Container from 'react-bootstrap/Container';
-import Nav from 'react-bootstrap/Nav';
-import Navbar from 'react-bootstrap/Navbar';
-import Offcanvas from 'react-bootstrap/Offcanvas';
 import ButtonMailto from './components/ButtonMailTo';
 import { Link, useNavigate } from 'react-router-dom';
 import { useState, useEffect, useContext } from 'react';
@@ -11,7 +7,7 @@ import {
   Menu,
   Package2,
 } from "lucide-react"
-import { Button } from "./components/ui/button"
+import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,8 +15,8 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "./components/ui/dropdown-menu"
-import { Sheet, SheetContent, SheetTrigger } from "./components/ui/sheet"
+} from "@/components/ui/dropdown-menu"
+import { Sheet, SheetContent, SheetTrigger } from "@/components/ui/sheet"
 
 
 function NavBar() {
@@ -60,81 +56,6 @@ function NavBar() {
   };
 
   return (
-    //   <>
-    //     {agent ? ( agent.role_id == 1 ? (
-    //       <Navbar expanded={expanded} expand={false} className="bg-body-tertiary mb-3">
-    //         <Container fluid>
-    //           <Navbar.Brand href="/">qp</Navbar.Brand>
-    //           <Navbar.Toggle aria-controls="offcanvasNavbar" onClick={handleToggle} />
-    //           <Navbar.Offcanvas
-    //             id="offcanvasNavbar"
-    //             aria-labelledby="offcanvasNavbarLabel"
-    //             placement="end"
-    //             show={expanded}
-    //             onHide={handleClose}
-    //           >
-    //             <Offcanvas.Header closeButton>
-    //               <Offcanvas.Title id="offcanvasNavbarLabel">
-    //                 QuotePro
-    //               </Offcanvas.Title>
-    //             </Offcanvas.Header>
-    //             <Offcanvas.Body>
-    //               <Nav className="justify-content-end flex-grow-1 pe-3">
-    //                 <p>Welcome, {agent.username}!</p>
-    //                 <Link to="/" onClick={handleClose}>Home</Link>
-    //                 <Link to="/accounts" onClick={handleClose}>Accounts</Link>
-    //                 <Link to="/users" onClick={handleClose}>Users</Link>
-    //                 {/* <Link to="/users" onClick={handleClose}>Users</Link> */}
-    //                 <Link to='/customers' onClick={handleClose}>Customers</Link>
-    //                 <Link to="/quotes" onClick={handleClose}>Quotes</Link>
-    //                 <Link to='/configurations' onClick={handleClose}>Configurations</Link>
-    //                 <ButtonMailto label="Support" mailto="mailto:tonyeder11@gmail.com?subject=Quote Pro Assistance Needed&body=Hello Admin, I could use some help with the following items:" />
-    //                 <hr />
-    //                 <button onClick={handleLogoutClick}>Logout</button>
-    //               </Nav>
-    //             </Offcanvas.Body>
-    //           </Navbar.Offcanvas>
-    //         </Container>
-    //       </Navbar>
-    //     ) : (
-    //       <Navbar expanded={expanded} expand={false} className="bg-body-tertiary mb-3">
-    //         <Container fluid>
-    //           <Navbar.Brand href="/">qp</Navbar.Brand>
-    //           <Navbar.Toggle aria-controls="offcanvasNavbar" onClick={handleToggle} />
-    //           <Navbar.Offcanvas
-    //             id="offcanvasNavbar"
-    //             aria-labelledby="offcanvasNavbarLabel"
-    //             placement="end"
-    //             show={expanded}
-    //             onHide={handleClose}
-    //           >
-    //             <Offcanvas.Header closeButton>
-    //               <Offcanvas.Title id="offcanvasNavbarLabel">
-    //                 QuotePro
-    //               </Offcanvas.Title>
-    //             </Offcanvas.Header>
-    //             <Offcanvas.Body>
-    //               <Nav className="justify-content-end flex-grow-1 pe-3">
-    //                 <p>Welcome, {agent.username}!</p>
-    //                 <Link to="/" onClick={handleClose}>Home</Link>
-    //                 <Link to={`/accounts/${valueId}`} onClick={handleClose}>My Account</Link>
-    //                 {/* <Link to="/users" onClick={handleClose}>Users</Link> */}
-    //                 <Link to={`/accounts/${valueId}/quotes`} onClick={handleClose}>My Quotes</Link>
-    //                 <Link to={`/accounts/${valueId}/new-quote`} onClick={handleClose}>New Quote</Link>
-    //                 <Link to ={`/accounts/${valueId}/customers`} onClick={handleClose}>My Customers</Link>
-    //                 <ButtonMailto label="Support" mailto="mailto:tonyeder11@gmail.com?subject=Quote Pro Assistance Needed&body=Hello Admin, I could use some help with the following items:" />
-    //                 <hr />
-
-    //                 <button onClick={handleLogoutClick}>Logout</button>
-    //               </Nav>
-    //             </Offcanvas.Body>
-    //           </Navbar.Offcanvas>
-    //         </Container>
-    //       </Navbar> 
-    //       ))  : null}
-    //   </>
-    // );
-
     <>
       {agent ? (agent.role_id == 1 ? (
         <header className="sticky top-0 flex h-16 items-center gap-4 border-b bg-background px-4 md:px-6">
@@ -229,7 +150,7 @@ function NavBar() {
             <Link className="text-muted-foreground hover:text-foreground" to={`/accounts/${valueId}`} >My Account</Link>
             <Link className="text-muted-foreground hover:text-foreground" to={`/accounts/${valueId}/quotes`} >My Quotes</Link>
             <Link className="text-muted-foreground hover:text-foreground" to={`/accounts/${valueId}/new-quote`} >New Quote</Link>
-            <Link className="text-muted-foreground hover:text-foreground" to ={`/accounts/${valueId}/customers`} >My Customers</Link>
+            <Link className="text-muted-foreground hover:text-foreground" to={`/accounts/${valueId}/customers`} >My Customers</Link>
           </nav>
           <Sheet open={expanded} onOpenChange={setExpanded}>
             <SheetTrigger asChild>
@@ -255,9 +176,9 @@ function NavBar() {
                 </Link>
                 <Link className="hover:text-foreground" to="/" onClick={handleClose}>Home</Link>
                 <Link className="text-muted-foreground hover:text-foreground" to={`/accounts/${valueId}`} onClick={handleClose}>My Account</Link>
-            <Link className="text-muted-foreground hover:text-foreground" to={`/accounts/${valueId}/quotes`} onClick={handleClose}>My Quotes</Link>
-            <Link className="text-muted-foreground hover:text-foreground" to={`/accounts/${valueId}/new-quote`} onClick={handleClose}>New Quote</Link>
-            <Link className="text-muted-foreground hover:text-foreground" to ={`/accounts/${valueId}/customers`} onClick={handleClose}>My Customers</Link>
+                <Link className="text-muted-foreground hover:text-foreground" to={`/accounts/${valueId}/quotes`} onClick={handleClose}>My Quotes</Link>
+                <Link className="text-muted-foreground hover:text-foreground" to={`/accounts/${valueId}/new-quote`} onClick={handleClose}>New Quote</Link>
+                <Link className="text-muted-foreground hover:text-foreground" to={`/accounts/${valueId}/customers`} onClick={handleClose}>My Customers</Link>
               </nav>
             </SheetContent>
           </Sheet>
