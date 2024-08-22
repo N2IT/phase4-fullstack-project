@@ -22,7 +22,7 @@ const AccountsTable = () => {
         <>
             {isLoading ? <h2>Loading...</h2> :
                 <Table>
-                    <TableCaption>A list of all Accounts on file.</TableCaption>
+                    {/* <TableCaption>A list of all Accounts on file.</TableCaption> */}
                     <TableHeader>
                         <TableRow>
                             <TableHead className="w-[100px]">Acct Number</TableHead>
