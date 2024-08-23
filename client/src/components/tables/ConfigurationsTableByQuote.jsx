@@ -25,7 +25,7 @@ const ConfigurationsTableByQuote = () => {
                     </Col>
                 </Row>
             </Container>
-            <Table responsive="sm" striped="columns">
+            <Table responsive striped hover>
                 <thead>
                     <tr>
                         <th>Id</th>

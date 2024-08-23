@@ -41,7 +41,7 @@ const UsersTableByAccount = () => {
                     </Row>
                 </div>
             </Container>
-                <Table responsive striped="columns">
+                <Table responsive striped hover>
                     <thead>
                         <tr>
                             <th>USERNAME</th>

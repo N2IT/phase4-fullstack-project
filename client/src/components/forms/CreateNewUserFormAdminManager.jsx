@@ -3,10 +3,15 @@ import { useFormik } from 'formik';
 import * as yup from "yup";
 import { AgentContext } from '../../AgentProvider';
 import { useParams } from 'react-router-dom';
+import { Form } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 
 const CreateNewUserFormAdminManager = () => {
 
-    const { agent, errors, setErrors, isLoading, setUser} = useContext(AgentContext);
+    const { agent, errors, setErrors, isLoading, setUser } = useContext(AgentContext);
     const { id } = useParams()
 
     const formSchema = yup.object().shape({
@@ -59,88 +64,111 @@ const CreateNewUserFormAdminManager = () => {
 
     return (
         <>
-            <div className='account-details'>
-                <h2>Fill in new user details below:</h2>
-                <form onSubmit={formik.handleSubmit}>
-                    <label htmlFor="username">First Name </label>
-                    <input
-                        type="text"
-                        id="first_name"
-                        name="first_name"
-                        onChange={formik.handleChange}
-                        value={formik.values.first_name}
-                    />
-                    <p style={{ color: 'red' }}> {formik.errors.first_name} </p>
-                    <label htmlFor="username">Last Name </label>
-                    <input
-                        type="text"
-                        id="last_name"
-                        name="last_name"
-                        onChange={formik.handleChange}
-                        value={formik.values.last_name}
-                    />
-                    <p style={{ color: 'red' }}> {formik.errors.last_name} </p>
-                    <label htmlFor="username">Email </label>
-                    <input
-                        type="email"
-                        id="email"
-                        name="email"
-                        onChange={formik.handleChange}
-                        value={formik.values.email}
-                    />
-                    <p style={{ color: 'red' }}> {formik.errors.email} </p>
-                    <label htmlFor="username">Username </label>
-                    <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        onChange={formik.handleChange}
-                        value={formik.values.username}
-                    />
-                    <p style={{ color: 'red' }}> {formik.errors.username} </p>
-                    {/* <br /> */}
-                    <label htmlFor="password">Password </label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        onChange={formik.handleChange}
-                        value={formik.values.password}
-                    />
-                    <br />
-                    <label htmlFor="role_id">Role &nbsp; </label>
-                    <select id='role_id' name='role_id' onChange={formik.handleChange} value={formik.values.role_id}>
-                        <option value="" disabled defaultValue>Select a role</option>
-                        {agent.role_id ===1 ? <option value='1'>Admin</option> : null}
-                        <option value='2'>Manager</option>
-                        <option value='3'>Sales</option>
-                    </select>
-                    <p style={{ color: 'red' }}> {formik.errors.role_id} </p>
-
-                    <label htmlFor="account_id">Account Id </label>
-                    <input
-                        type="account_id"
-                        id="account_id"
-                        name="account_id"
-                        onChange={formik.handleChange}
-                        value={formik.values.account_id = id}
-                        disabled
-                    />
-                    <p style={{ color: 'red' }}> {formik.errors.password}</p>
-                    {/* <label htmlFor="created_by">Created By </label> */}
-                    <input
-                        id="created_by"
-                        name="created_by"
-                        onChange={formik.handleChange}
-                        value={formik.values.created_by = agent.id}
-                        disabled
-                        hidden
-                    />
-                    <p style={{ color: 'red' }}> {formik.errors.created_by} </p>
-                    <button type="submit">Submit</button>
-                </form>
-                <p style={{ color: 'red' }}>{errors ? errors : null}</p>
-            </div>
+            <Container>
+                <div className='account-details'>
+                    <h2>Fill in new user details below:</h2>
+                </div>
+                    <Form onSubmit={formik.handleSubmit}>
+                        <Row>
+                            <Col md={6} sm={12} >
+                                <Form.Label htmlFor="username">First Name </Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    id="first_name"
+                                    name="first_name"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.first_name}
+                                />
+                                <p style={{ color: 'red' }}> {formik.errors.first_name} </p>
+                                
+                            </Col>
+                            <Col>
+                                <Form.Label htmlFor="username">Last Name </Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    id="last_name"
+                                    name="last_name"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.last_name}
+                                />
+                                <p style={{ color: 'red' }}> {formik.errors.last_name} </p>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md={6} sm={12} >
+                                <Form.Label htmlFor="username">Email </Form.Label>
+                                <Form.Control
+                                    type="email"
+                                    id="email"
+                                    name="email"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.email}
+                                />
+                                <p style={{ color: 'red' }}> {formik.errors.email} </p>
+                            </Col>
+                            <Col>
+                                <Form.Label htmlFor="username">Username </Form.Label>
+                                <Form.Control
+                                    type="text"
+                                    id="username"
+                                    name="username"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.username}
+                                />
+                                <p style={{ color: 'red' }}> {formik.errors.username} </p>
+                                {/* <br /> */}
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md={6} sm={12} >
+                                <Form.Label htmlFor="password">Password </Form.Label>
+                                <Form.Control
+                                    type="password"
+                                    id="password"
+                                    name="password"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.password}
+                                />
+                            </Col>
+                            <Col>
+                                <Form.Label htmlFor="role_id">Role &nbsp; </Form.Label>
+                                <Form.Select id='role_id' name='role_id' onChange={formik.handleChange} value={formik.values.role_id}>
+                                    <option value="" disabled defaultValue>Select a role</option>
+                                    {agent.role_id === 1 ? <option value='1'>Admin</option> : null}
+                                    <option value='2'>Manager</option>
+                                    <option value='3'>Sales</option>
+                                </Form.Select>
+                                <p style={{ color: 'red' }}> {formik.errors.role_id} </p>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md={6} sm={12} >
+                                <Form.Label htmlFor="account_id">Account Id </Form.Label>
+                                <Form.Control
+                                    type="account_id"
+                                    id="account_id"
+                                    name="account_id"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.account_id = id}
+                                    disabled
+                                />
+                                <p style={{ color: 'red' }}> {formik.errors.password}</p>
+                                {/* <Form.Label htmlFor="created_by">Created By </Form.Label> */}
+                                <Form.Control
+                                    id="created_by"
+                                    name="created_by"
+                                    onChange={formik.handleChange}
+                                    value={formik.values.created_by = agent.id}
+                                    disabled
+                                    hidden
+                                />
+                                <p style={{ color: 'red' }}> {formik.errors.created_by} </p>
+                            </Col>
+                        </Row>
+                        <p><Button type="submit">Submit</Button></p>
+                    </Form>
+                    <p style={{ color: 'red' }}>{errors ? errors : null}</p>
+            </Container >
         </>
     )
 }

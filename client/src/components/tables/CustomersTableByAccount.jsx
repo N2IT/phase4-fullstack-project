@@ -36,7 +36,7 @@ const CustomersTable = () => {
                 </div>
             </Container>
             {isLoading ? <h2>Loading...</h2> :
-                <Table responsive striped="columns">
+                <Table responsive striped hover>
                     <thead>
                         <tr>
                             <th>Number</th>

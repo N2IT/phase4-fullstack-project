@@ -9,7 +9,7 @@ const AccountsTable = () => {
     return (
         <>
             {isLoading ? <h2>Loading...</h2> :
-                <Table responsive="sm" striped="columns">
+                <Table responsive striped borderd hover>
                     <thead>
                         <tr>
                             <th>ACCT NUMBER</th>

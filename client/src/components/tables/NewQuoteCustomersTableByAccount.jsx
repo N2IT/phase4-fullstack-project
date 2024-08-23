@@ -17,7 +17,7 @@ const NewQuoteCustomersTableByAccount = () => {
 
     return (
         <>
-            <Table responsive="sm" striped="columns">
+            <Table responsive striped hover>
                 <thead>
                     <tr>
                         <th>Number</th>

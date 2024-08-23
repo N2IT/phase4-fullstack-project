@@ -31,7 +31,7 @@ const QuoteTableByCustomer = () => {
                 </Row>
             </Container>
 
-            <Table responsive="sm" striped="columns">
+            <Table responsive striped hover>
                 <thead>
                     <tr>
                         <th>Quote Number</th>
