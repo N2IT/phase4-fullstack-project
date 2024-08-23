@@ -3,7 +3,10 @@ import Unauthorized from '../components/Unauthorized';
 import AccountsTable from '../components/tables/AccountsTable'
 import { AgentContext } from '../AgentProvider';
 import InvalidCredentials from '../components/InvalidCredentials';
-import { Button } from '@/components/ui/button';
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
+import { Button } from 'react-bootstrap';
 
 const Accounts = () => {
 
@@ -26,19 +29,24 @@ const Accounts = () => {
     <>
       <div className="account-details">
         {agent ? (agent.role_id === 1 ?
-          <>
-            <div className="flex lg:items-center space-evenly">
-              <div className="min-w-0 flex-1">
-                <h2 className="text-2xl font-bold leading-7 text-gray-900 sm:truncate sm:text-3xl sm:tracking-tight">Accounts Table</h2>
-              </div>
-              <div className="flex lg:ml-4 lg:mt-0">
-                <span>
+          <Container>
+            <Row>
+              <Col md={4} sm={12}>
+                <div>
+                  <h2>Account Table</h2>
+                </div>
+              </Col>
+              <Col md={4} sm={12}>
+                <div>
                   <Button onClick={() => navigate('/create-new-account')}>Create New Account</Button>
-                </span>
-              </div>
-            </div>
-            <AccountsTable />
-          </>
+                </div>
+              </Col>
+              <Col>
+                <AccountsTable />
+              </Col>
+            </Row>
+          </Container>
+
           : (
             <div>
               <InvalidCredentials />
@@ -48,8 +56,10 @@ const Accounts = () => {
           <div>
             <Unauthorized />
           </div>
-        )}
-      </div >
+        )
+
+        }
+      </div>
     </>
   );
 
