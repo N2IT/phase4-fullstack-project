@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as yup from "yup";
 import { AgentContext } from '../../AgentProvider';
-import { Input } from '../../components/ui/input'
+import { Input } from '@/components/ui/input';
+import { Container } from 'react-bootstrap';
 
 const LoginForm = () => {
 
@@ -43,33 +44,35 @@ const LoginForm = () => {
 
     return (
         <>
-            <div>
-                <h2>Enter your credentials below:</h2>
-                <form onSubmit={formik.handleSubmit}>
-                    <label htmlFor="username">Username </label>
-                    <Input
-                        type="text"
-                        id="username"
-                        name="username"
-                        onBlur={formik.handleBlur}
-                        onChange={formik.handleChange}
-                        value={formik.values.username}
-                    />
-                    <p style={{ color: 'red' }}> {formik.errors.username} </p>
-                    <label htmlFor="password">Password </label>
-                    <Input
-                        type="password"
-                        id="password"
-                        name="password"
-                        onBlur={formik.handleBlur}
-                        onChange={formik.handleChange}
-                        value={formik.values.password}
-                    />
-                    <p style={{ color: 'red' }}> {formik.errors.password}</p>
-                    <button type="submit">Login</button>
-                </form>
-                <p style={{ color: 'red' }}>{errors ? errors : null}</p>
-            </div>
+            <Container>
+                <div>
+                    <h2>Enter your credentials below:</h2>
+                    <form onSubmit={formik.handleSubmit}>
+                        <label htmlFor="username">Username </label>
+                        <Input
+                            type="text"
+                            id="username"
+                            name="username"
+                            onBlur={formik.handleBlur}
+                            onChange={formik.handleChange}
+                            value={formik.values.username}
+                        />
+                        <p style={{ color: 'red' }}> {formik.errors.username} </p>
+                        <label htmlFor="password">Password </label>
+                        <Input
+                            type="password"
+                            id="password"
+                            name="password"
+                            onBlur={formik.handleBlur}
+                            onChange={formik.handleChange}
+                            value={formik.values.password}
+                        />
+                        <p style={{ color: 'red' }}> {formik.errors.password}</p>
+                        <button type="submit">Login</button>
+                    </form>
+                    <p style={{ color: 'red' }}>{errors ? errors : null}</p>
+                </div>
+            </Container>
         </>
     )
 }

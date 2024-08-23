@@ -63,12 +63,14 @@ const Home = () => {
 
           </>
         ) :
-          <div>
-            <h2>Quote Pro</h2>
-            <LoginForm />
-            <h3>OR<br /><br />Get Started Here:</h3>
-            <Link to="/sign-up">Sign Up</Link>
-          </div>
+          <Container>
+            <div>
+              <h2>Quote Pro</h2>
+              <LoginForm />
+              <h3>OR<br /><br />Get Started Here:</h3>
+              <Link to="/sign-up">Sign Up</Link>
+            </div>
+          </Container>
         }
       </div>
     </>
