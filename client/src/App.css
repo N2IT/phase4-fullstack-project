@@ -114,3 +114,8 @@ th, td {
 .card {
   box-shadow: 0px 3px 3px 0 #666;
 }
+
+.form-width {
+  max-width: 600px !important;
+  margin: auto;
+}

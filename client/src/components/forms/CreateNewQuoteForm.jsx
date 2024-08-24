@@ -1,15 +1,20 @@
 import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as yup from "yup";
+import Container from 'react-bootstrap/Container';
+import Row from 'react-bootstrap/Row';
+import Col from 'react-bootstrap/Col';
 import { AgentContext } from '../../AgentProvider';
+import { Form } from 'react-bootstrap';
 import { useParams } from 'react-router-dom';
+import { Button } from 'react-bootstrap';
 
 const CreateNewQuoteForm = () => {
 
     const { agent, customer, errors, setErrors, setQuote, onSubmitNewQuoteForm } = useContext(AgentContext);
     const { id } = useParams()
 
-    const prevQuote = Math.floor(Math.random()*1000)
+    const prevQuote = Math.floor(Math.random() * 1000)
 
     const formSchema = yup.object().shape({
         title: yup.string().required("Please enter a title"),
@@ -26,7 +31,7 @@ const CreateNewQuoteForm = () => {
             discount: localStorage.length !== 0 ? `${localStorage.getItem('account.discount')}` : history.go(-1),
             // discount: `${acctDiscount}`,
             // savings: '',
-            markup_variable: '',
+            markup_variable: 1.5,
             // sale_price: '',
             // margin_percentage: '',
             // margin_dollars: '',
@@ -58,11 +63,13 @@ const CreateNewQuoteForm = () => {
 
     return (
         <>
-            <div className="account-details">
-                <h2>Let's initiate the quote here:</h2>
-                <form onSubmit={formik.handleSubmit}>
-                    <label htmlFor="quote_number">Quote Number </label>
-                    <input
+            <Container className='form-width'>
+                <div className="account-details">
+                    <h2>Let's initiate the quote here:</h2>
+                </div>
+                <Form onSubmit={formik.handleSubmit}>
+                    <Form.Label htmlFor="quote_number">Quote Number </Form.Label>
+                    <Form.Control
                         id="quote_number"
                         name="quote_number"
                         onChange={formik.handleChange}
@@ -70,90 +77,99 @@ const CreateNewQuoteForm = () => {
                         disabled
                     />
                     <p style={{ color: 'red' }}> {formik.errors.quote_number}</p>
-                    <label htmlFor="title">Title </label>
-                    <input
+                    <Form.Label htmlFor="discount" hidden>Discount </Form.Label>
+                    <Form.Control
+                        id="discount"
+                        name="discount"
+                        onChange={formik.handleChange}
+                        value={formik.values.discount}
+                        disabled
+                        hidden
+                    />
+                    <p style={{ color: 'red' }}> {formik.errors.discount} </p>
+                    <Form.Label htmlFor="title">Title </Form.Label>
+                    <Form.Control
                         id="title"
                         name="title"
                         onChange={formik.handleChange}
                         value={formik.values.title}
                     />
                     <p style={{ color: 'red' }}> {formik.errors.title}</p>
-                    <label htmlFor="notes">Notes </label>
-                    <input
+                    <Form.Label htmlFor="markup_variable" hidden>Markup Variable </Form.Label>
+                    <Form.Control
+                        id="markup_variable"
+                        name="markup_variable"
+                        onChange={formik.handleChange}
+                        value={formik.values.markup_variable}
+                        disabled
+                        hidden
+                    />
+                    <p style={{ color: 'red' }}> {formik.errors.markup_variable} </p>
+                    <Form.Label htmlFor="notes">Notes </Form.Label>
+                    <Form.Control
+                        as='textarea'
                         id="notes"
                         name="notes"
                         onChange={formik.handleChange}
                         value={formik.values.notes}
                     />
                     <p style={{ color: 'red' }}> {formik.errors.notes}</p>
-                    <label htmlFor="markup_variable">Markup Variable </label>
-                    <input
-                        id="markup_variable"
-                        name="markup_variable"
-                        onChange={formik.handleChange}
-                        value={formik.values.markup_variable}
-                    />
-                    <p style={{ color: 'red' }}> {formik.errors.markup_variable} </p>
-                    <label htmlFor="discount">Discount </label>
-                    <input
-                        id="discount"
-                        name="discount"
-                        onChange={formik.handleChange}
-                        value={formik.values.discount}
-                        disabled
-                    />
-                    <p style={{ color: 'red' }}> {formik.errors.discount} </p>
-                    <label htmlFor="status">Status </label>
-                    <input
+                    <Form.Label htmlFor="status" hidden>Status </Form.Label>
+                    <Form.Control
                         id="status"
                         name="status"
-                        onChange={formik.handleChange} 
+                        onChange={formik.handleChange}
                         value={formik.values.status}
                         disabled
+                        hidden
                     />
                     <p style={{ color: 'red' }}> {formik.errors.status} </p>
 
-                    <label htmlFor="converted">Converted </label>
-                    <input
+                    <Form.Label htmlFor="converted" hidden>Converted </Form.Label>
+                    <Form.Control
                         id="converted"
                         name="converted"
-                        onChange={formik.handleChange} 
+                        onChange={formik.handleChange}
                         value={formik.values.converted = 'No'}
                         disabled
+                        hidden
                     />
                     <p style={{ color: 'red' }}> {formik.errors.converted} </p>
-                    
-                    <label htmlFor="created_by">Created By </label>
-                    <input
+
+                    <Form.Label htmlFor="created_by" hidden>Created By </Form.Label>
+                    <Form.Control
                         id="created_by"
                         name="created_by"
-                        onChange={formik.handleChange}                      
+                        onChange={formik.handleChange}
                         value={formik.values.created_by}
                         disabled
+                        hidden
                     />
                     <p style={{ color: 'red' }}> {formik.errors.created_by} </p>
-                    <label htmlFor="customer_id">Customer Id</label>
-                    <input
+                    <Form.Label htmlFor="customer_id" hidden>Customer Id</Form.Label>
+                    <Form.Control
                         id="customer_id"
                         name="customer_id"
-                        onChange={formik.handleChange}                       
+                        onChange={formik.handleChange}
                         value={formik.values.customer_id}
                         disabled
+                        hidden
                     />
                     <p style={{ color: 'red' }}> {formik.errors.customer_id} </p>
-                    <label htmlFor="account_id">Account Id </label>
-                    <input
+                    <Form.Label htmlFor="account_id" hidden>Account Id </Form.Label>
+                    <Form.Control
                         id="account_id"
                         name="account_id"
-                        onChange={formik.handleChange}                       
+                        onChange={formik.handleChange}
                         value={formik.values.account_id}
                         disabled
+                        hidden
                     />
                     <p style={{ color: 'red' }}> {formik.errors.account_id} </p>
-                    <button type="submit">Submit</button>
-                </form>
+                    <Button type="submit">Submit</Button>
+                </Form>
                 <p style={{ color: 'red' }}>{errors ? errors : null}</p>
-            </div>
+            </Container>
         </>
     )
 }
