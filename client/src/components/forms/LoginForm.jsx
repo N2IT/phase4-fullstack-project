@@ -2,8 +2,9 @@ import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as yup from "yup";
 import { AgentContext } from '../../AgentProvider';
-import { Input } from '@/components/ui/input';
 import { Container } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 const LoginForm = () => {
 
@@ -47,9 +48,9 @@ const LoginForm = () => {
             <Container>
                 <div>
                     <h2>Enter your credentials below:</h2>
-                    <form onSubmit={formik.handleSubmit}>
-                        <label htmlFor="username">Username </label>
-                        <Input
+                    <Form onSubmit={formik.handleSubmit}>
+                        <Form.Label htmlFor="username">Username </Form.Label>
+                        <Form.Control
                             type="text"
                             id="username"
                             name="username"
@@ -58,8 +59,8 @@ const LoginForm = () => {
                             value={formik.values.username}
                         />
                         <p style={{ color: 'red' }}> {formik.errors.username} </p>
-                        <label htmlFor="password">Password </label>
-                        <Input
+                        <Form.Label htmlFor="password">Password </Form.Label>
+                        <Form.Control
                             type="password"
                             id="password"
                             name="password"
@@ -68,8 +69,8 @@ const LoginForm = () => {
                             value={formik.values.password}
                         />
                         <p style={{ color: 'red' }}> {formik.errors.password}</p>
-                        <button type="submit">Login</button>
-                    </form>
+                        <Button variant='primary' type="submit">Login</Button>
+                    </Form>
                     <p style={{ color: 'red' }}>{errors ? errors : null}</p>
                 </div>
             </Container>

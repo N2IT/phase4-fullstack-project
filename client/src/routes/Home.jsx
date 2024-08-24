@@ -41,8 +41,8 @@ const Home = () => {
       <div className="account-details">
         {agent ? (
           <>
-            <h2 className="text-3xl font-bold underline">Welcome {agent.username}!</h2>
-            <Container>
+            <Container className='form-width'>
+              <h2 className="text-3xl font-bold underline">Welcome {agent.username}!</h2>
               <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
                 <BarChart accessibilityLayer data={chartData}>
                   <CartesianGrid vertical={false} />
@@ -63,7 +63,7 @@ const Home = () => {
 
           </>
         ) :
-          <Container>
+          <Container className='form-width'>
             <div>
               <h2>Quote Pro</h2>
               <LoginForm />
