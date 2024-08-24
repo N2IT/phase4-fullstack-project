@@ -37,9 +37,9 @@ const QuoteById = () => {
                 setAsDisabled(true);
                 setErrors(null);
             });
-        }, []);
+        }, [id]);
 
-    if (customer) {
+    if (isLoading) {
         return <div> Loading ... </div>
     }
 
