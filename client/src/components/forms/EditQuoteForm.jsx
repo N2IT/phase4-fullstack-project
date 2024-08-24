@@ -4,6 +4,8 @@ import * as yup from "yup";
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { Form } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { AgentContext } from '../../AgentProvider';
 
 const EditQuoteForm = ({ id }) => {
@@ -99,12 +101,12 @@ const EditQuoteForm = ({ id }) => {
     return (
         <>
             <Container fluid>
-                <form onSubmit={formik.handleSubmit}>
+                <Form onSubmit={formik.handleSubmit}>
                     <Row>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="quote_number">Quote Number &nbsp; </label>
+                            <Form.Label htmlFor="quote_number">Quote Number &nbsp; </Form.Label>
                             <br />
-                            <input
+                            <Form.Control
                                 id="quote_number"
                                 name="quote_number"
                                 onChange={formik.handleChange}
@@ -114,9 +116,9 @@ const EditQuoteForm = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.quote_number} </p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="title">Title &nbsp; </label>
+                            <Form.Label htmlFor="title">Title &nbsp; </Form.Label>
                             <br />
-                            <input
+                            <Form.Control
                                 id="title"
                                 name="title"
                                 onChange={formik.handleChange}
@@ -126,10 +128,10 @@ const EditQuoteForm = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.title}</p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="total_cost">Total Cost $&nbsp; </label>
+                            <Form.Label htmlFor="total_cost">Total Cost $&nbsp; </Form.Label>
                             
                             <br />
-                            <input
+                            <Form.Control
                                 id="total_cost"
                                 name="total_cost"
                                 onChange={formik.handleChange}
@@ -139,9 +141,9 @@ const EditQuoteForm = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.total_cost} </p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="discount">Discount %&nbsp; </label>
+                            <Form.Label htmlFor="discount">Discount %&nbsp; </Form.Label>
                             <br />
-                            <input
+                            <Form.Control
                                 id="discount"
                                 name="discount"
                                 onChange={formik.handleChange}
@@ -153,9 +155,9 @@ const EditQuoteForm = ({ id }) => {
                     </Row>
                     <Row>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="savings">Savings $&nbsp; </label>
+                            <Form.Label htmlFor="savings">Savings $&nbsp; </Form.Label>
                             <br />
-                            <input
+                            <Form.Control
                                 id="savings"
                                 name="savings"
                                 onChange={formik.handleChange}
@@ -165,9 +167,9 @@ const EditQuoteForm = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.savings}</p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="markup_variable">Markup Variable &nbsp; </label>
+                            <Form.Label htmlFor="markup_variable">Markup Variable &nbsp; </Form.Label>
                             <br />
-                            <input
+                            <Form.Control
                                 id="markup_variable"
                                 name="markup_variable"
                                 onChange={formik.handleChange}
@@ -177,9 +179,9 @@ const EditQuoteForm = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.markup_variable}</p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="sale_price">Sale Price $&nbsp; </label>
+                            <Form.Label htmlFor="sale_price">Sale Price $&nbsp; </Form.Label>
                             <br />
-                            <input
+                            <Form.Control
                                 id="sale_price"
                                 name="sale_price"
                                 onChange={formik.handleChange}
@@ -189,9 +191,9 @@ const EditQuoteForm = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.sale_price}</p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="margin_percentage">Margin % &nbsp; </label>
+                            <Form.Label htmlFor="margin_percentage">Margin % &nbsp; </Form.Label>
                             <br />
-                            <input
+                            <Form.Control
                                 id="margin_percentage"
                                 name="margin_percentage"
                                 onChange={formik.handleChange}
@@ -201,9 +203,9 @@ const EditQuoteForm = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.margin_percentage}</p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="margin_dollars">Margin $ &nbsp; </label>
+                            <Form.Label htmlFor="margin_dollars">Margin $ &nbsp; </Form.Label>
                             <br />
-                            <input
+                            <Form.Control
                                 id="margin_dollars"
                                 name="margin_dollars"
                                 onChange={formik.handleChange}
@@ -213,9 +215,9 @@ const EditQuoteForm = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.margin_dollars}</p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="notes">Notes &nbsp; </label>
+                            <Form.Label htmlFor="notes">Notes &nbsp; </Form.Label>
                             <br />
-                            <input
+                            <Form.Control
                                 id="notes"
                                 name="notes"
                                 onChange={formik.handleChange}
@@ -225,7 +227,7 @@ const EditQuoteForm = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.notes}</p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="status">Status &nbsp; </label>
+                            <Form.Label htmlFor="status">Status &nbsp; </Form.Label>
                             <br />
                             <select id='status' name='status' onChange={formik.handleChange} value={formik.values.status} disabled>
                                 <option value='active'>Active</option>
@@ -235,7 +237,7 @@ const EditQuoteForm = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.status} </p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="converted">Converted &nbsp; </label>
+                            <Form.Label htmlFor="converted">Converted &nbsp; </Form.Label>
                             <br />
                             <select id='converted' name='converted' onChange={formik.handleChange} value={formik.values.converted} disabled>
                                 <option value='Yes'>Yes</option>
@@ -247,9 +249,9 @@ const EditQuoteForm = ({ id }) => {
                     </Row>
                     <Row>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="created_at">Created At &nbsp; </label>
+                            <Form.Label htmlFor="created_at">Created At &nbsp; </Form.Label>
                             <br />
-                            <input
+                            <Form.Control
                                 id="created_at"
                                 name="created_at"
                                 onChange={formik.handleChange}
@@ -259,9 +261,9 @@ const EditQuoteForm = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.created_at} </p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="created_by">Created By &nbsp; </label>
+                            <Form.Label htmlFor="created_by">Created By &nbsp; </Form.Label>
                             <br />
-                            <input
+                            <Form.Control
                                 id="created_by"
                                 name="created_by"
                                 onChange={formik.handleChange}
@@ -271,9 +273,9 @@ const EditQuoteForm = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.created_by} </p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="updated_at">Updated At &nbsp; </label>
+                            <Form.Label htmlFor="updated_at">Updated At &nbsp; </Form.Label>
                             <br />
-                            <input
+                            <Form.Control
                                 id="updated_at"
                                 name="updated_at"
                                 onChange={formik.handleChange}
@@ -283,9 +285,9 @@ const EditQuoteForm = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.updated_at} </p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="updated_by">Updated By &nbsp; </label>
+                            <Form.Label htmlFor="updated_by">Updated By &nbsp; </Form.Label>
                             <br />
-                            <input
+                            <Form.Control
                                 id="updated_by"
                                 name="updated_by"
                                 onChange={formik.handleChange}
@@ -302,9 +304,9 @@ const EditQuoteForm = ({ id }) => {
                     </Row>
                     <Row>
                     <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="customer_id">Customer Id &nbsp; </label>
+                            <Form.Label htmlFor="customer_id">Customer Id &nbsp; </Form.Label>
                             <br />
-                            <input
+                            <Form.Control
                                 id="customer_id"
                                 name="customer_id"
                                 onChange={formik.handleChange}
@@ -314,9 +316,9 @@ const EditQuoteForm = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.customer_id} </p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            {/* <label htmlFor="account_id">Account ID &nbsp; </label> */}
+                            {/* <Form.Label htmlFor="account_id">Account ID &nbsp; </Form.Label> */}
                             <br />
-                            <input
+                            <Form.Control
                                 id="account_id"
                                 name="account_id"
                                 onChange={formik.handleChange}
@@ -330,11 +332,11 @@ const EditQuoteForm = ({ id }) => {
                     {disabled ?
                         <p className="view-btn" title="Edit Account" onClick={() => handleEditClick()}> Edit Quote Details </p> :
                         <>
-                            <p><button type="submit">Save Changes</button></p> 
+                            <p><Button type="submit">Save Changes</Button></p> 
                             <p className="view-btn" title="Cancel update" onClick={() => {handleEditClick(); setErrors(null)}}> Cancel </p>
                         </>
                     }
-                </form>
+                </Form>
                 <p style={{ color: 'red' }}>{errors ? errors : null}</p>
             </Container >
         </>

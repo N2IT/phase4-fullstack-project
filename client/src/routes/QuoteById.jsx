@@ -32,50 +32,14 @@ const QuoteById = () => {
                 return response.json();
             })
             .then(data => {
+                // console.log(data.customer)
                 setQuote(data);
                 setAsDisabled(true);
                 setErrors(null);
             });
         }, []);
 
-    //             fetch(`/api/customers/${data.customer_id}`)
-    //             .then(response => {
-    //                 if (!response.ok) {
-    //                     return response.json().then(data => { throw data; });
-    //                 }
-    //                 return response.json();
-    //             })
-    //             .then(data => {
-    //                 setCustomer(data);
-    //                 setAsDisabled(true);
-    //                 setErrors(null);
-    //             })
-    //         })
-    //         .catch(error => {
-    //             console.error('Errors:', error);
-    //             setErrors([error.errors] || 'Unknown Error');
-    //             setQuote(null);
-    //         });
-
-    //     fetch('/api/configurations')
-    //         .then(response => {
-    //             if (!response.ok) {
-    //                 return response.json().then(data => { throw data; });
-    //             }
-    //             return response.json();
-    //         })
-    //         .then(data => {
-    //             setConfigurations(data);
-    //             setAsDisabled(true);
-    //             // setErrors(null);
-    //         })
-    //         .catch(error => {
-    //             console.error('Errors:', error);
-    //             setErrors([error.errors] || ['Unknown Error']);
-    //             setConfigurations(null);
-            
-
-    if (isLoading) {
+    if (customer) {
         return <div> Loading ... </div>
     }
 
@@ -98,11 +62,11 @@ const QuoteById = () => {
                                         {agent.role_id !== 3 ? <button type="button" onClick={() => handleShow()}>Delete Quote</button> : null}
                                     </Col>
                                 </Row>
-                                {customer ?
-                                <Row>
+                                {!quote.customer ?
+                                    'Loading' :
+                                    <Row>
                                      <h3>For Customer: {quote.customer.first_name}&nbsp;{quote.customer.last_name} </h3>
-                                </Row>
-                                : null}
+                                </Row>}
                                 <Row>
                                     <Col>
                                         <EditQuoteForm id={id} />

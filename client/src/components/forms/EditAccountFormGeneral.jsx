@@ -5,6 +5,8 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { AgentContext } from '../../AgentProvider';
+import { Form } from 'react-bootstrap';
+// import { Button } from 'react-bootstrap';
 
 const EditAccountFormGeneral = ({ id }) => {
     const { account, errors, setErrors, handleUpdateAccount } = useContext(AgentContext)
@@ -84,21 +86,21 @@ const EditAccountFormGeneral = ({ id }) => {
     return (
         <>
             <Container>
-                <form onSubmit={formik.handleSubmit}>
+                <Form onSubmit={formik.handleSubmit}>
                     <Row>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="status">Status &nbsp; </label>
+                            <Form.Label htmlFor="status">Status &nbsp; </Form.Label>
                             <br />
-                            <select id='status' name='status' onChange={formik.handleChange} value={formik.values.status} disabled>
+                            <Form.Select id='status' name='status' onChange={formik.handleChange} value={formik.values.status} disabled>
                                 <option value='active'>Active</option>
                                 <option value='inactive'>Inactive</option>
-                            </select>
+                            </Form.Select>
                             <p style={{ color: 'red' }}> {formik.errors.status} </p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="account_number">Account Number &nbsp; </label>
+                            <Form.Label htmlFor="account_number">Account Number &nbsp; </Form.Label>
                             <br />
-                            <input
+                            <Form.Control
                                 id="account_number"
                                 name="account_number"
                                 onChange={formik.handleChange}
@@ -109,9 +111,9 @@ const EditAccountFormGeneral = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.account_number} </p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="company_name">Company Name &nbsp; </label>
+                            <Form.Label htmlFor="company_name">Company Name &nbsp; </Form.Label>
                             <br />
-                            <input
+                            <Form.Control
                                 id="company_name"
                                 name="company_name"
                                 onChange={formik.handleChange}
@@ -122,9 +124,9 @@ const EditAccountFormGeneral = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.company_name}</p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="discount">Discount % &nbsp; </label>
+                            <Form.Label htmlFor="discount">Discount % &nbsp; </Form.Label>
                             <br />
-                            <input
+                            <Form.Control
                                 id="discount"
                                 name="discount"
                                 onChange={formik.handleChange}
@@ -136,9 +138,9 @@ const EditAccountFormGeneral = ({ id }) => {
                     </Row>
                     <Row>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="phone">Phone &nbsp; </label>
+                            <Form.Label htmlFor="phone">Phone &nbsp; </Form.Label>
                             <br />
-                            <input
+                            <Form.Control
                                 id="phone"
                                 name="phone"
                                 onChange={formik.handleChange}
@@ -148,9 +150,9 @@ const EditAccountFormGeneral = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.phone} </p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="city">City &nbsp; </label>
+                            <Form.Label htmlFor="city">City &nbsp; </Form.Label>
                             <br />
-                            <input
+                            <Form.Control
                                 id="city"
                                 name="city"
                                 onChange={formik.handleChange}
@@ -160,9 +162,9 @@ const EditAccountFormGeneral = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.city} </p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="state">State &nbsp; </label>
+                            <Form.Label htmlFor="state">State &nbsp; </Form.Label>
                             <br />
-                            <input
+                            <Form.Control
                                 id="state"
                                 name="state"
                                 onChange={formik.handleChange}
@@ -172,9 +174,9 @@ const EditAccountFormGeneral = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.state} </p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="address_1">Address 1 &nbsp; </label>
+                            <Form.Label htmlFor="address_1">Address 1 &nbsp; </Form.Label>
                             <br />
-                            <input
+                            <Form.Control
                                 id="address_1"
                                 name="address_1"
                                 onChange={formik.handleChange}
@@ -186,9 +188,9 @@ const EditAccountFormGeneral = ({ id }) => {
                     </Row>
                     <Row>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="address_2">Address 2 &nbsp; </label>
+                            <Form.Label htmlFor="address_2">Address 2 &nbsp; </Form.Label>
                             <br />
-                            <input
+                            <Form.Control
                                 id="address_2"
                                 name="address_2"
                                 onChange={formik.handleChange}
@@ -198,9 +200,9 @@ const EditAccountFormGeneral = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.address_2} </p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="zip_code">Zip Code &nbsp; </label>
+                            <Form.Label htmlFor="zip_code">Zip Code &nbsp; </Form.Label>
                             <br />
-                            <input
+                            <Form.Control
                                 id="zip_code"
                                 name="zip_code"
                                 onChange={formik.handleChange}
@@ -210,9 +212,9 @@ const EditAccountFormGeneral = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.zip_code} </p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="created_at">Created At &nbsp; </label>
+                            <Form.Label htmlFor="created_at">Created At &nbsp; </Form.Label>
                             <br />
-                            <input
+                            <Form.Control
                                 id="created_at"
                                 name="created_at"
                                 onChange={formik.handleChange}
@@ -222,9 +224,9 @@ const EditAccountFormGeneral = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.created_at} </p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="created_by">Created By &nbsp; </label>
+                            <Form.Label htmlFor="created_by">Created By &nbsp; </Form.Label>
                             <br />
-                            <input
+                            <Form.Control
                                 id="created_by"
                                 name="created_by"
                                 onChange={formik.handleChange}
@@ -234,9 +236,9 @@ const EditAccountFormGeneral = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.created_by} </p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="updated_at">Updated At &nbsp; </label>
+                            <Form.Label htmlFor="updated_at">Updated At &nbsp; </Form.Label>
                             <br />
-                            <input
+                            <Form.Control
                                 id="updated_at"
                                 name="updated_at"
                                 onChange={formik.handleChange}
@@ -246,9 +248,9 @@ const EditAccountFormGeneral = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.updated_at} </p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            <label htmlFor="updated_by">Updated By &nbsp; </label>
+                            <Form.Label htmlFor="updated_by">Updated By &nbsp; </Form.Label>
                             <br />
-                            <input
+                            <Form.Control
                                 id="updated_by"
                                 name="updated_by"
                                 onChange={formik.handleChange}
@@ -265,7 +267,7 @@ const EditAccountFormGeneral = ({ id }) => {
                             <p className="view-btn" title="Edit Account" onClick={() => handleEditClick()}> Cancel </p>
                         </>
                     } */}
-                </form>
+                </Form>
                 <p style={{ color: 'red' }}>{errors ? errors : null}</p>
             </Container >
         </>
