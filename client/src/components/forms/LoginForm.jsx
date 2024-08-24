@@ -69,7 +69,7 @@ const LoginForm = () => {
                             value={formik.values.password}
                         />
                         <p style={{ color: 'red' }}> {formik.errors.password}</p>
-                        <Button variant='primary' type="submit">Login</Button>
+                        <p><Button variant='primary' type="submit">Login</Button></p>
                     </Form>
                     <p style={{ color: 'red' }}>{errors ? errors : null}</p>
                 </div>

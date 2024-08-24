@@ -5,27 +5,28 @@ import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { Button } from 'react-bootstrap';
 
 const ConfigurationsTableByQuote = () => {
 
     const { configurations, quote, handleIdClick, navigate, setNewQuotePageStatus } = useContext(AgentContext);
-    const {id} = useParams()
+    const { id } = useParams()
 
     const quoteConfigurations = quote.configurations
 
     return (
         <>
-        <Container>
+            <Container className='mb-3'>
                 <Row>
                     <Col md={6} sm={12}>
                         <h3>Quote Configurations</h3>
                     </Col>
-                    <Col md={6} sm={12}>
-                        <button type="button" onClick={() => (navigate(`customers/${quote.customer_id}/new-quote`), setNewQuotePageStatus(false))}>Add New Configuration</button>
+                    <Col className="d-flex justify-content-end gap-2">
+                        <Button type="button" onClick={() => (navigate(`customers/${quote.customer_id}/new-quote`), setNewQuotePageStatus(false))}>Add New Configuration</Button>
                     </Col>
                 </Row>
             </Container>
-            <Table responsive striped hover>
+            <Table responsive striped bordered hover size='sm'>
                 <thead>
                     <tr>
                         <th>Id</th>

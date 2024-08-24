@@ -55,11 +55,9 @@ const QuoteById = () => {
                                     <Col md={4} sm={12}>
                                         <h2>Quote Details</h2>
                                     </Col>
-                                    <Col md={4} xs={12}>
-                                        <button type="button" onClick={() => history.go(-1)}>Return to Prev. page</button>
-                                    </Col>
-                                    <Col md={4} xs={12}>
-                                        {agent.role_id !== 3 ? <button type="button" onClick={() => handleShow()}>Delete Quote</button> : null}
+                                    <Col className="d-flex justify-content-end gap-2">
+                                        <Button variant='dark' type="button" onClick={() => history.go(-1)}>Return to Prev. page</Button>
+                                        {agent.role_id !== 3 ? <Button variant='danger' type="button" onClick={() => handleShow()}>Delete Quote</Button> : null}
                                     </Col>
                                 </Row>
                                 {!quote.customer ?

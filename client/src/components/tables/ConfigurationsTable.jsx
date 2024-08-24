@@ -9,7 +9,7 @@ const ConfigurationsTable = () => {
     return (
         <>
             {isLoading ? <h2>Loading...</h2> :
-                <Table responsive striped hover>
+                <Table responsive striped bordered hover size='sm'>
                     <thead>
                         <tr>
                             <th>Quote Number</th>

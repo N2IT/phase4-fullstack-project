@@ -24,7 +24,7 @@ const AdminView = () => {
         deleteAccountObject(id, account)
         setShow(false)
     }
-   
+
     return (
         <>
             <Container>
@@ -39,16 +39,14 @@ const AdminView = () => {
                         <Col>
                             <h3>Account Details</h3>
                         </Col>
-                        <Col>
-                            <Button type="button" onClick={() => history.go(-1)}>Return to Prev. page</Button>
-                        </Col>
-                        <Col>
+                        <Col className="d-flex justify-content-end gap-2">
+                            <Button variant='dark' type="button" onClick={() => history.go(-1)}>Return to Prev. page</Button>
                             {agent.account_id === account.id ? null : <Button variant="danger" type="button" onClick={() => handleShow()}>Delete Account</Button>}
                         </Col>
                     </Row>
                     <Row className='mt-3'>
                         <Col>
-                            <AccountCompCards account={account}/>
+                            <AccountCompCards account={account} />
                         </Col>
                     </Row>
                     <Row>

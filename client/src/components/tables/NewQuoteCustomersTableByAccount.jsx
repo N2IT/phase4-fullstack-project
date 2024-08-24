@@ -4,6 +4,7 @@ import { AgentContext } from '../../AgentProvider';
 // import Row from 'react-bootstrap/Row';
 // import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
+import { Button } from 'react-bootstrap';
 
 const NewQuoteCustomersTableByAccount = () => {
 
@@ -17,7 +18,7 @@ const NewQuoteCustomersTableByAccount = () => {
 
     return (
         <>
-            <Table responsive striped hover>
+            <Table responsive striped bordered hover size='sm'>
                 <thead>
                     <tr>
                         <th>Number</th>
@@ -42,7 +43,7 @@ const NewQuoteCustomersTableByAccount = () => {
                 </tbody>
             </Table>
             <h3>OR</h3>
-            <p><button className="button" onClick={() => (setNewCustomerForQuote(true), navigate(`accounts/${account.id}/add-customer`))}>Create New Customer</button></p>
+            <p><Button variant='primary' onClick={() => (setNewCustomerForQuote(true), navigate(`accounts/${account.id}/add-customer`))}>Create New Customer</Button></p>
         </>
     )
 }

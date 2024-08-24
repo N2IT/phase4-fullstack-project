@@ -64,7 +64,7 @@ const CreateNewUserFormAdminManager = () => {
 
     return (
         <>
-            <Container>
+            <Container className='form-width'>
                 <div className='account-details'>
                     <h2>Fill in new user details below:</h2>
                 </div>

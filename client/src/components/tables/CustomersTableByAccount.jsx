@@ -6,6 +6,7 @@ import Col from 'react-bootstrap/Col';
 import { useParams } from 'react-router-dom';
 import { Link } from 'react-router-dom';
 import { Table } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 
 const CustomersTable = () => {
@@ -25,18 +26,18 @@ const CustomersTable = () => {
         <>
             <Container>
                 <div className="account-details">
-                    <Row>
+                    <Row className='mb-3'>
                         <Col md={6} sm={12}>
                             <h3>Account Customers</h3>
                         </Col>
-                        <Col md={6} sm={12}>
-                            <button type="button" onClick={() => (navigate(`accounts/${id}/add-customer`), setNewCustomerForQuote(false))}>Add New Customer</button>
+                        <Col className="d-flex justify-content-end gap-2">
+                            <Button variant='primary' type="button" onClick={() => (navigate(`accounts/${id}/add-customer`), setNewCustomerForQuote(false))}>Add New Customer</Button>
                         </Col>
                     </Row>
                 </div>
             </Container>
             {isLoading ? <h2>Loading...</h2> :
-                <Table responsive striped hover>
+                <Table responsive striped bordered hover size='sm'>
                     <thead>
                         <tr>
                             <th>Number</th>

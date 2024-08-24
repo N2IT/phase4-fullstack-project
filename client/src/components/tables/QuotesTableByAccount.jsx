@@ -5,6 +5,7 @@ import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { Button } from 'react-bootstrap';
 
 const QuotesTableByAccount = () => {
     console.log('loggingQuoteTableByAccount')
@@ -24,19 +25,19 @@ const QuotesTableByAccount = () => {
         <>
             <Container>
                 <div className="account-details">
-                    <Row>
+                    <Row className='mb-3'>
                         <Col md={6} sm={12}>
                             <h3>Quote Activity</h3>
                         </Col>
-                        <Col md={6} sm={12}>
+                        <Col className="d-flex justify-content-end gap-2">
                             <div>
-                                <button type="button" onClick={() => navigate(`accounts/${id}/new-quote`)}>Create New Quote</button>
+                                <Button variant='primary' type="button" onClick={() => navigate(`accounts/${id}/new-quote`)}>Create New Quote</Button>
                             </div>
                         </Col>
                     </Row>
                 </div>
             </Container>
-            <Table responsive striped hover>
+            <Table responsive striped bordered hover size='sm'>
                 <thead>
                     <tr>
                         <th>Quote Number</th>

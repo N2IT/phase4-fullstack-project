@@ -2,7 +2,11 @@ import React, { useContext } from 'react';
 import { Link } from 'react-router-dom';
 import { useFormik } from 'formik';
 import * as yup from "yup";
+import { Form } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { AgentContext } from '../../AgentProvider';
+import Container from 'react-bootstrap/Container';
+
 
 const SignupPageAccountForm = () => {
 
@@ -10,12 +14,12 @@ const SignupPageAccountForm = () => {
 
 
     const formSchema = yup.object().shape({
-        company_name: yup.string().required("A company name must be entered"),
-        address_1: yup.string().required("Please enter the address for your business"),
-        city: yup.string().required('Please enter the city where your company is located'),
-        state: yup.string().required('Please enter the state where your company is located'),
-        zip_code: yup.string().required("Please enter a zip code for your business location"),
-        phone: yup.string().required("Please enter a phone number for your business"),
+        company_name: yup.string(),
+        address_1: yup.string(),
+        city: yup.string(),
+        state: yup.string(),
+        zip_code: yup.string(),
+        phone: yup.string(),
     })
 
     const formik = useFormik({
@@ -50,81 +54,90 @@ const SignupPageAccountForm = () => {
 
     return (
         <>
-            <div className="account-details">
-                <h2>First enter you company details:</h2>
-                <form onSubmit={formik.handleSubmit}>
-                    <label htmlFor="company_name">Company Name </label>
-                    <input
-                        id="company_name"
-                        name="company_name"
-                        onChange={formik.handleChange}
-                        value={formik.values.company_name}
-                    />
-                    <p style={{ color: 'red' }}> {formik.errors.company_name}</p>
-                    <label htmlFor="address_1">Address Line 1 </label>
-                    <input
-                        id="address_1"
-                        name="address_1"
-                        onChange={formik.handleChange}
-                        value={formik.values.address_1}
-                    />
-                    <p style={{ color: 'red' }}> {formik.errors.address_1}</p>
-                    <label htmlFor="address_2">Address Line 2 </label>
-                    <input
-                        id="address_2"
-                        name="address_2"
-                        onChange={formik.handleChange}
-                        value={formik.values.address_2}
-                    />
-                    <p style={{ color: 'red' }}> {formik.errors.address_2} </p>
-                    <label htmlFor="city">City </label>
-                    <input
-                        id="city"
-                        name="city"
-                        onChange={formik.handleChange}
-                        value={formik.values.city}
-                    />
-                    <p style={{ color: 'red' }}> {formik.errors.city} </p>
-                    <label htmlFor="state">State </label>
-                    <input
-                        id="state"
-                        name="state"
-                        onChange={formik.handleChange}
-                        value={formik.values.state}
-                    />
-                    <p style={{ color: 'red' }}> {formik.errors.state} </p>
-                    <label htmlFor="zip_code">Zip Code </label>
-                    <input
-                        id="zip_code"
-                        name="zip_code"
-                        onChange={formik.handleChange}
-                        value={formik.values.zip_code}
-                    />
-                    <p style={{ color: 'red' }}> {formik.errors.zip_code} </p>
-                    <label htmlFor="phone">Phone </label>
-                    <input
-                        id="phone"
-                        name="phone"
-                        onChange={formik.handleChange}
-                        value={formik.values.phone}
-                    />
-                    <p style={{ color: 'red' }}> {formik.errors.phone} </p>
-                    {/* <label htmlFor="discount">Discount </label> */}
-                    <input
-                        id="discount"
-                        name="discount"
-                        placeholder="Enter a whole number"
-                        onChange={formik.handleChange}
-                        value={formik.values.discount}
-                        hidden
-                        disabled
-                    />
-                    <p style={{ color: 'red' }}> {formik.errors.discount} </p>
-                    <button type="submit">Submit</button>
-                </form>
-                <p style={{ color: 'red' }}>{errors ? errors : null}</p>
-                <Link to="#" >Forgot Password</Link>
-            </div>
+            <Container className='form-width'>
+                <div className="account-details">
+                    <h2>First enter you company details:</h2>
+                    <form onSubmit={formik.handleSubmit}>
+                        <Form.Label htmlFor="company_name">Company Name </Form.Label>
+                        <Form.Control
+                            id="company_name"
+                            name="company_name"
+                            onChange={formik.handleChange}
+                            value={formik.values.company_name}
+                            required
+                        />
+                        <p style={{ color: 'red' }}> {formik.errors.company_name}</p>
+                        <Form.Label htmlFor="address_1">Address Line 1 </Form.Label>
+                        <Form.Control
+                            id="address_1"
+                            name="address_1"
+                            onChange={formik.handleChange}
+                            value={formik.values.address_1}
+                            required
+                        />
+                        <p style={{ color: 'red' }}> {formik.errors.address_1}</p>
+                        <Form.Label htmlFor="address_2">Address Line 2 </Form.Label>
+                        <Form.Control
+                            id="address_2"
+                            name="address_2"
+                            onChange={formik.handleChange}
+                            value={formik.values.address_2}
+                            
+                        />
+                        <p style={{ color: 'red' }}> {formik.errors.address_2} </p>
+                        <Form.Label htmlFor="city">City </Form.Label>
+                        <Form.Control
+                            id="city"
+                            name="city"
+                            onChange={formik.handleChange}
+                            value={formik.values.city}
+                            required
+                        />
+                        <p style={{ color: 'red' }}> {formik.errors.city} </p>
+                        <Form.Label htmlFor="state">State </Form.Label>
+                        <Form.Control
+                            id="state"
+                            name="state"
+                            onChange={formik.handleChange}
+                            value={formik.values.state}
+                            required
+                        />
+                        <p style={{ color: 'red' }}> {formik.errors.state} </p>
+                        <Form.Label htmlFor="zip_code">Zip Code </Form.Label>
+                        <Form.Control
+                            id="zip_code"
+                            name="zip_code"
+                            onChange={formik.handleChange}
+                            value={formik.values.zip_code}
+                            required
+                        />
+                        <p style={{ color: 'red' }}> {formik.errors.zip_code} </p>
+                        <Form.Label htmlFor="phone">Phone </Form.Label>
+                        <Form.Control
+                            id="phone"
+                            name="phone"
+                            onChange={formik.handleChange}
+                            value={formik.values.phone}
+                            required
+                        />
+                        <p style={{ color: 'red' }}> {formik.errors.phone} </p>
+                        {/* <Form.Label htmlFor="discount">Discount </Form.Label> */}
+                        <Form.Control
+                            id="discount"
+                            name="discount"
+                            placeholder="Enter a whole number"
+                            onChange={formik.handleChange}
+                            value={formik.values.discount}
+                            hidden
+                            disabled
+                        />
+                        <p style={{ color: 'red' }}> {formik.errors.discount} </p>
+                        <p><Button variant='secondary' type="submit">Submit</Button></p>
+                    </form>
+                    <p style={{ color: 'red' }}>{errors ? errors : null}</p>
+                    {/* <Link to="#" >Forgot Password</Link> */}
+                </div>
+            </Container>
         </>
     )
 }

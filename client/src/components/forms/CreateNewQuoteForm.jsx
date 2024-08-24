@@ -166,7 +166,7 @@ const CreateNewQuoteForm = () => {
                         hidden
                     />
                     <p style={{ color: 'red' }}> {formik.errors.account_id} </p>
-                    <Button type="submit">Submit</Button>
+                    <p><Button type="submit">Submit</Button></p>
                 </Form>
                 <p style={{ color: 'red' }}>{errors ? errors : null}</p>
             </Container>

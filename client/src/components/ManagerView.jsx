@@ -5,43 +5,7 @@ import QuotesTableByAccount from './tables/QuotesTableByAccount';
 import CustomersTableByAccount from './tables/CustomersTableByAccount';
 import { AgentContext } from '../AgentProvider';
 import { useParams } from 'react-router-dom';
-import {
-    Activity,
-    ArrowUpRight,
-    CircleUser,
-    CreditCard,
-    DollarSign,
-    Menu,
-    Package2,
-    Search,
-    Users,
-} from "lucide-react"
-
-import {
-    Avatar,
-    AvatarFallback,
-    AvatarImage,
-} from "@/components/ui/avatar"
-import { Badge } from "@/components/ui/badge"
-import { Button } from "@/components/ui/button"
-import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardHeader,
-    CardTitle,
-} from "@/components/ui/card"
-
-import {
-    Table,
-    TableBody,
-    TableCell,
-    TableHead,
-    TableHeader,
-    TableRow,
-} from "@/components/ui/table"
-
-import { Link } from 'react-router-dom';
+import AccountCompCards from './AccountCompCards';
 
 
 const ManagerView = ({ account }) => {
@@ -63,6 +27,9 @@ const ManagerView = ({ account }) => {
                 <h2>Hello, {agent.username}:</h2>
                 <h3>Account Details</h3>
                 <EditAccountFormGeneral id={id} />
+            </div>
+            <div>
+                <AccountCompCards account={account}/>
             </div>
             <div>
                 <UsersTableByAccount />

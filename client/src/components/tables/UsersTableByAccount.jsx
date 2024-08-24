@@ -5,6 +5,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import Table from 'react-bootstrap/Table';
+import { Button } from 'react-bootstrap';
 
 const UsersTableByAccount = () => {
     console.log('UsersTableByAccount')
@@ -31,24 +32,24 @@ const UsersTableByAccount = () => {
         <>
             <Container>
                 <div className="account-details">
-                    <Row>
+                    <Row className='mb-3'>
                         <Col md={6} sm={12}>
                             <h3>Account Users</h3>
                         </Col>
-                        <Col md={6} sm={12}>
-                            {agent.role_id === 3 ? null : <button type="button" onClick={() => navigate(`accounts/${account.id}/add-user`)}>Add New User</button>}
+                        <Col className="d-flex justify-content-end gap-2">
+                            {agent.role_id === 3 ? null : <Button variant='primary' type="button" onClick={() => navigate(`accounts/${account.id}/add-user`)}>Add New User</Button>}
                         </Col>
                     </Row>
                 </div>
             </Container>
-                <Table responsive striped hover>
+                <Table responsive striped bordered hover size='sm'>
                     <thead>
                         <tr>
                             <th>USERNAME</th>
                             <th>FIRST NAME</th>
                             <th>LAST NAME</th>
                             <th>EMAIL</th>
-                            <th>STATUS</th>
+                            {/* <th>STATUS</th> */}
                             <th>ACTION</th>
                         </tr>
                     </thead>
@@ -60,7 +61,7 @@ const UsersTableByAccount = () => {
                                 <td>{user.last_name}</td>
                                 <td>{user.email}</td>
                                 {/* <td>{user.role_id}</td> */}
-                                <td>{user.status}</td>
+                                {/* <td>{user.status}</td> */}
                                 {agent.role_id === 3 ? (agent.username === user.username ?
                                     <td><p className="view-btn" title="View User" onClick={() => handleIdClick(user)}> View </p></td>
                                     :

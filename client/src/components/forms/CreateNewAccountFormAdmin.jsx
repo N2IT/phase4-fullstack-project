@@ -76,8 +76,8 @@ const CreateNewAccountFormAdmin = () => {
                         <Col md={6} sm={12}>
                             <h2>Enter the company details:</h2>
                         </Col>
-                        <Col md={6} sm={12}>
-                            <button type="button" onClick={() => history.go(-1)}>Return to Prev. page</button>
+                        <Col className="d-flex justify-content-end gap-2">
+                            <Button variant='dark' type="button" onClick={() => history.go(-1)}>Return to Prev. page</Button>
                         </Col>
                     </Row>
                 </div>

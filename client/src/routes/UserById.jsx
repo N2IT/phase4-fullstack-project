@@ -33,7 +33,7 @@ const UserById = () => {
                 setErrors([error.errors] || ['Unknown Error']);
                 setUser(null);
             });
-    }, [agent,id]);
+    }, [agent, id]);
 
     const handleDeleteClick = () => {
         fetch(`/api/users/${id}`, {
@@ -67,13 +67,17 @@ const UserById = () => {
                         <Row>
                             <Col md={4} xs={12}>
                                 <h2>Hello, {agent.username}</h2>
+
+                            </Col>
+                        </Row>
+                        <Row className='mb-3'>
+                            <Col md={4} xs={12}>
                                 <h3>User Details</h3>
                             </Col>
-                            <Col md={4} xs={12}>
-                                <button type="button" onClick={() => history.go(-1)}>Return to Prev. page</button>
-                            </Col>
-                            <Col md={4} xs={12}>
-                                {user.id === agent.id ? null : <button type="button" onClick={() => handleShow()}>Delete User</button>}
+
+                            <Col className="d-flex justify-content-end gap-2">
+                                <Button variant='dark' type="button" onClick={() => history.go(-1)}>Return to Prev. page</Button>
+                                {user.id === agent.id ? null : <Button variant='danger' type="button" onClick={() => handleShow()}>Delete User</Button>}
                             </Col>
                         </Row>
                         <Row>
@@ -109,13 +113,15 @@ const UserById = () => {
                         <Row>
                             <Col md={4} xs={12}>
                                 <h2>Hello, {agent.username}</h2>
+                            </Col>
+                        </Row>
+                        <Row>
+                            <Col md={4} xs={12}>
                                 <h3>User Details</h3>
                             </Col>
-                            <Col md={4} xs={12}>
-                                <button type="button" onClick={() => history.go(-1)}>Return to Prev. page</button>
-                            </Col>
-                            <Col md={4} xs={12}>
-                                {user.id === agent.id ? null : <button type="button" onClick={() => handleShow()}>Delete User</button>}
+                            <Col className="d-flex justify-content-end gap-2">
+                                <Button variant='dark' type="button" onClick={() => history.go(-1)}>Return to Prev. page</Button>
+                                {user.id === agent.id ? null : <Button variant='danger' type="button" onClick={() => handleShow()}>Delete User</Button>}
                             </Col>
                         </Row>
                         <Row>
@@ -152,8 +158,8 @@ const UserById = () => {
                             <Col md={6} sm={12}>
                                 <h2>User Details</h2>
                             </Col>
-                            <Col md={6} sm={12}>
-                                <button type="button" onClick={() => history.go(-1)}>Return to Prev. page</button>
+                            <Col className="d-flex justify-content-end gap-2">
+                                <Button variant='dark' type="button" onClick={() => history.go(-1)}>Return to Prev. page</Button>
                             </Col>
                         </Row>
                         <Row>
