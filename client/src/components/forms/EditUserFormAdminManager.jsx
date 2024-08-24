@@ -35,8 +35,8 @@ const EditUserFormAdminManager = ({ id }) => {
                 account_id: `${user.account.account_number}`,
                 company_name: `${user.account.company_name}`,
                 created_at: `${user.created_at}`,
-                updated_at: `${user.updated_at}`,
-                updated_by: `${user.updated_by}`,
+                updated_at: user.updated_at ? `${user.updated_at}` : "",
+                updated_by: user.updated_by ? `${user.updated_by}` : "",
                 status: `${user.status}`,
                 role_id: `${user.role_id}`,
             });

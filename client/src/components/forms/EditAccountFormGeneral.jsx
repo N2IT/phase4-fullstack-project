@@ -40,8 +40,9 @@ const EditAccountFormGeneral = ({ id }) => {
                 phone: `${account.phone}`,
                 discount: `${account.discount}`,
                 created_at: `${account.created_at}`,
-                created_by: `${account.created_by}`,
-                updated_at: `${account.updated_at}`,
+                created_by: account.created_by ? `${account.created_by}` : "",
+                updated_at: account.updated_at ? `${account.updated_at}` : "",
+                updated_by: account.udpated_by ? `${account.updated_by}` : "",
                 status: `${account.status}`,
             });
         }
@@ -223,6 +224,7 @@ const EditAccountFormGeneral = ({ id }) => {
                             />
                             <p style={{ color: 'red' }}> {formik.errors.created_at} </p>
                         </Col>
+                        {account.created_by ? 
                         <Col lg={3} md={6} xs={12}>
                             <Form.Label htmlFor="created_by">Created By &nbsp; </Form.Label>
                             <br />
@@ -234,7 +236,9 @@ const EditAccountFormGeneral = ({ id }) => {
                                 disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.created_by} </p>
-                        </Col>
+                        </Col> : ""}
+                    </Row>
+                    <Row>
                         <Col lg={3} md={6} xs={12}>
                             <Form.Label htmlFor="updated_at">Updated At &nbsp; </Form.Label>
                             <br />
