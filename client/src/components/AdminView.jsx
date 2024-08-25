@@ -1,7 +1,7 @@
 import Modal from 'react-bootstrap/Modal';
+import { Button } from 'react-bootstrap';
 import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
-import Button from 'react-bootstrap/Button';
 import UsersTableByAccount from './tables/UsersTableByAccount';
 import EditAccountFormAdmin from './forms/EditAccountFormAdmin';
 import QuotesTableByAccount from './tables/QuotesTableByAccount';
@@ -10,6 +10,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { AgentContext } from '../AgentProvider';
+import AccountCompCards from './AccountCompCards';
 
 const AdminView = () => {
 
@@ -35,14 +36,17 @@ const AdminView = () => {
                         </Col>
                     </Row>
                     <Row>
-                        <Col md={4} xs={12}>
+                        <Col>
                             <h3>Account Details</h3>
                         </Col>
-                        <Col md={4} xs={12}>
-                            <button type="button" onClick={() => history.go(-1)}>Return to Prev. page</button>
+                        <Col className="d-flex justify-content-end gap-2">
+                            <Button variant='dark' type="button" onClick={() => history.go(-1)}>Return to Prev. page</Button>
+                            {agent.account_id === account.id ? null : <Button variant="danger" type="button" onClick={() => handleShow()}>Delete Account</Button>}
                         </Col>
-                        <Col md={4} xs={12}>
-                            {agent.account_id === account.id ? null : <button type="button" onClick={() => handleShow()}>Delete Account</button>}
+                    </Row>
+                    <Row className='mt-3'>
+                        <Col>
+                            <AccountCompCards account={account} />
                         </Col>
                     </Row>
                     <Row>
