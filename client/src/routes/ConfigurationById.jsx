@@ -22,30 +22,6 @@ const ConfigurationById = () => {
         setShow(false)
     }
 
-    // useEffect(() => {
-    //     if (!agent) {
-    //         return;
-    //     }
-    //     fetch(`/api/configurations/${id}`)
-    //         .then(response => {
-    //             if (!response.ok) {
-    //                 return response.json().then(data => { throw data; });
-    //             }
-    //             return response.json();
-    //         })
-    //         .then(data => {
-    //             setConfiguration(data);
-    //             setAsDisabled(true);
-    //             setErrors(null);
-    //         })
-    //         .catch(error => {
-    //             console.error('Errors:', error);
-    //             setErrors([error.errors] || ['Unknown Error']);
-    //             setConfiguration(null);
-    //         });
-
-    // }, [id, agent]);
-
     if (isLoading) {
         return <div>Loading ...</div>;
     }
@@ -79,11 +55,9 @@ const ConfigurationById = () => {
                             <Col md={4} sm={12}>
                                 <h2>Configuration Details</h2>
                             </Col>
-                            <Col md={4} sm={12}>
-                                <button type="button" onClick={() => history.go(-1)}>Return to Prev. page</button>
-                            </Col>
-                            <Col md={4} sm={12}>
-                                {agent.role_id !== 3 ? <button type="button" onClick={() => handleShow()}>Delete Configuration</button> : null}
+                            <Col className="d-flex justify-content-end gap-2">
+                                <Button variant='dark' type="button" onClick={() => history.go(-1)}>Return to Prev. page</Button>
+                                {agent.role_id !== 3 ? <Button variant='danger' type="button" onClick={() => handleShow()}>Delete Configuration</Button> : null}
                             </Col>
                         </Row>
                         <Row>
@@ -119,11 +93,9 @@ const ConfigurationById = () => {
                             <Col md={4} sm={12}>
                                 <h2>Configuration Details</h2>
                             </Col>
-                            <Col md={4} sm={12}>
-                                <button type="button" onClick={() => history.go(-1)}>Return to Prev. page</button>
-                            </Col>
-                            <Col md={4} sm={12}>
-                                {agent.role_id !== 3 ? <button type="button" onClick={() => handleShow()}>Delete Configuration</button> : null}
+                            <Col className="d-flex justify-content-end gap-2">
+                                <Button variant='dark' type="button" onClick={() => history.go(-1)}>Return to Prev. page</Button>
+                                {agent.role_id !== 3 ? <Button variant='danger' type="button" onClick={() => handleShow()}>Delete Configuration</Button> : null}
                             </Col>
                         </Row>
                         <Row>

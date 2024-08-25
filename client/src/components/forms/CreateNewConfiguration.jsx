@@ -738,7 +738,7 @@ const CreateNewConfiguration = () => {
                                 </Row>
                                 <Row>
                                     {sideTrack ?
-                                        <Col md={6}>
+                                        <Col>
                                             <>
                                                 <Form.Label htmlFor="tracks_charge">Tracks Charge $</Form.Label>
                                                 <Form.Control
