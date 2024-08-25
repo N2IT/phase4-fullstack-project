@@ -32,7 +32,6 @@ const QuoteById = () => {
                 return response.json();
             })
             .then(data => {
-                // console.log(data.customer)
                 setQuote(data);
                 setAsDisabled(true);
                 setErrors(null);

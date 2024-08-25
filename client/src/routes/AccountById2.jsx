@@ -22,7 +22,6 @@ const AccountById = () => {
             })
             .then(data => {
                 setAccount(data);
-                console.log("AccountById2")
                 setAsDisabled(true);
                 setErrors(null);
                 localStorage.setItem('account.id', JSON.stringify(data.id))

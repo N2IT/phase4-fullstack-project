@@ -1,5 +1,5 @@
 import CreateNewQuoteForm from "../components/forms/CreateNewQuoteForm";
-import CreateNewConfiguration from "../components/forms/TemplarKnightShadeProductForm";
+import CreateNewConfiguration from "../components/forms/CreateNewConfiguration";
 import Unauthorized from "../components/Unauthorized";
 import { useContext, useEffect } from "react";
 import { AgentContext } from '../AgentProvider';
@@ -29,7 +29,7 @@ const CustomersIdNewQuote = () => {
             setErrors([error.errors] || ['Unknown Error']);
             setCustomer(null);
         });
-    },[])
+    },[id])
 
     if (isLoading) {
         return <div>Loading ...</div>;
@@ -49,6 +49,10 @@ const CustomersIdNewQuote = () => {
         );
     }
 
+    if (!customer) {
+        return <div>Loading...</div>
+    }
+    
     if (agent.role_id !== 1 && agent.account_id === customer.account_id) {
         return (
             <div>

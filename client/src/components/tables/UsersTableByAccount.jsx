@@ -8,7 +8,6 @@ import Table from 'react-bootstrap/Table';
 import { Button } from 'react-bootstrap';
 
 const UsersTableByAccount = () => {
-    console.log('UsersTableByAccount')
 
     const { account, handleIdClick, agent, navigate, isLoading } = useContext(AgentContext);
     // const { id } = useParams()

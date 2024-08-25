@@ -25,8 +25,6 @@ const AccountById = () => {
                 return response.json();
             })
             .then(data => {
-                // debugger
-                // console.log(data)
                 setAccount(data);
                 setAsDisabled(true);
                 setErrors(null);

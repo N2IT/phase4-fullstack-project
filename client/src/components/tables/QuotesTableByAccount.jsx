@@ -8,7 +8,6 @@ import Col from 'react-bootstrap/Col';
 import { Button } from 'react-bootstrap';
 
 const QuotesTableByAccount = () => {
-    console.log('loggingQuoteTableByAccount')
 
     const { quotes, account, handleIdClick, navigate, isLoading, setErrors, setAsDisabled, setQuotes } = useContext(AgentContext);
     const { id } = useParams();

@@ -51,7 +51,7 @@ const EditQuoteForm = ({ id }) => {
                 created_at: `${quote.created_at}`,
                 created_by: `${quote.created_by}`,
                 updated_at: quote.updated_at ? `${quote.updated_at}` : "",
-                updated_by: `${quote.updated_by}`,
+                updated_by: quote.updated_by ? `${quote.updated_by}` : "",
                 customer_id: `${quote.customer_id}`,
                 account_id: `${quote.account_id}`
             })

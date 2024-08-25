@@ -10,16 +10,12 @@ import AccountCompCards from './AccountCompCards';
 
 const ManagerView = ({ account }) => {
 
-    console.log(account)
-
     const { agent, user } = useContext(AgentContext);
     const { id } = useParams()
-    const pastCustomers = () => {
-        console.log('created', account.customers.created_at)
-        console.log('typeof', typeof (account.customers.created_at))
-    }
-
-    pastCustomers()
+    // const pastCustomers = () => {
+    //     console.log('created', account.customers.created_at)
+    //     console.log('typeof', typeof (account.customers.created_at))
+    // }
 
     return (
         <>

@@ -10,7 +10,6 @@ import { Button } from 'react-bootstrap';
 
 
 const CustomersTable = () => {
-    console.log('CustomersTableByAccount')
     const { handleIdClick, account, isLoading, customers, navigate, setCustomers, setNewCustomerForQuote, setErrors, setAsDisabled } = useContext(AgentContext);
     const { id } = useParams()
 
