@@ -46,7 +46,7 @@ const ConfigurationsTableByQuote = () => {
                                 <td>{configuration.project_name}</td>
                                 <td>{configuration.unit_name}</td>
                                 <td>${parseFloat(configuration.list_price).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                                <td>{configuration.complete_unit === 0 ? 'true' : 'false'}</td>
+                                <td>{configuration.complete_unit === true ? 'true' : 'false'}</td>
                                 {/* <td>{configuration.quote.account.account_number}</td> */}
                                 {/* <td>{configuration.quote.account.company_name}</td> */}
                                 <td><p className="view-btn" title="View Configuration" onClick={() => handleIdClick(configuration)}> View </p></td>

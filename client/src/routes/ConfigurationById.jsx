@@ -110,7 +110,7 @@ const ConfigurationById = () => {
         );
     }
 
-    if (agent.role_id !== 1 && agent.account_id === configuration.quote.account.id) {
+    if (agent.role_id !== 1 && agent.account_id === configuration.quote.account_id) {
         return (
             <>
                 <div className='account-details'>
