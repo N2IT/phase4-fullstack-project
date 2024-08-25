@@ -14,6 +14,9 @@ const AccountById = () => {
 
     useEffect(() => {
         setIsLoading(true)
+        // if (!agent) {
+        //     return;
+        // }
         fetch(`/api/accounts/${id}`)
             .then(response => {
                 if (!response.ok) {
@@ -22,6 +25,8 @@ const AccountById = () => {
                 return response.json();
             })
             .then(data => {
+                // debugger
+                // console.log(data)
                 setAccount(data);
                 setAsDisabled(true);
                 setErrors(null);

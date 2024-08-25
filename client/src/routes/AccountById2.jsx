@@ -7,8 +7,10 @@ import AdminView from '../components/AdminView';
 import ManagerView from '../components/ManagerView';
 
 const AccountById = () => {
-    const { agent, account, setAccount, setAsDisabled, setErrors } = useContext(AgentContext);
+    const { agent, account, isLoading, setAccount, setAsDisabled, setErrors } = useContext(AgentContext);
     const { id } = useParams();
+
+    // debugger
 
     useEffect(() => {
         fetch(`/api/accounts/${id}`)
@@ -20,6 +22,7 @@ const AccountById = () => {
             })
             .then(data => {
                 setAccount(data);
+                console.log("AccountById2")
                 setAsDisabled(true);
                 setErrors(null);
                 localStorage.setItem('account.id', JSON.stringify(data.id))

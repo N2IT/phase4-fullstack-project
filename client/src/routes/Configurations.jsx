@@ -18,7 +18,7 @@ const Configurations = () => {
     localStorage.removeItem('account.id')
     localStorage.removeItem('account.discount')
 
-  }, [agent])
+  }, [])
 
   if (isLoading) {
     return <div> Loading ... </div>
