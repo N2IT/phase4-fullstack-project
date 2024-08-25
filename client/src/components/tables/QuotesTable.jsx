@@ -9,7 +9,7 @@ const QuotesTable = () => {
     return (
         <>
             {isLoading ? <h2>Loading...</h2> :
-                <Table responsive="sm" striped="columns">
+                <Table responsive striped bordered hover size='sm'>
                     <thead>
                         <tr>
                             <th>Quote Number</th>

@@ -1,16 +1,22 @@
-import { useContext } from 'react';
+import { useContext, useEffect } from 'react';
 import { AgentContext } from '../../AgentProvider';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import Table from 'react-bootstrap/Table';
 import { useParams } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import { Table } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+
 
 const CustomersTable = () => {
-    const { handleIdClick, account, isLoading, navigate, setNewCustomerForQuote } = useContext(AgentContext);
+    console.log('CustomersTableByAccount')
+    const { handleIdClick, account, isLoading, customers, navigate, setCustomers, setNewCustomerForQuote, setErrors, setAsDisabled } = useContext(AgentContext);
     const { id } = useParams()
 
-    const customersByAccount = account.customers
+    const customersByAccount = account.customers.filter(customer => {
+        return account.id.toString() === id;
+    })
 
     if (isLoading) {
         return <div>Loading ...</div>;
@@ -20,18 +26,18 @@ const CustomersTable = () => {
         <>
             <Container>
                 <div className="account-details">
-                    <Row>
+                    <Row className='mb-3'>
                         <Col md={6} sm={12}>
                             <h3>Account Customers</h3>
                         </Col>
-                        <Col md={6} sm={12}>
-                            <button type="button" onClick={() => (navigate(`accounts/${id}/add-customer`), setNewCustomerForQuote(false))}>Add New Customer</button>
+                        <Col className="d-flex justify-content-end gap-2">
+                            <Button variant='primary' type="button" onClick={() => (navigate(`accounts/${id}/add-customer`), setNewCustomerForQuote(false))}>Add New Customer</Button>
                         </Col>
                     </Row>
                 </div>
             </Container>
             {isLoading ? <h2>Loading...</h2> :
-                <Table responsive="sm" striped="columns">
+                <Table responsive striped bordered hover size='sm'>
                     <thead>
                         <tr>
                             <th>Number</th>
