@@ -189,7 +189,7 @@ const EditQuoteForm = ({ id }) => {
                                 id="total_cost"
                                 name="total_cost"
                                 onChange={formik.handleChange}
-                                value={("$" + (formik.values.total_cost))}
+                                value={parseFloat(formik.values.total_cost).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                 disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.total_cost} </p>
@@ -201,7 +201,7 @@ const EditQuoteForm = ({ id }) => {
                                 id="discount"
                                 name="discount"
                                 onChange={formik.handleChange}
-                                value={(formik.values.discount * 100)}
+                                value={(formik.values.discount * 100).toFixed(2)}
                                 disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.discount} </p>
@@ -213,7 +213,7 @@ const EditQuoteForm = ({ id }) => {
                                 id="savings"
                                 name="savings"
                                 onChange={formik.handleChange}
-                                value={"$" + (formik.values.total_cost * formik.values.discount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                value={(formik.values.total_cost * formik.values.discount).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                 disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.savings}</p>
@@ -226,7 +226,7 @@ const EditQuoteForm = ({ id }) => {
                                 id="sale_price"
                                 name="sale_price"
                                 onChange={formik.handleChange}
-                                value={"$" + ((formik.values.total_cost - formik.values.savings) * formik.values.markup_variable).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                value={((formik.values.total_cost - formik.values.savings) * formik.values.markup_variable).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                 disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.sale_price}</p>
@@ -250,7 +250,7 @@ const EditQuoteForm = ({ id }) => {
                                 id="margin_dollars"
                                 name="margin_dollars"
                                 onChange={formik.handleChange}
-                                value={"$" + (((formik.values.total_cost * formik.values.discount) * formik.values.markup_variable) - (formik.values.total_cost * formik.values.discount)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                value={(((formik.values.total_cost * formik.values.discount) * formik.values.markup_variable) - (formik.values.total_cost * formik.values.discount)).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                 disabled
                             />
                             <p style={{ color: 'red' }}> {formik.errors.margin_dollars}</p>
