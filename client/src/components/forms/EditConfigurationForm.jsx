@@ -420,11 +420,11 @@ const EditConfigurationform = () => {
     })
 
     useEffect(() => {
-        const housingCharge = (housing ? parseFloat(formik.values.housing_charge, 10) : 0)
-        const motorTubeCharge = (motorTube ? parseFloat(formik.values.tube_charge, 10) : 0)
-        const sideTrackCharge = (sideTrack ? parseFloat(formik.values.tracks_charge, 10) : 0)
-        const hemBarCharge = (hemBar ? parseFloat(formik.values.hem_bar_charge, 10) : 0)
-        const fabricCharge = (fabric ? parseFloat(formik.values.fabric_charge, 10) : 0)
+        const housingCharge = (housing ? formik.values.housing_charge : 0)
+        const motorTubeCharge = (motorTube ? formik.values.tube_charge : 0)
+        const sideTrackCharge = (sideTrack ? formik.values.tracks_charge : 0)
+        const hemBarCharge = (hemBar ? formik.values.hem_bar_charge : 0)
+        const fabricCharge = (fabric ? formik.values.fabric_charge : 0)
         const total = housingCharge + motorTubeCharge + sideTrackCharge + hemBarCharge + fabricCharge + formik.values.motor_charge
         formik.setFieldValue('list_price', total);
     }, [formik.values.motor_charge, formik.values.unit_width, formik.values.unit_height, formik.values.housing_tube_size, formik.values.housing_type, formik.values.retention_type, formik.values.hem_bar_type, formik.values.fabric_type, formik.values.complete_unit, formik.values.housing_charge, formik.values.tracks_charge, formik.hem_bar_charge, formik.values.fabric_charge, formik.values.tube_charge,]);
@@ -1075,7 +1075,7 @@ const EditConfigurationform = () => {
                                     name="list_price"
                                     disabled
                                     onChange={formik.handleChange}
-                                    value={parseFloat(formik.values.list_price, 10).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                    value={formik.values.list_price}
                                 />
                                 <p style={{ color: 'red' }}> {formik.errors.list_price}</p>
                             </Col>

@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 
-from flask import request, session, make_response, jsonify, render_template
+from flask import request, session, make_response, jsonify, render_template, send_from_directory
 from flask_restful import Api, Resource
 import random
 from config import app, db, api
@@ -16,27 +16,27 @@ from seed import calculate_quote_info, update_quote_discount
 # create a custom decorator to conduct session check and apply to each of the resources
 
 # # # # # # # FOR PRODUCTION ONLY # # # # # # #
-@app.route("/", defaults={"path": ""})
-@app.route("/<path:path>")
-def catch_all(path):
-    if path != "" and os.path.exists(app.static_folder + '/' + path):
-        return send_from_directory(app.static_folder, path)
-    else:
-        return send_from_directory(app.static_folder, 'index.html')
+# @app.route("/", defaults={"path": ""})
+# @app.route("/<path:path>")
+# def catch_all(path):
+#     if path != "" and os.path.exists(app.static_folder + '/' + path):
+#         return send_from_directory(app.static_folder, path)
+#     else:
+#         return send_from_directory(app.static_folder, 'index.html')
 
-@app.errorhandler(404)
-def not_found(e):
-    return send_from_directory(app.static_folder, 'index.html'), 404
+# @app.errorhandler(404)
+# def not_found(e):
+#     return send_from_directory(app.static_folder, 'index.html'), 404
 
-api = Api(app, prefix="/api")
+# api = Api(app, prefix="/api")
 # # # # # # # END FOR PRODUCTION ONLY # # # # # # #
 
 
 # # # # # # # FOR DEV ONLY - TO RUN LOCALLY # # # # # # #
-# class Home(Resource):
-#   def get(self):
-#     return {'message' : 'Welcome to QP Development Database'}, 200
-# api.add_resource(Home, '/')
+class Home(Resource):
+  def get(self):
+    return {'message' : 'Welcome to QP Development Database'}, 200
+api.add_resource(Home, '/')
 # # # # # # # END FOR DEV ONLY - TO RUN LOCALLY # # # # # # #
   
 @app.before_request
@@ -44,9 +44,9 @@ def check_if_logged_in():
   if session.get('user_id') is None:
     session.clear()
     # return {'errors': 'Unauthorized Access'}, 401
-  else:
-      print('User is logged in')
-      print(session['user_id'])
+  # else:
+  #     print('User is logged in')
+  #     print(session['user_id'])
 
 class Accounts(Resource):
   def get(self):
@@ -81,7 +81,7 @@ class Accounts(Resource):
       state = form_data.get('state')
       zip_code = form_data.get('zip_code')
       phone = form_data.get('phone')
-      discount = form_data.get('discount')
+      discount = float(form_data.get('discount'))
       created_by = form_data.get('created_by')
 
       errors = []
@@ -462,7 +462,7 @@ class Quotes(Resource):
         elif not title:
           errors.append('A title must be assigned')
         elif not discount:
-          errros.append('A discount must be assigned')
+          errors.append('A discount must be assigned')
         # elif not savings:
         #   errors.append('Savings must be applied')
         # elif not sale_price:
@@ -739,159 +739,6 @@ class CustomerById(Resource):
     except ValueError as e:
       return {'errors' : str(e)}, 404
 
-# class Configurations(Resource):
-  # def get(self):
-  #   user_id = session.get("user_id")
-  #   if not user_id:
-  #     return {"error": "Unauthorized"}, 403
-  #   try:
-  #     configurations = [configuration.to_dict() for configuration in Configuration.query.all()]
-
-  #     if not configurations:
-  #       return {'errors' : '204: No content available'}, 204
-
-  #     return make_response(
-  #       configurations,
-  #       200
-  #     )
-  #   except ValueError as e:
-  #     return {'errors' : str(e)}, 404
-  #   except Exception as e:
-  #     return {'errors' : str(e)}, 500
-  
-  # def post(self):
-  #   user_id = session.get("user_id")
-  #   if not user_id:
-  #     return {"error": "Unauthorized"}, 403
-  #   try:
-  #     ## retrieve form data
-  #     form_data = request.get_json()
-
-  #     sku = form_data.get('sku')
-  #     product_title = form_data.get('product_title')
-  #     product_description = form_data.get('product_description')
-  #     cost = form_data.get('cost')
-  #     quote_id = form_data.get('quote_id')
-  #     created_by = form_data.get('created_by')
-
-  #     errors = []
-
-  #     if form_data:
-  #       if not sku:
-  #         errors.append('A sku must be entered')
-  #       if not product_title:
-  #         errors.append('A product title must be entered')
-  #       if not product_description:
-  #         errors.append('A product description must be entered')
-  #       if not cost:
-  #         errors.append('An account id must be associated with the configuration')
-  #       if not created_by:
-  #         errors.append('Created by must be populated')
-        
-  #       if errors:
-  #         return { 'errors' : errors }, 422
-        
-  #       new_configuration = Configuration(
-  #         sku = sku,
-  #         product_title = product_title,
-  #         product_description = product_description,
-  #         cost = cost,
-  #         quote_id = quote_id,
-  #         created_by = created_by
-  #       )
-
-  #       db.session.add(new_configuration)
-  #       db.session.commit()
-
-  #       if quote_id:
-  #         calculate_quote_info()
-
-  #       return new_configuration.to_dict(), 201
-  #   except ValueError as e:
-  #     return {'errors' : str(e)}
-  #   except Exception as e:
-  #     return {'errors' : str(e)}
-
-# class ConfigurationById(Resource):
-  # def get(self, id):
-  #   user_id = session.get("user_id")
-  #   if not user_id:
-  #     return {"error": "Unauthorized"}, 403
-  #   try:
-  #     configuration = Configuration.query.filter(Configuration.id == id).first()
-
-  #     if configuration:
-  #       return make_response(
-  #         configuration.to_dict(),
-  #         200
-  #       )
-  #     else:
-  #       return {"errors" : "404: That configuration does not exist."}, 404
-  #   except Exception as e:
-  #     return {"errors": str(e)}, 500
-  
-  # def patch(self, id):
-  #   user_id = session.get("user_id")
-  #   if not user_id:
-  #     return {"error": "Unauthorized"}, 403
-  #   try:
-  #     configuration = Configuration.query.filter(Configuration.id == id).first()
-
-  #     if configuration:
-  #       data = request.get_json()
-
-  #       for attr in data:
-  #         setattr(configuration, attr, data[attr])
-        
-  #       db.session.add(configuration)
-  #       db.session.commit()
-
-  #       cost = data.get('cost')
-  #       if cost:
-  #         calculate_quote_info()
-  #         ## this is temporary - don't know if a server side calc is good or not 
-  #         ## may want to do so from frontend
-
-  #       return make_response(
-  #         configuration.to_dict(), 200
-  #       )
-  #     else:
-  #       return {'errors' : '404: That configuation does not exist'}, 404
-  #   except Exception as e:
-  #     return {'errors' : str(e)}, 500
-  #   except ValueError as e:
-  #     return {'errors' : str(e)}, 404
-
-  # def delete(self, id):
-  #   user_id = session.get("user_id")
-  #   if not user_id:
-  #     return {"error": "Unauthorized"}, 403
-  #   try:
-  #     configuration = Configuration.query.filter(Configuration.id == id).first()
-  #     quote_id = configuration.quote_id
-
-  #     if configuration:
-        
-  #       db.session.delete(configuration)
-  #       db.session.commit()
-
-  #       response_body = {
-  #         'delete_successful' : True,
-  #         'message' : f'Configuration {id} has been deleted.'
-  #       }
-
-  #       calculate_quote_info(quote_id)
- 
-  #       return make_response(
-  #         response_body,
-  #         200
-  #       )
-  #     else:
-  #       {'errors' : '404:That configuration does not exist'}, 404
-  #   except Exception as e:
-  #     return {'errors' : str(e)}, 500
-  #   except ValueError as e:
-  #     return {'errors' : str(e)}, 404
 
 class Configurations(Resource):
   def get(self):
@@ -918,6 +765,7 @@ class Configurations(Resource):
     if not user_id:
       return {"error": "Unauthorized"}, 403
     try:
+      breakpoint()
       ## retrieve form data
       form_data = request.get_json()
 
@@ -929,40 +777,40 @@ class Configurations(Resource):
       hem_bar = form_data.get('hem_bar')
       fabric = form_data.get('fabric')
       motor_tube = form_data.get('motor_tube')
-      unit_width = form_data.get('unit_width')
-      unit_height = form_data.get('unit_height')
+      unit_width = float(form_data.get('unit_width'))
+      unit_height = float(form_data.get('unit_height'))
       housing_tube_size = form_data.get('housing_tube_size')
       housing_type = form_data.get('housing_type')
       motor_type = form_data.get('motor_type')
       motor_side = form_data.get('motor_side')
       power_chord = form_data.get('power_chord')
-      motor_charge = form_data.get('motor_charge')
-      tube_charge = form_data.get('tube_charge')
-      housing_charge = form_data.get('housing_charge')
+      motor_charge = float(form_data.get('motor_charge'))
+      tube_charge = float(form_data.get('tube_charge'))
+      housing_charge = float(form_data.get('housing_charge'))
       retention_type = form_data.get('retention_type')
       retention_cap_color = form_data.get('retention_cap_color')
-      left_retention = form_data.get('left_retention')
-      right_retention = form_data.get('right_retention')
+      # left_retention = form_data.get('left_retention')
+      # right_retention = form_data.get('right_retention')
       tracks_exact_length = form_data.get('tracks_exact_length')
-      tracks_charge = form_data.get('tracks_charge')
+      tracks_charge = float(form_data.get('tracks_charge'))
       hem_bar_type = form_data.get('hem_bar_type')
       hem_cap_color = form_data.get('hem_cap_color')
       pile_brush_style = form_data.get('pile_brush_style')
-      hem_bar_charge = form_data.get('hem_bar_charge')
+      hem_bar_charge = float(form_data.get('hem_bar_charge'))
       fabric_type = form_data.get('fabric_type')
       fabric_selection = form_data.get('fabric_selection')
-      seam_location = form_data.get('seam_location')
-      seam_location_num = form_data.get('seam_location_num')
+      # seam_location = form_data.get('seam_location')
+      # seam_location_num = form_data.get('seam_location_num')
       zipper_color = form_data.get('zipper_color')
-      usable_fabric_width = form_data.get('usable_fabric_width')
+      # usable_fabric_width = form_data.get('usable_fabric_width')
       rotate_fabric = form_data.get('rotate_fabric')
-      fabric_charge = form_data.get('fabric_charge')
+      fabric_charge = float(form_data.get('fabric_charge'))
       color_collection = form_data.get('color_collection')
       frame_color = form_data.get('frame_color')
-      powder_charge = form_data.get('powder_charge')
-      list_price = form_data.get('list_price')
-      quote_id = form_data.get('quote_id')
-      created_by = form_data.get('created_by') 
+      # powder_charge = form_data.get('powder_charge')
+      list_price = float(form_data.get('list_price'))
+      quote_id = int(form_data.get('quote_id'))
+      created_by = int(form_data.get('created_by')) 
 
       # errors = []
 
@@ -989,6 +837,7 @@ class Configurations(Resource):
       #   if errors:
       #     return { 'errors' : errors }, 422
         
+      
       new_screenconfiguration = ScreenConfiguration(
         project_name = project_name,
         unit_name = unit_name,
@@ -1010,8 +859,8 @@ class Configurations(Resource):
         housing_charge = housing_charge,
         retention_type = retention_type,
         retention_cap_color = retention_cap_color,
-        left_retention = left_retention,
-        right_retention = right_retention,
+        # left_retention = left_retention,
+        # right_retention = right_retention,
         tracks_exact_length = tracks_exact_length,
         tracks_charge = tracks_charge,
         hem_bar_type = hem_bar_type,
@@ -1020,15 +869,15 @@ class Configurations(Resource):
         hem_bar_charge = hem_bar_charge,
         fabric_type = fabric_type,
         fabric_selection = fabric_selection,
-        seam_location = seam_location,
-        seam_location_num = seam_location_num,
+        # seam_location = seam_location,
+        # seam_location_num = seam_location_num,
         zipper_color = zipper_color,
-        usable_fabric_width = usable_fabric_width,
-        rotate_fabric = rotate_fabric,
+        # usable_fabric_width = usable_fabric_width,
+        # rotate_fabric = rotate_fabric,
         fabric_charge = fabric_charge,
         color_collection = color_collection,
         frame_color = frame_color,
-        powder_charge = powder_charge,
+        # powder_charge = powder_charge,
         list_price = list_price,
         quote_id = quote_id,
         created_by = created_by,
