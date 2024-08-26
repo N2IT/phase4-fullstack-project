@@ -40,7 +40,7 @@ const EditConfigurationform = () => {
                 return configuration;
             });
             setConfigurations(updatedConfigurationsArray);
-            alert(`Configuration ${updatedConfiguration.id} has been updated`);
+            // alert(`Configuration ${updatedConfiguration.id} has been updated`);
         } else {
             console.error('Configurations is undefined.');
         }
@@ -396,6 +396,7 @@ const EditConfigurationform = () => {
                 }
             });
             if (Object.keys(changes).length > 1) {
+                
                 fetch(`/api/configurations/${id}`, {
                     method: "PATCH",
                     headers: {
@@ -403,6 +404,7 @@ const EditConfigurationform = () => {
                     },
                     body: JSON.stringify(changes),
                 })
+                    .then(alert('Changes are being applied. Click `OK` and wait to be redirected.'))
                     .then((res) => res.json())
                     .then((data) => {
                         if (data.errors) {
