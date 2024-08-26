@@ -2,10 +2,11 @@ import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as yup from "yup";
 import { AgentContext } from '../../AgentProvider';
+import Modal from 'react-bootstrap/Modal';
 
 const CreateNewConfiguration = () => {
 
-    const { agent, setConfiguration, errors, setErrors, quote, navigate, onSubmitNewQuoteForm } = useContext(AgentContext);
+    const { agent, setConfiguration, errors, setErrors, quote, navigate, onSubmitNewQuoteForm, show, handleClose, handleShow } = useContext(AgentContext);
 
     const formSchema = yup.object().shape({
         project_name: yup.string(),
@@ -103,7 +104,7 @@ const CreateNewConfiguration = () => {
                             setConfiguration(data),
                             onSubmitNewQuoteForm(),
                             // navigate(`/quotes/${quote.id}`),
-                            alert(`Configuration ${data.id} has been successfully created.`)
+                            handleShow()
                     }
                 })
         }
@@ -188,6 +189,17 @@ const CreateNewConfiguration = () => {
                 </form>
                 <p style={{ color: 'red' }}>{errors ? errors : null}</p>
             </div>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Configuration Confirmed!</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Your configuration is being processed. Your screen will automatically navigate once your configuration is safe and sound.</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </>
     )
 }

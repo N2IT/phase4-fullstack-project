@@ -765,7 +765,6 @@ class Configurations(Resource):
     if not user_id:
       return {"error": "Unauthorized"}, 403
     try:
-      breakpoint()
       ## retrieve form data
       form_data = request.get_json()
 
@@ -944,7 +943,6 @@ class ConfigurationById(Resource):
       return {'errors' : str(e)}, 404
 
   def delete(self, id):
-    # breakpoint()
     user_id = session.get("user_id")
     if not user_id:
       return {"error": "Unauthorized"}, 403
