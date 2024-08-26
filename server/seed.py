@@ -3,6 +3,7 @@ from random import randint, choice as rc, choices
 from datetime import datetime
 from faker import Faker
 from models import * 
+from sqlalchemy import text
 
 
 fake = Faker()
@@ -441,27 +442,41 @@ def update_quote_discount(discount, id):
 
 if __name__ == "__main__":
   with app.app_context():
-    print("Clearing db...")
-    db.session.commit()
-    Account.query.delete()
-    User.query.delete()
-    RolePermission.query.delete()
-    Role.query.delete()
-    Permission.query.delete()
-    Customer.query.delete()
-    ScreenConfiguration.query.delete()
-    # Configuration.query.delete()
-    Quote.query.delete()
+    session = db.session()
+
+    # Truncate all tables and reset primary key sequences
+    print("Truncating all tables...")
+    session.execute(text('''
+    DO $$ DECLARE\n
+        r RECORD;
+    BEGIN
+        FOR r IN (SELECT tablename FROM pg_tables WHERE schemaname = current_schema()) LOOP
+            EXECUTE 'TRUNCATE TABLE ' || quote_ident(r.tablename) || ' RESTART IDENTITY CASCADE';
+        END LOOP;
+    END $$;
+    '''))
+
+    # print("Clearing db...")
+    # User.query.delete()
+    # Account.query.delete()
+    # RolePermission.query.delete()
+    # Role.query.delete()
+    # Permission.query.delete()
+    # Customer.query.delete()
+    # ScreenConfiguration.query.delete()
+    # # Configuration.query.delete()
+    # Quote.query.delete()
+    # db.session.commit()
 
     print("Seeding accounts...")
     accounts = create_accounts()
     db.session.add_all(accounts)
     db.session.commit()
 
-    print('Seeding users...')
-    users = create_users()
-    db.session.add_all(users)
-    db.session.commit()
+    # print('Seeding users...')
+    # users = create_users()
+    # db.session.add_all(users)
+    # db.session.commit()
 
     print('Creating Roles...')
     role0=Role(title="admin")
@@ -533,6 +548,11 @@ if __name__ == "__main__":
     rp32 = RolePermission(role = role3, permission = p11, status = 'active')
 
     db.session.add_all([rp0,rp1,rp2,rp3,rp4,rp5,rp6,rp7,rp8,rp9,rp10,rp11,rp12,rp13,rp14,rp15,rp16,rp17,rp18,rp19,rp20,rp21,rp22,rp23,rp24,rp25,rp26,rp27,rp28,rp29,rp30,rp31,rp32])
+    db.session.commit()
+
+    print('Seeding users...')
+    users = create_users()
+    db.session.add_all(users)
     db.session.commit()
 
     print('seeding customers...')

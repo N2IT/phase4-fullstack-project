@@ -17,7 +17,7 @@ class Account(db.Model, SerializerMixin):
     city = db.Column(db.String)
     state = db.Column(db.String)
     zip_code = db.Column(db.Integer)
-    phone = db.Column(db.Integer)
+    phone = db.Column(db.String)
     discount = db.Column(db.Integer)
     status = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
@@ -67,7 +67,7 @@ class User(db.Model,SerializerMixin):
     status = db.Column(db.String)
     account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'), nullable = False)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
-    _password_hash = db.Column(db.String(12))
+    _password_hash = db.Column(db.String)
 
     @hybrid_property
     def password_hash(self):
@@ -198,7 +198,7 @@ class Customer(db.Model, SerializerMixin):
     first_name = db.Column(db.String, nullable = False)
     last_name = db.Column(db.String, nullable = False)
     email = db.Column(db.String, nullable = False, unique = True)
-    phone = db.Column(db.Integer, nullable = False, unique = True)
+    phone = db.Column(db.String, nullable = False, unique = True)
     address_1 = db.Column(db.String)
     address_2 = db.Column(db.String)
     city = db.Column(db.String)
