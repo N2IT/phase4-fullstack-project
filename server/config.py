@@ -21,16 +21,16 @@ naming_convention = {
 
 metadata = MetaData(naming_convention=naming_convention)
 
-# COMMENT OUT FOR PRODUCTION
-app = Flask(__name__)
+# COMMENT OUT WHEN RUNNING PRODUCTION
+# app = Flask(__name__)
 
-#COMMENT OUT FOR DEVELOPMENT
-# app = Flask(
-#     __name__,
-#     static_url_path='',
-#     static_folder='../client/dist',
-#     template_folder='../client/dist'
-# )
+#COMMENT OUT WHEN RUNNING DEVELOPMENT
+app = Flask(
+    __name__,
+    static_url_path='',
+    static_folder='../client/dist',
+    template_folder='../client/dist'
+)
 
 # app = Flask(
 #     __name__,
