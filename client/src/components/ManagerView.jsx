@@ -6,7 +6,13 @@ import CustomersTableByAccount from './tables/CustomersTableByAccount';
 import { AgentContext } from '../AgentProvider';
 import { useParams } from 'react-router-dom';
 import AccountCompCards from './AccountCompCards';
+import { Container } from 'react-bootstrap';
+import { Row } from 'react-bootstrap';
+import { Col } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
+import { Progress } from "@/components/ui/progress"
 
+// import {Column} from 'react-bootstrap';
 
 const ManagerView = ({ account }) => {
 
@@ -14,32 +20,39 @@ const ManagerView = ({ account }) => {
 
     const { agent, user } = useContext(AgentContext);
     const { id } = useParams()
-    const pastCustomers = () => {
-        console.log('created', account.customers.created_at)
-        console.log('typeof', typeof (account.customers.created_at))
-    }
-
-    pastCustomers()
 
     return (
         <>
             <div className='account-details'>
-                <h2>Hello, {agent.username}:</h2>
-                <h3>Account Details</h3>
-                <EditAccountFormGeneral id={id} />
+                <Container>
+                    <Row>
+                        <Col><h2>Hello, {agent.username}:</h2></Col>
+                    </Row>
+                    <Row>
+                        <Col><h3>Account Details</h3></Col>
+                    </Row>
+                </Container>
+                {/* <EditAccountFormGeneral id={id} /> */}
             </div>
-            <div>
-                <AccountCompCards account={account}/>
-            </div>
-            <div>
-                <UsersTableByAccount />
-            </div>
-            <div>
-                <QuotesTableByAccount />
-            </div>
-            <div>
-                <CustomersTableByAccount />
-            </div>
+            <Container>
+                <AccountCompCards account={account} />
+                <Card className='mb-3'>
+                    <Card.Body>
+                        <UsersTableByAccount />
+                    </Card.Body>
+                </Card>
+                <Card className='mb-3'>
+                    <Card.Body>
+                        <QuotesTableByAccount />
+                    </Card.Body>
+                </Card>
+                <Card>
+                    <Card.Body>
+                        <CustomersTableByAccount />
+                    </Card.Body>
+                </Card>
+
+            </Container>
         </>
     )
 

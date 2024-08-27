@@ -90,6 +90,7 @@ const EditAccountFormAdmin = ({ id }) => {
     return (
         <>
             <Container className='mt-3'>
+            <h3>Edit account details here:</h3>
                 <Form onSubmit={formik.handleSubmit}>
                     <Row>
                         <Col lg={3} md={4} sm={6} xs={12}>

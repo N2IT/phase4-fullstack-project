@@ -117,110 +117,90 @@ const AccountCompCards = ({ account }) => {
 
     return (
         <>
-            <Container>
-                <Row>
-                    <Col md={3} sm={6} xs={12} className='mb-3'>
-                        <Card style={{ maxWidth: '18rem', margin: 'auto', minHeight: '12rem' }}>
-                            <Card.Body className='text-center'>
-                                <Card.Title>Total Sales $</Card.Title>
-                                <Card.Text className='card-fontsize'>
-                                    $0.00
-                                </Card.Text>
-                                <Card.Subtitle className="mb-2 text-muted">+ or - % over prev 7 days</Card.Subtitle>
-                                {/* <Card.Link href={`/accounts/${account.id}/add-customer`}>Create New Customer</Card.Link> */}
-                                {/* <Card.Link href="#">Another Link</Card.Link> */}
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                    <Col md={3} sm={6} xs={12} className='mb-3'>
-                        <Card style={{ maxWidth: '18rem', margin: 'auto', minHeight: '12rem' }}>
-                            <Card.Body className='text-center'>
-                                <Card.Title>New Sales $</Card.Title>
-                                <Card.Text className='card-fontsize'>
-                                    $0.00
-                                </Card.Text>
-                                <Card.Subtitle className="mb-2 text-muted">+ or - % over prev 7 days</Card.Subtitle>
-                                {/* <Card.Link href={`/accounts/${account.id}/add-customer`}>Create New Customer</Card.Link> */}
-                                {/* <Card.Link href="#">Another Link</Card.Link> */}
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                    <Col md={3} sm={6} xs={12} className='mb-3'>
-                        <Card style={{ maxWidth: '18rem', margin: 'auto', minHeight: '12rem' }}>
-                            <Card.Body className='text-center'>
-                                <Card.Title>Total Quotes</Card.Title>
-                                <Card.Text className='card-fontsize'>
-                                    {account.quotes.length}
-                                </Card.Text>
-                                <Card.Subtitle className="mb-2 text-muted">{quoteChartComp()}</Card.Subtitle>
-                                {/* <Card.Link href={`/accounts/${account.id}/new-quote`}>Create New Quote</Card.Link> */}
-                                {/* <Card.Link href="#">Another Link</Card.Link> */}
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                    <Col md={3} sm={6} xs={12} className='mb-3'>
-                        <Card style={{ maxWidth: '18rem', margin: 'auto', minHeight: '12rem' }}>
-                            <Card.Body className='text-center'>
-                                <Card.Title>Total Quote $</Card.Title>
-                                <Card.Text className='card-fontsize'>${(quoteDollarsChartComp('get total')).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</Card.Text>
-                                <Card.Subtitle className="mb-2 text-muted">{quoteDollarsChartComp()}</Card.Subtitle>
-                                {/* <Card.Link href="#">Card Link</Card.Link>
-                                <Card.Link href="#">Another Link</Card.Link> */}
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                    <Col md={3} sm={6} xs={12} className='mb-3'>
-                        <Card style={{ maxWidth: '18rem', margin: 'auto', minHeight: '12rem' }}>
-                            <Card.Body className='text-center'>
-                                <Card.Title>New Quotes</Card.Title>
-                                <Card.Text className='card-fontsize'>
-                                    {quoteChartComp('get recent')}
-                                </Card.Text>
-                                <Card.Subtitle className="mb-2 text-muted">{quoteChartComp()}</Card.Subtitle>
-                                {/* <Card.Link href={`/accounts/${account.id}/new-quote`}>Create New Quote</Card.Link> */}
-                                {/* <Card.Link href="#">Another Link</Card.Link> */}
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                    <Col md={3} sm={6} xs={12} className='mb-3'>
-                        <Card style={{ maxWidth: '18rem', margin: 'auto', minHeight: '12rem' }}>
-                            <Card.Body className='text-center'>
-                                <Card.Title>Open Quotes</Card.Title>
-                                <Card.Text className='card-fontsize'>{openQuoteComp()}</Card.Text>
-                                <Card.Subtitle className="mb-2 text-muted">${(quoteDollarsChartComp('open total') / openQuoteComp()).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}<br /> Avg value open quotes</Card.Subtitle>
-                                {/* <Card.Link href="#">Card Link</Card.Link>
-                                <Card.Link href="#">Another Link</Card.Link> */}
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                    <Col md={3} sm={6} xs={12} className='mb-3'>
-                        <Card style={{ maxWidth: '18rem', margin: 'auto', minHeight: '12rem' }}>
-                            <Card.Body className='text-center'>
-                                <Card.Title>Total Customer Count</Card.Title>
-                                <Card.Text className='card-fontsize'>
-                                    {account.customers.length}
-                                </Card.Text>
-                                <Card.Subtitle className="mb-2 text-muted">{customerChartComp()}</Card.Subtitle>
-                                {/* <Card.Link href={`/accounts/${account.id}/add-customer`}>Create New Customer</Card.Link> */}
-                                {/* <Card.Link href="#">Another Link</Card.Link> */}
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                    <Col md={3} sm={6} xs={12} className='mb-3'>
-                        <Card style={{ maxWidth: '18rem', margin: 'auto', minHeight: '12rem' }}>
-                            <Card.Body className='text-center'>
-                                <Card.Title>New Customers</Card.Title>
-                                <Card.Text className='card-fontsize'>
-                                    {customerChartComp('get recent')}
-                                </Card.Text>
-                                <Card.Subtitle className="mb-2 text-muted">{customerChartComp()}</Card.Subtitle>
-                                {/* <Card.Link href={`/accounts/${account.id}/add-customer`}>Create New Customer</Card.Link> */}
-                                {/* <Card.Link href="#">Another Link</Card.Link> */}
-                            </Card.Body>
-                        </Card>
-                    </Col>
-                </Row>
-            </Container>
+            <Row className='mb-3'>
+                <Col sm={6}>
+                    <Card className='stat-card mt-3'>
+                        <Card.Body>
+                            {/* <Card.Title>Card Title</Card.Title> */}
+                            <Card.Subtitle className="mb-2"><h2>Company: {account.company_name}</h2></Card.Subtitle>
+                            <Card.Text>
+                                <p>Address: {account.address_1} {account.address_2} {account.city}, {account.state} </p>
+                                <p>Phone: {account.phone}</p>
+                            </Card.Text>
+                            {/* <Card.Link href="#">Card Link</Card.Link>
+                                    <Card.Link href="#">Another Link</Card.Link> */}
+                        </Card.Body>
+                    </Card>
+                </Col>
+                <Col sm={6}>
+                    <Card className='stat-card mt-3'>
+                        <Card.Body>
+                            <Card.Title>Quotes Approved / Not Ordered</Card.Title>
+                            <Card.Text className='card-fontsize'>
+                                4
+                            </Card.Text>
+                            {/* <Card.Subtitle className="mb-2 text-muted">+ or - % over prev 7 days</Card.Subtitle> */}
+                            {/* <Card.Link href={`/accounts/${account.id}/add-customer`}>Create New Customer</Card.Link> */}
+                            <Card.Link href="#">View quotes ready for order</Card.Link>
+                        </Card.Body>
+                    </Card>
+
+                </Col>
+            </Row>
+            <Row>
+                <Col md={3} sm={6} xs={12} className='mb-3'>
+                    <Card className='stat-card'>
+                        <Card.Body className='text-center'>
+                            <Card.Title>Sales Revenue</Card.Title>
+                            <Card.Text className='card-fontsize'>
+                                $45,983.90
+                            </Card.Text>
+                            <Card.Subtitle className="mb-2 text-muted">+ or - % over prev 7 days</Card.Subtitle>
+                            {/* <Card.Link href={`/accounts/${account.id}/add-customer`}>Create New Customer</Card.Link> */}
+                            {/* <Card.Link href="#">Another Link</Card.Link> */}
+                        </Card.Body>
+                    </Card>
+                </Col>
+                <Col md={3} sm={6} xs={12} className='mb-3'>
+                    <Card className='stat-card'>
+                        <Card.Body className='text-center'>
+                            <Card.Title>Orders</Card.Title>
+                            <Card.Text className='card-fontsize'>
+                                6
+                            </Card.Text>
+                            <Card.Subtitle className="mb-2 text-muted">+ or - % over prev 7 days</Card.Subtitle>
+                            {/* <Card.Link href={`/accounts/${account.id}/add-customer`}>Create New Customer</Card.Link> */}
+                            {/* <Card.Link href="#">Another Link</Card.Link> */}
+                        </Card.Body>
+                    </Card>
+                </Col>
+                <Col md={3} sm={6} xs={12} className='mb-3'>
+                    <Card className='stat-card'>
+                        <Card.Body className='text-center'>
+                            <Card.Title>Customers</Card.Title>
+                            <Card.Text className='card-fontsize'>
+                                {customerChartComp('get recent')}
+                            </Card.Text>
+                            <Card.Subtitle className="mb-2 text-muted">{customerChartComp()}</Card.Subtitle>
+                            {/* <Card.Link href={`/accounts/${account.id}/add-customer`}>Create New Customer</Card.Link> */}
+                            {/* <Card.Link href="#">Another Link</Card.Link> */}
+                        </Card.Body>
+                    </Card>
+                </Col>
+                <Col md={3} sm={6} xs={12} className='mb-3'>
+                    <Card className='stat-card'>
+                        <Card.Body className='text-center'>
+                            <Card.Title>Quotes</Card.Title>
+                            <Card.Text className='card-fontsize'>
+                                {quoteChartComp('get recent')}
+                            </Card.Text>
+                            <Card.Subtitle className="mb-2 text-muted">{quoteChartComp()}</Card.Subtitle>
+                            {/* <Card.Link href={`/accounts/${account.id}/new-quote`}>Create New Quote</Card.Link> */}
+                            {/* <Card.Link href="#">Another Link</Card.Link> */}
+                        </Card.Body>
+                    </Card>
+                </Col>
+            </Row>
         </>
     );
 }
