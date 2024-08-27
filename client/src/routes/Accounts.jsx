@@ -10,20 +10,18 @@ import { Button } from 'react-bootstrap';
 
 const Accounts = () => {
 
-  const { agent, accounts, navigate, setAccounts, setIsLoading } = useContext(AgentContext);
+  const { agent, navigate, setAccounts, setIsLoading } = useContext(AgentContext);
 
   useEffect(() => {
+
     fetch('/api/accounts')
+      .then(setIsLoading(true))
       .then((r) => r.json())
       .then((account) => setAccounts(account))
       .then(() => setIsLoading(false))
       .catch(error => console.error("Error:", error));
 
   }, [agent])
-
-  if (!accounts) {
-    return <div> Loading ... </div>
-  }
 
   return (
     <>

@@ -8,12 +8,10 @@ const AccountsTable = () => {
     const { accounts, handleIdClick, isLoading } = useContext(AgentContext);
 
     if (isLoading) {
-        return <Spinner animation="border" />;
+        return <div className='text-center'>
+            <Spinner animation="border" />
+        </div>
     }
-
-    // LEAVING OFF HERE TO WORK ON SPINNER
-    // CLEAN UP PROJECT REPO
-    // CREATE LOCAL VERSION OF THIS BRANCH TO WORK ON AND TEST FURTHER
 
     return (
         <>
