@@ -47,7 +47,7 @@ const UsersTableByAccount = () => {
                             <th>Username</th>
                             <th>First Name</th>
                             <th>Last Name</th>
-                            <th className='d-none d-sm-block'>Email</th>
+                            <th >Email</th>
                             {/* <th>STATUS</th> */}
                             <th>Action</th>
                         </tr>
@@ -58,7 +58,7 @@ const UsersTableByAccount = () => {
                                 <td>{user.username}</td>
                                 <td>{user.first_name}</td>
                                 <td>{user.last_name}</td>
-                                <td className='d-none d-sm-block'>{user.email}</td>
+                                <td >{user.email}</td>
                                 {/* <td>{user.role_id}</td> */}
                                 {/* <td>{user.status}</td> */}
                                 {agent.role_id === 3 ? (agent.username === user.username ?
