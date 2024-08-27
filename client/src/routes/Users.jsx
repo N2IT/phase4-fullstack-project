@@ -3,6 +3,7 @@ import Unauthorized from '../components/Unauthorized';
 import { AgentContext } from '../AgentProvider'
 import UsersTable from '../components/tables/UsersTable'
 import InvalidCredentials from '../components/InvalidCredentials';
+import { Container } from 'react-bootstrap';
 
 const Users = () => {
 
@@ -23,7 +24,7 @@ const Users = () => {
 
     localStorage.removeItem('account.id')
     localStorage.removeItem('account.discount')
-    
+
   }, [])
 
   if (isLoading) {
@@ -32,24 +33,27 @@ const Users = () => {
 
   return (
     <>
-    <div className="account-details">
-        {agent ? (agent.role_id === 1 ?
-          <div>
-            <h2>Users Table</h2>
-            <UsersTable />
-          </div>
-          : (
+      <div className="account-details">
+        <Container>
+
+          {agent ? (agent.role_id === 1 ?
             <div>
-              <InvalidCredentials />
+              <h2>Users Table</h2>
+              <UsersTable />
+            </div>
+            : (
+              <div>
+                <InvalidCredentials />
+              </div>
+            )
+          ) : (
+            <div>
+              <Unauthorized />
             </div>
           )
-        ) : (
-          <div>
-            <Unauthorized />
-          </div>
-        )
 
-        }
+          }
+        </Container>
       </div>
     </>
   );

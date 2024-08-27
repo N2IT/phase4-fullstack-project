@@ -30,7 +30,7 @@ const Accounts = () => {
       <div className="account-details">
         {agent ? (agent.role_id === 1 ?
           <Container>
-            <Row>
+            <Row className='mb-3'>
               <Col md={4} sm={12}>
                 <div>
                   <h2>Account Table</h2>

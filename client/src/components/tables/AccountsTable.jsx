@@ -14,9 +14,9 @@ const AccountsTable = () => {
                         <tr>
                             <th>ACCT NUMBER</th>
                             <th>COMPANY NAME</th>
-                            <th>STATE</th>
+                            <th className='remove-column'>STATE</th>
                             <th>PHONE</th>
-                            <th>DISCOUNT</th>
+                            <th className='remove-column'>DISCOUNT</th>
                             <th>ACTIONS</th>
                         </tr>
                     </thead>
@@ -25,9 +25,9 @@ const AccountsTable = () => {
                             <tr key={account.account_number} className="">
                                 <td>{account.account_number}</td>
                                 <td>{account.company_name}</td>
-                                <td>{account.state}</td>
+                                <td className='remove-column'>{account.state}</td>
                                 <td>{account.phone}</td>
-                                <td>{account.discount}</td>
+                                <td className='remove-column'>{account.discount}</td>
                                 <td><p className="view-btn" title="View Account" onClick={() => handleIdClick(account)}> View </p></td>
                             </tr>
                         ))}

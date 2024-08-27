@@ -13,10 +13,10 @@ const ConfigurationsTable = () => {
                     <thead>
                         <tr>
                             <th>Quote Number</th>
-                            <th>Sku</th>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Cost</th>
+                            <th className='remove-column'>Project Name</th>
+                            <th>Unit Name</th>
+                            <th>List Price</th>
+                            <th className='remove-column'>Complete Unit</th>
                             {/* <th>Account Number</th> */}
                             {/* <th>Company Name</th> */}
                             <th>Actions</th>
@@ -26,12 +26,10 @@ const ConfigurationsTable = () => {
                         {configurations.map((configuration) => (
                             <tr key={configuration.id} className="">
                                 <td>{configuration.quote.quote_number}</td>
-                                <td>{configuration.sku}</td>
-                                <td>{configuration.product_title}</td>
-                                <td>{configuration.product_description}</td>
-                                <td>${parseFloat(configuration.cost).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
-                                {/* <td>{configuration.quote.account.account_number}</td> */}
-                                {/* <td>{configuration.quote.account.company_name}</td> */}
+                                <td className='remove-column'>{configuration.project_name}</td>
+                                <td>{configuration.unit_name}</td>
+                                <td>${parseFloat(configuration.list_price).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                                <td className='remove-column'>{configuration.complete_unit === true ? 'true' : 'false'}</td>
                                 <td><p className="view-btn" title="View Configuration" onClick={() => handleIdClick(configuration)}> View </p></td>
                             </tr>
                         ))}

@@ -18,14 +18,14 @@ const QuotesTable = () => {
                             <th>Total Cost</th>
                             {/* <th>Discount</th>
                             <th>M. Variable</th> */}
-                            <th>Sale Price</th>
+                            <th className='remove-column'>Sale Price</th>
                             {/* <th>Margin %</th>
                             <th>Margin $</th> */}
                             {/* <th>Notes</th> */}
-                            <th>Status</th>
+                            <th className='remove-column'>Status</th>
                             {/* <th>Converted</th> */}
                             {/* <th>Created By</th> */}
-                            <th>Created At</th>
+                            <th className='remove-column'>Created At</th>
                             {/* <th>Customer</th> */}
                             {/* <th>Sales Order Number</th> */}
                             <th>View</th>
@@ -40,13 +40,13 @@ const QuotesTable = () => {
                                 <td>{quote.total_cost ? "$" + (parseFloat(quote.total_cost).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")) : null}</td>
                                 {/* <td>{quote.discount}</td>
                                 <td>{quote.markup_variable}</td> */}
-                                <td>{quote.sale_price ? "$" + (parseFloat(quote.sale_price).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")): null }</td>
+                                <td className='remove-column'>{quote.sale_price ? "$" + (parseFloat(quote.sale_price).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")): null }</td>
                                 {/* <td>{quote.margin_percentage}</td>
                                 <td>{quote.margin_dollars}</td> */}
                                 {/* <td>{quote.notes}</td> */}
-                                <td>{quote.status}</td>
+                                <td className='remove-column'>{quote.status}</td>
                                 {/* <td>{quote.created_by}</td> */}
-                                <td>{quote.created_at}</td>
+                                <td className='remove-column'>{quote.created_at}</td>
                                 {/* <td>{quote.customer.first_name}&nbsp;{quote.customer.last_name}</td> */}
                                 <td><p className="view-btn" title="View Quote" onClick={() => handleIdClick(quote)}> View </p></td>
                             </tr>

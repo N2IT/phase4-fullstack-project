@@ -18,10 +18,10 @@ const CustomersTable = () => {
                             <th>Last Name</th>
                             {/* <th>Discount</th>
                             <th>M. Variable</th> */}
-                            <th>Email</th>
+                            <th className='remove-column'>Email</th>
                             {/* <th>Margin %</th>
                             <th>Margin $</th> */}
-                            <th>Phone</th>
+                            <th className='remove-column'>Phone</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
@@ -31,8 +31,8 @@ const CustomersTable = () => {
                                 <td>{customer.id}</td>
                                 <td>{customer.first_name}</td>
                                 <td>{customer.last_name}</td>
-                                <td>{customer.email}</td>
-                                <td>{customer.phone}</td>
+                                <td className='remove-column'>{customer.email}</td>
+                                <td className='remove-column'>{customer.phone}</td>
                                 <td><p className="view-btn" title="View Quote" onClick={() => handleIdClick(customer)}> View </p></td>
                             </tr>
                         ))}
