@@ -577,6 +577,11 @@ class Customers(Resource):
       last_name = form_data.get('last_name')
       email = form_data.get('email')
       phone = form_data.get('phone')
+      address_1 = form_data.get('address_1')
+      address_2 = form_data.get('address_2')
+      city = form_data.get('city')
+      state = form_data.get('state')
+      zip_code = form_data.get('zip_code')
       notes = form_data.get('notes')
       account_id = form_data.get('account_id')
       created_by = form_data.get('created_by')
@@ -609,9 +614,14 @@ class Customers(Resource):
           last_name = last_name,
           email = email,
           phone = phone,
+          address_1 = address_1,
+          address_2 = address_2,
+          city = city,
+          state = state,
+          zip_code = zip_code,
           notes = notes,
           account_id = account_id,
-          created_by = created_by
+          created_by = created_by,
         )
 
         db.session.add(new_customer)
