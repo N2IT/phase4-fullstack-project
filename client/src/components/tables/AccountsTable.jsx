@@ -11,6 +11,10 @@ const AccountsTable = () => {
         return <Spinner animation="border" />;
     }
 
+    // LEAVING OFF HERE TO WORK ON SPINNER
+    // CLEAN UP PROJECT REPO
+    // CREATE LOCAL VERSION OF THIS BRANCH TO WORK ON AND TEST FURTHER
+
     return (
         <>
             <Table responsive striped bordered hover size='sm'>
