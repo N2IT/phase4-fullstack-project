@@ -4,6 +4,7 @@ import ConfigurationsTable from '../components/tables/ConfigurationsTable'
 import { AgentContext } from '../AgentProvider';
 import InvalidCredentials from '../components/InvalidCredentials';
 import { Container } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 
 const Configurations = () => {
 
@@ -31,8 +32,12 @@ const Configurations = () => {
         <Container>
           {agent ? (agent.role_id === 1 ?
             <div>
-              <h2>Configurations Table</h2>
-              <ConfigurationsTable />
+              <Card>
+                <Card.Body>
+                  <h2>Configurations Table</h2>
+                  <ConfigurationsTable />
+                </Card.Body>
+              </Card>
             </div>
             : (
               <div>

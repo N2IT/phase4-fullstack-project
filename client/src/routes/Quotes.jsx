@@ -4,6 +4,7 @@ import QuotesTable from '../components/tables/QuotesTable'
 import { AgentContext } from '../AgentProvider';
 import InvalidCredentials from '../components/InvalidCredentials';
 import { Container } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 
 const Quotes = () => {
 
@@ -31,8 +32,12 @@ const Quotes = () => {
         <Container>
           {agent ? (agent.role_id === 1 ?
             <div>
-              <h2>Quotes Table</h2>
-              <QuotesTable />
+              <Card>
+                <Card.Body>
+                  <h2>Quotes Table</h2>
+                  <QuotesTable />
+                </Card.Body>
+              </Card>
             </div>
             : (
               <div>

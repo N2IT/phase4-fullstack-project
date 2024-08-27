@@ -4,6 +4,7 @@ import { AgentContext } from '../AgentProvider'
 import UsersTable from '../components/tables/UsersTable'
 import InvalidCredentials from '../components/InvalidCredentials';
 import { Container } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 
 const Users = () => {
 
@@ -38,8 +39,12 @@ const Users = () => {
 
           {agent ? (agent.role_id === 1 ?
             <div>
-              <h2>Users Table</h2>
-              <UsersTable />
+              <Card>
+                <Card.Body>
+                  <h2>Users Table</h2>
+                  <UsersTable />
+                </Card.Body>
+              </Card>
             </div>
             : (
               <div>

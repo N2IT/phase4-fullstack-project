@@ -3,6 +3,8 @@ import { AgentContext } from '../AgentProvider';
 import Unauthorized from '../components/Unauthorized';
 import NewQuoteCustomersTableByAccount from '../components/tables/NewQuoteCustomersTableByAccount';
 import { useParams } from 'react-router-dom';
+import { Container } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 
 const NewQuote = () => {
 
@@ -18,9 +20,15 @@ const NewQuote = () => {
       <div className="account-details">
         {agent ? (
           <>
-            <h2>Get started with a new quote below.</h2>
-            <p>Choose from existing customer:</p>
-            <NewQuoteCustomersTableByAccount />
+            <Container>
+              <h2>Get started with a new quote below.</h2>
+              <p>Choose from existing customer:</p>
+              <Card className='mb-3'>
+                <Card.Body>
+                  <NewQuoteCustomersTableByAccount />
+                </Card.Body>
+              </Card>
+            </Container>
           </>
         ) :
           <Unauthorized />

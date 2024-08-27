@@ -7,6 +7,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Button } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 
 const Accounts = () => {
 
@@ -42,11 +43,11 @@ const Accounts = () => {
                 </div>
               </Col>
             </Row>
-            <Row>
-              <Col>
+            <Card className='mb-3'>
+              <Card.Body>
                 <AccountsTable />
-              </Col>
-            </Row>
+              </Card.Body>
+            </Card>
           </Container>
           : (
             <div>
