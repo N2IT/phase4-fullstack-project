@@ -3,16 +3,17 @@
 from flask import request, session, make_response, jsonify, render_template, send_from_directory
 from flask_restful import Api, Resource
 import random
-from config import app, db, api
-from models import Account, User, Role, Permission, RolePermission, Quote, Customer, Configuration
+# from config import app, db, api, os ## FOR LAUNCHING VIA GUNICORN (OS MISSING CAUSES ISSUE)
+from config import app, db, api ## FOR PRODUCTION (OS PRESENT LAUNCHES BACKEND IN BROWSER)
+from models import Account, User, Role, Permission, RolePermission, Quote, Customer, ScreenConfiguration
 from seed import calculate_quote_info, update_quote_discount
 
 # just imported Account, User above
 # need to write up the Routes now
 
 # user_id = session.get("user_id")
-#         if not user_id:
-#             return {"error": "Unauthorized"}, 403
+#   if not user_id:
+#       return {"error": "Unauthorized"}, 403
 # create a custom decorator to conduct session check and apply to each of the resources
 
 # # # # # # # FOR PRODUCTION ONLY # # # # # # #
@@ -31,15 +32,6 @@ from seed import calculate_quote_info, update_quote_discount
 # api = Api(app, prefix="/api")
 # # # # # # # END FOR PRODUCTION ONLY # # # # # # #
 
-@app.before_request
-def check_if_logged_in():
-  if session.get('user_id') is None:
-    session.clear()
-    # return {'errors': 'Unauthorized Access'}, 401
-  else:
-      print('User is logged in')
-      print(session['user_id'])
-
 
 # # # # # # # FOR DEV ONLY - TO RUN LOCALLY # # # # # # #
 class Home(Resource):
@@ -48,9 +40,20 @@ class Home(Resource):
 api.add_resource(Home, '/')
 # # # # # # # END FOR DEV ONLY - TO RUN LOCALLY # # # # # # #
   
+@app.before_request
+def check_if_logged_in():
+  if session.get('user_id') is None:
+    session.clear()
+    # return {'errors': 'Unauthorized Access'}, 401
+  # else:
+  #     print('User is logged in')
+  #     print(session['user_id'])
 
 class Accounts(Resource):
   def get(self):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       accounts = [account.to_dict(rules = ('-updated_at',)) for account in Account.query.all()]
 
@@ -79,7 +82,7 @@ class Accounts(Resource):
       state = form_data.get('state')
       zip_code = form_data.get('zip_code')
       phone = form_data.get('phone')
-      discount = form_data.get('discount')
+      discount = float(form_data.get('discount'))
       created_by = form_data.get('created_by')
 
       errors = []
@@ -138,6 +141,9 @@ class Accounts(Resource):
 
 class AccountById(Resource):
   def get(self,id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       account = Account.query.filter(Account.id == id).first()
       if account:
@@ -151,6 +157,9 @@ class AccountById(Resource):
         return {"errors": str(e)}, 500
 
   def patch(self,id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       account = Account.query.filter(Account.id == id).first()
       if account:
@@ -181,6 +190,9 @@ class AccountById(Resource):
       return {'errors' : str(e)}, 500
   
   def delete(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       account = Account.query.filter(Account.id == id).first()
       if account:
@@ -204,6 +216,9 @@ class AccountById(Resource):
 
 class UserById(Resource):
   def get(self,id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       user = User.query.filter(User.id == id).first()
       if user:
@@ -217,6 +232,9 @@ class UserById(Resource):
         return {"errors": str(e)}, 500
 
   def patch(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       user = User.query.filter(User.id == id).first()
       if user:
@@ -239,6 +257,9 @@ class UserById(Resource):
       return {'errors' : str(e)}, 500
   
   def delete(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       user = User.query.filter(User.id == id).first()
       if user:
@@ -265,6 +286,9 @@ class UserById(Resource):
 
 class Users(Resource):
   def get(self):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       users = [user.to_dict(rules = ('-_password_hash',)) for user in User.query.all()]
 
@@ -348,7 +372,7 @@ class CheckSession(Resource):
     if user_id:
       user = User.query.filter(User.id == user_id).first()
       if user:
-        return user.to_dict(),200
+        return user.to_dict(rules=('-_password_hash', '-account', '-email', '-first_name', '-updated_at', '-last_name', '-created_at', '-updated_by', '-created_by')),200
       else:
         # User ID in session but user not found in database
         return {'error': 'User not found'}, 404
@@ -373,7 +397,7 @@ class Login(Resource):
         return {'errors' : 'This users account is no longer active.'}, 401
 
     session['user_id'] = user.id
-    return user.to_dict(), 200
+    return user.to_dict(rules=('-_password_hash', '-account', '-email', '-first_name', '-updated_at', '-last_name', '-created_at', '-updated_by', '-created_by')), 200
 
 class Logout(Resource):
   def delete(self):
@@ -391,6 +415,9 @@ class Logout(Resource):
 
 class Quotes(Resource):
   def get(self):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       quotes = [quote.to_dict() for quote in Quote.query.all()]
 
@@ -407,6 +434,9 @@ class Quotes(Resource):
       return {'errors' : str(e)}, 500
 
   def post(self):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       form_data = request.get_json()
 
@@ -433,7 +463,7 @@ class Quotes(Resource):
         elif not title:
           errors.append('A title must be assigned')
         elif not discount:
-          errros.append('A discount must be assigned')
+          errors.append('A discount must be assigned')
         # elif not savings:
         #   errors.append('Savings must be applied')
         # elif not sale_price:
@@ -482,6 +512,9 @@ class Quotes(Resource):
 
 class QuoteById(Resource):
   def get(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       quote = Quote.query.filter(Quote.id == id).first()
 
@@ -497,13 +530,14 @@ class QuoteById(Resource):
   
 
   def patch(self, id):
-    # breakpoint()
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       quote = Quote.query.filter(Quote.id == id).first()
     
       if quote:
         data = request.get_json()
-        # breakpoint()
         if data:
           for attr in data:
             setattr(quote, attr, data[attr])
@@ -529,6 +563,9 @@ class QuoteById(Resource):
       return {'errors' : str(e)}, 500
 
   def delete(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       quote = Quote.query.filter(Quote.id == id).first()
 
@@ -555,6 +592,9 @@ class QuoteById(Resource):
 
 class Customers(Resource):
   def get(self):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       customers = [quote.to_dict() for quote in Customer.query.all()]
 
@@ -571,8 +611,10 @@ class Customers(Resource):
       return {'errors' : str(e)}, 500
   
   def post(self):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
-      breakpoint()
       form_data = request.get_json()
 
       first_name = form_data.get('first_name')
@@ -587,7 +629,6 @@ class Customers(Resource):
       notes = form_data.get('notes')
       account_id = form_data.get('account_id')
       created_by = form_data.get('created_by')
-      status = 'active'
 
       errors = []
 
@@ -625,7 +666,6 @@ class Customers(Resource):
           notes = notes,
           account_id = account_id,
           created_by = created_by,
-          status = status
         )
 
         db.session.add(new_customer)
@@ -643,6 +683,9 @@ class Customers(Resource):
 
 class CustomerById(Resource):
   def get(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       customer = Customer.query.filter(Customer.id == id).first()
 
@@ -657,6 +700,9 @@ class CustomerById(Resource):
       return {"errors": str(e)}, 500
 
   def patch(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       customer = Customer.query.filter(Customer.id == id).first()
       if customer:
@@ -678,6 +724,9 @@ class CustomerById(Resource):
       return {'errors' : str(e)}, 404
   
   def delete(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       customer = Customer.query.filter(Customer.id == id).first()
 
@@ -701,16 +750,20 @@ class CustomerById(Resource):
     except ValueError as e:
       return {'errors' : str(e)}, 404
 
+
 class Configurations(Resource):
   def get(self):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
-      configurations = [configuration.to_dict() for configuration in Configuration.query.all()]
+      screenconfigurations = [screenconfiguration.to_dict() for screenconfiguration in ScreenConfiguration.query.all()]
 
-      if not configurations:
+      if not screenconfigurations:
         return {'errors' : '204: No content available'}, 204
 
       return make_response(
-        configurations,
+        screenconfigurations,
         200
       )
     except ValueError as e:
@@ -719,50 +772,134 @@ class Configurations(Resource):
       return {'errors' : str(e)}, 500
   
   def post(self):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       ## retrieve form data
       form_data = request.get_json()
 
-      sku = form_data.get('sku')
-      product_title = form_data.get('product_title')
-      product_description = form_data.get('product_description')
-      cost = form_data.get('cost')
-      quote_id = form_data.get('quote_id')
-      created_by = form_data.get('created_by')
+      project_name = form_data.get('project_name')
+      unit_name = form_data.get('unit_name')
+      complete_unit = form_data.get('complete_unit')
+      housing = form_data.get('housing')
+      side_track = form_data.get('side_track')
+      hem_bar = form_data.get('hem_bar')
+      fabric = form_data.get('fabric')
+      motor_tube = form_data.get('motor_tube')
+      unit_width = float(form_data.get('unit_width'))
+      unit_height = float(form_data.get('unit_height'))
+      housing_tube_size = form_data.get('housing_tube_size')
+      housing_type = form_data.get('housing_type')
+      motor_type = form_data.get('motor_type')
+      motor_side = form_data.get('motor_side')
+      power_chord = form_data.get('power_chord')
+      motor_charge = float(form_data.get('motor_charge'))
+      tube_charge = float(form_data.get('tube_charge'))
+      housing_charge = float(form_data.get('housing_charge'))
+      retention_type = form_data.get('retention_type')
+      retention_cap_color = form_data.get('retention_cap_color')
+      # left_retention = form_data.get('left_retention')
+      # right_retention = form_data.get('right_retention')
+      tracks_exact_length = form_data.get('tracks_exact_length')
+      tracks_charge = float(form_data.get('tracks_charge'))
+      hem_bar_type = form_data.get('hem_bar_type')
+      hem_cap_color = form_data.get('hem_cap_color')
+      pile_brush_style = form_data.get('pile_brush_style')
+      hem_bar_charge = float(form_data.get('hem_bar_charge'))
+      fabric_type = form_data.get('fabric_type')
+      fabric_selection = form_data.get('fabric_selection')
+      # seam_location = form_data.get('seam_location')
+      # seam_location_num = form_data.get('seam_location_num')
+      zipper_color = form_data.get('zipper_color')
+      # usable_fabric_width = form_data.get('usable_fabric_width')
+      rotate_fabric = form_data.get('rotate_fabric')
+      fabric_charge = float(form_data.get('fabric_charge'))
+      color_collection = form_data.get('color_collection')
+      frame_color = form_data.get('frame_color')
+      # powder_charge = form_data.get('powder_charge')
+      list_price = float(form_data.get('list_price'))
+      quote_id = int(form_data.get('quote_id'))
+      created_by = int(form_data.get('created_by')) 
 
-      errors = []
+      # errors = []
 
-      if form_data:
-        if not sku:
-          errors.append('A sku must be entered')
-        if not product_title:
-          errors.append('A product title must be entered')
-        if not product_description:
-          errors.append('A product description must be entered')
-        if not cost:
-          errors.append('An account id must be associated with the configuration')
-        if not created_by:
-          errors.append('Created by must be populated')
+      # if form_data:
+      #   if not unit_width:
+      #     errors.append('A unit width must be entered')
+      #   if not unit_height:
+      #     errors.append('A unit height must be entered')
+      #   if not housing_tube_size:
+      #     errors.append('Housing and Tube size must be selected')
+      #   if not side_track:
+      #     errors.append('Housing type must be selected')
+      #   if not motor_type:
+      #     errors.append('A motor type must be selected')
+      #   if not motor_side:
+      #     errors.append('Please select a motor side')
+      #   if not side_track:
+      #     errors.append('Housing type must be selected')
+      #   if not motor_type:
+      #     errors.append('A motor type must be selected')
+      #   if not motor_type:
+      #     errors.append('A motor type must be selected')
+
+      #   if errors:
+      #     return { 'errors' : errors }, 422
         
-        if errors:
-          return { 'errors' : errors }, 422
-        
-        new_configuration = Configuration(
-          sku = sku,
-          product_title = product_title,
-          product_description = product_description,
-          cost = cost,
-          quote_id = quote_id,
-          created_by = created_by
-        )
+      
+      new_screenconfiguration = ScreenConfiguration(
+        project_name = project_name,
+        unit_name = unit_name,
+        complete_unit = complete_unit,
+        housing = housing,
+        side_track = side_track,
+        hem_bar = hem_bar,
+        fabric = fabric,
+        motor_tube = motor_tube,
+        unit_width = unit_width,
+        unit_height = unit_height,
+        housing_tube_size = housing_tube_size,
+        housing_type = housing_type,
+        motor_type = motor_type,
+        motor_side = motor_side,
+        power_chord = power_chord,
+        motor_charge = motor_charge,
+        tube_charge = tube_charge,
+        housing_charge = housing_charge,
+        retention_type = retention_type,
+        retention_cap_color = retention_cap_color,
+        # left_retention = left_retention,
+        # right_retention = right_retention,
+        tracks_exact_length = tracks_exact_length,
+        tracks_charge = tracks_charge,
+        hem_bar_type = hem_bar_type,
+        hem_cap_color = hem_cap_color,
+        pile_brush_style = pile_brush_style,
+        hem_bar_charge = hem_bar_charge,
+        fabric_type = fabric_type,
+        fabric_selection = fabric_selection,
+        # seam_location = seam_location,
+        # seam_location_num = seam_location_num,
+        zipper_color = zipper_color,
+        # usable_fabric_width = usable_fabric_width,
+        # rotate_fabric = rotate_fabric,
+        fabric_charge = fabric_charge,
+        color_collection = color_collection,
+        frame_color = frame_color,
+        # powder_charge = powder_charge,
+        list_price = list_price,
+        quote_id = quote_id,
+        created_by = created_by,
+      )
 
-        db.session.add(new_configuration)
-        db.session.commit()
+      db.session.add(new_screenconfiguration)
+      db.session.commit()
 
-        if quote_id:
-          calculate_quote_info()
+      if quote_id:
+        calculate_quote_info()
 
-        return new_configuration.to_dict(), 201
+      return new_screenconfiguration.to_dict(), 201
     except ValueError as e:
       return {'errors' : str(e)}
     except Exception as e:
@@ -770,12 +907,15 @@ class Configurations(Resource):
 
 class ConfigurationById(Resource):
   def get(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
-      configuration = Configuration.query.filter(Configuration.id == id).first()
+      screenconfiguration = ScreenConfiguration.query.filter(ScreenConfiguration.id == id).first()
 
-      if configuration:
+      if screenconfiguration:
         return make_response(
-          configuration.to_dict(),
+          screenconfiguration.to_dict(),
           200
         )
       else:
@@ -784,26 +924,27 @@ class ConfigurationById(Resource):
       return {"errors": str(e)}, 500
   
   def patch(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
-      configuration = Configuration.query.filter(Configuration.id == id).first()
+      screenconfiguration = ScreenConfiguration.query.filter(ScreenConfiguration.id == id).first()
 
-      if configuration:
+      if screenconfiguration:
         data = request.get_json()
 
         for attr in data:
-          setattr(configuration, attr, data[attr])
+          setattr(screenconfiguration, attr, data[attr])
         
-        db.session.add(configuration)
+        db.session.add(screenconfiguration)
         db.session.commit()
 
-        cost = data.get('cost')
+        cost = data.get('list_price')
         if cost:
           calculate_quote_info()
-          ## this is temporary - don't know if a server side calc is good or not 
-          ## may want to do so from frontend
 
         return make_response(
-          configuration.to_dict(), 200
+          screenconfiguration.to_dict(), 200
         )
       else:
         return {'errors' : '404: That configuation does not exist'}, 404
@@ -813,18 +954,21 @@ class ConfigurationById(Resource):
       return {'errors' : str(e)}, 404
 
   def delete(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
-      configuration = Configuration.query.filter(Configuration.id == id).first()
-      quote_id = configuration.quote_id
+      screenconfiguration = ScreenConfiguration.query.filter(ScreenConfiguration.id == id).first()
+      quote_id = screenconfiguration.quote_id
 
-      if configuration:
+      if screenconfiguration:
         
-        db.session.delete(configuration)
+        db.session.delete(screenconfiguration)
         db.session.commit()
 
         response_body = {
           'delete_successful' : True,
-          'message' : f'Configuration {id} has been deleted.'
+          'message' : f'ScreenConfiguration {id} has been deleted.'
         }
 
         calculate_quote_info(quote_id)
@@ -870,6 +1014,8 @@ api.add_resource(CustomerById, '/customers/<int:id>')
 api.add_resource(Configurations, '/configurations')
 api.add_resource(ConfigurationById, '/configurations/<int:id>')
 # api.add_resource(AccountsDiscountGreaterTen, '/accounts-greater')
+# api.add_resource(ScreenConfigurations, '/screen-configurations')
+# api.add_resource(ScreenConfigurationById, '/screen-configurations/<int:id>')
 
 if __name__ == "__main__":
   app.run(port=5000, debug=True)

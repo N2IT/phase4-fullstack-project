@@ -17,8 +17,8 @@ class Account(db.Model, SerializerMixin):
     city = db.Column(db.String)
     state = db.Column(db.String)
     zip_code = db.Column(db.Integer)
-    phone = db.Column(db.Integer)
-    discount = db.Column(db.Integer)
+    phone = db.Column(db.String)
+    discount = db.Column(db.Float)
     status = db.Column(db.String)
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     created_by = db.Column(db.Integer)
@@ -67,7 +67,7 @@ class User(db.Model,SerializerMixin):
     status = db.Column(db.String)
     account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'), nullable = False)
     role_id = db.Column(db.Integer, db.ForeignKey('roles.id'))
-    _password_hash = db.Column(db.String(12))
+    _password_hash = db.Column(db.String)
 
     @hybrid_property
     def password_hash(self):
@@ -198,7 +198,7 @@ class Customer(db.Model, SerializerMixin):
     first_name = db.Column(db.String, nullable = False)
     last_name = db.Column(db.String, nullable = False)
     email = db.Column(db.String, nullable = False, unique = True)
-    phone = db.Column(db.Integer, nullable = False, unique = True)
+    phone = db.Column(db.String, nullable = False, unique = True)
     address_1 = db.Column(db.String)
     address_2 = db.Column(db.String)
     city = db.Column(db.String)
@@ -208,7 +208,7 @@ class Customer(db.Model, SerializerMixin):
     created_by = db.Column(db.Integer)
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
     updated_by = db.Column(db.Integer)
-    notes = db.Column(db.String(500))
+    notes = db.Column(db.String)
     account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'), nullable = False)
     status = db.Column(db.String)
 
@@ -236,11 +236,11 @@ class Customer(db.Model, SerializerMixin):
             return {'errors' : '402: First and / or last name fields must be populated.'}
         return name
 
-    @validates('notes')
-    def validate_notes(self, key, notes):
-        if len(notes) > 500:
-            raise ValueError("You have exceeded the 500 character limit")
-        return notes
+    # @validates('notes')
+    # def validate_notes(self, key, notes):
+    #     if len(notes) > 500:
+    #         raise ValueError("You have exceeded the 500 character limit")
+    #     return notes
     
     @validates('account_id')
     def validate_account_id(self, key, account_id):
@@ -264,27 +264,27 @@ class Customer(db.Model, SerializerMixin):
         return f'Customer {self.id}, {self.first_name}, {self.last_name}, {self.email}, {self.phone}, {self.created_at}, {self.created_by}, {self.updated_at}, {self.updated_by}, {self.notes}, {self.account_id} '
 
 
-class Configuration(db.Model, SerializerMixin):
-    __tablename__ = 'configurations'
-    id = db.Column(db.Integer, primary_key = True)
-    sku = db.Column(db.Integer)
-    product_title = db.Column(db.String)
-    product_description = db.Column(db.String)
-    cost = db.Column(db.Integer)
-    quote_id = db.Column(db.Integer, db.ForeignKey('quotes.id'))
-    created_at = db.Column(db.DateTime, server_default=db.func.now())
-    created_by = db.Column(db.Integer)
-    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
-    updated_by = db.Column(db.Integer)
+# class Configuration(db.Model, SerializerMixin):
+#     __tablename__ = 'configurations'
+#     id = db.Column(db.Integer, primary_key = True)
+#     sku = db.Column(db.String)
+#     product_title = db.Column(db.String)
+#     product_description = db.Column(db.String)
+#     cost = db.Column(db.Integer)
+#     quote_id = db.Column(db.Integer, db.ForeignKey('quotes.id'))
+#     created_at = db.Column(db.DateTime, server_default=db.func.now())
+#     created_by = db.Column(db.Integer)
+#     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+#     updated_by = db.Column(db.Integer)
 
-    ##relationships
-    quote = db.relationship('Quote', back_populates = 'configurations')
+#     ##relationships
+#     quote = db.relationship('Quote', back_populates = 'configurations')
 
-    ##serialize
-    serialize_rules = ('-quote.configurations',)
+#     ##serialize
+#     serialize_rules = ('-quote.configurations',)
 
-    def __repr__(self):
-        return f'Configuration {self.id}, {self.sku}, {self.product_title}, {self.product_description}, {self.cost}'
+#     def __repr__(self):
+#         return f'Configuration {self.id}, {self.sku}, {self.product_title}, {self.product_description}, {self.cost}'
     
 
 class Quote(db.Model, SerializerMixin):
@@ -317,11 +317,72 @@ class Quote(db.Model, SerializerMixin):
 
     # relationships
     customer = db.relationship('Customer', back_populates = 'quotes')
-    configurations = db.relationship('Configuration', back_populates = 'quote', cascade='all, delete')
+    screenconfigurations = db.relationship('ScreenConfiguration', back_populates = 'quote', cascade='all, delete')
     account = db.relationship('Account', back_populates = 'quotes')
 
     ##serialize
-    serialize_rules = ('-customer.quotes','-customer.account_id', '-customer.created_at', '-customer.created_by', '-customer.id', '-customer.updated_at', '-customer.updated_by', '-configurations.quote', '-configurations.quote_id', '-account')
+    serialize_rules = ('-customer.quotes','-customer.account_id', '-customer.created_at', '-customer.created_by', '-customer.id', '-customer.updated_at', '-customer.updated_by', '-screenconfigurations.quote_id','-account')
 
     def __repr__(self):
         return f'Quote {self.id}, {self.quote_number}, {self.title}, {self.discount}, {self.savings}, {self.markup_variable}, {self.sale_price}, {self.margin_percentage}, {self.margin_dollars}, {self.notes}, {self.status}, {self.converted}, {self.created_at}, {self.created_by}, {self.updated_at}, {self.updated_by}'
+
+
+class ScreenConfiguration(db.Model, SerializerMixin):
+    __tablename__='screenconfigurations'
+    id = db.Column(db.Integer, primary_key = True)
+    project_name = db.Column(db.String)
+    unit_name = db.Column(db.String)
+    complete_unit = db.Column(db.Boolean)
+    housing = db.Column(db.Boolean)
+    side_track = db.Column(db.Boolean)
+    hem_bar = db.Column(db.Boolean)
+    fabric = db.Column(db.Boolean)
+    motor_tube = db.Column(db.Boolean)
+    unit_width = db.Column(db.Float)
+    unit_height = db.Column(db.Float)
+    housing_tube_size = db.Column(db.String)
+    housing_type = db.Column(db.String)
+    motor_type = db.Column(db.String)
+    motor_side = db.Column(db.String)
+    power_chord = db.Column(db.String)
+    motor_charge = db.Column(db.Float)
+    tube_charge = db.Column(db.Float)
+    housing_charge = db.Column(db.Float)
+    retention_type = db.Column(db.String)
+    retention_cap_color = db.Column(db.String)
+    # left_retention = db.Column(db.String)
+    # right_retention = db.Column(db.String)
+    tracks_exact_length = db.Column(db.Boolean)
+    tracks_charge = db.Column(db.Float)
+    hem_bar_type = db.Column(db.String)
+    hem_cap_color = db.Column(db.String)
+    pile_brush_style = db.Column(db.String)
+    hem_bar_charge = db.Column(db.Float)
+    fabric_type = db.Column(db.String)
+    fabric_selection = db.Column(db.String)
+    # seam_location = db.Column(db.String)
+    # seam_location_num = db.Column(db.Integer)
+    zipper_color = db.Column(db.String)
+    # usable_fabric_width = db.Column(db.Integer)
+    # rotate_fabric = db.Column(db.String)
+    fabric_charge = db.Column(db.Float)
+    color_collection = db.Column(db.String)
+    frame_color = db.Column(db.String)
+    powder_charge = db.Column(db.Float)
+    list_price = db.Column(db.Float)
+    quote_id = db.Column(db.Integer, db.ForeignKey('quotes.id'))
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
+    created_by = db.Column(db.Integer)
+    updated_at = db.Column(db.DateTime, onupdate=db.func.now())
+    updated_by = db.Column(db.Integer)
+
+    ##relationships
+    quote = db.relationship('Quote', back_populates = 'screenconfigurations')
+
+    ##serialize
+    serialize_rules = ('-quote.screenconfigurations',)
+
+    def __repr__(self):
+        return f'Configuration {self.id}, {self.project_name}, {self.unit_name}, {self.complete_unit}, {self.housing}, {self.side_track}, {self.hem_bar}, {self.fabric}, {self.motor_tube}, {self.unit_width}, {self.unit_height}, {self.housing_tube_size}, {self.housing_type}, {self. housing_type}, {self.motor_type}, {self. motor_side}, {self. power_chord}, {self.retention_type}, {self.retention_cap_color}, {self.left_retention}, {self.tracks_exact_length}, {self.hem_bar_type}, {self.hem_cap_color}, {self.pile_brush_style}, {self.fabric_type}, {self.fabric_selection}, {self.seam_location}, {self.seam_location_num}, {self.zipper_color}, {self.usable_fabric_width}, {self.rotate_fabric}, {self.color_collection}, {self.frame_color}, {self.list_price}, {self.quote_id}, {self.created_at}, {self.created_by}, {self.updated_at}, {self.updated_by}'
+
+    
