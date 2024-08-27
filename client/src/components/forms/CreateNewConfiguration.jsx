@@ -7,10 +7,11 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Form } from 'react-bootstrap';
 import { Button } from 'react-bootstrap';
+import { Modal } from 'react-bootstrap';
 
 const CreateNewConfiguration = () => {
 
-    const { agent, setConfiguration, errors, setErrors, quote, navigate, onSubmitNewQuoteForm } = useContext(AgentContext);
+    const { agent, setConfiguration, errors, setErrors, quote, navigate, onSubmitNewQuoteForm, show, handleClose, handleShow } = useContext(AgentContext);
 
     const [completeUnit, setAsCompleteUnit] = useState(true)
     const [housing, setHousing] = useState(true)
@@ -311,6 +312,7 @@ const CreateNewConfiguration = () => {
         },
         validationSchema: formSchema,
         onSubmit: (values) => {
+            handleShow()
             fetch("/api/configurations", {
                 method: "POST",
                 headers: {
@@ -322,10 +324,11 @@ const CreateNewConfiguration = () => {
                 .then((data) => {
                     {
                         data.errors ? setErrors(data.errors) :
-                            setConfiguration(data),
-                            onSubmitNewQuoteForm(),
-                            navigate(`/quotes/${quote.id}`),
-                            alert(`Configuration ${data.id} has been successfully created.`)
+                            setConfiguration(data)
+                            onSubmitNewQuoteForm()
+                            handleClose()
+                            navigate(`/quotes/${quote.id}`)
+                            // alert(`Configuration ${data.id} has been successfully created.`)
                     }
                 })
         }
@@ -1014,6 +1017,17 @@ const CreateNewConfiguration = () => {
                     <p style={{ color: 'red' }}>{errors ? errors : null}</p>
                 </div>
             </Container >
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Configuration Confirmed!</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Your configuration is being processed. Your screen will automatically refresh once your configuration is safe and sound.</Modal.Body>
+                <Modal.Footer>
+                    {/* <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button> */}
+                </Modal.Footer>
+            </Modal>
         </>
     )
 }

@@ -2,10 +2,11 @@ import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as yup from "yup";
 import { AgentContext } from '../../AgentProvider';
+import Modal from 'react-bootstrap/Modal';
 
 const CreateNewConfiguration = () => {
 
-    const { agent, setConfiguration, errors, setErrors, quote, navigate, onSubmitNewQuoteForm } = useContext(AgentContext);
+    const { agent, setConfiguration, errors, setErrors, quote, navigate, onSubmitNewQuoteForm, show, handleClose, handleShow } = useContext(AgentContext);
 
     const formSchema = yup.object().shape({
         project_name: yup.string(),
@@ -23,8 +24,8 @@ const CreateNewConfiguration = () => {
         housing_charge: yup.string(),
         retention_type: yup.string(),
         retention_cap_color: yup.string(),
-        left_retention: yup.string(),
-        right_retention: yup.string(),
+        // left_retention: yup.string(),
+        // right_retention: yup.string(),
         tracks_exact_length: yup.string(),
         tracks_charge: yup.string(),
         hem_bar_type: yup.string(),
@@ -33,15 +34,15 @@ const CreateNewConfiguration = () => {
         hem_bar_charge: yup.string(),
         fabric_type: yup.string(),
         fabric_selection: yup.string(),
-        seam_location: yup.string(),
-        seam_location_num: yup.string(),
+        // seam_location: yup.string(),
+        // seam_location_num: yup.string(),
         zipper_color: yup.string(),
-        usable_fabric_width: yup.string(),
-        rotate_fabric: yup.string(),
+        // usable_fabric_width: yup.string(),
+        // rotate_fabric: yup.string(),
         fabric_charge: yup.string(),
         color_collection: yup.string(),
         frame_color: yup.string(),
-        powder_charge: yup.string(),
+        // powder_charge: yup.string(),
         list_price: yup.string(),
         quote_id: yup.string(),
     })
@@ -58,31 +59,31 @@ const CreateNewConfiguration = () => {
             motor_tube: "",
             motor_side: "",
             power_chord: "",
-            motor_charge: "",
-            tube_charge: "",
-            housing_charge: "",
+            motor_charge: 0,
+            tube_charge: 0,
+            housing_charge: 0,
             retention_type: "",
             retention_cap_color: "",
-            left_retention: "",
-            right_retention: "",
+            // left_retention: "",
+            // right_retention: "",
             tracks_exact_length: "",
-            tracks_charge: "",
+            tracks_charge: 0,
             hem_bar_type: "",
             hem_cap_color: "",
             pile_brush_style: "",
-            hem_bar_charge: "",
+            hem_bar_charge: 0,
             fabric_type: "",
             fabric_selection: "",
             seam_location: "",
             seam_location_num: "",
             zipper_color: "",
-            usable_fabric_width: "",
-            rotate_fabric: "",
-            fabric_charge: "",
+            // usable_fabric_width: "",
+            // rotate_fabric: "",
+            fabric_charge: 0,
             color_collection: "",
             frame_color: "",
-            powder_charge: "",
-            list_price: "",
+            // powder_charge: 0,
+            list_price: 0,
             quote_id: `${quote.id}`,
             created_by: `${agent.id}`,
             status: true,
@@ -102,8 +103,8 @@ const CreateNewConfiguration = () => {
                         data.errors ? setErrors(data.errors) :
                             setConfiguration(data),
                             onSubmitNewQuoteForm(),
-                            navigate(`/quotes/${quote.id}`),
-                            alert(`Configuration ${data.id} has been successfully created.`)
+                            // navigate(`/quotes/${quote.id}`),
+                            handleShow()
                     }
                 })
         }
@@ -188,6 +189,17 @@ const CreateNewConfiguration = () => {
                 </form>
                 <p style={{ color: 'red' }}>{errors ? errors : null}</p>
             </div>
+            <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton>
+                    <Modal.Title>Configuration Confirmed!</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>Your configuration is being processed. Your screen will automatically navigate once your configuration is safe and sound.</Modal.Body>
+                <Modal.Footer>
+                    <Button variant="secondary" onClick={handleClose}>
+                        Close
+                    </Button>
+                </Modal.Footer>
+            </Modal>
         </>
     )
 }

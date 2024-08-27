@@ -20,9 +20,6 @@ const UsersTableByAccount = () => {
     // });
     const accountUsers = account.users
 
-    // NEED TO LOOK INTO WHY MANAGER LOGIN IS FAILING WHEN HEADING TO MY ACCOUNT PAGE
-    // LOGIN TO LIVE WITH INCOGNITO BROWSER TO TEST
-
     if (isLoading) {
         return <div>Loading ...</div>;
     }
@@ -44,12 +41,12 @@ const UsersTableByAccount = () => {
                 <Table responsive striped bordered hover size='sm'>
                     <thead>
                         <tr>
-                            <th>USERNAME</th>
-                            <th>FIRST NAME</th>
-                            <th>LAST NAME</th>
-                            <th>EMAIL</th>
+                            <th>Username</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th >Email</th>
                             {/* <th>STATUS</th> */}
-                            <th>ACTION</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -58,7 +55,7 @@ const UsersTableByAccount = () => {
                                 <td>{user.username}</td>
                                 <td>{user.first_name}</td>
                                 <td>{user.last_name}</td>
-                                <td>{user.email}</td>
+                                <td >{user.email}</td>
                                 {/* <td>{user.role_id}</td> */}
                                 {/* <td>{user.status}</td> */}
                                 {agent.role_id === 3 ? (agent.username === user.username ?

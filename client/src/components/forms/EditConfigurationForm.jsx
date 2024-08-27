@@ -40,7 +40,7 @@ const EditConfigurationform = () => {
                 return configuration;
             });
             setConfigurations(updatedConfigurationsArray);
-            alert(`Configuration ${updatedConfiguration.id} has been updated`);
+            // alert(`Configuration ${updatedConfiguration.id} has been updated`);
         } else {
             console.error('Configurations is undefined.');
         }
@@ -396,6 +396,7 @@ const EditConfigurationform = () => {
                 }
             });
             if (Object.keys(changes).length > 1) {
+                
                 fetch(`/api/configurations/${id}`, {
                     method: "PATCH",
                     headers: {
@@ -403,6 +404,7 @@ const EditConfigurationform = () => {
                     },
                     body: JSON.stringify(changes),
                 })
+                    .then(alert('Changes are being applied. Click `OK` and wait to be redirected.'))
                     .then((res) => res.json())
                     .then((data) => {
                         if (data.errors) {
@@ -425,7 +427,9 @@ const EditConfigurationform = () => {
         const sideTrackCharge = (sideTrack ? parseFloat(formik.values.tracks_charge, 10) : 0)
         const hemBarCharge = (hemBar ? parseFloat(formik.values.hem_bar_charge, 10) : 0)
         const fabricCharge = (fabric ? parseFloat(formik.values.fabric_charge, 10) : 0)
-        const total = housingCharge + motorTubeCharge + sideTrackCharge + hemBarCharge + fabricCharge + formik.values.motor_charge
+        const motorCharge = parseFloat(formik.values.motor_charge)
+        const total = housingCharge + motorTubeCharge + sideTrackCharge + hemBarCharge + fabricCharge + motorCharge
+        // const total = motorCharge
         formik.setFieldValue('list_price', total);
     }, [formik.values.motor_charge, formik.values.unit_width, formik.values.unit_height, formik.values.housing_tube_size, formik.values.housing_type, formik.values.retention_type, formik.values.hem_bar_type, formik.values.fabric_type, formik.values.complete_unit, formik.values.housing_charge, formik.values.tracks_charge, formik.hem_bar_charge, formik.values.fabric_charge, formik.values.tube_charge,]);
 
