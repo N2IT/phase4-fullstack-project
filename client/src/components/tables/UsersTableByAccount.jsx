@@ -44,12 +44,12 @@ const UsersTableByAccount = () => {
                 <Table responsive striped bordered hover size='sm'>
                     <thead>
                         <tr>
-                            <th>USERNAME</th>
-                            <th>FIRST NAME</th>
-                            <th>LAST NAME</th>
-                            <th className='d-none d-sm-block'>EMAIL</th>
+                            <th>Username</th>
+                            <th>First Name</th>
+                            <th>Last Name</th>
+                            <th className='d-none d-sm-block'>Email</th>
                             {/* <th>STATUS</th> */}
-                            <th>ACTION</th>
+                            <th>Action</th>
                         </tr>
                     </thead>
                     <tbody>

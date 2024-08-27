@@ -5,6 +5,7 @@ import Table from 'react-bootstrap/Table';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { Button } from 'react-bootstrap';
 
 const QuoteTableByCustomer = () => {
 
@@ -24,8 +25,8 @@ const QuoteTableByCustomer = () => {
                         agent.role_id === 1
                             ? null
                             :
-                            <Col md={4} sm={12}>
-                                <button type="button" onClick={() => newConfigurationHandleIdClick(customer)}>Create New Quote</button>
+                            <Col className="d-flex justify-content-end gap-2">
+                                <Button type="button" onClick={() => newConfigurationHandleIdClick(customer)}>Create New Quote</Button>
                             </Col>
                     }
                 </Row>
