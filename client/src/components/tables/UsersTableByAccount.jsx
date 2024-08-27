@@ -20,9 +20,6 @@ const UsersTableByAccount = () => {
     // });
     const accountUsers = account.users
 
-    // NEED TO LOOK INTO WHY MANAGER LOGIN IS FAILING WHEN HEADING TO MY ACCOUNT PAGE
-    // LOGIN TO LIVE WITH INCOGNITO BROWSER TO TEST
-
     if (isLoading) {
         return <div>Loading ...</div>;
     }
