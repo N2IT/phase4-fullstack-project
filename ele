@@ -1,0 +1,26 @@
+                                          Table "public.accounts"
+     Column     |            Type             | Collation | Nullable |               Default                
+----------------+-----------------------------+-----------+----------+--------------------------------------
+ id             | integer                     |           | not null | nextval('accounts_id_seq'::regclass)
+ account_number | integer                     |           | not null | 
+ company_name   | character varying           |           | not null | 
+ address_1      | character varying           |           |          | 
+ address_2      | character varying           |           |          | 
+ city           | character varying           |           |          | 
+ state          | character varying           |           |          | 
+ zip_code       | integer                     |           |          | 
+ phone          | character varying           |           |          | 
+ discount       | integer                     |           |          | 
+ status         | character varying           |           |          | 
+ created_at     | timestamp without time zone |           |          | now()
+ created_by     | integer                     |           |          | 
+ updated_at     | timestamp without time zone |           |          | 
+ updated_by     | integer                     |           |          | 
+Indexes:
+    "pk_accounts" PRIMARY KEY, btree (id)
+    "uq_accounts_company_name" UNIQUE CONSTRAINT, btree (company_name)
+Referenced by:
+    TABLE "customers" CONSTRAINT "fk_customers_account_id_accounts" FOREIGN KEY (account_id) REFERENCES accounts(id)
+    TABLE "quotes" CONSTRAINT "fk_quotes_account_id_accounts" FOREIGN KEY (account_id) REFERENCES accounts(id)
+    TABLE "users" CONSTRAINT "fk_users_account_id_accounts" FOREIGN KEY (account_id) REFERENCES accounts(id)
+

@@ -53,7 +53,7 @@ const AgentProvider = ({ children }) => {
             // setQuote(value)
             navigate(`/quotes/${value.id}`)
         }
-        else if (value.sku) {
+        else if (value.project_name) {
             setConfiguration(value)
             navigate(`/configurations/${value.id}`)
         }
@@ -93,15 +93,17 @@ const AgentProvider = ({ children }) => {
         handleEditClick()
     }
 
-    const handleUpdateConfiguration = (updatedConfiguration) => {
-        const updatedConfigurationsArray = configurations.map(configuration => {
-            if (configuration.id === updatedConfiguration.id)
-                return updatedConfiguration
-            else return configuration;
-        });
-        setConfigurations(updatedConfigurationsArray);
-        handleEditClick()
-    }
+    // const handleUpdateConfiguration = (updatedConfiguration) => {
+    //     debugger
+    //     const updatedConfigurationsArray = configurations.map(configuration => {
+    //         if (configuration.id === updatedConfiguration.id)
+    //             return updatedConfiguration
+    //         else return configuration;
+    //     });
+    //     setConfigurations(updatedConfigurationsArray);
+    //     alert(`Configuration ${updatedConfiguration.id} has been updated`)
+    //     handleEditClick()
+    // }
 
     const handleUpdateCustomer = (updatedCustomer) => {
         const updatedCustomersArray = customers.map(customer => {
@@ -141,12 +143,12 @@ const AgentProvider = ({ children }) => {
         history.go(-1)
     }
 
-    const deleteConfigurationObject = (id, configuration) => {
-        const updatedConfigurations = configurations.filter(configuration => configuration.id !== id);
-        setConfigurations(updatedConfigurations)
-        alert(`Configuration ${configuration.id} has been successfully deleted`)
-        history.go(-1)
-    }
+    // const deleteConfigurationObject = (id, configuration) => {
+    //     const updatedConfigurations = configurations.filter(configuration => configuration.id !== id);
+    //     setConfigurations(updatedConfigurations)
+    //     alert(`Configuration ${configuration.id} has been successfully deleted`)
+    //     history.go(-1)
+    // }
 
     const newConfigurationHandleIdClick = (value) => {
         setCustomer(value)
@@ -187,7 +189,7 @@ const AgentProvider = ({ children }) => {
                 customers,
                 disabled,
                 deleteAccountObject,
-                deleteConfigurationObject,
+                // deleteConfigurationObject,
                 deleteCustomerObject,
                 deleteQuoteObject,
                 deleteUserObject,
@@ -197,7 +199,7 @@ const AgentProvider = ({ children }) => {
                 handleIdClick,
                 handleShow,
                 handleUpdateAccount,
-                handleUpdateConfiguration,
+                // handleUpdateConfiguration,
                 handleUpdateCustomer,
                 handleUpdateUser,
                 handleUpdateQuote,

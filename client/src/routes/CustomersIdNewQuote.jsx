@@ -13,64 +13,59 @@ const CustomersIdNewQuote = () => {
 
     useEffect(() => {
         fetch(`/api/customers/${id}`)
-            .then(response => {
-                if (!response.ok) {
-                    return response.json().then(data => { throw data; });
-                }
-                return response.json();
-            })
-            .then(data => {
-                setCustomer(data);
-                setAsDisabled(true);
-                setErrors(null);
-            })
-            .catch(error => {
-                console.error('Errors:', error);
-                setErrors([error.errors] || ['Unknown Error']);
-                setCustomer(null);
-            });
-    }, [])
+        .then(response => {
+            if (!response.ok) {
+                return response.json().then(data => { throw data; });
+            }
+            return response.json();
+        })
+        .then(data => {
+            setCustomer(data);
+            setAsDisabled(true);
+            setErrors(null);
+        })
+        .catch(error => {
+            console.error('Errors:', error);
+            setErrors([error.errors] || ['Unknown Error']);
+            setCustomer(null);
+        });
+    },[id])
 
-    if (!customer) {
+    if (isLoading) {
+        return <div>Loading ...</div>;
+    }
+
+    if (!agent) {
         return (
-            <div>Loading...</div>
+            <Unauthorized />
         )
     }
 
-    else {
-
-        if (isLoading) {
-            return <div>Loading ...</div>;
-        }
-
-        if (!agent) {
-            return (
-                <Unauthorized />
-            )
-        }
-
-        if (agent.role_id === 1) {
-            return (
-                <div>
-                    {newQuotePageStatus ? <CreateNewQuoteForm /> : <CreateNewConfiguration />}
-                </div>
-            );
-        }
-
-        if (agent.role_id !== 1 && agent.account_id === customer.account_id) {
-            return (
-                <div>
-                    {newQuotePageStatus ? <CreateNewQuoteForm /> : <CreateNewConfiguration />}
-                </div>
-            );
-        }
-
+    if (agent.role_id === 1) {
         return (
             <div>
-                <InvalidCredentials />
+                {newQuotePageStatus ? <CreateNewQuoteForm /> : <CreateNewConfiguration />}
             </div>
         );
     }
+
+    if (!customer) {
+        return <div>Loading...</div>
+    }
+    
+    if (agent.role_id !== 1 && agent.account_id === customer.account_id) {
+        return (
+            <div>
+                {newQuotePageStatus ? <CreateNewQuoteForm /> : <CreateNewConfiguration />}
+            </div>
+        );
+    }
+
+    return (
+        <div>
+            <InvalidCredentials />
+        </div>
+    );
 }
 
 export default CustomersIdNewQuote

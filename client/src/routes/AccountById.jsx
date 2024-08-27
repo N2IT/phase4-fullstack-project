@@ -14,6 +14,9 @@ const AccountById = () => {
 
     useEffect(() => {
         setIsLoading(true)
+        // if (!agent) {
+        //     return;
+        // }
         fetch(`/api/accounts/${id}`)
             .then(response => {
                 if (!response.ok) {

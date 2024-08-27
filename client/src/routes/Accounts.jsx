@@ -6,6 +6,7 @@ import InvalidCredentials from '../components/InvalidCredentials';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { Button } from 'react-bootstrap';
 
 const Accounts = () => {
 
@@ -35,17 +36,18 @@ const Accounts = () => {
                   <h2>Account Table</h2>
                 </div>
               </Col>
-              <Col md={4} sm={12}>
-                <div>
-                  <button type="button" onClick={() => navigate('/create-new-account')}>Create New Account</button>
+              <Col>
+                <div className="d-flex justify-content-end gap-2">
+                  <Button onClick={() => navigate('/create-new-account')}>Create New Account</Button>
                 </div>
               </Col>
+            </Row>
+            <Row>
               <Col>
                 <AccountsTable />
               </Col>
             </Row>
           </Container>
-
           : (
             <div>
               <InvalidCredentials />

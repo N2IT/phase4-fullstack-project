@@ -9,7 +9,7 @@ const UsersTable = () => {
 
     return (
         <>
-            <Table responsive="sm" striped="columns">
+            <Table responsive striped bordered hover size='sm'>
                 <thead>
                     <tr>
                         <th>ID</th>

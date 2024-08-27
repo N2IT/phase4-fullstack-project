@@ -2,6 +2,9 @@ import React, { useContext } from 'react';
 import { useFormik } from 'formik';
 import * as yup from "yup";
 import { AgentContext } from '../../AgentProvider';
+import { Container } from 'react-bootstrap';
+import { Form } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 
 const LoginForm = () => {
 
@@ -36,10 +39,10 @@ const LoginForm = () => {
                 .then((agent) => {
                     setAgent(agent);
                     if (agent.role_id !== 1) {
-                        navigate(`accounts/${agent.account_id}`);
+                        navigate(`/accounts/${agent.account_id}`)
                     }
                     else {
-                        navigate('/')
+                        navigate('/');
                     }
                 })
         },
@@ -47,33 +50,35 @@ const LoginForm = () => {
 
     return (
         <>
-            <div>
-                <h2>Enter your credentials below:</h2>
-                <form onSubmit={formik.handleSubmit}>
-                    <label htmlFor="username">Username </label>
-                    <input
-                        type="text"
-                        id="username"
-                        name="username"
-                        onBlur={formik.handleBlur}
-                        onChange={formik.handleChange}
-                        value={formik.values.username}
-                    />
-                    <p style={{ color: 'red' }}> {formik.errors.username} </p>
-                    <label htmlFor="password">Password </label>
-                    <input
-                        type="password"
-                        id="password"
-                        name="password"
-                        onBlur={formik.handleBlur}
-                        onChange={formik.handleChange}
-                        value={formik.values.password}
-                    />
-                    <p style={{ color: 'red' }}> {formik.errors.password}</p>
-                    <button type="submit">Login</button>
-                </form>
-                <p style={{ color: 'red' }}>{errors ? errors : null}</p>
-            </div>
+            <Container>
+                <div>
+                    <h2>Enter your credentials below:</h2>
+                    <Form onSubmit={formik.handleSubmit}>
+                        <Form.Label htmlFor="username">Username </Form.Label>
+                        <Form.Control
+                            type="text"
+                            id="username"
+                            name="username"
+                            onBlur={formik.handleBlur}
+                            onChange={formik.handleChange}
+                            value={formik.values.username}
+                        />
+                        <p style={{ color: 'red' }}> {formik.errors.username} </p>
+                        <Form.Label htmlFor="password">Password </Form.Label>
+                        <Form.Control
+                            type="password"
+                            id="password"
+                            name="password"
+                            onBlur={formik.handleBlur}
+                            onChange={formik.handleChange}
+                            value={formik.values.password}
+                        />
+                        <p style={{ color: 'red' }}> {formik.errors.password}</p>
+                        <p><Button variant='primary' type="submit">Login</Button></p>
+                    </Form>
+                    <p style={{ color: 'red' }}>{errors ? errors : null}</p>
+                </div>
+            </Container>
         </>
     )
 }

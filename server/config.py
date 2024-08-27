@@ -21,17 +21,23 @@ naming_convention = {
 
 metadata = MetaData(naming_convention=naming_convention)
 
-# # # # # # # COMMENT OUT FOR PRODUCTION # # # # # # #
+# COMMENT OUT WHEN RUNNING PRODUCTION
 # app = Flask(__name__)
 
-# # # # # # # COMMENT OUT FOR DEVELOPMENT # # # # # # #
+#COMMENT OUT WHEN RUNNING DEVELOPMENT
 app = Flask(
     __name__,
     static_url_path='',
     static_folder='../client/dist',
     template_folder='../client/dist'
 )
-# # # # # # # COMMENT OUT FOR DEVELOPMENT # # # # # # #
+
+# app = Flask(
+#     __name__,
+#     static_url_path='/static',
+#     static_folder='../client/dist/static',
+#     template_folder='../client/dist'
+# )
 
 app.secret_key = os.getenv("FLASK_SECRET_KEY")
 app.config["SQLALCHEMY_DATABASE_URI"] = os.getenv("DATABASE_URI")
