@@ -7,6 +7,9 @@ import random
 from config import app, db, api ## FOR PRODUCTION (OS PRESENT LAUNCHES BACKEND IN BROWSER)
 from models import Account, User, Role, Permission, RolePermission, Quote, Customer, ScreenConfiguration
 from seed import calculate_quote_info, update_quote_discount
+from sqlalchemy.orm.session import make_transient
+import copy
+
 
 # just imported Account, User above
 # need to write up the Routes now
@@ -48,6 +51,7 @@ def check_if_logged_in():
   # else:
   #     print('User is logged in')
   #     print(session['user_id'])
+       
 
 class Accounts(Resource):
   def get(self):
@@ -984,6 +988,8 @@ class ConfigurationById(Resource):
     except ValueError as e:
       return {'errors' : str(e)}, 404
 
+        
+
 # class AccountsDiscountGreaterTen(Resource):
 #   def get(self):
 #     try:
@@ -999,7 +1005,54 @@ class ConfigurationById(Resource):
     # except Exception as e:
     #   return {'errors' : str(e)}
 
+class Duplicate(Resource):
+  def post(self):
+    breakpoint()
+  
+    data = request.get_json()
+    variable = data.get('id')
+    
+    configs = ScreenConfiguration.query.all()
+    origConfig = ScreenConfiguration.query.filter(ScreenConfiguration.id == variable).first()
+    if origConfig:
+      cloneConfig = copy.deepcopy(origConfig)
+      make_transient(cloneConfig)
+      cloneConfig.id = len(configs) + 2
+      
+      db.session.add(cloneConfig)
+      db.session.commit()
+      return {"message": "Configuration duplicated successfully"}, 200  # Return success response
+    else:
+      return {"errors": "404: That configuration does not exist"}, 404  # Properly formatted response
 
+    # Perform the desired backend action using the variable
+    # Example: result = some_function(variable)
+
+    # Respond back to the frontend
+    return jsonify({"message": "Success", "received_variable": variable})
+  # def get(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
+    try:
+      configs = ScreenConfiguration.query.all()
+      origConfig = ScreenConfiguration.query.filter(ScreenConfiguration.id == id).first()
+      if origConfig:
+        cloneConfig = copy.deepcopy(origConfig)
+        make_transient(cloneConfig)
+        cloneConfig.id = len(configs) + 2
+        
+        db.session.add(cloneConfig)
+        db.session.commit()
+        return {"message": "Configuration duplicated successfully"}, 200  # Return success response
+      else:
+        return {"errors": "404: That configuration does not exist"}, 404  # Properly formatted response
+    except Exception as e:
+      return {"errors": str(e)}, 500
+    except ValueError as e:
+      return {"errors": str(e)}, 404
+
+api.add_resource(Duplicate, '/api/duplicate-configuration')
 api.add_resource(Accounts, '/accounts')
 api.add_resource(AccountById, '/accounts/<int:id>')
 api.add_resource(Users, '/users')
