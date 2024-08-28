@@ -11,7 +11,7 @@ import Col from 'react-bootstrap/Col';
 import InvalidCredentials from '../components/InvalidCredentials';
 
 const ConfigurationById = () => {
-    const { agent, isLoading, configuration, setShow, deleteConfigurationObject, setConfiguration, setAsDisabled, setErrors, show, handleClose, handleShow } = useContext(AgentContext);
+    const { agent, isLoading, configuration, setShow, deleteConfigurationObject, show, handleClose, handleShow } = useContext(AgentContext);
     const { id } = useParams();
 
     const handleDeleteClick = () => {
@@ -21,30 +21,6 @@ const ConfigurationById = () => {
         deleteConfigurationObject(id, configuration)
         setShow(false)
     }
-
-    // useEffect(() => {
-    //     if (!agent) {
-    //         return;
-    //     }
-    //     fetch(`/api/configurations/${id}`)
-    //         .then(response => {
-    //             if (!response.ok) {
-    //                 return response.json().then(data => { throw data; });
-    //             }
-    //             return response.json();
-    //         })
-    //         .then(data => {
-    //             setConfiguration(data);
-    //             setAsDisabled(true);
-    //             setErrors(null);
-    //         })
-    //         .catch(error => {
-    //             console.error('Errors:', error);
-    //             setErrors([error.errors] || ['Unknown Error']);
-    //             setConfiguration(null);
-    //         });
-
-    // }, [id, agent]);
 
     if (isLoading) {
         return <div>Loading ...</div>;
