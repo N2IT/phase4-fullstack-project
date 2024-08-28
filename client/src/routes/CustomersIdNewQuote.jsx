@@ -43,6 +43,10 @@ const CustomersIdNewQuote = () => {
         )
     }
 
+    if (!customer) {
+        return <div>Loading...</div>
+    }
+
     if (agent.role_id === 1) {
         return (
             <div className='account-details'>
