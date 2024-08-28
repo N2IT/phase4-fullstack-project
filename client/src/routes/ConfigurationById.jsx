@@ -79,11 +79,9 @@ const ConfigurationById = () => {
                             <Col md={4} sm={12}>
                                 <h2>Configuration Details</h2>
                             </Col>
-                            <Col md={4} sm={12}>
-                                <button type="button" onClick={() => history.go(-1)}>Return to Prev. page</button>
-                            </Col>
-                            <Col md={4} sm={12}>
-                                {agent.role_id !== 3 ? <button type="button" onClick={() => handleShow()}>Delete Configuration</button> : null}
+                            <Col className="d-flex justify-content-end gap-2">
+                                <Button variant='dark' type="button" onClick={() => history.go(-1)}>Return to Prev. page</Button>
+                                {agent.role_id !== 3 ? <Button variant='danger' type="button" onClick={() => handleShow()}>Delete Configuration</Button> : null}
                             </Col>
                         </Row>
                         <Row>

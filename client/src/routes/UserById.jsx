@@ -10,6 +10,7 @@ import Col from 'react-bootstrap/Col';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
 import InvalidCredentials from '../components/InvalidCredentials';
+import { Card } from 'react-bootstrap';
 
 const UserById = () => {
     const { agent, setUser, user, isLoading, deleteUserObject, setAsDisabled, setShow, show, handleClose, handleShow, setErrors } = useContext(AgentContext)
@@ -82,7 +83,11 @@ const UserById = () => {
                         </Row>
                         <Row>
                             <Col>
-                                <EditUserFormAdminManager id={id} />
+                                <Card>
+                                    <Card.Body>
+                                        <EditUserFormAdminManager id={id} />
+                                    </Card.Body>
+                                </Card>
                             </Col>
                         </Row>
                     </div>
@@ -126,7 +131,11 @@ const UserById = () => {
                         </Row>
                         <Row>
                             <Col>
-                                <EditUserFormAdminManager id={id} />
+                                <Card>
+                                    <Card.Body>
+                                        <EditUserFormAdminManager id={id} />
+                                    </Card.Body>
+                                </Card>
                             </Col>
                         </Row>
                     </div>
@@ -163,7 +172,11 @@ const UserById = () => {
                             </Col>
                         </Row>
                         <Row>
-                            <EditUserFormSales id={id} />
+                            <Card>
+                                <Card.Body>
+                                    <EditUserFormSales id={id} />
+                                </Card.Body>
+                            </Card>
                         </Row>
                     </div>
                 </Container>

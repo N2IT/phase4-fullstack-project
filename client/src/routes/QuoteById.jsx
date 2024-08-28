@@ -10,6 +10,7 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { Card } from 'react-bootstrap';
 
 const QuoteById = () => {
     const { agent, customer, quote, handleClose, handleShow, show, setShow, setCustomer, setConfigurations, setQuote, setAsDisabled, errors = [], setErrors, isLoading, deleteQuoteObject } = useContext(AgentContext)
@@ -37,7 +38,7 @@ const QuoteById = () => {
                 setAsDisabled(true);
                 setErrors(null);
             });
-        }, [id]);
+    }, [id]);
 
     if (isLoading) {
         return <div> Loading ... </div>
@@ -63,16 +64,24 @@ const QuoteById = () => {
                                 {!quote.customer ?
                                     'Loading' :
                                     <Row>
-                                     <h3>For Customer: {quote.customer.first_name}&nbsp;{quote.customer.last_name} </h3>
-                                </Row>}
+                                        <h3>For Customer: {quote.customer.first_name}&nbsp;{quote.customer.last_name} </h3>
+                                    </Row>}
                                 <Row>
                                     <Col>
-                                        <EditQuoteForm id={id} />
+                                        <Card>
+                                            <Card.Body>
+                                                <EditQuoteForm id={id} />
+                                            </Card.Body>
+                                        </Card>
                                     </Col>
                                 </Row>
-                                <Row>
+                                <Row className='mt-3 mb-3'>
                                     <Col>
-                                        <ConfigurationsTableByQuote />
+                                        <Card>
+                                            <Card.Body>
+                                                <ConfigurationsTableByQuote />
+                                            </Card.Body>
+                                        </Card>
                                     </Col>
                                 </Row>
                             </div>

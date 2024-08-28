@@ -122,10 +122,9 @@ const AccountCompCards = ({ account }) => {
                     <Card className='stat-card mt-3'>
                         <Card.Body>
                             {/* <Card.Title>Card Title</Card.Title> */}
-                            <Card.Subtitle className="mb-2"><h2>Company: {account.company_name}</h2></Card.Subtitle>
+                            <Card.Subtitle className="mb-2"><h2>{account.company_name}</h2></Card.Subtitle>
                             <Card.Text>
-                                <p>Address: {account.address_1} {account.address_2} {account.city}, {account.state} </p>
-                                <p>Phone: {account.phone}</p>
+                                <p>{account.address_1} {account.address_2} <br /> {account.city}, {account.state} {account.zip_code}<br />{account.phone}</p>
                             </Card.Text>
                             {/* <Card.Link href="#">Card Link</Card.Link>
                                     <Card.Link href="#">Another Link</Card.Link> */}

@@ -9,6 +9,7 @@ import { AgentContext } from '../AgentProvider';
 import QuoteTableByCustomer from '../components/tables/QuoteTableByCustomer';
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import { Card } from 'react-bootstrap';
 
 
 const CustomerById = () => {
@@ -70,12 +71,20 @@ const CustomerById = () => {
                                 </Row>
                                 <Row>
                                     <Col>
-                                        <EditCustomerForm id={id} />
+                                        <Card>
+                                            <Card.Body>
+                                                <EditCustomerForm id={id} />
+                                            </Card.Body>
+                                        </Card>
                                     </Col>
                                 </Row>
-                                <Row>
+                                <Row className='mt-3 mb-3'>
                                     <Col>
-                                        <QuoteTableByCustomer />
+                                        <Card>
+                                            <Card.Body>
+                                                <QuoteTableByCustomer />
+                                            </Card.Body>
+                                        </Card>
                                     </Col>
                                 </Row>
                             </div>
