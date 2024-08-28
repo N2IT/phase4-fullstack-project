@@ -931,7 +931,54 @@ class ConfigurationById(Resource):
     # except Exception as e:
     #   return {'errors' : str(e)}
 
+class Duplicate(Resource):
+  def post(self):
+  
+    data = request.get_json()
+    variable = data.get('id')
+    
+    configs = ScreenConfiguration.query.all()
+    origConfig = ScreenConfiguration.query.filter(ScreenConfiguration.id == variable).first()
+    if origConfig:
+      cloneConfig = copy.deepcopy(origConfig)
+      make_transient(cloneConfig)
+      cloneConfig.id = len(configs) + 2
+      
+      db.session.add(cloneConfig)
+      db.session.commit()
+      return {"message": "Configuration duplicated successfully"}, 200  # Return success response
+    else:
+      return {"errors": "404: That configuration does not exist"}, 404  # Properly formatted response
 
+    # Perform the desired backend action using the variable
+    # Example: result = some_function(variable)
+
+    # Respond back to the frontend
+    return jsonify({"message": "Success", "received_variable": variable})
+  # def get(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
+    try:
+      configs = ScreenConfiguration.query.all()
+      origConfig = ScreenConfiguration.query.filter(ScreenConfiguration.id == id).first()
+      if origConfig:
+        cloneConfig = copy.deepcopy(origConfig)
+        make_transient(cloneConfig)
+        cloneConfig.id = len(configs) + 2
+        
+        db.session.add(cloneConfig)
+        db.session.commit()
+        return {"message": "Configuration duplicated successfully"}, 200  # Return success response
+      else:
+        return {"errors": "404: That configuration does not exist"}, 404  # Properly formatted response
+    except Exception as e:
+      return {"errors": str(e)}, 500
+    except ValueError as e:
+      return {"errors": str(e)}, 404
+
+
+api.add_resource(Duplicate, '/api/duplicate-configuration')
 api.add_resource(Accounts, '/accounts')
 api.add_resource(AccountById, '/accounts/<int:id>')
 api.add_resource(Users, '/users')

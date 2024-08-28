@@ -22,6 +22,26 @@ const ConfigurationById = () => {
         setShow(false)
     }
 
+    const duplicateConfig = async () => {
+        try {
+            // Make the POST request to the backend, including the id variable
+            const response = await fetch('http://127.0.0.1:5000/api/duplicate-configuration', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ id }), // Send the id to the backend
+            });
+
+            const result = await response.json();
+            console.log('Backend Response:', result); // Handle the response as needed
+            history.go(-1)
+            alert('The configuration has been cloned')
+        } catch (error) {
+            console.error('Error calling backend:', error);
+        }
+    };
+
     if (isLoading) {
         return <div>Loading ...</div>;
     }
@@ -58,6 +78,7 @@ const ConfigurationById = () => {
                             <Col className="d-flex justify-content-end gap-2">
                                 <Button variant='dark' type="button" onClick={() => history.go(-1)}>Return to Prev. page</Button>
                                 {agent.role_id !== 3 ? <Button variant='danger' type="button" onClick={() => handleShow()}>Delete Configuration</Button> : null}
+                                <Button variant='secondary' type='button' onClick={() => duplicateConfig()}>Duplicate Configuration</Button>
                             </Col>
                         </Row>
                         <Row>
@@ -96,6 +117,7 @@ const ConfigurationById = () => {
                             <Col className="d-flex justify-content-end gap-2">
                                 <Button variant='dark' type="button" onClick={() => history.go(-1)}>Return to Prev. page</Button>
                                 {agent.role_id !== 3 ? <Button variant='danger' type="button" onClick={() => handleShow()}>Delete Configuration</Button> : null}
+                                <Button variant='secondary' type='button' onClick={() => duplicateConfig()}>Duplicate Configuration</Button>
                             </Col>
                         </Row>
                         <Row>
