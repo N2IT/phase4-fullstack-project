@@ -1007,7 +1007,6 @@ class ConfigurationById(Resource):
 
 class Duplicate(Resource):
   def post(self):
-    breakpoint()
   
     data = request.get_json()
     variable = data.get('id')
