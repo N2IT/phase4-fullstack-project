@@ -25,7 +25,7 @@ const ConfigurationById = () => {
     const duplicateConfig = async () => {
         try {
             // Make the POST request to the backend, including the id variable
-            const response = await fetch('http://127.0.0.1:5000/api/duplicate-configuration', {
+            const response = await fetch('/api/duplicate-configuration', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json',

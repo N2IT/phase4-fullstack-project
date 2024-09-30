@@ -433,6 +433,38 @@ def calculate_quote_info(quote_id=None):
     
   db.session.commit()
 
+def recalculate_quote_totals(quote_id):
+  quote = Quote.query.filter(Quote.id == quote_id).first()
+  if not quote.screenconfigurations and not quote.add_on_accessories:
+    quote.total_cost = None
+    quote.savings = None
+    quote.sale_price = None
+    quote.margin_percentage = None
+    quote.margin_dollars = None
+
+    db.session.add(quote)
+  
+  else:
+    configurationTotals = [config.list_price for config in quote.screenconfigurations]
+    # accessoryTotals = [accessory.prod_cost for accessory in quote.add_on_accessories]
+    configSum = sum(configurationTotals)
+    # accessorySum = sum(accessoryTotals)
+
+    total_cost = configSum
+    
+    cost_w_savings = total_cost - (total_cost * quote.discount)
+
+    # Calculate the financial metrics
+    quote.total_cost = total_cost
+    quote.savings = total_cost * quote.discount
+    quote.sale_price = cost_w_savings * quote.markup_variable
+    quote.margin_percentage = ((quote.sale_price - cost_w_savings) / cost_w_savings)
+    quote.margin_dollars = quote.sale_price - cost_w_savings
+
+    db.session.add(quote)
+  
+  db.session.commit()
+
 def update_quote_discount(discount, id):
   quote = Quote.query.filter(Quote.account_id == id).first()
   quote.discount = discount
