@@ -1,5 +1,5 @@
 import CreateNewQuoteForm from "../components/forms/CreateNewQuoteForm";
-import CreateNewConfiguration from "../components/forms/TemplarKnightShadeProductForm";
+import CreateNewConfiguration from "../components/forms/NewConfigFormReference";
 import Unauthorized from "../components/Unauthorized";
 import { useContext, useEffect } from "react";
 import { AgentContext } from '../AgentProvider';
