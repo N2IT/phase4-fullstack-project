@@ -1,0 +1,15 @@
+## Git Selective Merge Process
+git checkout <branch>
+git merge --no-commit --no-ff <branch to be merged>
+
+## Reset specific db files as these do not merge without conflicts
+git reset HEAD server/instance/app.db server/config.py server/app.py
+git checkout -- server/instance/app.db server/config.py server/app.py
+
+## Complete the merge
+git commit -m "Merge <branch that was merged> into <branch> with selective file updates"
+
+
+## Git delete branch on github
+## ONLY after deleting locally
+git push origin --delete <branch-name>
