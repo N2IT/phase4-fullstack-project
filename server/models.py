@@ -426,4 +426,16 @@ class Order(db.Model, SerializerMixin):
     def __repr__(self):
         return f'Order {self.id}, {self.orderNumber}, {self.orderDate}, {self.status}, {self.notes}, {self.termsAndConditions}, {self.account_id}, {self.customer_id}, {self.quote_id}, {self.customer_id}, {self.user_id}, {self.created_by}'
     
+
+# create new resource called Demo, with table name 'demos' and include three attributes: id, name, and description
+class Demo(db.Model, SerializerMixin):
+    __tablename__ = 'demos'
+    id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.String)
+    description = db.Column(db.String)
+
+    def __repr__(self):
+        return f'Demo {self.id}, {self.name}, {self.description}'   
+
+
     
