@@ -1,5 +1,5 @@
 import { useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import EditQuoteForm from '../components/forms/EditQuoteForm';
 // import SalesEditUserForm from '../components/SalesEditUserForm';
 import Unauthorized from '../components/Unauthorized';
@@ -12,8 +12,9 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Card } from 'react-bootstrap';
 
+
 const QuoteById = () => {
-    const { agent, customer, quote, handleClose, handleShow, show, setShow, setCustomer, setConfigurations, setQuote, setAsDisabled, errors = [], setErrors, isLoading, deleteQuoteObject } = useContext(AgentContext)
+    const { agent, customer, quote, handleClose, handleShow, show, setShow, setCustomer, setConfigurations, setQuote, setAsDisabled, errors = [], setErrors, isLoading, deleteQuoteObject, navigate } = useContext(AgentContext)
     const { id } = useParams();
 
     const handleDeleteClick = () => {
@@ -58,6 +59,7 @@ const QuoteById = () => {
                                     </Col>
                                     <Col className="d-flex justify-content-end gap-2">
                                         <Button variant='dark' type="button" onClick={() => history.go(-1)}>Return to Prev. page</Button>
+                                        <Button variant = 'light' type="button" onClick={() => navigate(`quotes/${id}/preview`)}>Preview Quote</Button>
                                         {agent.role_id !== 3 ? <Button variant='danger' type="button" onClick={() => handleShow()}>Delete Quote</Button> : null}
                                     </Col>
                                 </Row>

@@ -55,7 +55,7 @@ const AccountCompCards = ({ account }) => {
             return 'No quotes from the previous week to compare.';
         }
         let calculated = (pastSevenDays.length - older.length) / older.length;
-        return '+' + calculated.toFixed(2) + '%' + 'from last week';
+        return calculated.toFixed(2) + '%' + 'from last week';
     };
 
     const openQuoteComp = () => {

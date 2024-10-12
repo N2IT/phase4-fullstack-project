@@ -465,6 +465,17 @@ def recalculate_quote_totals(quote_id):
   
   db.session.commit()
 
+def update_screen_configuration_order_id(id):
+    screenconfigurations = ScreenConfiguration.query.all()
+    order = Order.query.get(id)
+
+    for screenconfiguration in screenconfigurations:
+      if screenconfiguration.quote_id == order.quote_id:
+        screenconfiguration.order_id = order.id
+
+    # Commit the changes to the database
+    db.session.commit()
+
 def update_quote_discount(discount, id):
   quote = Quote.query.filter(Quote.account_id == id).first()
   quote.discount = discount

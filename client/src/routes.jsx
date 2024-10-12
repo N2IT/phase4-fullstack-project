@@ -20,6 +20,7 @@ import AccountIdAddCustomer from './routes/AccountIdAddCustomer';
 import CreateNewAccountFormAdmin from './components/forms/CreateNewAccountFormAdmin';
 import CustomersIdNewQuote from './routes/CustomersIdNewQuote';
 import CustomersByAccountId from './routes/CustomersByAccountId';
+import QuotePreviewById from './routes/QuotePreviewById';
 
 const routes = [
     {
@@ -90,6 +91,10 @@ const routes = [
             {
                 path: 'quotes/:id',
                 element: <QuoteById />
+            },
+            {
+                path: 'quotes/:id/preview',
+                element: <QuotePreviewById />
             },
             {
                 path: 'sign-up',

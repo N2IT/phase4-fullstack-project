@@ -42,7 +42,7 @@ const ConfigurationsTableByQuote = () => {
                     <tbody>
                         {quoteConfigurations.map((configuration) => (
                             <tr key={configuration.id} className="">
-                                <td>{configuration.quote.quote_number}</td>
+                                <td>{quote.quote_number}</td>
                                 <td>{configuration.project_name}</td>
                                 <td>{configuration.unit_name}</td>
                                 <td>${parseFloat(configuration.list_price).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>

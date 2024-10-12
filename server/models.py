@@ -45,8 +45,11 @@ class Account(db.Model, SerializerMixin):
     users = db.relationship('User', back_populates = 'account', cascade='all, delete')
     customers = db.relationship('Customer', back_populates = 'account', cascade='all, delete')
     quotes = db.relationship('Quote', back_populates = 'account', cascade='all, delete')
+    orders = db.relationship('Order', back_populates = 'account', cascade='all, delete')
 
-    serialize_rules = ('-users.status', '-users._password_hash','-users.account.customers', '-quotes.customer', '-customers.quotes.customer')
+    # serialize_rules = ('-users.status', '-users._password_hash','-users.account.customers', '-quotes.account', '-quotes.customers', '-orders.account')
+
+    serialize_rules = ('-users.status', '-users._password_hash', '-quotes.account', '-customers.orders', '-customers.quotes.customer', '-customers.quotes.order', '-customers.quotes.screenconfigurations', '-quotes.screenconfigurations', '-orders.quote', '-orders.screenconfigurations', '-orders.customer', '-orders.account_id', '-orders.quote_id', '-orders.termsAndConditions', '-orders.user_id')
 
     def __repr__(self):
         return f'Account {self.id}, {self.account_number}, {self.company_name}, {self.address_1}, {self.address_2}, {self.city}, {self.state}, {self.zip_code}, {self.phone}, {self.discount}, {self.markup_variable}, {self.created_at}, {self.updated_at}'
@@ -130,8 +133,9 @@ class User(db.Model,SerializerMixin):
     # relationships
     account = db.relationship('Account', back_populates = 'users')
     role = db.relationship('Role', back_populates = 'users')
+    orders = db.relationship('Order', back_populates = 'user')
 
-    serialize_rules = ('-account.users', '-account.created_at', '-account.updated_at', '-account.address_1', '-account.address_2', '-account.city', '-account.id', '-account.phone', '-account.zip_code', '-role')
+    serialize_rules = ('-account.users', '-account.created_at', '-account.updated_at', '-account.address_1', '-account.address_2', '-account.city', '-account.id', '-account.phone', '-account.zip_code', '-role', '-orders.user',)
 
     def __repr__(self):
         return f'User {self.id}, {self.first_name}, {self.last_name}, {self.username}, {self.created_at}, {self.updated_at}, {self.status}, {self.account_id}'
@@ -256,9 +260,10 @@ class Customer(db.Model, SerializerMixin):
     ## relationships
     quotes = db.relationship('Quote', back_populates = 'customer', cascade='all, delete')
     account = db.relationship('Account', back_populates = 'customers')
+    orders = db.relationship('Order', back_populates = 'customer')
 
     ##serialize
-    serialize_rules = ('-account','-quotes.account_id', '-quotes.customer_id')
+    serialize_rules = ('-account','-quotes.account_id', '-quotes.customer_id', '-orders.customer',)
 
     def __repr__(self):
         return f'Customer {self.id}, {self.first_name}, {self.last_name}, {self.email}, {self.phone}, {self.created_at}, {self.created_by}, {self.updated_at}, {self.updated_by}, {self.notes}, {self.account_id} '
@@ -319,9 +324,12 @@ class Quote(db.Model, SerializerMixin):
     customer = db.relationship('Customer', back_populates = 'quotes')
     screenconfigurations = db.relationship('ScreenConfiguration', back_populates = 'quote', cascade='all, delete')
     account = db.relationship('Account', back_populates = 'quotes')
+    order = db.relationship('Order', back_populates = 'quote')
 
     ##serialize
-    serialize_rules = ('-customer.quotes','-customer.account_id', '-customer.created_at', '-customer.created_by', '-customer.id', '-customer.updated_at', '-customer.updated_by', '-screenconfigurations.quote_id','-account')
+    # serialize_rules = ('-customer.quotes','-customer.account_id', '-customer.created_at', '-customer.created_by', '-customer.id', '-customer.updated_at', '-customer.updated_by', '-screenconfigurations.quote_id','-account.quotes','-order.quote')
+
+    serialize_rules = ('-order', '-hashedquotepreview', '-customer.account', '-customer.quotes', '-customer.orders', '-screenconfigurations.quote_id', 'account.company_name', '-account.users.account', '-account.customers', '-account.quotes', '-account.orders', '-order.account_id', '-order.created_by', '-order.created_at', '-order.customer_id', '-order.id', '-order.notes', '-order.orderDate', '-order.quote_id', '-order.status', '-order.termsAndConditions', '-order.user_id', '-order.screenconfigurations', '-screenconfigurations.quote', '-screenconfigurations.created_by', '-screenconfigurations.updated_at','-screenconfigurations.updated_by')
 
     def __repr__(self):
         return f'Quote {self.id}, {self.quote_number}, {self.title}, {self.discount}, {self.savings}, {self.markup_variable}, {self.sale_price}, {self.margin_percentage}, {self.margin_dollars}, {self.notes}, {self.status}, {self.converted}, {self.created_at}, {self.created_by}, {self.updated_at}, {self.updated_by}'
@@ -371,6 +379,7 @@ class ScreenConfiguration(db.Model, SerializerMixin):
     powder_charge = db.Column(db.Float)
     list_price = db.Column(db.Float)
     quote_id = db.Column(db.Integer, db.ForeignKey('quotes.id'))
+    order_id = db.Column(db.Integer, db.ForeignKey('orders.id'))
     created_at = db.Column(db.DateTime, server_default=db.func.now())
     created_by = db.Column(db.Integer)
     updated_at = db.Column(db.DateTime, onupdate=db.func.now())
@@ -378,11 +387,43 @@ class ScreenConfiguration(db.Model, SerializerMixin):
 
     ##relationships
     quote = db.relationship('Quote', back_populates = 'screenconfigurations')
+    order = db.relationship('Order', back_populates = 'screenconfigurations')
 
     ##serialize
-    serialize_rules = ('-quote.screenconfigurations',)
+    serialize_rules = ('-quote.screenconfigurations','-order.screenconfigurations')
 
     def __repr__(self):
         return f'Configuration {self.id}, {self.project_name}, {self.unit_name}, {self.complete_unit}, {self.housing}, {self.side_track}, {self.hem_bar}, {self.fabric}, {self.motor_tube}, {self.unit_width}, {self.unit_height}, {self.housing_tube_size}, {self.housing_type}, {self.motor_type}, {self. motor_side}, {self. power_chord}, {self.retention_type}, {self.retention_cap_color}, {self.tracks_exact_length}, {self.hem_bar_type}, {self.hem_cap_color}, {self.pile_brush_style}, {self.fabric_type}, {self.fabric_selection}, {self.zipper_color}, {self.color_collection}, {self.frame_color}, {self.list_price}, {self.quote_id}, {self.created_at}, {self.created_by}, {self.updated_at}, {self.updated_by}'
 
+
+class Order(db.Model, SerializerMixin):
+    __tablename__ = 'orders'
+    id = db.Column(db.Integer, primary_key=True)
+    orderNumber = db.Column(db.Integer)
+    orderDate = db.Column(db.DateTime, server_default=db.func.now())
+    status = db.Column(db.String)
+    notes = db.Column(db.String)
+    termsAndConditions = db.Column(db.String)
+    sale_price = db.Column(db.Float)
+    account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'))
+    customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))
+    quote_id = db.Column(db.Integer, db.ForeignKey('quotes.id'))
+    user_id = db.Column(db.Integer, db.ForeignKey('users.id'))
+    created_by = db.Column(db.Integer)
+
+    #relationships
+    account = db.relationship('Account', back_populates='orders')
+    user = db.relationship('User', back_populates='orders')
+    quote = db.relationship('Quote', back_populates='order')
+    customer = db.relationship('Customer', back_populates='orders')
+    screenconfigurations = db.relationship('ScreenConfiguration', back_populates='order')
+    # add_on_accessories = db.relationship('AddOnAccessory', back_populates='order')
+    # misc_items = db.relationship('Miscellaneous', back_populates='order')
+
+    # serialize rules
+    serialize_rules = ('-account.orders','-account.customers', '-account.quotes', '-account.users', '-account.account_number', '-account.address_1', '-account.address_2', '-account.city', '-account.created_at', '-account.created_by', '-account.discount', '-account.id', '-account.state', '-account.status', '-account.updated_at', '-account.updated_by', '-account.zip_code', '-quote.order', '-customer.account', '-customer.orders', '-customer.quotes', '-add_on_accessories.order', '-quote.account','-quote.add_on_accessories',  '-quote.customer', '-quote.screenconfigurations', '-quote.status', '-screenconfigurations.quote', '-screenconfigurations.cut_to_length', '-screenconfigurations.fabric_charge', '-screenconfigurations.frame_buildout_collection', '-screenconfigurations.frame_buildout_color', '-screenconfigurations.frame_charge', '-screenconfigurations.frame_collection', '-screenconfigurations.frame_color_varies', '-screenconfigurations.frame_hem_bar_collection', '-screenconfigurations.frame_hem_bar_color', '-screenconfigurations.frame_housing_collection', '-screenconfigurations.frame_housing_color', '-screenconfigurations.frame_retention_collection', '-screenconfigurations.frame_retention_color', '-screenconfigurations.hem_bar_cap', '-screenconfigurations.hem_bar_charge', '-screenconfigurations.hem_bar_type', '-screenconfigurations.housing_charge', '-screenconfigurations.housing_option', '-screenconfigurations.housing_type', '-screenconfigurations.included_buildout', '-screenconfigurations.included_complete_unit', '-screenconfigurations.included_fabric', '-screenconfigurations.included_hem_bar', '-screenconfigurations.included_housing', '-screenconfigurations.included_motor_tube', '-screenconfigurations.included_retention', '-screenconfigurations.motor_brand', '-screenconfigurations.motor_charge', '-screenconfigurations.motor_cord', '-screenconfigurations.motor_side', '-screenconfigurations.motor_type', '-screenconfigurations.order_id', '-screenconfigurations.pile_brush', '-screenconfigurations.retention_cap', '-screenconfigurations.retention_charge', '-screenconfigurations.retention_left', '-screenconfigurations.retention_right', '-screenconfigurations.retention_type', '-screenconfigurations.tube_charge', '-screenconfigurations.unit_height_ft', '-screenconfigurations.unit_width_ft', '-screenconfigurations.zipper_color',)
+
+    def __repr__(self):
+        return f'Order {self.id}, {self.orderNumber}, {self.orderDate}, {self.status}, {self.notes}, {self.termsAndConditions}, {self.account_id}, {self.customer_id}, {self.quote_id}, {self.customer_id}, {self.user_id}, {self.created_by}'
+    
     
