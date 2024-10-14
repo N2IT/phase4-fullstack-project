@@ -331,7 +331,7 @@ const EditConfigurationform = () => {
                 frame_color: `${configuration.frame_color}`,
                 powder_charge: `${configuration.powder_charge}`,
                 list_price: `${configuration.list_price}`,
-                quote_id: `${configuration.quote.id}`,
+                quote_id: `${configuration.quote_id}`,
                 created_by: `${agent.id}`,
                 // status: `${configuration.status}`,
                 created_at: `${configuration.created_at}`,
