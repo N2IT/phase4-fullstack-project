@@ -54,7 +54,7 @@ const ConfigurationsTable = ({ preview = null }) => {
                             <td>{configuration.unit_width}w x {configuration.unit_height}h</td>
                             <td>{configuration.housing_tube_size}</td>
                             <td>{configuration.fabric_type}</td>
-                            <td>${((configuration.list_price * quote.discount) * quote.markup_variable).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
+                            <td>${((configuration.list_price - (configuration.list_price * quote.discount)) * quote.markup_variable).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}</td>
                         </tr>
                     ))}
                 </tbody>

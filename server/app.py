@@ -6,7 +6,7 @@ from flask_restful import Api, Resource
 import random
 # from config import app, db, api, os ## FOR LAUNCHING VIA GUNICORN (OS MISSING CAUSES ISSUE)
 from config import app, db, api ## FOR PRODUCTION (OS PRESENT LAUNCHES BACKEND IN BROWSER)
-from models import Account, User, Role, Permission, RolePermission, Quote, Customer, ScreenConfiguration
+from models import Account, User, Role, Permission, RolePermission, Quote, Customer, ScreenConfiguration, Order
 from seed import calculate_quote_info, update_quote_discount, recalculate_quote_totals, update_screen_configuration_order_id
 from sqlalchemy.orm.session import make_transient
 import copy

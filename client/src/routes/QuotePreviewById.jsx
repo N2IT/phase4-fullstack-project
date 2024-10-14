@@ -111,7 +111,7 @@ const QuotePreviewById = () => {
 
     // get totals of all configurations
     const configurationstotal = (quote.screenconfigurations || []).reduce((acc, config) => {
-        return acc + config.list_price
+        return acc + (config.list_price * quote.discount) * quote.markup_variable
     }, 0)
 
     // get totals of all accessory_add_ons
@@ -216,12 +216,12 @@ const QuotePreviewById = () => {
                                                         <h6><b>Configuration Totals:</b></h6>
                                                     </Col>
                                                     <Col className="text-end" xs={6}>
-                                                        ${configurationstotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                                        ${quote.sale_price.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                                     </Col>
-                                                    <Col xs={6}>
+                                                    {/* <Col xs={6}>
                                                         <h6><b>Accessory Totals:</b></h6>
-                                                    </Col>
-                                                    <Col className="text-end" xs={6}>
+                                                    </Col> */}
+                                                    {/* <Col className="text-end" xs={6}>
                                                         ${accessorytotal.toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                                     </Col>
                                                     <Col xs={6}>
@@ -229,7 +229,7 @@ const QuotePreviewById = () => {
                                                     </Col>
                                                     <Col className="text-end" xs={6}>
                                                         $0.00
-                                                    </Col>
+                                                    </Col> */}
                                                     <Col xs={6}>
                                                         <h6><b>Shipping:</b></h6>
                                                     </Col>
@@ -240,7 +240,7 @@ const QuotePreviewById = () => {
                                                         <h6><b>Grand Total:</b></h6>
                                                     </Col>
                                                     <Col className="text-end" xs={6}>
-                                                        ${(configurationstotal + accessorytotal + shippingtotal).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                                        ${(quote.sale_price + shippingtotal).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                                                     </Col>
                                                 </Row>
                                             </CardContent>
@@ -252,13 +252,13 @@ const QuotePreviewById = () => {
                                         <Card>
                                             <CardContent className="p-6 pb-3">
                                                 <Row >
-                                                    <Col className='mb-2' xs={12} md={4}>
+                                                    <Col className='mb-2' xs={12} md={6}>
                                                         <Button className="w-full" variant="destructive" onClick={() => history.go(-1)}>Cancel</Button>
                                                     </Col>
-                                                    <Col className='mb-2' xs={12} md={4}>
+                                                    {/* <Col className='mb-2' xs={12} md={4}>
                                                         <Button className="w-full" onClick={() => handleShowModal()}>Email Customer Copy</Button>
-                                                    </Col>
-                                                    <Col xs={12} md={4}>
+                                                    </Col> */}
+                                                    <Col xs={12} md={6}>
                                                         <Button className="w-full" onClick={() => handleShow()}>Submit Quote for Order</Button>
                                                     </Col>
                                                 </Row>
