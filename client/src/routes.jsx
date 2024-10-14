@@ -21,6 +21,7 @@ import CreateNewAccountFormAdmin from './components/forms/CreateNewAccountFormAd
 import CustomersIdNewQuote from './routes/CustomersIdNewQuote';
 import CustomersByAccountId from './routes/CustomersByAccountId';
 import QuotePreviewById from './routes/QuotePreviewById';
+import OrderConfirmation from './routes/OrderConfirmation';
 
 const routes = [
     {
@@ -95,6 +96,10 @@ const routes = [
             {
                 path: 'quotes/:id/preview',
                 element: <QuotePreviewById />
+            },
+            {
+                path: 'orders/:id/confirmation',
+                element: <OrderConfirmation />
             },
             {
                 path: 'sign-up',
