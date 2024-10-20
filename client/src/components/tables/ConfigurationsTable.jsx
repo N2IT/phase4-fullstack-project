@@ -4,8 +4,11 @@ import Table from 'react-bootstrap/Table';
 
 const ConfigurationsTable = ({ preview = null }) => {
 
-    const { configurations, handleIdClick, isLoading, quote } = useContext(AgentContext);
+    const { configurations, handleIdClick, isLoading, quote, order = null } = useContext(AgentContext);
     const quoteConfigurations = quote.screenconfigurations
+
+    console.log('quoteConfigurations', quoteConfigurations)
+    console.log('order', order)
     
     return (
         <>{!preview ?

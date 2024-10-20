@@ -29,6 +29,7 @@ const OrderConfirmation = () => {
     const isConfirmationPage = location.pathname.includes('confirmation');
     const [cookies, setCookie] = useCookies(['confettiShown8']);
     const [firstVisit, setFirstVisit] = useState(false);
+    const [preview, setPreview] = useState(false);
 
     useEffect(() => {
         fetch(`/api/orders/${id}`)
@@ -42,14 +43,16 @@ const OrderConfirmation = () => {
                 setOrder(data);
                 setAsDisabled(true);
                 setErrors(null);
+                console.log('order in useEffect', order)
             });
     }, []);
 
+    console.log('preview order-confirmation page', preview)
     const salesReps = order?.quote?.account?.users || []
     const salesRep = salesReps.filter((rep) => rep.id === order.quote.created_by) || null
 
     const configurationstotal = (order?.screenconfigurations || []).reduce((acc, config) => {
-        return (acc + ((config.unit_total * (1 - order.quote.discount)) * order.quote.markup_variable))
+        return (acc + ((config.list_price * (1 - order.quote.discount)) * order.quote.markup_variable))
     }, 0)
 
     const accessorytotal = (order?.add_on_accessories || []).reduce((acc, accessory) => {
@@ -83,11 +86,15 @@ const OrderConfirmation = () => {
     const accountUsers = order?.quote?.account?.users || [];
     const recipients = [quote.customer];
 
+    if (!order) {
+        return <h2>Loading...</h2>
+    }
+
+    console.log(order)
+
     return (
         <>
             <div className='account-details'>
-                {agent ? (
-                    order ? (
                         <>
                             {firstVisit && (
                                 <div style={{ textAlign: 'center', marginTop: '50px' }}>
@@ -138,7 +145,7 @@ const OrderConfirmation = () => {
                                         <Col>
                                             <Card>
                                                 <CardContent className="p-4">
-                                                    <ConfigurationsTable order={order} fullScreen={true} />
+                                                    <ConfigurationsTable order={quote} fullScreen={true} preview={true} />
                                                 </CardContent>
                                             </Card>
                                         </Col>
@@ -226,19 +233,7 @@ const OrderConfirmation = () => {
                                     isCustomer={true}
                                 />
                             }
-                        </>
-                    ) : (
-                        <div className='account-details'>
-                            {Array.isArray(errors) && errors.length > 0 ? (
-                                <h2>{errors[0]}</h2>
-                            ) : (
-                                <h2>That quote does not exist.</h2>
-                            )}
-                        </div>
-                    )
-                ) : (
-                    <Unauthorized />
-                )}
+                        </> 
             </div>
         </>
     );

@@ -184,7 +184,7 @@ const QuotePreviewById = () => {
                                     <Col>
                                         <Card>
                                             <CardContent className="p-4">
-                                                <ConfigurationsTable preview={true}/>
+                                                <ConfigurationsTable preview={preview}/>
                                             </CardContent>
                                         </Card>
                                     </Col>
