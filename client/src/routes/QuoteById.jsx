@@ -17,6 +17,10 @@ const QuoteById = () => {
     const { agent, customer, quote, handleClose, handleShow, show, setShow, setCustomer, setConfigurations, setQuote, setAsDisabled, errors = [], setErrors, isLoading, deleteQuoteObject, navigate } = useContext(AgentContext)
     const { id } = useParams();
 
+    console.log(quote.status)
+
+    // check quote.status and if '
+
     const handleDeleteClick = () => {
         fetch(`/api/quotes/${id}`, {
             method: 'DELETE',

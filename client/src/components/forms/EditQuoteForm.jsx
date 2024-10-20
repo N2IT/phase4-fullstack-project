@@ -146,7 +146,7 @@ const EditQuoteForm = ({ id }) => {
                                 <br />
                                 <Form.Select id='status' name='status' onChange={formik.handleChange} value={formik.values.status} disabled>
                                     <option value='active'>Active</option>
-                                    <option value='inactive'>Inactive</option>
+                                    <option value='closed'>Inactive</option>
                                 </Form.Select>
 
                                 <p style={{ color: 'red' }}> {formik.errors.status} </p>
