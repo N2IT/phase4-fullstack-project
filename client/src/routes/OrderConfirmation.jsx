@@ -208,7 +208,7 @@ const OrderConfirmation = () => {
                                             </Card>
                                         </Col>
                                     </Row>
-                                    <Row>
+                                    {/* <Row>
                                         <Col>
                                             <Card>
                                                 <CardContent className="p-6 pb-3">
@@ -220,7 +220,7 @@ const OrderConfirmation = () => {
                                                 </CardContent>
                                             </Card>
                                         </Col>
-                                    </Row>
+                                    </Row> */}
                                 </div>
                             </Container>
                             {quote.customer &&
