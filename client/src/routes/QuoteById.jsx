@@ -63,8 +63,12 @@ const QuoteById = () => {
                                     </Col>
                                     <Col className="d-flex justify-content-end gap-2">
                                         <Button variant='dark' type="button" onClick={() => history.go(-1)}>Return to Prev. page</Button>
-                                        <Button variant = 'light' type="button" onClick={() => navigate(`quotes/${id}/preview`)}>Preview Quote</Button>
-                                        {agent.role_id !== 3 ? <Button variant='danger' type="button" onClick={() => handleShow()}>Delete Quote</Button> : null}
+                                        {quote.status !== 'closed' && (
+                                        <>
+                                            <Button variant = 'light' type="button" onClick={() => navigate(`quotes/${id}/preview`)}>Preview Quote</Button>
+                                            {agent.role_id !== 3 ? <Button variant='danger' type="button" onClick={() => handleShow()}>Delete Quote</Button> : null}
+                                        </>
+                                        )}
                                     </Col>
                                 </Row>
                                 {!quote.customer ?

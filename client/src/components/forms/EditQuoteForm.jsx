@@ -325,7 +325,7 @@ const EditQuoteForm = ({ id }) => {
                             <p style={{ color: 'red' }}> {formik.errors.customer_id} </p>
                         </Col>
                         <Col lg={3} md={6} xs={12}>
-                            {/* <Form.Label htmlFor="account_id">Account ID &nbsp; </Form.Label> */}
+                            <Form.Label htmlFor="account_id">Account ID &nbsp; </Form.Label>
                             <br />
                             <Form.Control
                                 id="account_id"
@@ -339,7 +339,9 @@ const EditQuoteForm = ({ id }) => {
                         </Col>
                     </Row>
                     {disabled ?
-                        <p className="view-btn" title="Edit Account" onClick={() => handleEditClick()}> Edit Quote Details </p> :
+                        quote.status !== 'closed' && (
+                            <p className="view-btn" title="Edit Account" onClick={() => handleEditClick()}> Edit Quote Details </p>
+                        ) :
                         <>
                             <p><Button type="submit">Save Changes</Button></p>
                             <p className="view-btn" title="Cancel update" onClick={() => { handleEditClick(); setErrors(null) }}> Cancel </p>

@@ -20,7 +20,10 @@ const ConfigurationsTableByQuote = () => {
                         <h3>Quote Configurations</h3>
                     </Col>
                     <Col className="d-flex justify-content-end gap-2">
+                    {quote.status !== 'closed' &&
+                    (
                         <Button variant='primary' type="button" onClick={() => (navigate(`customers/${quote.customer_id}/new-quote`), setNewQuotePageStatus(false))}>Add New Configuration</Button>
+                    )}
                     </Col>
                 </Row>
             </Container>
@@ -36,7 +39,9 @@ const ConfigurationsTableByQuote = () => {
                             <th className='remove-column'>Complete Unit</th>
                             {/* <th>Account Number</th> */}
                             {/* <th>Company Name</th> */}
-                            <th>Actions</th>
+                            {quote.status !== 'closed' && (
+                                <th>Actions</th>
+                            )}
                         </tr>
                     </thead>
                     <tbody>
@@ -49,7 +54,9 @@ const ConfigurationsTableByQuote = () => {
                                 <td className='remove-column'>{configuration.complete_unit === true ? 'true' : 'false'}</td>
                                 {/* <td>{configuration.quote.account.account_number}</td> */}
                                 {/* <td>{configuration.quote.account.company_name}</td> */}
-                                <td><p className="view-btn" title="View Configuration" onClick={() => handleIdClick(configuration)}> View </p></td>
+                                {quote.status !== 'closed' && (
+                                    <td><p className="view-btn" title="View Configuration" onClick={() => handleIdClick(configuration)}> View </p></td>
+                                )}
                             </tr>
                         ))
                         }
