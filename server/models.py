@@ -399,11 +399,11 @@ class ScreenConfiguration(db.Model, SerializerMixin):
 class Order(db.Model, SerializerMixin):
     __tablename__ = 'orders'
     id = db.Column(db.Integer, primary_key=True)
-    orderNumber = db.Column(db.Integer)
-    orderDate = db.Column(db.DateTime, server_default=db.func.now())
+    order_number = db.Column(db.Integer)
+    created_at = db.Column(db.DateTime, server_default=db.func.now())
     status = db.Column(db.String)
     notes = db.Column(db.String)
-    termsAndConditions = db.Column(db.String)
+    terms_conditions = db.Column(db.String)
     sale_price = db.Column(db.Float)
     account_id = db.Column(db.Integer, db.ForeignKey('accounts.id'))
     customer_id = db.Column(db.Integer, db.ForeignKey('customers.id'))

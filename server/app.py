@@ -1065,10 +1065,10 @@ class Orders(Resource):
       ## retrieve form data
       form_data = request.get_json()
 
-      orderNumber = "DEMO" + "_" + str(form_data.get('id'))
+      order_number = "DEMO" + "_" + str(form_data.get('id'))
       status = 'new'
       notes = form_data.get('notes')
-      termsAndConditions = "Default text per each order"
+      terms_conditions = "Default text per each order"
       account_id = form_data.get('account_id')
       customer_id = form_data.get('customer_id')
       quote_id = form_data.get('id')
@@ -1082,10 +1082,10 @@ class Orders(Resource):
 
       if form_data:
         new_order = Order(
-          orderNumber = orderNumber,
+          order_number = order_number,
           status = status,
           notes = notes,
-          termsAndConditions = termsAndConditions,
+          terms_conditions = terms_conditions,
           account_id = account_id,
           customer_id = customer_id,
           # configuration_id = configuration_id,

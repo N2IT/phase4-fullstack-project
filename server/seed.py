@@ -516,6 +516,7 @@ if __name__ == "__main__":
     Role.query.delete()
     Permission.query.delete()
     Customer.query.delete()
+    Order.query.delete()
     ScreenConfiguration.query.delete()
     # Configuration.query.delete()
     Quote.query.delete()

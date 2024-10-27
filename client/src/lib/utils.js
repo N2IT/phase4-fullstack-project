@@ -49,13 +49,13 @@ export function compChartData(data_set, action, type = null) {
 
   // Return the total sales if requested
   if (type === 'dollar') {
-    return allTime.reduce((a, b) => a + b, 0);
+    // return allTime to two decimal places
+    return allTime.reduce((a, b) => a + b, 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
   if (action === 'open total') {
-    return openTotal.reduce((a, b) => a + b, 0);
+    return openTotal.reduce((a, b) => a + b, 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
-
   // Return the number of recent customers if requested
   if (action === 'show all') {
     return data_set.length;
@@ -71,6 +71,10 @@ export function compChartData(data_set, action, type = null) {
     }
 
     return pastSevenDays.length;
+  }
+
+  if (action ==='get recent' && type === 'dollar') {
+    return pastSevenDays.reduce((a, b) => a + b, 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
   // Handle the case where no data to compare
