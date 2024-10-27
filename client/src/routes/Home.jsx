@@ -5,6 +5,7 @@ import { Container } from 'react-bootstrap';
 import { AgentContext } from '../AgentProvider';
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from "@/components/ui/chart"
+import AdminHome from '../components/AdminHome';
 
 // import { useEffect } from 'react';
 
@@ -39,30 +40,9 @@ const Home = () => {
   return (
     <>
       <div className="account-details">
-        {agent ? (
-          <>
-            <Container className='form-width'>
-              <h2 className="text-3xl font-bold underline">Welcome {agent.username}!</h2>
-              <ChartContainer config={chartConfig} className="min-h-[200px] w-full">
-                <BarChart accessibilityLayer data={chartData}>
-                  <CartesianGrid vertical={false} />
-                  <XAxis
-                    dataKey="month"
-                    tickLine={false}
-                    tickMargin={10}
-                    axisLine={false}
-                    tickFormatter={(value) => value.slice(0, 3)}
-                  />
-                  <ChartTooltip content={<ChartTooltipContent />} />
-                  <ChartLegend content={<ChartLegendContent />} />
-                  <Bar dataKey="desktop" fill="var(--color-desktop)" radius={4} />
-                  <Bar dataKey="mobile" fill="var(--color-mobile)" radius={4} />
-                </BarChart>
-              </ChartContainer>
-            </Container>
-
-          </>
-        ) :
+        {agent ?
+          <AdminHome />
+          :
           <Container className='form-width'>
             <div>
               <h2>Quote Pro</h2>
