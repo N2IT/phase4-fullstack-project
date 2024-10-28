@@ -79,11 +79,26 @@ export function compChartData(data_set, action, type = null) {
 
   // Handle the case where no data to compare
   if (older.length === 0) {
-    return `Nothing from the previous week to compare`;
+    return 'No data from prior week';
   }
 
   // Calculate the percentage change from last week
   let calculated = (pastSevenDays.length - older.length) / older.length;
   return calculated.toFixed(2) + '%' + " from last week";
 };
+
+// show sales revenue for the past 7 days
+export function showRecentSales(data_set) {
+  let pastSevenDays = [];
+  data_set.forEach((data) => {
+    const currentDate = new Date();
+    let createDate = data.created_at && new Date(data.created_at);
+    const timeDifference = currentDate - createDate;
+    const daysDifference = timeDifference / (1000 * 60 * 60 * 24);
+    if (daysDifference <= 7) {
+      pastSevenDays.push(data.sale_price);
+    }
+  });
+  return pastSevenDays.reduce((a, b) => a + b, 0).toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
 
