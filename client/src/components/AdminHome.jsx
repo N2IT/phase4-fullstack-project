@@ -49,7 +49,7 @@ const AdminCompCards = () => {
                                 <Card.Text className='card-fontsize'>
                                     {compChartData(accts, 'show all')}
                                 </Card.Text>
-                                <Card.Subtitle className="mb-2 text-muted">{compChartData(accts, 'get recent')} new prev. 7 days</Card.Subtitle>
+                                <Card.Subtitle className="mb-2 text-muted">{compChartData(accts, 'get recent')} new this week</Card.Subtitle>
                                 <Card.Link href='/accounts'>View All Accounts</Card.Link>
                             </Card.Body>
                         </Card>
@@ -62,7 +62,7 @@ const AdminCompCards = () => {
                                 <Card.Text className='card-fontsize'>
                                     {compChartData(allCustomers, 'show all')}
                                 </Card.Text>
-                                <Card.Subtitle className="mb-2 text-muted">{compChartData(allCustomers, 'get recent')} new prev. 7 days</Card.Subtitle>
+                                <Card.Subtitle className="mb-2 text-muted">{compChartData(allCustomers, 'get recent')} new this week</Card.Subtitle>
                                 <Card.Link href='/customers'>View all Customers</Card.Link>
                             </Card.Body>
                         </Card>
@@ -74,7 +74,7 @@ const AdminCompCards = () => {
                                 <Card.Text className='card-fontsize'>
                                     {compChartData(allOrders, 'show all')}
                                 </Card.Text>
-                                <Card.Subtitle className="mb-2 text-muted">{compChartData(allOrders, 'get recent')} new prev. 7 days</Card.Subtitle>
+                                <Card.Subtitle className="mb-2 text-muted">{compChartData(allOrders, 'get recent')} new this week</Card.Subtitle>
                                 <Card.Link href='/orders'>View all Orders</Card.Link>
                             </Card.Body>
                         </Card>
@@ -89,7 +89,7 @@ const AdminCompCards = () => {
                                 <Card.Text className='card-fontsize'>
                                     $ {compChartData(allOrders, 'get total', 'dollar')}
                                 </Card.Text>
-                                <Card.Subtitle className="mb-2 text-muted">$ {showRecentSales(allOrders)} new this week</Card.Subtitle>
+                                <Card.Subtitle className="mb-2 text-muted">$ {showRecentSales(allOrders)}</Card.Subtitle>
                             </Card.Body>
                         </Card>
 
@@ -101,7 +101,7 @@ const AdminCompCards = () => {
                                 <Card.Text className='card-fontsize'>
                                     {compChartData(allQuotes, 'show all')}
                                 </Card.Text>
-                                <Card.Subtitle className="mb-2 text-muted">{compChartData(allQuotes, 'show recent')} </Card.Subtitle>
+                                <Card.Subtitle className="mb-2 text-muted">{compChartData(allQuotes, 'get recent')} new this week</Card.Subtitle>
                                 <Card.Link href='/quotes'>View All Quotes</Card.Link>
                             </Card.Body>
                         </Card>
@@ -113,7 +113,7 @@ const AdminCompCards = () => {
                                 <Card.Text className='card-fontsize'>
                                     $ {compChartData(allQuotes, 'get total', 'dollar')}
                                 </Card.Text>
-                                <Card.Subtitle className="mb-2 text-muted">$ {showRecentSales(allQuotes)} new this week</Card.Subtitle>
+                                <Card.Subtitle className="mb-2 text-muted">$ {showRecentSales(allQuotes)}</Card.Subtitle>
                             </Card.Body>
                         </Card>
 

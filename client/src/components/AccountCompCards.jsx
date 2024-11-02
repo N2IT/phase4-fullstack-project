@@ -2,7 +2,7 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
-import { compChartData } from '../lib/utils';
+import { compChartData, showRecentSales, showOpenQuotes, showQuoteDifference } from '../lib/utils';
 
 const AccountCompCards = ({ account }) => {
 
@@ -132,16 +132,30 @@ const AccountCompCards = ({ account }) => {
                         </Card.Body>
                     </Card>
                 </Col>
-                <Col sm={6}>
+                <Col sm={3}>
                     <Card className='stat-card mt-3'>
-                        <Card.Body>
+                        <Card.Body className="text-center">
+                            <Card.Title>Open Quotes</Card.Title>
+                            <Card.Text className='card-fontsize'>
+                                {showOpenQuotes(account.quotes)}
+                            </Card.Text>
+                            <Card.Subtitle className="mb-2 text-muted">{compChartData(account.quotes, 'get recent')}</Card.Subtitle>
+                            {/* <Card.Link href={`/accounts/${account.id}/add-customer`}>Create New Customer</Card.Link> */}
+                            {/* <Card.Link href="#">View quotes</Card.Link> */}
+                        </Card.Body>
+                    </Card>
+
+                </Col>
+                <Col sm={3}>
+                    <Card className='stat-card mt-3'>
+                        <Card.Body className="text-center">
                             <Card.Title>Open Quote $ Value</Card.Title>
                             <Card.Text className='card-fontsize'>
-                                $ {quoteDollarsChartComp('open total').toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
+                                $ {compChartData(account.quotes, 'get total', 'dollar')}
                             </Card.Text>
-                            {/* <Card.Subtitle className="mb-2 text-muted">+ or - % over prev 7 days</Card.Subtitle> */}
+                            <Card.Subtitle className="mb-2 text-muted">$ {showRecentSales(account.quotes)}</Card.Subtitle>
                             {/* <Card.Link href={`/accounts/${account.id}/add-customer`}>Create New Customer</Card.Link> */}
-                            <Card.Link href="#">View quotes</Card.Link>
+                            {/* <Card.Link href="#">View quotes</Card.Link> */}
                         </Card.Body>
                     </Card>
 
@@ -155,7 +169,7 @@ const AccountCompCards = ({ account }) => {
                             <Card.Text className='card-fontsize'>
                                 $ {compChartData(account.orders, 'get total', 'dollar')}
                             </Card.Text>
-                            <Card.Subtitle className="mb-2 text-muted">+ or - % over prev 7 days</Card.Subtitle>
+                            <Card.Subtitle className="mb-2 text-muted">$ {showRecentSales(account.orders)}</Card.Subtitle>
                             {/* <Card.Link href={`/accounts/${account.id}/add-customer`}>Create New Customer</Card.Link> */}
                             {/* <Card.Link href="#">Another Link</Card.Link> */}
                         </Card.Body>
@@ -166,9 +180,9 @@ const AccountCompCards = ({ account }) => {
                         <Card.Body className='text-center'>
                             <Card.Title>Orders</Card.Title>
                             <Card.Text className='card-fontsize'>
-                                6
+                                {compChartData(account.orders, 'show all')}
                             </Card.Text>
-                            <Card.Subtitle className="mb-2 text-muted">+ or - % over prev 7 days</Card.Subtitle>
+                            <Card.Subtitle className="mb-2 text-muted">{compChartData(account.orders, 'get recent')}</Card.Subtitle>
                             {/* <Card.Link href={`/accounts/${account.id}/add-customer`}>Create New Customer</Card.Link> */}
                             {/* <Card.Link href="#">Another Link</Card.Link> */}
                         </Card.Body>
@@ -179,9 +193,9 @@ const AccountCompCards = ({ account }) => {
                         <Card.Body className='text-center'>
                             <Card.Title>Customers</Card.Title>
                             <Card.Text className='card-fontsize'>
-                                {customerChartComp('get recent')}
+                                {compChartData(account.customers, 'show all')}
                             </Card.Text>
-                            <Card.Subtitle className="mb-2 text-muted">{customerChartComp()}</Card.Subtitle>
+                            <Card.Subtitle className="mb-2 text-muted">{compChartData(account.customers, 'get recent')}</Card.Subtitle>
                             {/* <Card.Link href={`/accounts/${account.id}/add-customer`}>Create New Customer</Card.Link> */}
                             {/* <Card.Link href="#">Another Link</Card.Link> */}
                         </Card.Body>
@@ -192,9 +206,9 @@ const AccountCompCards = ({ account }) => {
                         <Card.Body className='text-center'>
                             <Card.Title>Quotes</Card.Title>
                             <Card.Text className='card-fontsize'>
-                                {quoteChartComp('get recent')}
+                                {compChartData(account.quotes, 'show all')}
                             </Card.Text>
-                            <Card.Subtitle className="mb-2 text-muted">{quoteChartComp()}</Card.Subtitle>
+                            <Card.Subtitle className="mb-2 text-muted">{compChartData(account.quotes, 'show recent')}</Card.Subtitle>
                             {/* <Card.Link href={`/accounts/${account.id}/new-quote`}>Create New Quote</Card.Link> */}
                             {/* <Card.Link href="#">Another Link</Card.Link> */}
                         </Card.Body>
