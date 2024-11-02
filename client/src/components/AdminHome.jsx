@@ -26,7 +26,7 @@ const AdminCompCards = () => {
     const allOrders = accounts.flatMap(account => account.orders);
 
     //toggle to set true or false based on which card is clicked
-    const [toggle, setToggle] = useState(false);
+    const [cardId, setCardId] = useState('accounts');
 
     if (!accounts) {
         return <div> Loading ... </div>
@@ -43,7 +43,7 @@ const AdminCompCards = () => {
                 </Row>
                 <Row className='mb-3'>
                     <Col sm={4}>
-                        <Card id='accounts' className='stat-card mt-3'>
+                        <Card id='accounts' className='stat-card mt-3' onClick={() => setCardId('accounts')}>
                             <Card.Body>
                                 <Card.Title>Accounts</Card.Title>
                                 <Card.Text className='card-fontsize'>
@@ -56,7 +56,7 @@ const AdminCompCards = () => {
 
                     </Col>
                     <Col sm={4} className='mt-3'>
-                        <Card id='customers' className='stat-card'>
+                        <Card id='customers' className='stat-card' onClick={() => setCardId('customers')} >
                             <Card.Body>
                                 <Card.Title>Customers</Card.Title>
                                 <Card.Text className='card-fontsize'>
@@ -68,7 +68,7 @@ const AdminCompCards = () => {
                         </Card>
                     </Col>
                     <Col sm={4}>
-                        <Card id='orders' className='stat-card mt-3'>
+                        <Card id='orders' className='stat-card mt-3' onClick={() => setCardId('orders')}>
                             <Card.Body>
                                 <Card.Title>Orders</Card.Title>
                                 <Card.Text className='card-fontsize'>
@@ -95,7 +95,7 @@ const AdminCompCards = () => {
 
                     </Col>
                     <Col sm={4} className='mt-3'>
-                        <Card id='quotes' className='stat-card'>
+                        <Card id='quotes' className='stat-card' onClick={() => setCardId('quotes')}>
                             <Card.Body>
                                 <Card.Title>Quotes</Card.Title>
                                 <Card.Text className='card-fontsize'>
@@ -120,7 +120,9 @@ const AdminCompCards = () => {
                     </Col>
                 </Row>
                 <Row>
-                    <Component accounts={accounts} dataType="quotes" />
+                    <Col>
+                    <Component accounts={accounts} dataType={cardId} />
+                    </Col>
                 </Row>
             </Container>
         </>

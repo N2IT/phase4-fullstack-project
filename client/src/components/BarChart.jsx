@@ -1,7 +1,7 @@
 "use client";
 
 import { TrendingUp } from "lucide-react";
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { ResponsiveContainer, Bar, BarChart, CartesianGrid, XAxis } from "recharts";
 import { parseISO, getMonth } from "date-fns";
 
 import {
@@ -51,6 +51,10 @@ const chartConfig = {
         label: "Orders",
         color: "hsl(var(--chart-3))",
     },
+    accounts: {
+        label: "Accounts",
+        color: "hsl(var(--chart-4))",
+    },
 };
 
 const colorConfig = Object.entries(chartConfig || {}).filter(
@@ -60,21 +64,23 @@ const colorConfig = Object.entries(chartConfig || {}).filter(
 // Custom BarChart component
 export function CustomBarChart({ data, label }) {
     return (
-        <BarChart width={600} height={300} data={data}>
-            <CartesianGrid vertical={false} />
-            <XAxis
-                dataKey="month"
-                tickLine={false}
-                tickMargin={10}
-                axisLine={false}
-                tickFormatter={(value) => value.slice(0, 3)}
-            />
-            <ChartTooltip
-                cursor={false}
-                content={<ChartTooltipContent hideLabel />}
-            />
-            <Bar dataKey={label} fill="var(--color-desktop)" radius={8} />
-        </BarChart>
+        <ResponsiveContainer width="100%" height="100%"> {/* Responsive container */}
+            <BarChart margin={{ top: 20, right: 30, left: 20, bottom: 5 }} data={data}>
+                <CartesianGrid vertical={false} />
+                <XAxis
+                    dataKey="month"
+                    tickLine={false}
+                    tickMargin={10}
+                    axisLine={false}
+                    tickFormatter={(value) => value.slice(0, 3)}
+                />
+                <ChartTooltip
+                    cursor={false}
+                    content={<ChartTooltipContent hideLabel />}
+                />
+                <Bar dataKey={label} fill="var(--color-desktop)" radius={8} />
+            </BarChart>
+        </ResponsiveContainer>
     );
 }
 
@@ -86,16 +92,20 @@ export function Component({ accounts, dataType }) {
         customers: accounts.flatMap((account) => account.customers),
         quotes: accounts.flatMap((account) => account.quotes),
         orders: accounts.flatMap((account) => account.orders),
-        accounts : accounts.flatMap((account) => account)
+        accounts: accounts
     };
 
     const selectedData = dataMapping[dataType] || [];
     const chartData = generateChartData(selectedData, dataType);
 
+    function capitalizeFirstLetter(val) {
+        return String(val).charAt(0).toUpperCase() + String(val).slice(1);
+    }
+
     return (
         <Card>
             <CardHeader>
-                <CardTitle>Bar Chart</CardTitle>
+                <CardTitle>{capitalizeFirstLetter(dataType)}</CardTitle>
                 <CardDescription>January - December 2024</CardDescription>
             </CardHeader>
             <CardContent>
@@ -103,14 +113,14 @@ export function Component({ accounts, dataType }) {
                     <CustomBarChart data={chartData} label={dataType} />
                 </ChartContainer>
             </CardContent>
-            <CardFooter className="flex-col items-start gap-2 text-sm">
+            {/* <CardFooter className="flex-col items-start gap-2 text-sm">
                 <div className="flex gap-2 font-medium leading-none">
                     Trending up by 5.2% this month <TrendingUp className="h-4 w-4" />
                 </div>
                 <div className="leading-none text-muted-foreground">
                     Showing total {dataType} for the year 2024
                 </div>
-            </CardFooter>
+            </CardFooter> */}
         </Card>
     );
 }

@@ -1,6 +1,6 @@
 from config import app, db, func
 from random import randint, choice as rc, choices
-from datetime import datetime
+from datetime import datetime, timedelta
 from faker import Faker
 from models import * 
 from sqlalchemy import text
@@ -39,6 +39,33 @@ width_126 = ['Ferrari Soltis Veozip', 'Twitchell Nano 50', 'Twitchell Nano 55', 
 width_122 = ['Mermet Natte 10%', 'Mermet Natte 3%', 'Mermet Natte 5%', 'Mermet Satine 1%', 'Mermet Satine 5%']
 width_105 = ['Ferrari Soltis Horizon 86', 'Ferrari Soltis Perform 92']
 
+def random_date_within_last_90_days():
+    now = datetime.now()
+    days_ago = randint(0, 90)
+    random_time = timedelta(
+        days=days_ago,
+        hours=randint(0, 23),
+        minutes=randint(0, 59),
+        seconds=randint(0, 59)
+    )
+    return now - random_time
+
+def create_admin_account():
+  account = Account(
+    account_number = 0,
+    company_name = 'Admin',
+    address_1 = '123 Admin St',
+    address_2 = 'Suite 100',
+    city = 'Adminville',
+    state = 'Adminland',
+    zip_code = '12345',
+    phone = '123-456-7890',
+    status = 'active',
+    discount = 0,
+    created_by = 0,
+  )
+
+  return account
 
 def create_accounts():
   accounts = []
@@ -54,7 +81,7 @@ def create_accounts():
       phone = fake.phone_number(),
       discount = randint(0, 45) / 100.0,
       created_by = 1,
-      created_at = datetime.now(),
+      created_at = random_date_within_last_90_days(),
       status = choices(status_list, weights = [10, 1], k=1)[0]
     )
   
@@ -62,6 +89,23 @@ def create_accounts():
 
   return accounts
 
+
+def create_admin_user(account):
+  user = User(
+    first_name = 'Admin',
+    last_name = 'User',
+    email = 'admin@auronec.com',
+    username = 'admin',
+    
+    created_by = 0,
+    status = 'active',
+    role_id = 1,
+    account_id = account.id,
+  )
+
+  user.password_hash = 'Templar2025'
+
+  return user
 
 def create_users():
 
@@ -73,7 +117,7 @@ def create_users():
       email = fake.profile(fields=['mail'])['mail'],
       username=fake.profile(fields=['username'])['username'],
       created_by = 1,
-      created_at = datetime.now(),
+      created_at = random_date_within_last_90_days(),
       status = choices(status_list, weights = [10, 1], k=1)[0],
       role_id = choices(roles, weights = [1, 5, 10, 2], k=1)[0],
       account_id = rc([account.id for account in accounts]),
@@ -98,7 +142,7 @@ def create_customers():
       city = fake.city(),
       state = fake.state(),
       zip_code = fake.postcode(),
-      created_at = datetime.now(),
+      created_at = random_date_within_last_90_days(),
       created_by = 1,
       notes = fake.text(),
       account_id = rc([account.id for account in accounts]),
@@ -133,7 +177,7 @@ def create_quotes():
         notes=fake.sentence(),
         status = choices(status_list, weights = [10, 1], k=1)[0],
         converted='No',
-        created_at=datetime.now(),
+        created_at=random_date_within_last_90_days(),
         created_by = 1,
     )
 
@@ -249,6 +293,7 @@ def create_screenConfigurations():
       # charges = [motor_charge, tube_charge, housing_charge, tracks_charge, hem_bar_charge, fabric_charge, powder_charge]
       # list_price = sum(charges)
       quote_id = rc([quote.id for quote in quotes]),
+      created_at = random_date_within_last_90_days(),
       created_by = 1,
       )
     s.motor_type_price = 0
@@ -523,6 +568,16 @@ if __name__ == "__main__":
     db.session.commit()
     #
     # # # # # # # # # # # # # # # # # # # # # #
+
+    print('Creating Admin account...')
+    account = create_admin_account()
+    db.session.add(account)
+    db.session.commit()
+
+    print('Creating Admin user...')
+    user = create_admin_user(account)
+    db.session.add(user)
+    db.session.commit()
 
     print("Seeding accounts...")
     accounts = create_accounts()
