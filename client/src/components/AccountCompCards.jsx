@@ -2,6 +2,7 @@ import Card from 'react-bootstrap/Card';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { compChartData } from '../lib/utils';
 
 const AccountCompCards = ({ account }) => {
 
@@ -134,13 +135,13 @@ const AccountCompCards = ({ account }) => {
                 <Col sm={6}>
                     <Card className='stat-card mt-3'>
                         <Card.Body>
-                            <Card.Title>Quotes Approved / Not Ordered</Card.Title>
+                            <Card.Title>Open Quote $ Value</Card.Title>
                             <Card.Text className='card-fontsize'>
-                                4
+                                $ {quoteDollarsChartComp('open total').toFixed(2).replace(/\B(?=(\d{3})+(?!\d))/g, ",")}
                             </Card.Text>
                             {/* <Card.Subtitle className="mb-2 text-muted">+ or - % over prev 7 days</Card.Subtitle> */}
                             {/* <Card.Link href={`/accounts/${account.id}/add-customer`}>Create New Customer</Card.Link> */}
-                            <Card.Link href="#">View quotes ready for order</Card.Link>
+                            <Card.Link href="#">View quotes</Card.Link>
                         </Card.Body>
                     </Card>
 
@@ -152,7 +153,7 @@ const AccountCompCards = ({ account }) => {
                         <Card.Body className='text-center'>
                             <Card.Title>Sales Revenue</Card.Title>
                             <Card.Text className='card-fontsize'>
-                                $45,983.90
+                                $ {compChartData(account.orders, 'get total', 'dollar')}
                             </Card.Text>
                             <Card.Subtitle className="mb-2 text-muted">+ or - % over prev 7 days</Card.Subtitle>
                             {/* <Card.Link href={`/accounts/${account.id}/add-customer`}>Create New Customer</Card.Link> */}
