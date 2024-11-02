@@ -12,6 +12,8 @@ const AgentProvider = ({ children }) => {
     const [valueId, setValueId] = useState()
     const navigate = useNavigate()
     const [account, setAccount] = useState(null)
+    const [orders, setOrders] = useState([])
+    const [order, setOrder] = useState(null)
     const [errors, setErrors] = useState([])
     const [disabled, setAsDisabled] = useState(true)
     const [users, setUsers] = useState([])
@@ -56,6 +58,10 @@ const AgentProvider = ({ children }) => {
         else if (value.project_name) {
             setConfiguration(value)
             navigate(`/configurations/${value.id}`)
+        }
+        else if (value.order_number) {
+            setOrder(value)
+            navigate(`/orders/${value.id}/confirmation`)
         }
         else if (value.notes) {
             setCustomer(value)
@@ -208,6 +214,8 @@ const AgentProvider = ({ children }) => {
                 newQuotePageStatus,
                 onSubmitAccountForm,
                 onSubmitNewQuoteForm,
+                order,
+                orders,
                 quote,
                 quotes,
                 setAccount,
@@ -223,6 +231,8 @@ const AgentProvider = ({ children }) => {
                 setIsLoading,
                 setNewCustomerForQuote,
                 setNewQuotePageStatus,
+                setOrder,
+                setOrders,
                 setQuote,
                 setQuotes,
                 setUpdatedBy,

@@ -45,9 +45,9 @@ const OrderConfirmation = () => {
                 setErrors(null);
                 console.log('order in useEffect', order)
             });
-    }, []);
+    }, [id]);
 
-    console.log('preview order-confirmation page', preview)
+    // console.log('preview order-confirmation page', preview)
     const salesReps = order?.quote?.account?.users || []
     const salesRep = salesReps.filter((rep) => rep.id === order.quote.created_by) || null
 
@@ -85,12 +85,13 @@ const OrderConfirmation = () => {
 
     const accountUsers = order?.quote?.account?.users || [];
     const recipients = [quote.customer];
+    const orderConfigurations = order?.screenconfigurations || [];
+
+    console.log('orderConfigurations', orderConfigurations)
 
     if (!order) {
         return <h2>Loading...</h2>
     }
-
-    console.log(order)
 
     return (
         <>
@@ -117,12 +118,12 @@ const OrderConfirmation = () => {
                                         </CardHeader>
                                         <CardContent>
                                             <Row>
-                                                {!order?.orderNumber ?
+                                                {!order?.order_number ?
                                                     'Loading' :
                                                     <>
                                                         <Col md={6} sm={12}>
                                                             <h6><b>Order Number:</b> <span className="text-gray-700">{order.orderNumber}</span></h6>
-                                                            <h6><b>Date of Issue:</b> <span className="text-gray-700">{order.orderDate}</span></h6>
+                                                            <h6><b>Date of Issue:</b> <span className="text-gray-700">{order.created_at}</span></h6>
                                                             <h6><b>Customer Name:</b> <span className="text-gray-700">{order?.customer?.first_name} {order?.customer?.last_name}</span></h6>
                                                             <h6><b>Phone:</b> <span className="text-gray-700">{order?.customer?.phone}</span></h6>
                                                             <h6><b>Email:</b> <span className="text-gray-700">{order?.customer?.email}</span></h6>
@@ -145,7 +146,7 @@ const OrderConfirmation = () => {
                                         <Col>
                                             <Card>
                                                 <CardContent className="p-4">
-                                                    <ConfigurationsTable order={quote} fullScreen={true} preview={true} />
+                                                    <ConfigurationsTable order={order} orderConfigurations={orderConfigurations} fullScreen={true} preview={true} />
                                                 </CardContent>
                                             </Card>
                                         </Col>

@@ -208,7 +208,7 @@ const AccountCompCards = ({ account }) => {
                             <Card.Text className='card-fontsize'>
                                 {compChartData(account.quotes, 'show all')}
                             </Card.Text>
-                            <Card.Subtitle className="mb-2 text-muted">{compChartData(account.quotes, 'show recent')}</Card.Subtitle>
+                            <Card.Subtitle className="mb-2 text-muted">{compChartData(account.quotes, 'get recent')}</Card.Subtitle>
                             {/* <Card.Link href={`/accounts/${account.id}/new-quote`}>Create New Quote</Card.Link> */}
                             {/* <Card.Link href="#">Another Link</Card.Link> */}
                         </Card.Body>

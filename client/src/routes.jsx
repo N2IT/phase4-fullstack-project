@@ -22,6 +22,8 @@ import CustomersIdNewQuote from './routes/CustomersIdNewQuote';
 import CustomersByAccountId from './routes/CustomersByAccountId';
 import QuotePreviewById from './routes/QuotePreviewById';
 import OrderConfirmation from './routes/OrderConfirmation';
+import Orders from './routes/Orders';
+
 
 const routes = [
     {
@@ -96,6 +98,14 @@ const routes = [
             {
                 path: 'quotes/:id/preview',
                 element: <QuotePreviewById />
+            },
+            {
+                path: 'orders',
+                element: <Orders />
+            },
+            {
+                path: 'orders/:id',
+                element: <OrderConfirmation />
             },
             {
                 path: 'orders/:id/confirmation',

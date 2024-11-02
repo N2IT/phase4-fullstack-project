@@ -13,13 +13,10 @@ const RecipientSelectionModal = ({ show, handleClose, recipients, selectedRecipi
     const [message, setMessage] = useState(isCustomer ? '' : 'NOTE: This is only a quote preview, the final quote may vary. Please contact us for more information.');
     const [showMessageModal, setShowMessageModal] = useState(false);
 
-    console.log(recipients)
-
     // loop through and compare emails to prevent duplicates
     const uniqueRecipients = recipients.filter((v, i, a) => a.findIndex(t => (t.email === v.email)) === i);
 
     const handleSelectRecipient = (recipient) => {
-        console.log('Selected recipients:', selectedRecipients);
         if (selectedRecipients.includes(recipient)) {
             if (recipient.id) setSelectedRecipients(selectedRecipients.filter(r => r !== recipient));
             else setExtraRecipients(extraRecipients.filter(r => r !== recipient));
@@ -35,7 +32,6 @@ const RecipientSelectionModal = ({ show, handleClose, recipients, selectedRecipi
             setExtraRecipients([...extraRecipients, obj]);
             setSelectedRecipients([...selectedRecipients, obj]);
             setCustomEmail('');
-            console.log('Selected recipients:', selectedRecipients);
         } else {
             alert('Please enter a valid email address.');
         }
@@ -75,14 +71,14 @@ const RecipientSelectionModal = ({ show, handleClose, recipients, selectedRecipi
         }
     }, [isCustomer]);
 
-    console.log('recipients:', extraRecipients);
+    
 
     return (
         showMessageModal ?
             <MessageModal message="Email sent successfully!" duration={3000} onClose={() => {
                 handleClose();
                 setShowMessageModal(false);
-                console.log('Message modal closed');
+
             }} />
             :
             <Modal show={show} onHide={handleClose}>

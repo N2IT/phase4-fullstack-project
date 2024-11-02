@@ -220,6 +220,27 @@ class AccountById(Resource):
     except ValueError as e:
       return {'errors' : str(e)}, 404
 
+class AccountsTable(Resource):
+  def get(self):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized, 403"}
+
+    try:
+      accounts = [account.to_dict(rules = ('-users', '-quotes.account_id', '-quotes.converted', '-quotes.created_at', '-quotes.created_by', '-quotes.customer_id', '-quotes.discount', '-quotes.hashedKey', '-quotes.id', '-quotes.margin_dollars', '-quotes.margin_percentage', '-markup_variable', '-quotes.notes', '-quote.quote_number', '-quotes.savings', '-quotes.status', '-quotes.title','-quotes.updated_at', '-quotes.updated_by', '-quotes.markup_variable', '-quotes.quote_number', '-quotes.total_cost', '-screenconfigurations', '-orders', '-customers')) for account in Account.query.all()]
+
+      if not accounts:
+        return {'errors' : '204: No content available'}, 204
+
+      return make_response(
+        accounts,
+        200
+      )
+
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
+    except Exception as e:
+      return {'errors' : str(e)}, 500
 
 class UserById(Resource):
   def get(self,id):

@@ -39,9 +39,9 @@ width_126 = ['Ferrari Soltis Veozip', 'Twitchell Nano 50', 'Twitchell Nano 55', 
 width_122 = ['Mermet Natte 10%', 'Mermet Natte 3%', 'Mermet Natte 5%', 'Mermet Satine 1%', 'Mermet Satine 5%']
 width_105 = ['Ferrari Soltis Horizon 86', 'Ferrari Soltis Perform 92']
 
-def random_date_within_last_90_days():
+def random_date_within_last_360_days():
     now = datetime.now()
-    days_ago = randint(0, 90)
+    days_ago = randint(0, 360)
     random_time = timedelta(
         days=days_ago,
         hours=randint(0, 23),
@@ -69,7 +69,7 @@ def create_admin_account():
 
 def create_accounts():
   accounts = []
-  for _ in range(10):
+  for _ in range(50):
     a = Account(
       account_number = rc(range(0, 1000)),
       company_name = fake.company(),
@@ -81,7 +81,7 @@ def create_accounts():
       phone = fake.phone_number(),
       discount = randint(0, 45) / 100.0,
       created_by = 1,
-      created_at = random_date_within_last_90_days(),
+      created_at = random_date_within_last_360_days(),
       status = choices(status_list, weights = [10, 1], k=1)[0]
     )
   
@@ -110,14 +110,14 @@ def create_admin_user(account):
 def create_users():
 
   users = []
-  for _ in range(20):
+  for _ in range(83):
     u = User(
       first_name = fake.first_name(),
       last_name = fake.last_name(),
       email = fake.profile(fields=['mail'])['mail'],
       username=fake.profile(fields=['username'])['username'],
       created_by = 1,
-      created_at = random_date_within_last_90_days(),
+      created_at = random_date_within_last_360_days(),
       status = choices(status_list, weights = [10, 1], k=1)[0],
       role_id = choices(roles, weights = [1, 5, 10, 2], k=1)[0],
       account_id = rc([account.id for account in accounts]),
@@ -131,7 +131,7 @@ def create_users():
 
 def create_customers():
   customers = []
-  for _ in range(20):
+  for _ in range(217):
     c = Customer(
       first_name = fake.first_name(),
       last_name = fake.last_name(),
@@ -142,7 +142,7 @@ def create_customers():
       city = fake.city(),
       state = fake.state(),
       zip_code = fake.postcode(),
-      created_at = random_date_within_last_90_days(),
+      created_at = random_date_within_last_360_days(),
       created_by = 1,
       notes = fake.text(),
       account_id = rc([account.id for account in accounts]),
@@ -163,7 +163,7 @@ def create_quotes():
         for customer in customers if customer.account
     }
 
-  for _ in range(30):
+  for _ in range(235):
     selected_customer_id = rc(list(customer_account_data.keys()))
     account_data = customer_account_data[selected_customer_id]
 
@@ -177,7 +177,7 @@ def create_quotes():
         notes=fake.sentence(),
         status = choices(status_list, weights = [10, 1], k=1)[0],
         converted='No',
-        created_at=random_date_within_last_90_days(),
+        created_at=random_date_within_last_360_days(),
         created_by = 1,
     )
 
@@ -238,7 +238,7 @@ def create_screenConfigurations():
     if fabric_type == 'Ferrari Soltis Opaque B92':
       return 64.9
 
-  for _ in range(35):
+  for _ in range(343):
     fabric_type = choices(fabric_type_options, weights=[1] * len(fabric_type_options), k=1)[0]
     unit_width = rc(range(36, 300))
     unit_height = rc(range(36, 400))
@@ -293,7 +293,7 @@ def create_screenConfigurations():
       # charges = [motor_charge, tube_charge, housing_charge, tracks_charge, hem_bar_charge, fabric_charge, powder_charge]
       # list_price = sum(charges)
       quote_id = rc([quote.id for quote in quotes]),
-      created_at = random_date_within_last_90_days(),
+      created_at = random_date_within_last_360_days(),
       created_by = 1,
       )
     s.motor_type_price = 0
