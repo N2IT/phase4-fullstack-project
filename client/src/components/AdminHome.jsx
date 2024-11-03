@@ -6,6 +6,7 @@ import { useContext, useEffect, useState } from 'react';
 import { AgentContext } from '../AgentProvider';
 import { compChartData, showRecentSales } from '../lib/utils';
 import { Component } from './BarChart';
+import Loading from './Loading';
 
 const AdminCompCards = () => {
 
@@ -29,7 +30,7 @@ const AdminCompCards = () => {
     const [cardId, setCardId] = useState('accounts');
 
     if (!accounts) {
-        return <div> Loading ... </div>
+        return <Loading />
     }
 
     return (
@@ -83,7 +84,7 @@ const AdminCompCards = () => {
                 </Row>
                 <Row className='mb-3'>
                     <Col sm={4}>
-                        <Card className='stat-card mt-3'>
+                        <Card id='orderDollarValues' className='stat-card mt-3'>
                             <Card.Body>
                                 <Card.Title>Sales Revenue</Card.Title>
                                 <Card.Text className='card-fontsize'>
@@ -107,7 +108,7 @@ const AdminCompCards = () => {
                         </Card>
                     </Col>
                     <Col sm={4}>
-                        <Card className='stat-card mt-3'>
+                        <Card id='quoteDollarValues' className='stat-card mt-3'>
                             <Card.Body>
                                 <Card.Title>Open Quote $ Value</Card.Title>
                                 <Card.Text className='card-fontsize'>

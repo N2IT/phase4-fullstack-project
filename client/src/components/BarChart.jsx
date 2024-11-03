@@ -86,8 +86,7 @@ export function CustomBarChart({ data, label }) {
 
 // Main component rendering the chart
 export function Component({ accounts, dataType }) {
-    console.log(accounts);
-    console.log(dataType);
+
     const dataMapping = {
         customers: accounts.flatMap((account) => account.customers),
         quotes: accounts.flatMap((account) => account.quotes),
