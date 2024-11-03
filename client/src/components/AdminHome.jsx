@@ -6,11 +6,13 @@ import { useContext, useEffect, useState } from 'react';
 import { AgentContext } from '../AgentProvider';
 import { compChartData, showRecentSales } from '../lib/utils';
 import { Component } from './BarChart';
+import LoadingPage from './LoadingPage';
 import Loading from './Loading';
+
 
 const AdminCompCards = () => {
 
-    const { agent, accounts, setAccounts, setIsLoading } = useContext(AgentContext);
+    const { agent, accounts, setAccounts, setIsLoading, isLoading } = useContext(AgentContext);
 
     useEffect(() => {
         fetch('/api/accounts')
@@ -29,8 +31,8 @@ const AdminCompCards = () => {
     //toggle to set true or false based on which card is clicked
     const [cardId, setCardId] = useState('accounts');
 
-    if (!accounts) {
-        return <Loading />
+    if (isLoading || !accounts) {
+        return <LoadingPage />
     }
 
     return (
@@ -48,7 +50,10 @@ const AdminCompCards = () => {
                             <Card.Body>
                                 <Card.Title>Accounts</Card.Title>
                                 <Card.Text className='card-fontsize'>
-                                    {compChartData(accts, 'show all')}
+                                    {compChartData(accts, 'show all') === 0 ? <Loading /> : <>
+                                        {compChartData(accts, 'show all')}
+                                    </>
+                                    }
                                 </Card.Text>
                                 <Card.Subtitle className="mb-2 text-muted">{compChartData(accts, 'get recent')} new this week</Card.Subtitle>
                                 <Card.Link href='/accounts'>View All Accounts</Card.Link>
@@ -61,7 +66,10 @@ const AdminCompCards = () => {
                             <Card.Body>
                                 <Card.Title>Customers</Card.Title>
                                 <Card.Text className='card-fontsize'>
-                                    {compChartData(allCustomers, 'show all')}
+                                    {compChartData(allCustomers, 'show all') === 0 ? <Loading /> : <>
+                                        {compChartData(allCustomers, 'show all')}
+                                    </>
+                                    }
                                 </Card.Text>
                                 <Card.Subtitle className="mb-2 text-muted">{compChartData(allCustomers, 'get recent')} new this week</Card.Subtitle>
                                 <Card.Link href='/customers'>View all Customers</Card.Link>
@@ -73,7 +81,10 @@ const AdminCompCards = () => {
                             <Card.Body>
                                 <Card.Title>Orders</Card.Title>
                                 <Card.Text className='card-fontsize'>
-                                    {compChartData(allOrders, 'show all')}
+                                    {compChartData(allOrders, 'show all') === 0 ? <Loading /> : <>
+                                        {compChartData(allOrders, 'show all')}
+                                    </>
+                                    }
                                 </Card.Text>
                                 <Card.Subtitle className="mb-2 text-muted">{compChartData(allOrders, 'get recent')} new this week</Card.Subtitle>
                                 <Card.Link href='/orders'>View all Orders</Card.Link>
@@ -88,7 +99,10 @@ const AdminCompCards = () => {
                             <Card.Body>
                                 <Card.Title>Sales Revenue</Card.Title>
                                 <Card.Text className='card-fontsize'>
-                                    $ {compChartData(allOrders, 'get total', 'dollar')}
+                                    {compChartData(allOrders, 'show all') === 0 ? <Loading /> : <>
+                                        $ {compChartData(allOrders, 'get total', 'dollar')}
+                                    </>
+                                    }
                                 </Card.Text>
                                 <Card.Subtitle className="mb-2 text-muted">$ {showRecentSales(allOrders)}</Card.Subtitle>
                             </Card.Body>
@@ -100,7 +114,10 @@ const AdminCompCards = () => {
                             <Card.Body>
                                 <Card.Title>Quotes</Card.Title>
                                 <Card.Text className='card-fontsize'>
-                                    {compChartData(allQuotes, 'show all')}
+                                    {compChartData(allQuotes, 'show all') === 0 ? <Loading /> : <>
+                                        {compChartData(allQuotes, 'show all')}
+                                    </>
+                                    }
                                 </Card.Text>
                                 <Card.Subtitle className="mb-2 text-muted">{compChartData(allQuotes, 'get recent')} new this week</Card.Subtitle>
                                 <Card.Link href='/quotes'>View All Quotes</Card.Link>
@@ -112,7 +129,10 @@ const AdminCompCards = () => {
                             <Card.Body>
                                 <Card.Title>Open Quote $ Value</Card.Title>
                                 <Card.Text className='card-fontsize'>
-                                    $ {compChartData(allQuotes, 'get total', 'dollar')}
+                                    {compChartData(allQuotes, 'show all') === 0 ? <Loading /> : <>
+                                        $ {compChartData(allQuotes, 'get total', 'dollar')}
+                                    </>
+                                    }
                                 </Card.Text>
                                 <Card.Subtitle className="mb-2 text-muted">$ {showRecentSales(allQuotes)}</Card.Subtitle>
                             </Card.Body>
@@ -122,7 +142,7 @@ const AdminCompCards = () => {
                 </Row>
                 <Row>
                     <Col>
-                    <Component accounts={accounts} dataType={cardId} />
+                        <Component accounts={accounts} dataType={cardId} />
                     </Col>
                 </Row>
             </Container>

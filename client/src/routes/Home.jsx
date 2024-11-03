@@ -6,7 +6,7 @@ import { AgentContext } from '../AgentProvider';
 import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
 import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from "@/components/ui/chart"
 import AdminHome from '../components/AdminHome';
-import Loading from '../components/Loading';
+import LoadingPage from '../components/LoadingPage';
 
 // import { useEffect } from 'react';
 
@@ -15,7 +15,7 @@ const Home = () => {
   const { agent, isLoading } = useContext(AgentContext);
 
   if (isLoading) {
-    return <Loading />
+    return <LoadingPage />
   }
 
   const chartData = [

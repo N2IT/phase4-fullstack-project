@@ -8,7 +8,7 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Button } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
-import Loading from '../components/Loading';
+import LoadingPage from '../components/LoadingPage';
 
 const Orders = () => {
 
@@ -24,7 +24,7 @@ const Orders = () => {
   }, [agent])
 
   if (!orders) {
-    return <Loading />
+    return <LoadingPage />
   }
 
   return (
