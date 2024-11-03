@@ -12,7 +12,7 @@ import LoadingPage from '../components/LoadingPage';
 
 const Orders = () => {
 
-  const { agent, order, setOrder, orders, setOrders, setIsLoading } = useContext(AgentContext);
+  const { agent, order, setOrder, orders, setOrders, isLoading, setIsLoading } = useContext(AgentContext);
 
   useEffect(() => {
     fetch('/api/orders')
@@ -23,14 +23,14 @@ const Orders = () => {
 
   }, [agent])
 
-  if (!orders) {
+  if (!orders || isLoading ) {
     return <LoadingPage />
   }
 
   return (
     <>
       <div className="account-details">
-        {agent ? (agent.role_id === 1 ?
+        {agent.role_id === 1 ?
           <Container>
             <Row className='mb-3'>
               <Col md={4} sm={12}>
@@ -55,12 +55,6 @@ const Orders = () => {
               <InvalidCredentials />
             </div>
           )
-        ) : (
-          <div>
-            <Unauthorized />
-          </div>
-        )
-
         }
       </div>
     </>

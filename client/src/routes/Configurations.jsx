@@ -5,10 +5,11 @@ import { AgentContext } from '../AgentProvider';
 import InvalidCredentials from '../components/InvalidCredentials';
 import { Container } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
+import LoadingPage from '../components/Loading';
 
 const Configurations = () => {
 
-  const { agent, isLoading, setConfigurations, setIsLoading } = useContext(AgentContext);
+  const { agent, isLoading, setConfigurations, setIsLoading, configurations } = useContext(AgentContext);
 
   useEffect(() => {
     fetch('/api/configurations')
@@ -22,15 +23,15 @@ const Configurations = () => {
 
   }, [])
 
-  if (isLoading) {
-    return <div> Loading ... </div>
+  if (!configurations || isLoading ) {
+    return <LoadingPage />
   }
 
   return (
     <>
       <div className="account-details">
         <Container>
-          {agent ? (agent.role_id === 1 ?
+          {agent.role_id === 1 ?
             <div>
               <Card>
                 <Card.Body>
@@ -44,12 +45,6 @@ const Configurations = () => {
                 <InvalidCredentials />
               </div>
             )
-          ) : (
-            <div>
-              <Unauthorized />
-            </div>
-          )
-
           }
         </Container>
       </div>

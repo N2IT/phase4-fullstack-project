@@ -1,14 +1,14 @@
 import { useEffect, useContext } from 'react';
-import Unauthorized from '../components/Unauthorized';
 import { AgentContext } from '../AgentProvider'
 import UsersTable from '../components/tables/UsersTable'
 import InvalidCredentials from '../components/InvalidCredentials';
 import { Container } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
+import LoadingPage from '../components/LoadingPage';
 
 const Users = () => {
 
-  const { agent, setUsers, setIsLoading, isLoading } = useContext(AgentContext);
+  const { agent, users, setUsers, setIsLoading, isLoading } = useContext(AgentContext);
 
   useEffect(() => {
     fetch('/api/users')
@@ -28,8 +28,8 @@ const Users = () => {
 
   }, [])
 
-  if (isLoading) {
-    return <div> Loading ... </div>
+  if (!users || isLoading ) {
+    return <LoadingPage />
   }
 
   return (
@@ -37,7 +37,7 @@ const Users = () => {
       <div className="account-details">
         <Container>
 
-          {agent ? (agent.role_id === 1 ?
+          {agent.role_id === 1 ?
             <div>
               <Card>
                 <Card.Body>
@@ -51,12 +51,6 @@ const Users = () => {
                 <InvalidCredentials />
               </div>
             )
-          ) : (
-            <div>
-              <Unauthorized />
-            </div>
-          )
-
           }
         </Container>
       </div>

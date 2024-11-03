@@ -2,12 +2,13 @@ import { useContext } from 'react';
 import { AgentContext } from '../../AgentProvider';
 import Table from 'react-bootstrap/Table';
 import LoadingPage from '../LoadingPage';
+import Loading from '../Loading';
 
 const AccountsTable = () => {
 
     const { accounts, handleIdClick, isLoading } = useContext(AgentContext);
 
-    if (!accounts) {
+    if (!accounts || isLoading) {
         return <LoadingPage />
     }
 

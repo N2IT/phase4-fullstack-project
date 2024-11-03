@@ -56,17 +56,17 @@ const AdminView = () => {
                     </Card>
                     <Card className='mb-3'>
                         <Card.Body>
-                            <UsersTableByAccount />
-                        </Card.Body>
-                    </Card>
-                    <Card className='mb-3'>
-                        <Card.Body>
                             <QuotesTableByAccount />
                         </Card.Body>
                     </Card>
                     <Card className='mb-3'>
                         <Card.Body>
                             <CustomersTableByAccount />
+                        </Card.Body>
+                    </Card>
+                    <Card className='mb-3'>
+                        <Card.Body>
+                            <UsersTableByAccount />
                         </Card.Body>
                     </Card>
                 </div >

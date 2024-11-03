@@ -11,6 +11,7 @@ import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { Card } from 'react-bootstrap';
+import LoadingPage from '../components/LoadingPage';
 
 
 const QuoteById = () => {
@@ -45,9 +46,9 @@ const QuoteById = () => {
             });
     }, [id]);
 
-    if (isLoading) {
-        return <div> Loading ... </div>
-    }
+    if (!quote || isLoading ) {
+        return <LoadingPage />
+      }
 
     return (
         <>

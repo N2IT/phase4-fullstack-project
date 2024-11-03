@@ -1,14 +1,14 @@
 import { useEffect, useContext } from 'react';
-import Unauthorized from '../components/Unauthorized';
 import CustomersTable from '../components/tables/CustomersTable'
 import { AgentContext } from '../AgentProvider';
 import InvalidCredentials from '../components/InvalidCredentials';
 import { Container } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
+import LoadingPage from '../components/LoadingPage';
 
 const Customers = () => {
 
-  const { agent, isLoading, setCustomers, setIsLoading } = useContext(AgentContext);
+  const { agent, isLoading, setCustomers, setIsLoading, customers } = useContext(AgentContext);
 
   useEffect(() => {
     fetch('/api/customers')
@@ -22,15 +22,15 @@ const Customers = () => {
 
   }, [])
 
-  if (isLoading) {
-    return <div> Loading ... </div>
+  if (!customers || isLoading ) {
+    return <LoadingPage />
   }
 
   return (
     <>
       <div className="account-details">
         <Container>
-          {agent ? (agent.role_id === 1 ?
+          {agent.role_id === 1 ?
             <div>
               <Card>
                 <Card.Body>
@@ -44,12 +44,6 @@ const Customers = () => {
                 <InvalidCredentials />
               </div>
             )
-          ) : (
-            <div>
-              <Unauthorized />
-            </div>
-          )
-
           }
         </Container>
       </div>
