@@ -1,22 +1,21 @@
-import LoginForm from '../components/forms/LoginForm'
+import LoginForm from '../components/forms/LoginForm';
 import { Link, Navigate } from 'react-router-dom';
 import { useContext, useEffect } from 'react';
 import { Container } from 'react-bootstrap';
 import { AgentContext } from '../AgentProvider';
-import { Bar, BarChart, CartesianGrid, XAxis } from "recharts"
-import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from "@/components/ui/chart"
+import { Bar, BarChart, CartesianGrid, XAxis } from "recharts";
+import { ChartContainer, ChartTooltip, ChartTooltipContent, ChartLegend, ChartLegendContent } from "@/components/ui/chart";
 import AdminHome from '../components/AdminHome';
 import LoadingPage from '../components/LoadingPage';
 
-
 const Home = () => {
-
   const { agent, isLoading, navigate } = useContext(AgentContext);
 
   const accountId = localStorage.getItem('account.id');
 
-  if (accountId) {
-    navigate(`/accounts/${accountId}`)
+  // Show loading screen while the app is checking the session state
+  if (isLoading) {
+    return <LoadingPage />;
   }
 
   if (agent) {
@@ -25,8 +24,12 @@ const Home = () => {
         <div className="account-details">
           <AdminHome />
         </div>
-      )
+      );
     }
+  }
+
+  if (accountId) {
+    navigate(`/accounts/${accountId}`);
   }
 
   return (
@@ -40,11 +43,9 @@ const Home = () => {
             <Link to="/sign-up">Sign Up</Link>
           </div>
         </Container>
-        )
       </div>
     </>
   );
 }
 
 export default Home;
-

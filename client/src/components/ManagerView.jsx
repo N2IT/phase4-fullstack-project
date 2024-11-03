@@ -11,12 +11,11 @@ import { Row } from 'react-bootstrap';
 import { Col } from 'react-bootstrap';
 import { Card } from 'react-bootstrap';
 import { Progress } from "@/components/ui/progress"
+import OrdersTable from './tables/OrdersTable';
 
 // import {Column} from 'react-bootstrap';
 
 const ManagerView = ({ account }) => {
-
-    console.log(account)
 
     const { agent, user } = useContext(AgentContext);
     const { id } = useParams()
@@ -38,17 +37,27 @@ const ManagerView = ({ account }) => {
                 <AccountCompCards account={account} />
                 <Card className='mb-3'>
                     <Card.Body>
-                        <UsersTableByAccount />
+                        <QuotesTableByAccount />
                     </Card.Body>
                 </Card>
                 <Card className='mb-3'>
                     <Card.Body>
-                        <QuotesTableByAccount />
+                        <CustomersTableByAccount />
                     </Card.Body>
                 </Card>
-                <Card>
+                <Card className='mb-3'>
                     <Card.Body>
-                        <CustomersTableByAccount />
+                        <div className="account-details">
+                            <div>
+                                <h3>Orders Table</h3>
+                            </div>
+                            <OrdersTable acctOrders={account.orders} />
+                        </div>
+                    </Card.Body>
+                </Card>
+                <Card className='mb-3'>
+                    <Card.Body>
+                        <UsersTableByAccount />
                     </Card.Body>
                 </Card>
 

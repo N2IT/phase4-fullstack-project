@@ -35,7 +35,7 @@ const Orders = () => {
             <Row className='mb-3'>
               <Col md={4} sm={12}>
                 <div>
-                  <h2>Order Table</h2>
+                  <h2>Orders Table</h2>
                 </div>
               </Col>
               <Col>

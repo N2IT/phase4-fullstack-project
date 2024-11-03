@@ -71,7 +71,7 @@ export function compChartData(data_set, action, type = null) {
       return `Nothing new this week`;
     }
 
-    if (pastSevenDays.length === 1) {
+    if (pastSevenDays.length >= 1) {
       return pastSevenDays.length + ` new this week`;
     }
 

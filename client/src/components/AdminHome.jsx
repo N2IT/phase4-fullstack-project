@@ -55,7 +55,7 @@ const AdminCompCards = () => {
                                     </>
                                     }
                                 </Card.Text>
-                                <Card.Subtitle className="mb-2 text-muted">{compChartData(accts, 'get recent')} new this week</Card.Subtitle>
+                                <Card.Subtitle className="mb-2 text-muted">{compChartData(accts, 'get recent')} </Card.Subtitle>
                                 <Card.Link href='/accounts'>View All Accounts</Card.Link>
                             </Card.Body>
                         </Card>
@@ -71,7 +71,7 @@ const AdminCompCards = () => {
                                     </>
                                     }
                                 </Card.Text>
-                                <Card.Subtitle className="mb-2 text-muted">{compChartData(allCustomers, 'get recent')} new this week</Card.Subtitle>
+                                <Card.Subtitle className="mb-2 text-muted">{compChartData(allCustomers, 'get recent')} </Card.Subtitle>
                                 <Card.Link href='/customers'>View all Customers</Card.Link>
                             </Card.Body>
                         </Card>
@@ -86,7 +86,7 @@ const AdminCompCards = () => {
                                     </>
                                     }
                                 </Card.Text>
-                                <Card.Subtitle className="mb-2 text-muted">{compChartData(allOrders, 'get recent')} new this week</Card.Subtitle>
+                                <Card.Subtitle className="mb-2 text-muted">{compChartData(allOrders, 'get recent')} </Card.Subtitle>
                                 <Card.Link href='/orders'>View all Orders</Card.Link>
                             </Card.Body>
                         </Card>
@@ -119,7 +119,7 @@ const AdminCompCards = () => {
                                     </>
                                     }
                                 </Card.Text>
-                                <Card.Subtitle className="mb-2 text-muted">{compChartData(allQuotes, 'get recent')} new this week</Card.Subtitle>
+                                <Card.Subtitle className="mb-2 text-muted">{compChartData(allQuotes, 'get recent')} </Card.Subtitle>
                                 <Card.Link href='/quotes'>View All Quotes</Card.Link>
                             </Card.Body>
                         </Card>
