@@ -1,8 +1,8 @@
 """initial migration
 
-Revision ID: 25a4377d29aa
+Revision ID: a858fbd262be
 Revises: 
-Create Date: 2024-08-19 14:18:33.332967
+Create Date: 2024-11-04 10:23:25.252763
 
 """
 from alembic import op
@@ -10,7 +10,7 @@ import sqlalchemy as sa
 
 
 # revision identifiers, used by Alembic.
-revision = '25a4377d29aa'
+revision = 'a858fbd262be'
 down_revision = None
 branch_labels = None
 depends_on = None
@@ -27,8 +27,8 @@ def upgrade():
     sa.Column('city', sa.String(), nullable=True),
     sa.Column('state', sa.String(), nullable=True),
     sa.Column('zip_code', sa.Integer(), nullable=True),
-    sa.Column('phone', sa.Integer(), nullable=True),
-    sa.Column('discount', sa.Integer(), nullable=True),
+    sa.Column('phone', sa.String(), nullable=True),
+    sa.Column('discount', sa.Float(), nullable=True),
     sa.Column('status', sa.String(), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('created_by', sa.Integer(), nullable=True),
@@ -36,6 +36,12 @@ def upgrade():
     sa.Column('updated_by', sa.Integer(), nullable=True),
     sa.PrimaryKeyConstraint('id', name=op.f('pk_accounts')),
     sa.UniqueConstraint('company_name', name=op.f('uq_accounts_company_name'))
+    )
+    op.create_table('demos',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('name', sa.String(), nullable=True),
+    sa.Column('description', sa.String(), nullable=True),
+    sa.PrimaryKeyConstraint('id', name=op.f('pk_demos'))
     )
     op.create_table('permissions',
     sa.Column('id', sa.Integer(), nullable=False),
@@ -53,7 +59,7 @@ def upgrade():
     sa.Column('first_name', sa.String(), nullable=False),
     sa.Column('last_name', sa.String(), nullable=False),
     sa.Column('email', sa.String(), nullable=False),
-    sa.Column('phone', sa.Integer(), nullable=False),
+    sa.Column('phone', sa.String(), nullable=False),
     sa.Column('address_1', sa.String(), nullable=True),
     sa.Column('address_2', sa.String(), nullable=True),
     sa.Column('city', sa.String(), nullable=True),
@@ -95,7 +101,7 @@ def upgrade():
     sa.Column('status', sa.String(), nullable=True),
     sa.Column('account_id', sa.Integer(), nullable=False),
     sa.Column('role_id', sa.Integer(), nullable=True),
-    sa.Column('_password_hash', sa.String(length=12), nullable=True),
+    sa.Column('_password_hash', sa.String(), nullable=True),
     sa.ForeignKeyConstraint(['account_id'], ['accounts.id'], name=op.f('fk_users_account_id_accounts')),
     sa.ForeignKeyConstraint(['role_id'], ['roles.id'], name=op.f('fk_users_role_id_roles')),
     sa.PrimaryKeyConstraint('id', name=op.f('pk_users')),
@@ -127,6 +133,25 @@ def upgrade():
     sa.PrimaryKeyConstraint('id', name=op.f('pk_quotes')),
     sa.UniqueConstraint('quote_number', name=op.f('uq_quotes_quote_number'))
     )
+    op.create_table('orders',
+    sa.Column('id', sa.Integer(), nullable=False),
+    sa.Column('order_number', sa.Integer(), nullable=True),
+    sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
+    sa.Column('status', sa.String(), nullable=True),
+    sa.Column('notes', sa.String(), nullable=True),
+    sa.Column('terms_conditions', sa.String(), nullable=True),
+    sa.Column('sale_price', sa.Float(), nullable=True),
+    sa.Column('account_id', sa.Integer(), nullable=True),
+    sa.Column('customer_id', sa.Integer(), nullable=True),
+    sa.Column('quote_id', sa.Integer(), nullable=True),
+    sa.Column('user_id', sa.Integer(), nullable=True),
+    sa.Column('created_by', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['account_id'], ['accounts.id'], name=op.f('fk_orders_account_id_accounts')),
+    sa.ForeignKeyConstraint(['customer_id'], ['customers.id'], name=op.f('fk_orders_customer_id_customers')),
+    sa.ForeignKeyConstraint(['quote_id'], ['quotes.id'], name=op.f('fk_orders_quote_id_quotes')),
+    sa.ForeignKeyConstraint(['user_id'], ['users.id'], name=op.f('fk_orders_user_id_users')),
+    sa.PrimaryKeyConstraint('id', name=op.f('pk_orders'))
+    )
     op.create_table('screenconfigurations',
     sa.Column('id', sa.Integer(), nullable=False),
     sa.Column('project_name', sa.String(), nullable=True),
@@ -137,43 +162,39 @@ def upgrade():
     sa.Column('hem_bar', sa.Boolean(), nullable=True),
     sa.Column('fabric', sa.Boolean(), nullable=True),
     sa.Column('motor_tube', sa.Boolean(), nullable=True),
-    sa.Column('unit_width', sa.String(), nullable=True),
-    sa.Column('unit_height', sa.String(), nullable=True),
+    sa.Column('unit_width', sa.Float(), nullable=True),
+    sa.Column('unit_height', sa.Float(), nullable=True),
     sa.Column('housing_tube_size', sa.String(), nullable=True),
     sa.Column('housing_type', sa.String(), nullable=True),
     sa.Column('motor_type', sa.String(), nullable=True),
     sa.Column('motor_side', sa.String(), nullable=True),
     sa.Column('power_chord', sa.String(), nullable=True),
-    sa.Column('motor_charge', sa.Integer(), nullable=True),
-    sa.Column('tube_charge', sa.Integer(), nullable=True),
-    sa.Column('housing_charge', sa.Integer(), nullable=True),
+    sa.Column('motor_charge', sa.Float(), nullable=True),
+    sa.Column('tube_charge', sa.Float(), nullable=True),
+    sa.Column('housing_charge', sa.Float(), nullable=True),
     sa.Column('retention_type', sa.String(), nullable=True),
     sa.Column('retention_cap_color', sa.String(), nullable=True),
-    sa.Column('left_retention', sa.String(), nullable=True),
-    sa.Column('right_retention', sa.String(), nullable=True),
     sa.Column('tracks_exact_length', sa.Boolean(), nullable=True),
-    sa.Column('tracks_charge', sa.Integer(), nullable=True),
+    sa.Column('tracks_charge', sa.Float(), nullable=True),
     sa.Column('hem_bar_type', sa.String(), nullable=True),
     sa.Column('hem_cap_color', sa.String(), nullable=True),
     sa.Column('pile_brush_style', sa.String(), nullable=True),
-    sa.Column('hem_bar_charge', sa.Integer(), nullable=True),
+    sa.Column('hem_bar_charge', sa.Float(), nullable=True),
     sa.Column('fabric_type', sa.String(), nullable=True),
     sa.Column('fabric_selection', sa.String(), nullable=True),
-    sa.Column('seam_location', sa.String(), nullable=True),
-    sa.Column('seam_location_num', sa.Integer(), nullable=True),
     sa.Column('zipper_color', sa.String(), nullable=True),
-    sa.Column('usable_fabric_width', sa.Integer(), nullable=True),
-    sa.Column('rotate_fabric', sa.String(), nullable=True),
-    sa.Column('fabric_charge', sa.Integer(), nullable=True),
+    sa.Column('fabric_charge', sa.Float(), nullable=True),
     sa.Column('color_collection', sa.String(), nullable=True),
     sa.Column('frame_color', sa.String(), nullable=True),
-    sa.Column('powder_charge', sa.Integer(), nullable=True),
-    sa.Column('list_price', sa.Integer(), nullable=True),
+    sa.Column('powder_charge', sa.Float(), nullable=True),
+    sa.Column('list_price', sa.Float(), nullable=True),
     sa.Column('quote_id', sa.Integer(), nullable=True),
+    sa.Column('order_id', sa.Integer(), nullable=True),
     sa.Column('created_at', sa.DateTime(), server_default=sa.text('(CURRENT_TIMESTAMP)'), nullable=True),
     sa.Column('created_by', sa.Integer(), nullable=True),
     sa.Column('updated_at', sa.DateTime(), nullable=True),
     sa.Column('updated_by', sa.Integer(), nullable=True),
+    sa.ForeignKeyConstraint(['order_id'], ['orders.id'], name=op.f('fk_screenconfigurations_order_id_orders')),
     sa.ForeignKeyConstraint(['quote_id'], ['quotes.id'], name=op.f('fk_screenconfigurations_quote_id_quotes')),
     sa.PrimaryKeyConstraint('id', name=op.f('pk_screenconfigurations'))
     )
@@ -183,11 +204,13 @@ def upgrade():
 def downgrade():
     # ### commands auto generated by Alembic - please adjust! ###
     op.drop_table('screenconfigurations')
+    op.drop_table('orders')
     op.drop_table('quotes')
     op.drop_table('users')
     op.drop_table('roles_permissions')
     op.drop_table('customers')
     op.drop_table('roles')
     op.drop_table('permissions')
+    op.drop_table('demos')
     op.drop_table('accounts')
     # ### end Alembic commands ###

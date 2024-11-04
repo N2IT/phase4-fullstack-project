@@ -23,19 +23,19 @@ from order_preview_generator import send_pdf
 # create a custom decorator to conduct session check and apply to each of the resources
 
 # # # # # # # FOR PRODUCTION ONLY # # # # # # #
-@app.route("/", defaults={"path": ""})
-@app.route("/<path:path>")
-def catch_all(path):
-    if path != "" and os.path.exists(app.static_folder + '/' + path):
-        return send_from_directory(app.static_folder, path)
-    else:
-        return send_from_directory(app.static_folder, 'index.html')
+# @app.route("/", defaults={"path": ""})
+# @app.route("/<path:path>")
+# def catch_all(path):
+#     if path != "" and os.path.exists(app.static_folder + '/' + path):
+#         return send_from_directory(app.static_folder, path)
+#     else:
+#         return send_from_directory(app.static_folder, 'index.html')
 
-@app.errorhandler(404)
-def not_found(e):
-    return send_from_directory(app.static_folder, 'index.html'), 404
+# @app.errorhandler(404)
+# def not_found(e):
+#     return send_from_directory(app.static_folder, 'index.html'), 404
 
-api = Api(app, prefix="/api")
+# api = Api(app, prefix="/api")
 # # # # # # # END FOR PRODUCTION ONLY # # # # # # #
 
 
