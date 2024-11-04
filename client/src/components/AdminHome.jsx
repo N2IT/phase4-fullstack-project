@@ -81,7 +81,7 @@ const AdminCompCards = () => {
                             <Card.Body>
                                 <Card.Title>Orders</Card.Title>
                                 <Card.Text className='card-fontsize'>
-                                    {!compChartData(allOrders, 'show all') ? <Loading /> : <>
+                                    {compChartData(allOrders, 'show all') === 0 ? <Loading /> : <>
                                         {compChartData(allOrders, 'show all')}
                                     </>
                                     }

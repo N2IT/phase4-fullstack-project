@@ -52,7 +52,6 @@ const Accounts = () => {
               }
             </Card>
           </Container>
-          )
       </div>
     </>
   );
