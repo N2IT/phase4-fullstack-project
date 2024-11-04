@@ -1,0 +1,59 @@
+{
+    "options": {
+        "standard": {
+            "id": 0,
+            "displayName": "Standard",
+            "size": "4.5\"",
+            "embed": "S",
+            "price": {
+                "housing": {
+                    "m": 31.750,
+                    "b": 174.040
+                },
+                "tube": {
+                    "m": 18.290,
+                    "b": 549.258
+                }
+            },
+            "enabled": true,
+            "visible": true
+        },
+        "micro": {
+            "id": 1,
+            "displayName": "Micro",
+            "size": "3.5\"",
+            "embed": "M",
+            "price": {
+                "housing": {
+                    "m": 23.660,
+                    "b": 156.370
+                },
+                "tube": {
+                    "m": 11.860,
+                    "b": 447.015
+                }
+            },
+            "enabled": true,
+            "visible": true
+        },
+        "jumbo": {
+            "id": 2,
+            "displayName": "Jumbo",
+            "size": "5.75\"",
+            "embed": "J",
+            "price": {
+                "housing": {
+                    "m": 49.540,
+                    "b": 212.463
+                },
+                "tube": {
+                    "m": 30.010,
+                    "b": 670.005
+                }
+            },
+            "enabled": true,
+            "visible": true
+        }
+    },
+    "defaultValue": "standard"
+}

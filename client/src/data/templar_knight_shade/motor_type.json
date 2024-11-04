@@ -1,0 +1,137 @@
+{
+    "options": {
+        "alpha": {
+            "id": 0,
+            "displayName": "Alpha",
+            "motor": {
+                "options": {
+                    "pro": {
+                        "id": 0,
+                        "displayName": "Pro",
+                        "embed": "P",
+                        "price": 0.000,
+                        "enabled": false,
+                        "visible": false
+                    },
+                    "proOverdrive": {
+                        "id": 1,
+                        "displayName": "Pro + OD",
+                        "embed": "D",
+                        "price": 0.000,
+                        "enabled": true,
+                        "visible": true
+                    },
+                    "proSolar": {
+                        "id": 2,
+                        "displayName": "Pro + Solar",
+                        "embed": "B",
+                        "price": 500.000,
+                        "enabled": false,
+                        "visible": false
+                    }
+                },
+                "defaultValue": "proOverdrive"
+            },
+            "cord": {
+                "options": {
+                    "pigtail6ft": {
+                        "id": 0,
+                        "displayName": "6ft w/ Pigtail",
+                        "embed": "1",
+                        "price": 0.000,
+                        "enabled": true,
+                        "visible": true
+                    },
+                    "pigtail32ft": {
+                        "id": 1,
+                        "displayName": "32ft w/ Pigtail",
+                        "embed": "2",
+                        "price": 85.000,
+                        "enabled": true,
+                        "visible": true
+                    },
+                    "molded19ft": {
+                        "id": 2,
+                        "displayName": "19ft w/ Molded Plug",
+                        "embed": "3",
+                        "price": 85.000,
+                        "enabled": false,
+                        "visible": false
+                    }
+                },
+                "defaultValue": "pigtail6ft"
+            },
+            "enabled": true
+        },
+        "somfy": {
+            "id": 1,
+            "displayName": "Somfy",
+            "motor": {
+                "options": {
+                    "rts": {
+                        "id": 0,
+                        "displayName": "RTS",
+                        "embed": "A",
+                        "price": 300.000,
+                        "enabled": true,
+                        "visible": true
+                    },
+                    "hardwired": {
+                        "id": 1,
+                        "displayName": "Hardwired",
+                        "embed": "H",
+                        "price": 300.000,
+                        "enabled": true,
+                        "visible": true
+                    },
+                    "autoSun": {
+                        "id": 2,
+                        "displayName": "AutoSun",
+                        "embed": "T",
+                        "price": 600.000,
+                        "enabled": true,
+                        "visible": true
+                    }
+                },
+                "defaultValue": "rts"
+            },
+            "cord": {
+                "options": {
+                    "pigtail10ft": {
+                        "id": 0,
+                        "displayName": "10ft w/ Pigtail",
+                        "embed": "1",
+                        "price": 0.000,
+                        "enabled": true,
+                        "visible": true
+                    },
+                    "molded32ft": {
+                        "id": 1,
+                        "displayName": "32ft w/ Molded Plug",
+                        "embed": "2",
+                        "price": 85.000,
+                        "enabled": true,
+                        "visible": true
+                    },
+                    "molded30ft": {
+                        "id": 2,
+                        "displayName": "30ft w/ Molded Plug (Black)",
+                        "embed": "3",
+                        "price": 95.000,
+                        "enabled": true,
+                        "visible": true
+                    }
+                },
+                "defaultValue": "6ftPigtail"
+            },
+            "enabled": true
+        }
+    },
+    "defaultValue": "alpha",
+    "extendedCord": {
+        "embed": "3",
+        "price": 85.000,
+        "defaultValue": false,
+        "visible": false
+    }
+}

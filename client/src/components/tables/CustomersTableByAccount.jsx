@@ -39,22 +39,22 @@ const CustomersTable = () => {
                 <Table responsive striped bordered hover size='sm'>
                     <thead>
                         <tr>
-                            <th>Number</th>
+                            <th className='remove-column'>Number</th>
                             <th>First Name</th>
                             <th>Last Name</th>
-                            <th >Email</th>
-                            <th >Phone</th>
+                            <th className='remove-column'>Email</th>
+                            <th>Phone</th>
                             <th>Actions</th>
                         </tr>
                     </thead>
                     <tbody>
                         {customersByAccount.map((customer) => (
                             <tr key={customer.email} className="">
-                                <td>{customer.id}</td>
+                                <td className='remove-column'>{customer.id}</td>
                                 <td>{customer.first_name}</td>
                                 <td>{customer.last_name}</td>
-                                <td >{customer.email}</td>
-                                <td >{customer.phone}</td>
+                                <td className='remove-column'>{customer.email}</td>
+                                <td>{customer.phone}</td>
                                 <td><p className="view-btn" title="View Quote" onClick={() => handleIdClick(customer)}> View </p></td>
                             </tr>
                         ))}

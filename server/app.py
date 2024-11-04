@@ -1,19 +1,25 @@
 #!/usr/bin/env python3
 
 from flask import request, session, make_response, jsonify, render_template, send_from_directory
+from flask_mail import Mail, Message
 from flask_restful import Api, Resource
 import random
 # from config import app, db, api, os ## FOR LAUNCHING VIA GUNICORN (OS MISSING CAUSES ISSUE)
 from config import app, db, api ## FOR PRODUCTION (OS PRESENT LAUNCHES BACKEND IN BROWSER)
-from models import Account, User, Role, Permission, RolePermission, Quote, Customer, ScreenConfiguration
-from seed import calculate_quote_info, update_quote_discount
+from models import Account, User, Role, Permission, RolePermission, Quote, Customer, ScreenConfiguration, Order
+from seed import calculate_quote_info, update_quote_discount, recalculate_quote_totals, update_screen_configuration_order_id
+from sqlalchemy.orm.session import make_transient
+import copy
+from mail_send import send_mail
+from order_preview_generator import send_pdf
+
 
 # just imported Account, User above
 # need to write up the Routes now
 
 # user_id = session.get("user_id")
-#         if not user_id:
-#             return {"error": "Unauthorized"}, 403
+#   if not user_id:
+#       return {"error": "Unauthorized"}, 403
 # create a custom decorator to conduct session check and apply to each of the resources
 
 # # # # # # # FOR PRODUCTION ONLY # # # # # # #
@@ -34,10 +40,10 @@ api = Api(app, prefix="/api")
 
 
 # # # # # # # FOR DEV ONLY - TO RUN LOCALLY # # # # # # #
-# class Home(Resource):
-#   def get(self):
-#     return {'message' : 'Welcome to QP Development Database'}, 200
-# api.add_resource(Home, '/')
+class Home(Resource):
+  def get(self):
+    return {'message' : 'Welcome to QP Development Database'}, 200
+api.add_resource(Home, '/')
 # # # # # # # END FOR DEV ONLY - TO RUN LOCALLY # # # # # # #
   
 @app.before_request
@@ -45,12 +51,16 @@ def check_if_logged_in():
   if session.get('user_id') is None:
     session.clear()
     # return {'errors': 'Unauthorized Access'}, 401
-  else:
-      print('User is logged in')
-      print(session['user_id'])
+  # else:
+  #     print('User is logged in')
+  #     print(session['user_id'])
+       
 
 class Accounts(Resource):
   def get(self):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       accounts = [account.to_dict(rules = ('-updated_at',)) for account in Account.query.all()]
 
@@ -138,6 +148,9 @@ class Accounts(Resource):
 
 class AccountById(Resource):
   def get(self,id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       account = Account.query.filter(Account.id == id).first()
       if account:
@@ -151,6 +164,9 @@ class AccountById(Resource):
         return {"errors": str(e)}, 500
 
   def patch(self,id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       account = Account.query.filter(Account.id == id).first()
       if account:
@@ -181,6 +197,9 @@ class AccountById(Resource):
       return {'errors' : str(e)}, 500
   
   def delete(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       account = Account.query.filter(Account.id == id).first()
       if account:
@@ -201,9 +220,33 @@ class AccountById(Resource):
     except ValueError as e:
       return {'errors' : str(e)}, 404
 
+class AccountsTable(Resource):
+  def get(self):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized, 403"}
+
+    try:
+      accounts = [account.to_dict(rules = ('-users', '-quotes.account_id', '-quotes.converted', '-quotes.created_at', '-quotes.created_by', '-quotes.customer_id', '-quotes.discount', '-quotes.hashedKey', '-quotes.id', '-quotes.margin_dollars', '-quotes.margin_percentage', '-markup_variable', '-quotes.notes', '-quote.quote_number', '-quotes.savings', '-quotes.status', '-quotes.title','-quotes.updated_at', '-quotes.updated_by', '-quotes.markup_variable', '-quotes.quote_number', '-quotes.total_cost', '-screenconfigurations', '-orders', '-customers')) for account in Account.query.all()]
+
+      if not accounts:
+        return {'errors' : '204: No content available'}, 204
+
+      return make_response(
+        accounts,
+        200
+      )
+
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
+    except Exception as e:
+      return {'errors' : str(e)}, 500
 
 class UserById(Resource):
   def get(self,id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       user = User.query.filter(User.id == id).first()
       if user:
@@ -217,6 +260,9 @@ class UserById(Resource):
         return {"errors": str(e)}, 500
 
   def patch(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       user = User.query.filter(User.id == id).first()
       if user:
@@ -239,6 +285,9 @@ class UserById(Resource):
       return {'errors' : str(e)}, 500
   
   def delete(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       user = User.query.filter(User.id == id).first()
       if user:
@@ -265,6 +314,9 @@ class UserById(Resource):
 
 class Users(Resource):
   def get(self):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       users = [user.to_dict(rules = ('-_password_hash',)) for user in User.query.all()]
 
@@ -348,7 +400,7 @@ class CheckSession(Resource):
     if user_id:
       user = User.query.filter(User.id == user_id).first()
       if user:
-        return user.to_dict(),200
+        return user.to_dict(rules=('-_password_hash', '-account', '-email', '-first_name', '-updated_at', '-last_name', '-created_at', '-updated_by', '-created_by')),200
       else:
         # User ID in session but user not found in database
         return {'error': 'User not found'}, 404
@@ -373,7 +425,7 @@ class Login(Resource):
         return {'errors' : 'This users account is no longer active.'}, 401
 
     session['user_id'] = user.id
-    return user.to_dict(), 200
+    return user.to_dict(rules=('-_password_hash', '-account', '-email', '-first_name', '-updated_at', '-last_name', '-created_at', '-updated_by', '-created_by')), 200
 
 class Logout(Resource):
   def delete(self):
@@ -391,6 +443,9 @@ class Logout(Resource):
 
 class Quotes(Resource):
   def get(self):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       quotes = [quote.to_dict() for quote in Quote.query.all()]
 
@@ -407,6 +462,9 @@ class Quotes(Resource):
       return {'errors' : str(e)}, 500
 
   def post(self):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       form_data = request.get_json()
 
@@ -482,6 +540,9 @@ class Quotes(Resource):
 
 class QuoteById(Resource):
   def get(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       quote = Quote.query.filter(Quote.id == id).first()
 
@@ -497,7 +558,9 @@ class QuoteById(Resource):
   
 
   def patch(self, id):
-    # breakpoint()
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       quote = Quote.query.filter(Quote.id == id).first()
     
@@ -528,6 +591,9 @@ class QuoteById(Resource):
       return {'errors' : str(e)}, 500
 
   def delete(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       quote = Quote.query.filter(Quote.id == id).first()
 
@@ -554,6 +620,9 @@ class QuoteById(Resource):
 
 class Customers(Resource):
   def get(self):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       customers = [quote.to_dict() for quote in Customer.query.all()]
 
@@ -570,6 +639,9 @@ class Customers(Resource):
       return {'errors' : str(e)}, 500
   
   def post(self):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       form_data = request.get_json()
 
@@ -639,6 +711,9 @@ class Customers(Resource):
 
 class CustomerById(Resource):
   def get(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       customer = Customer.query.filter(Customer.id == id).first()
 
@@ -653,6 +728,9 @@ class CustomerById(Resource):
       return {"errors": str(e)}, 500
 
   def patch(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       customer = Customer.query.filter(Customer.id == id).first()
       if customer:
@@ -674,6 +752,9 @@ class CustomerById(Resource):
       return {'errors' : str(e)}, 404
   
   def delete(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       customer = Customer.query.filter(Customer.id == id).first()
 
@@ -700,6 +781,9 @@ class CustomerById(Resource):
 
 class Configurations(Resource):
   def get(self):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       screenconfigurations = [screenconfiguration.to_dict() for screenconfiguration in ScreenConfiguration.query.all()]
 
@@ -716,6 +800,9 @@ class Configurations(Resource):
       return {'errors' : str(e)}, 500
   
   def post(self):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       ## retrieve form data
       form_data = request.get_json()
@@ -848,6 +935,9 @@ class Configurations(Resource):
 
 class ConfigurationById(Resource):
   def get(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       screenconfiguration = ScreenConfiguration.query.filter(ScreenConfiguration.id == id).first()
 
@@ -862,6 +952,9 @@ class ConfigurationById(Resource):
       return {"errors": str(e)}, 500
   
   def patch(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       screenconfiguration = ScreenConfiguration.query.filter(ScreenConfiguration.id == id).first()
 
@@ -889,6 +982,9 @@ class ConfigurationById(Resource):
       return {'errors' : str(e)}, 404
 
   def delete(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
     try:
       screenconfiguration = ScreenConfiguration.query.filter(ScreenConfiguration.id == id).first()
       quote_id = screenconfiguration.quote_id
@@ -916,6 +1012,8 @@ class ConfigurationById(Resource):
     except ValueError as e:
       return {'errors' : str(e)}, 404
 
+        
+
 # class AccountsDiscountGreaterTen(Resource):
 #   def get(self):
 #     try:
@@ -931,15 +1029,159 @@ class ConfigurationById(Resource):
     # except Exception as e:
     #   return {'errors' : str(e)}
 
+class Duplicate(Resource):
+  def post(self):
+    # breakpoint()
+    data = request.get_json()
+    variable = data.get('id')
+    
+    configs = ScreenConfiguration.query.all()
+    origConfig = ScreenConfiguration.query.filter(ScreenConfiguration.id == variable).first()
+    quote_id = origConfig.quote_id
 
+    if origConfig:
+      cloneConfig = copy.deepcopy(origConfig)
+      make_transient(cloneConfig)
+      cloneConfig.unit_name = f"{origConfig.unit_name} - Copy"
+      cloneConfig.project_name = f"{origConfig.project_name} - Copy"
+      cloneConfig.motor_side = ''
+      cloneConfig.list_price = 0
+      cloneConfig.id = configs[-1].id + 1
+      
+      db.session.add(cloneConfig)
+      db.session.commit()
+
+      recalculate_quote_totals(quote_id)
+
+      return {"message": "Configuration duplicated successfully"}, 200  # Return success response
+    else:
+      return {"errors": "404: That configuration does not exist"}, 404  # Properly formatted response
+
+class Orders(Resource):
+  def get(self):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
+    try:
+      orders = [order.to_dict() for order in Order.query.all()]
+
+      if not orders:
+        return {'errors' : '204: No content available'}, 204
+
+      return make_response(
+        orders,
+        200
+      )
+    
+    except Exception as e:
+      return {'errors' : str(e)}, 500
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
+    
+  def post(self):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
+    try:
+      ## retrieve form data
+      form_data = request.get_json()
+
+      order_number = "DEMO" + "_" + str(form_data.get('id'))
+      status = 'new'
+      notes = form_data.get('notes')
+      terms_conditions = "Default text per each order"
+      account_id = form_data.get('account_id')
+      customer_id = form_data.get('customer_id')
+      quote_id = form_data.get('id')
+      sale_price = form_data.get('sale_price')
+      # configuration_id = [screenconfiguration.id for screenconfiguration in ScreenConfiguration.query.all() if screenconfiguration.quote_id == quote_id]
+      # accessory_id = form_data.get('accessory_id')
+      # misc_id = form_data.get('misc_id')
+      user_id = form_data.get('user_id')
+      created_by = form_data.get('created_by')
+
+
+      if form_data:
+        new_order = Order(
+          order_number = order_number,
+          status = status,
+          notes = notes,
+          terms_conditions = terms_conditions,
+          account_id = account_id,
+          customer_id = customer_id,
+          # configuration_id = configuration_id,
+          # accessory_id = accessory_id,
+          # misc_id = misc_id,
+          quote_id = quote_id,
+          sale_price = sale_price,
+          user_id = user_id,
+          created_by = created_by,
+        )
+
+
+        db.session.add(new_order)
+        db.session.commit()
+
+        update_screen_configuration_order_id(new_order.id)
+        # update_add_on_accessory_order_id(new_order.id)
+
+        return new_order.to_dict(), 201
+      else:
+        return {'errors' : '422: Unprocessable Entry'}, 422
+    
+    except Exception as e:
+      return {'errors' : str(e)}, 500
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
+
+class OrdersById(Resource):
+  def get(self, id):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {'error' : "Unauthorized"}, 403
+    try:
+      order = Order.query.filter(Order.id == id).first()
+
+      if not order:
+        return {'error' : '204: No content available'}, 204
+      
+      return make_response(
+        order.to_dict(),
+        200
+      )
+    
+    except Exception as e:
+      return {'errors' : str(e)}, 500
+    except ValueError as e:
+      return {'errors' : str(e)}, 404
+
+class SendQuote(Resource):
+  def post(self):
+    user_id = session.get("user_id")
+    if not user_id:
+      return {"error": "Unauthorized"}, 403
+    try:
+      data = request.get_json()
+      quote = data.get('quote')
+      recipients = data.get('recipients')
+      footer = data.get('message')
+
+      return send_pdf(quote, recipients, footer)
+    except Exception as e:
+      return {'errors' : str(e)}
+
+api.add_resource(Duplicate, '/duplicate-configuration')
 api.add_resource(Accounts, '/accounts')
 api.add_resource(AccountById, '/accounts/<int:id>')
 api.add_resource(Users, '/users')
 api.add_resource(UserById, '/users/<int:id>')
+api.add_resource(Orders, '/orders')
+api.add_resource(OrdersById, '/orders/<int:id>')
 api.add_resource(Login, '/login')
 api.add_resource(CheckSession, '/check-session')
 api.add_resource(Logout, '/logout')
 api.add_resource(Quotes, '/quotes')
+api.add_resource(SendQuote, '/send-quote')
 api.add_resource(QuoteById, '/quotes/<int:id>')
 api.add_resource(Customers, '/customers')
 api.add_resource(CustomerById, '/customers/<int:id>')

@@ -3,6 +3,8 @@ import Unauthorized from '../components/Unauthorized';
 import QuotesTable from '../components/tables/QuotesTable'
 import { AgentContext } from '../AgentProvider';
 import InvalidCredentials from '../components/InvalidCredentials';
+import { Container } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
 
 const Quotes = () => {
 
@@ -14,7 +16,7 @@ const Quotes = () => {
       .then((quote) => setQuotes(quote))
       .then(() => setIsLoading(false))
       .catch(error => console.error("Error:", error));
-  
+
     localStorage.removeItem('account.id')
     localStorage.removeItem('account.discount')
 
@@ -27,23 +29,29 @@ const Quotes = () => {
   return (
     <>
       <div className="account-details">
-        {agent ? (agent.role_id === 1 ?
-          <div>
-            <h2>Quotes Table</h2>
-            <QuotesTable />
-          </div>
-          : (
+        <Container>
+          {agent ? (agent.role_id === 1 ?
             <div>
-              <InvalidCredentials />
+              <Card>
+                <Card.Body>
+                  <h2>Quotes Table</h2>
+                  <QuotesTable />
+                </Card.Body>
+              </Card>
+            </div>
+            : (
+              <div>
+                <InvalidCredentials />
+              </div>
+            )
+          ) : (
+            <div>
+              <Unauthorized />
             </div>
           )
-        ) : (
-          <div>
-            <Unauthorized />
-          </div>
-        )
 
-        }
+          }
+        </Container>
       </div>
     </>
   );

@@ -1,12 +1,14 @@
 import { useEffect, useContext } from 'react';
-import Unauthorized from '../components/Unauthorized';
 import CustomersTable from '../components/tables/CustomersTable'
 import { AgentContext } from '../AgentProvider';
 import InvalidCredentials from '../components/InvalidCredentials';
+import { Container } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
+import LoadingPage from '../components/LoadingPage';
 
 const Customers = () => {
 
-  const { agent, isLoading, setCustomers, setIsLoading } = useContext(AgentContext);
+  const { agent, isLoading, setCustomers, setIsLoading, customers } = useContext(AgentContext);
 
   useEffect(() => {
     fetch('/api/customers')
@@ -14,38 +16,39 @@ const Customers = () => {
       .then((customer) => setCustomers(customer))
       .then(() => setIsLoading(false))
       .catch(error => console.error("Error:", error));
-    
+
     localStorage.removeItem('account.id')
     localStorage.removeItem('account.discount')
 
   }, [])
 
-  if (isLoading) {
-    return <div> Loading ... </div>
+  if (!customers || isLoading ) {
+    return <LoadingPage />
   }
 
   return (
     <>
       <div className="account-details">
-        {agent ? (agent.role_id === 1 ?
-          <div>
-            <h2>Customers Table</h2>
-            <CustomersTable />
-          </div>
-          : (
+        <Container>
+          {agent.role_id === 1 ?
             <div>
-              <InvalidCredentials />
+              <Card>
+                <Card.Body>
+                  <h2>Customers Table</h2>
+                  <CustomersTable />
+                </Card.Body>
+              </Card>
             </div>
-          )
-        ) : (
-          <div>
-            <Unauthorized />
-          </div>
-        )
-
-        }
+            : (
+              <div>
+                <InvalidCredentials />
+              </div>
+            )
+          }
+        </Container>
       </div>
     </>
+
   );
 
 }

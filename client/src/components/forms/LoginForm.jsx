@@ -38,11 +38,11 @@ const LoginForm = () => {
                 })
                 .then((agent) => {
                     setAgent(agent);
-                    if (agent.role_id !== 1) {
+                    if (agent.role_id !== 1){
                         navigate(`/accounts/${agent.account_id}`)
                     }
                     else {
-                        navigate('/');
+                        navigate('/')
                     }
                 })
         },

@@ -1,12 +1,14 @@
 import { useEffect, useContext } from 'react';
-import Unauthorized from '../components/Unauthorized';
 import { AgentContext } from '../AgentProvider'
 import UsersTable from '../components/tables/UsersTable'
 import InvalidCredentials from '../components/InvalidCredentials';
+import { Container } from 'react-bootstrap';
+import { Card } from 'react-bootstrap';
+import LoadingPage from '../components/LoadingPage';
 
 const Users = () => {
 
-  const { agent, setUsers, setIsLoading, isLoading } = useContext(AgentContext);
+  const { agent, users, setUsers, setIsLoading, isLoading } = useContext(AgentContext);
 
   useEffect(() => {
     fetch('/api/users')
@@ -23,33 +25,34 @@ const Users = () => {
 
     localStorage.removeItem('account.id')
     localStorage.removeItem('account.discount')
-    
+
   }, [])
 
-  if (isLoading) {
-    return <div> Loading ... </div>
+  if (!users || isLoading ) {
+    return <LoadingPage />
   }
 
   return (
     <>
-    <div className="account-details">
-        {agent ? (agent.role_id === 1 ?
-          <div>
-            <h2>Users Table</h2>
-            <UsersTable />
-          </div>
-          : (
-            <div>
-              <InvalidCredentials />
-            </div>
-          )
-        ) : (
-          <div>
-            <Unauthorized />
-          </div>
-        )
+      <div className="account-details">
+        <Container>
 
-        }
+          {agent.role_id === 1 ?
+            <div>
+              <Card>
+                <Card.Body>
+                  <h2>Users Table</h2>
+                  <UsersTable />
+                </Card.Body>
+              </Card>
+            </div>
+            : (
+              <div>
+                <InvalidCredentials />
+              </div>
+            )
+          }
+        </Container>
       </div>
     </>
   );

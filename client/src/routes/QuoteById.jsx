@@ -1,5 +1,5 @@
 import { useEffect, useContext } from 'react';
-import { useParams } from 'react-router-dom';
+import { Navigate, useParams } from 'react-router-dom';
 import EditQuoteForm from '../components/forms/EditQuoteForm';
 // import SalesEditUserForm from '../components/SalesEditUserForm';
 import Unauthorized from '../components/Unauthorized';
@@ -10,10 +10,17 @@ import Button from 'react-bootstrap/Button';
 import Container from 'react-bootstrap/Container';
 import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
+import { Card } from 'react-bootstrap';
+import LoadingPage from '../components/LoadingPage';
+
 
 const QuoteById = () => {
-    const { agent, customer, quote, handleClose, handleShow, show, setShow, setCustomer, setConfigurations, setQuote, setAsDisabled, errors = [], setErrors, isLoading, deleteQuoteObject } = useContext(AgentContext)
+    const { agent, customer, quote, handleClose, handleShow, show, setShow, setCustomer, setConfigurations, setQuote, setAsDisabled, errors = [], setErrors, isLoading, deleteQuoteObject, navigate } = useContext(AgentContext)
     const { id } = useParams();
+
+    console.log(quote.status)
+
+    // check quote.status and if '
 
     const handleDeleteClick = () => {
         fetch(`/api/quotes/${id}`, {
@@ -32,15 +39,16 @@ const QuoteById = () => {
                 return response.json();
             })
             .then(data => {
+                // console.log(data.customer)
                 setQuote(data);
                 setAsDisabled(true);
                 setErrors(null);
             });
-        }, [id]);
+    }, [id]);
 
-    if (isLoading) {
-        return <div> Loading ... </div>
-    }
+    if (!quote || isLoading ) {
+        return <LoadingPage />
+      }
 
     return (
         <>
@@ -56,22 +64,35 @@ const QuoteById = () => {
                                     </Col>
                                     <Col className="d-flex justify-content-end gap-2">
                                         <Button variant='dark' type="button" onClick={() => history.go(-1)}>Return to Prev. page</Button>
-                                        {agent.role_id !== 3 ? <Button variant='danger' type="button" onClick={() => handleShow()}>Delete Quote</Button> : null}
+                                        {quote.status !== 'closed' && (
+                                        <>
+                                            <Button variant = 'light' type="button" onClick={() => navigate(`quotes/${id}/preview`)}>Preview Quote</Button>
+                                            {agent.role_id !== 3 ? <Button variant='danger' type="button" onClick={() => handleShow()}>Delete Quote</Button> : null}
+                                        </>
+                                        )}
                                     </Col>
                                 </Row>
                                 {!quote.customer ?
                                     'Loading' :
                                     <Row>
-                                     <h3>For Customer: {quote.customer.first_name}&nbsp;{quote.customer.last_name} </h3>
-                                </Row>}
+                                        <h3>For Customer: {quote.customer.first_name}&nbsp;{quote.customer.last_name} </h3>
+                                    </Row>}
                                 <Row>
                                     <Col>
-                                        <EditQuoteForm id={id} />
+                                        <Card>
+                                            <Card.Body>
+                                                <EditQuoteForm id={id} />
+                                            </Card.Body>
+                                        </Card>
                                     </Col>
                                 </Row>
-                                <Row>
+                                <Row className='mt-3 mb-3'>
                                     <Col>
-                                        <ConfigurationsTableByQuote />
+                                        <Card>
+                                            <Card.Body>
+                                                <ConfigurationsTableByQuote />
+                                            </Card.Body>
+                                        </Card>
                                     </Col>
                                 </Row>
                             </div>

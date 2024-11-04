@@ -6,7 +6,6 @@ import Row from 'react-bootstrap/Row';
 import Col from 'react-bootstrap/Col';
 import { AgentContext } from '../../AgentProvider';
 import { Form } from 'react-bootstrap';
-import { Button } from 'react-bootstrap';
 
 const EditAccountFormAdmin = ({ id }) => {
     const { agent, account, disabled, errors, setErrors, handleEditClick, handleUpdateAccount } = useContext(AgentContext)
@@ -91,6 +90,7 @@ const EditAccountFormAdmin = ({ id }) => {
     return (
         <>
             <Container className='mt-3'>
+            <h3>Edit account details here:</h3>
                 <Form onSubmit={formik.handleSubmit}>
                     <Row>
                         <Col lg={3} md={4} sm={6} xs={12}>

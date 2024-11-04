@@ -1,5 +1,5 @@
 import Modal from 'react-bootstrap/Modal';
-import { Button } from 'react-bootstrap';
+import { Button, Card } from 'react-bootstrap';
 import { useContext } from 'react';
 import { useParams } from 'react-router-dom';
 import UsersTableByAccount from './tables/UsersTableByAccount';
@@ -49,26 +49,26 @@ const AdminView = () => {
                             <AccountCompCards account={account} />
                         </Col>
                     </Row>
-                    <Row>
-                        <Col>
+                    <Card className='mb-3'>
+                        <Card.Body>
                             <EditAccountFormAdmin id={id} />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
-                            <UsersTableByAccount />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
+                        </Card.Body>
+                    </Card>
+                    <Card className='mb-3'>
+                        <Card.Body>
                             <QuotesTableByAccount />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col>
+                        </Card.Body>
+                    </Card>
+                    <Card className='mb-3'>
+                        <Card.Body>
                             <CustomersTableByAccount />
-                        </Col>
-                    </Row>
+                        </Card.Body>
+                    </Card>
+                    <Card className='mb-3'>
+                        <Card.Body>
+                            <UsersTableByAccount />
+                        </Card.Body>
+                    </Card>
                 </div >
             </Container>
             <Modal show={show} onHide={handleClose}>

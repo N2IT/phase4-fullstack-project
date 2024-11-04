@@ -1,0 +1,38 @@
+{
+    "includedAssemblies": {
+        "housing": {
+            "name": "Housing",
+            "defaultValue": true
+        },
+        "side_track": {
+            "name": "Side Track",
+            "defaultValue": true
+        },
+        "hem_bar": {
+            "name": "Hem Bar",
+            "defaultValue": true
+        },
+        "fabric": {
+            "name": "Fabric",
+            "defaultValue": true
+        },
+        "motor_tube": {
+            "name": "Motor Tube",
+            "defaultValue": true
+        },
+        "buildout": {
+            "name": "Buildout",
+            "defaultValue": false
+        }
+    },
+    "width_in": {
+        "min": 32,
+        "max": 216,
+        "defaultValue": 60
+    },
+    "height_in": {
+        "min": 12,
+        "max": 144,
+        "defaultValue": 36
+    }
+}

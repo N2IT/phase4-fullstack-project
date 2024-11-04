@@ -331,7 +331,7 @@ const EditConfigurationform = () => {
                 frame_color: `${configuration.frame_color}`,
                 powder_charge: `${configuration.powder_charge}`,
                 list_price: `${configuration.list_price}`,
-                quote_id: `${configuration.quote.id}`,
+                quote_id: `${configuration.quote_id}`,
                 created_by: `${agent.id}`,
                 // status: `${configuration.status}`,
                 created_at: `${configuration.created_at}`,
@@ -396,7 +396,7 @@ const EditConfigurationform = () => {
                 }
             });
             if (Object.keys(changes).length > 1) {
-                
+
                 fetch(`/api/configurations/${id}`, {
                     method: "PATCH",
                     headers: {
@@ -470,7 +470,7 @@ const EditConfigurationform = () => {
                             <Col md={6} xs={12}>
                                 <h3>Unit Contents</h3>
                                 <Row>
-                                    <Col md={3} xs={4}>
+                                    <Col md={4} xs={6}>
                                         <div className="form-check d-flex align-items-center">
                                             <Form.Check
                                                 type="checkbox"
@@ -484,7 +484,7 @@ const EditConfigurationform = () => {
                                             <p style={{ color: 'red' }}> {formik.errors.complete_unit} </p>
                                         </div>
                                     </Col>
-                                    <Col md={3} xs={4}>
+                                    <Col md={4} xs={6}>
                                         <div className="form-check d-flex align-items-center">
                                             <Form.Check
                                                 type="checkbox"
@@ -499,7 +499,7 @@ const EditConfigurationform = () => {
                                             <p style={{ color: 'red' }}> {formik.errors.housing} </p>
                                         </div>
                                     </Col>
-                                    <Col md={3} xs={4}>
+                                    <Col md={4} xs={6}>
                                         <div className="form-check d-flex align-items-center">
                                             <Form.Check
                                                 type="checkbox"
@@ -513,7 +513,7 @@ const EditConfigurationform = () => {
                                             <p style={{ color: 'red' }}> {formik.errors.side_track} </p>
                                         </div>
                                     </Col>
-                                    <Col md={3} xs={4}>
+                                    <Col md={4} xs={6}>
                                         <div className="form-check d-flex align-items-center">
                                             <Form.Check
                                                 type="checkbox"
@@ -527,7 +527,7 @@ const EditConfigurationform = () => {
                                             <p style={{ color: 'red' }}> {formik.errors.hem_bar} </p>
                                         </div>
                                     </Col>
-                                    <Col md={3} xs={4}>
+                                    <Col md={4} xs={6}>
                                         <div className="form-check d-flex align-items-center">
                                             <Form.Check
                                                 type="checkbox"
@@ -541,7 +541,7 @@ const EditConfigurationform = () => {
                                             <p style={{ color: 'red' }}> {formik.errors.fabric} </p>
                                         </div>
                                     </Col>
-                                    <Col md={3} xs={4}>
+                                    <Col md={4} xs={6}>
                                         <div className="form-check d-flex align-items-center">
                                             <Form.Check
                                                 type="checkbox"

@@ -41,12 +41,12 @@ const UsersTableByAccount = () => {
                 <Table responsive striped bordered hover size='sm'>
                     <thead>
                         <tr>
-                            <th>Username</th>
-                            <th>First Name</th>
-                            <th>Last Name</th>
-                            <th >Email</th>
+                            <th>USERNAME</th>
+                            <th >FIRST NAME</th>
+                            <th>LAST NAME</th>
+                            <th className='remove-column'>EMAIL</th>
                             {/* <th>STATUS</th> */}
-                            <th>Action</th>
+                            <th>ACTION</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -55,7 +55,7 @@ const UsersTableByAccount = () => {
                                 <td>{user.username}</td>
                                 <td>{user.first_name}</td>
                                 <td>{user.last_name}</td>
-                                <td >{user.email}</td>
+                                <td className='remove-column'>{user.email}</td>
                                 {/* <td>{user.role_id}</td> */}
                                 {/* <td>{user.status}</td> */}
                                 {agent.role_id === 3 ? (agent.username === user.username ?

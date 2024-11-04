@@ -1,6 +1,6 @@
 from config import app, db, func
 from random import randint, choice as rc, choices
-from datetime import datetime
+from datetime import datetime, timedelta
 from faker import Faker
 from models import * 
 from sqlalchemy import text
@@ -39,10 +39,37 @@ width_126 = ['Ferrari Soltis Veozip', 'Twitchell Nano 50', 'Twitchell Nano 55', 
 width_122 = ['Mermet Natte 10%', 'Mermet Natte 3%', 'Mermet Natte 5%', 'Mermet Satine 1%', 'Mermet Satine 5%']
 width_105 = ['Ferrari Soltis Horizon 86', 'Ferrari Soltis Perform 92']
 
+def random_date_within_last_360_days():
+    now = datetime.now()
+    days_ago = randint(0, 360)
+    random_time = timedelta(
+        days=days_ago,
+        hours=randint(0, 23),
+        minutes=randint(0, 59),
+        seconds=randint(0, 59)
+    )
+    return now - random_time
+
+def create_admin_account():
+  account = Account(
+    account_number = 0,
+    company_name = 'Admin',
+    address_1 = '123 Admin St',
+    address_2 = 'Suite 100',
+    city = 'Adminville',
+    state = 'Adminland',
+    zip_code = '12345',
+    phone = '123-456-7890',
+    status = 'active',
+    discount = 0,
+    created_by = 0,
+  )
+
+  return account
 
 def create_accounts():
   accounts = []
-  for _ in range(10):
+  for _ in range(50):
     a = Account(
       account_number = rc(range(0, 1000)),
       company_name = fake.company(),
@@ -54,7 +81,7 @@ def create_accounts():
       phone = fake.phone_number(),
       discount = randint(0, 45) / 100.0,
       created_by = 1,
-      created_at = datetime.now(),
+      created_at = random_date_within_last_360_days(),
       status = choices(status_list, weights = [10, 1], k=1)[0]
     )
   
@@ -63,17 +90,34 @@ def create_accounts():
   return accounts
 
 
+def create_admin_user(account):
+  user = User(
+    first_name = 'Admin',
+    last_name = 'User',
+    email = 'admin@auronec.com',
+    username = 'admin',
+    
+    created_by = 0,
+    status = 'active',
+    role_id = 1,
+    account_id = account.id,
+  )
+
+  user.password_hash = 'Templar2025'
+
+  return user
+
 def create_users():
 
   users = []
-  for _ in range(20):
+  for _ in range(83):
     u = User(
       first_name = fake.first_name(),
       last_name = fake.last_name(),
       email = fake.profile(fields=['mail'])['mail'],
       username=fake.profile(fields=['username'])['username'],
       created_by = 1,
-      created_at = datetime.now(),
+      created_at = random_date_within_last_360_days(),
       status = choices(status_list, weights = [10, 1], k=1)[0],
       role_id = choices(roles, weights = [1, 5, 10, 2], k=1)[0],
       account_id = rc([account.id for account in accounts]),
@@ -87,7 +131,7 @@ def create_users():
 
 def create_customers():
   customers = []
-  for _ in range(20):
+  for _ in range(217):
     c = Customer(
       first_name = fake.first_name(),
       last_name = fake.last_name(),
@@ -98,7 +142,7 @@ def create_customers():
       city = fake.city(),
       state = fake.state(),
       zip_code = fake.postcode(),
-      created_at = datetime.now(),
+      created_at = random_date_within_last_360_days(),
       created_by = 1,
       notes = fake.text(),
       account_id = rc([account.id for account in accounts]),
@@ -119,7 +163,7 @@ def create_quotes():
         for customer in customers if customer.account
     }
 
-  for _ in range(30):
+  for _ in range(235):
     selected_customer_id = rc(list(customer_account_data.keys()))
     account_data = customer_account_data[selected_customer_id]
 
@@ -133,7 +177,7 @@ def create_quotes():
         notes=fake.sentence(),
         status = choices(status_list, weights = [10, 1], k=1)[0],
         converted='No',
-        created_at=datetime.now(),
+        created_at=random_date_within_last_360_days(),
         created_by = 1,
     )
 
@@ -194,7 +238,7 @@ def create_screenConfigurations():
     if fabric_type == 'Ferrari Soltis Opaque B92':
       return 64.9
 
-  for _ in range(35):
+  for _ in range(343):
     fabric_type = choices(fabric_type_options, weights=[1] * len(fabric_type_options), k=1)[0]
     unit_width = rc(range(36, 300))
     unit_height = rc(range(36, 400))
@@ -249,6 +293,7 @@ def create_screenConfigurations():
       # charges = [motor_charge, tube_charge, housing_charge, tracks_charge, hem_bar_charge, fabric_charge, powder_charge]
       # list_price = sum(charges)
       quote_id = rc([quote.id for quote in quotes]),
+      created_at = random_date_within_last_360_days(),
       created_by = 1,
       )
     s.motor_type_price = 0
@@ -433,6 +478,49 @@ def calculate_quote_info(quote_id=None):
     
   db.session.commit()
 
+def recalculate_quote_totals(quote_id):
+  quote = Quote.query.filter(Quote.id == quote_id).first()
+  if not quote.screenconfigurations and not quote.add_on_accessories:
+    quote.total_cost = None
+    quote.savings = None
+    quote.sale_price = None
+    quote.margin_percentage = None
+    quote.margin_dollars = None
+
+    db.session.add(quote)
+  
+  else:
+    configurationTotals = [config.list_price for config in quote.screenconfigurations]
+    # accessoryTotals = [accessory.prod_cost for accessory in quote.add_on_accessories]
+    configSum = sum(configurationTotals)
+    # accessorySum = sum(accessoryTotals)
+
+    total_cost = configSum
+    
+    cost_w_savings = total_cost - (total_cost * quote.discount)
+
+    # Calculate the financial metrics
+    quote.total_cost = total_cost
+    quote.savings = total_cost * quote.discount
+    quote.sale_price = cost_w_savings * quote.markup_variable
+    quote.margin_percentage = ((quote.sale_price - cost_w_savings) / cost_w_savings)
+    quote.margin_dollars = quote.sale_price - cost_w_savings
+
+    db.session.add(quote)
+  
+  db.session.commit()
+
+def update_screen_configuration_order_id(id):
+    screenconfigurations = ScreenConfiguration.query.all()
+    order = Order.query.get(id)
+
+    for screenconfiguration in screenconfigurations:
+      if screenconfiguration.quote_id == order.quote_id:
+        screenconfiguration.order_id = order.id
+
+    # Commit the changes to the database
+    db.session.commit()
+
 def update_quote_discount(discount, id):
   quote = Quote.query.filter(Quote.account_id == id).first()
   quote.discount = discount
@@ -443,40 +531,58 @@ def update_quote_discount(discount, id):
 if __name__ == "__main__":
   with app.app_context():
     session = db.session()
-
+    
+    # # # # # # # # # # # # # # # # # # # # # #
+    # Use Truncate below to seed postgresql db
+    # # # # # # # # # # # # # # # # # # # # # #
+    #
     # Truncate all tables and reset primary key sequences
-    print("Truncating all tables...")
-    session.execute(text('''
-    DO $$ DECLARE\n
-        r RECORD;
-    BEGIN
-        FOR r IN (SELECT tablename FROM pg_tables WHERE schemaname = current_schema()) LOOP
-            EXECUTE 'TRUNCATE TABLE ' || quote_ident(r.tablename) || ' RESTART IDENTITY CASCADE';
-        END LOOP;
-    END $$;
-    '''))
+    # print("Truncating all tables...")
+    # session.execute(text('''
+    # DO $$ DECLARE\n
+    #     r RECORD;
+    # BEGIN
+    #     FOR r IN (SELECT tablename FROM pg_tables WHERE schemaname = current_schema()) LOOP
+    #         EXECUTE 'TRUNCATE TABLE ' || quote_ident(r.tablename) || ' RESTART IDENTITY CASCADE';
+    #     END LOOP;
+    # END $$;
+    # '''))
+    #
+    # # # # # # # # # # # # # # # # # # # # # #
 
-    # print("Clearing db...")
-    # User.query.delete()
-    # Account.query.delete()
-    # RolePermission.query.delete()
-    # Role.query.delete()
-    # Permission.query.delete()
-    # Customer.query.delete()
-    # ScreenConfiguration.query.delete()
-    # # Configuration.query.delete()
-    # Quote.query.delete()
-    # db.session.commit()
+    # # # # # # # # # # # # # # # # # # # # # #
+    # Uncomment query.delete commands below for sqlite db
+    # # # # # # # # # # # # # # # # # # # # # #
+    #
+    print("Clearing db...")
+    User.query.delete()
+    Account.query.delete()
+    RolePermission.query.delete()
+    Role.query.delete()
+    Permission.query.delete()
+    Customer.query.delete()
+    Order.query.delete()
+    ScreenConfiguration.query.delete()
+    # Configuration.query.delete()
+    Quote.query.delete()
+    db.session.commit()
+    #
+    # # # # # # # # # # # # # # # # # # # # # #
+
+    print('Creating Admin account...')
+    account = create_admin_account()
+    db.session.add(account)
+    db.session.commit()
+
+    print('Creating Admin user...')
+    user = create_admin_user(account)
+    db.session.add(user)
+    db.session.commit()
 
     print("Seeding accounts...")
     accounts = create_accounts()
     db.session.add_all(accounts)
     db.session.commit()
-
-    # print('Seeding users...')
-    # users = create_users()
-    # db.session.add_all(users)
-    # db.session.commit()
 
     print('Creating Roles...')
     role0=Role(title="admin")

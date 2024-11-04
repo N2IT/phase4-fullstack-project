@@ -5,6 +5,7 @@ import InvalidCredentials from '../components/InvalidCredentials'
 import Unauthorized from '../components/Unauthorized';
 import AdminView from '../components/AdminView';
 import ManagerView from '../components/ManagerView';
+import { Container } from 'react-bootstrap';
 
 const AccountById = () => {
     const { agent, account, isLoading, setAccount, setAsDisabled, setErrors } = useContext(AgentContext);
@@ -46,13 +47,17 @@ const AccountById = () => {
 
     if (agent.role_id === 1 && account) {
         return (
-            <AdminView />
+            <Container>
+                <AdminView />
+            </Container>
         );
     }
 
     if (agent.role_id !== 1 && agent.account_id.toString() === id) {
         return (
-            <ManagerView account={account}/>
+            <Container>
+                <ManagerView account={account} />
+            </Container>
         )
     }
 

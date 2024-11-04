@@ -1,0 +1,142 @@
+{
+    "hemBar": {
+        "options": {
+            "standard": {
+                "id": 0,
+                "displayName": "Standard",
+                "embed": "P",
+                "price": {
+                    "m": 9.644,
+                    "b": 66.391
+                },
+                "enabled": true,
+                "visible": true
+            },
+            "tall": {
+                "id": 1,
+                "displayName": "Tall",
+                "embed": "Q",
+                "price": {
+                    "m": 15.310,
+                    "b": 72.875
+                },
+                "enabled": true,
+                "visible": true
+            },
+            "mini": {
+                "id": 2,
+                "displayName": "Mini",
+                "embed": null,
+                "price": null,
+                "enabled": false,
+                "visible": false
+            },
+            "lanai": {
+                "id": 3,
+                "displayName": "Lanai",
+                "embed": "7",
+                "price": {
+                    "m": 15.310,
+                    "b": 272.875
+                },
+                "enabled": true,
+                "visible": true
+            }
+        },
+        "defaultValue": "standard"
+    },
+    "cap": {
+        "options": {
+            "black": {
+                "id": 0,
+                "displayName": "Jet Black",
+                "embed": "R",
+                "enabled": true,
+                "visible": true
+            },
+            "white": {
+                "id": 1,
+                "displayName": "Signal White",
+                "embed": "S",
+                "enabled": true,
+                "visible": true
+            },
+            "gray": {
+                "id": 2,
+                "displayName": "Urban Gray",
+                "embed": "T",
+                "enabled": true,
+                "visible": true
+            },
+            "darkGrey": {
+                "id": 3,
+                "displayName": "Anthracite",
+                "embed": "U",
+                "enabled": true,
+                "visible": true
+            },
+            "other": {
+                "id": 4,
+                "displayName": "Other (Call Us)",
+                "embed": null,
+                "enabled": false,
+                "visible": true
+            }
+        },
+        "defaultValue": "black"
+    },
+    "pileBrush": {
+        "options": {
+            "black05": {
+                "id": 0,
+                "displayName": "1/2 - Black",
+                "embed": "V",
+                "enabled": true,
+                "visible": true
+            },
+            "white05": {
+                "id": 1,
+                "displayName": "1/2 - White",
+                "embed": "W",
+                "enabled": true,
+                "visible": true
+            },
+            "grey05": {
+                "id": 2,
+                "displayName": "1/2 - Grey",
+                "embed": "X",
+                "enabled": true,
+                "visible": true
+            },
+            "black075": {
+                "id": 3,
+                "displayName": "3/4 - Black",
+                "embed": "Y",
+                "enabled": true,
+                "visible": true
+            },
+            "black2": {
+                "id": 4,
+                "displayName": "2 - Black",
+                "embed": "Z",
+                "enabled": true,
+                "visible": true
+            },
+            "black2Double": {
+                "id": 5,
+                "displayName": "2 - Black (Double)",
+                "embed": "8",
+                "enabled": true,
+                "visible": true
+            },
+            "none": {
+                "id": 6,
+                "displayName": "None",
+                "embed": "0",
+                "enabled": true,
+                "visible": true
+            }
+        },
+        "defaultValue": "black05"
+    }
+}
