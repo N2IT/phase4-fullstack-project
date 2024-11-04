@@ -106,7 +106,7 @@ const ConfigurationById = () => {
         );
     }
 
-    if (agent.role_id !== 1 && agent.account_id === configuration.quote.account_id) {
+    if (agent.role_id !== 1 && agent.account_id) {
         return (
             <>
                 <Container>
