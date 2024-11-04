@@ -150,12 +150,12 @@ const AgentProvider = ({ children }) => {
         history.go(-1)
     }
 
-    // const deleteConfigurationObject = (id, configuration) => {
-    //     const updatedConfigurations = configurations.filter(configuration => configuration.id !== id);
-    //     setConfigurations(updatedConfigurations)
-    //     alert(`Configuration ${configuration.id} has been successfully deleted`)
-    //     history.go(-1)
-    // }
+    const deleteConfigurationObject = (id, configuration) => {
+        const updatedConfigurations = configurations.filter(configuration => configuration.id !== id);
+        setConfigurations(updatedConfigurations)
+        alert(`Configuration ${configuration.id} has been successfully deleted`)
+        history.go(-1)
+    }
 
     const newConfigurationHandleIdClick = (value) => {
         setCustomer(value)
@@ -196,7 +196,7 @@ const AgentProvider = ({ children }) => {
                 customers,
                 disabled,
                 deleteAccountObject,
-                // deleteConfigurationObject,
+                deleteConfigurationObject,
                 deleteCustomerObject,
                 deleteQuoteObject,
                 deleteUserObject,
