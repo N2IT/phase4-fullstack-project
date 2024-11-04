@@ -56,6 +56,7 @@ const AgentProvider = ({ children }) => {
             navigate(`/quotes/${value.id}`)
         }
         else if (value.project_name) {
+            console.log(value)
             setConfiguration(value)
             navigate(`/configurations/${value.id}`)
         }
